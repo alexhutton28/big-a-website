@@ -7,3 +7,5 @@ Cube
 Boat
 Fish
 Tree
+Treasure Map
+House

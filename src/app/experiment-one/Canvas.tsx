@@ -14,6 +14,7 @@ export default function Canvas() {
   const colorRef = useRef<string>(currentColor);
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
   const isEmptyRef = useRef(true);
+  const [shopOpen, setShopOpen] = useState(false);
 
   // Define shop items and palette order
   const SHOP_ITEMS = [
@@ -32,8 +33,7 @@ export default function Canvas() {
   const isUnlocked = (color: string) => unlockedColors.has(color);
   const canAfford = (cost: number) => playerScore >= cost;
   const purchaseColor = (color: string, cost: number) => {
-    if (isUnlocked(color)) return; // already owned
-    if (!canAfford(cost)) return; // not enough score
+    if (!canAfford(cost)) return; // not enough gold
     setPlayerScore((s) => s - cost);
     setUnlockedColors((prev) => {
       const next = new Set(prev);
@@ -160,13 +160,12 @@ export default function Canvas() {
   };
 
   // Dont delete - for debugging
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmitDebug = () => {
-    setPlayerScore((s) => s + 50);
-    handleNewPrompt();
-    handleClear();
+    setPlayerScore((s) => s + 500);
+    setShopOpen(true);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
@@ -190,8 +189,7 @@ export default function Canvas() {
 
       if (Number.isFinite(score)) {
         setPlayerScore((s) => s + score * 2);
-        handleNewPrompt();
-        handleClear();
+        setShopOpen(true);
       } else {
         console.warn('Received invalid score from AI', data.output);
       }
@@ -213,9 +211,21 @@ export default function Canvas() {
     setPlayerScore(0);
     handleNewPrompt();
     handleClear();
+    setShopOpen(false);
+    setUnlockedColors(new Set(['#ffffff']));
   };
 
   const handleSetColor = (color: string) => setCurrentColor(color);
+
+  const startGame = () => {
+    resetGame();
+  };
+
+  const handleDoneShopping = () => {
+    setShopOpen(false);
+    handleNewPrompt();
+    handleClear();
+  };
 
   return (
     <div className="flex flex-col gap-3 items-center">
@@ -223,9 +233,13 @@ export default function Canvas() {
       <div className="flex flex-row gap-3">
         <canvas
           ref={canvasRef}
-          className="border-2 border-white w-[70vh] h-[70vh] max-w-[800px] max-h-[800px]"
+          className="border-2 bg-black border-white w-[70vh] h-[70vh] max-w-[800px] max-h-[800px] z-[5]"
         />
-        <div className="flex flex-col p-2 bg-gray-900">
+        <div
+          className={`relative flex flex-col pt-2 bg-gray-900 min-w-[150px] transition-all duration-300 ease-[ease] ${
+            shopOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-50px]'
+          }`}
+        >
           <div className="mb-1 text-center">shop</div>
 
           {/* Shop buttons generated from items - hide owned items */}
@@ -254,9 +268,22 @@ export default function Canvas() {
               );
             })
           )}
+
+          <button
+            onClick={handleDoneShopping}
+            className="text-white px-4 py-2 text-black hover:bg-gray-800 mt-auto"
+          >
+            Done
+          </button>
         </div>
       </div>
       <div className="flex gap-3">
+        <button
+          onClick={startGame}
+          className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+        >
+          Start Game
+        </button>
         <button
           onClick={handleClear}
           className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
@@ -264,7 +291,7 @@ export default function Canvas() {
           Clear
         </button>
         <button
-          onClick={handleSubmit}
+          onClick={handleSubmitDebug}
           disabled={isCanvasEmpty}
           className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200 disabled:opacity-60 disabled:cursor-not-allowed"
         >
