@@ -1,10 +1,13 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
+import PromptDisplay, { type PromptDisplayHandle } from './PromptDisplay';
+import Image from 'next/image';
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawingRef = useRef(false);
+  const promptRef = useRef<PromptDisplayHandle | null>(null);
   const [playerScore, setPlayerScore] = useState(0);
   const [prompt, setPrompt] = useState('Circle');
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
@@ -103,6 +106,8 @@ export default function Canvas() {
   };
 
   const handleNewPrompt = async () => {
+    promptRef.current?.triggerSubmitAnimation();
+    await new Promise((res) => setTimeout(res, 1000));
     try {
       const res = await fetch('/prompts.txt', { cache: 'no-store' });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -120,8 +125,8 @@ export default function Canvas() {
 
   const handleSubmitDebug = () => {
     setPlayerScore((s) => s + 500);
-    handleNewPrompt();
     handleClear();
+    handleNewPrompt();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -176,13 +181,14 @@ export default function Canvas() {
   };
 
   return (
-    <div className="bg-bone flex flex-col gap-3 items-center">
-      <div>an ai game about human art</div>
-      <div className="flex flex-row gap-3">
+    <div className="bg-bone flex flex-col gap-3 py-3 items-center">
+      <PromptDisplay ref={promptRef} prompt={prompt} />
+      <div className="mb-[50]">
         <canvas
           ref={canvasRef}
-          className="border-2 bg-white border-white w-[70vh] h-[70vh] max-w-[800px] max-h-[800px] z-[5]"
+          className="absolute border-2 bg-white border-mahogany w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px] z-[5]"
         />
+        <div className="bg-mahogany relative top-[25] left-[25] w-[min(70vh,70vw)] h-[min(70vh,70vw)]" />
       </div>
       <div className="flex gap-3">
         <button
@@ -211,6 +217,18 @@ export default function Canvas() {
           Save Image
         </button>
         <button
+          className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer"
+          onClick={handleSaveImage}
+        >
+          <Image src="/save.svg" alt="Save" width={24} height={24} />
+        </button>
+        <button
+          className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer"
+          onClick={handleSubmitDebug}
+        >
+          <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
+        </button>
+        <button
           onClick={resetGame}
           className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
         >
@@ -218,8 +236,7 @@ export default function Canvas() {
         </button>
       </div>
       <div className="flex items-center gap-3">
-        <div>Score: {playerScore}</div>
-        <div>Prompt: {prompt}</div>
+        <div className="text-mahogany">Score: {playerScore}</div>
       </div>
     </div>
   );

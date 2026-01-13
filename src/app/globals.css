@@ -1,14 +1,14 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #000;
+  --background: #fff;
   --foreground: #fff;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-lato);
   --font-mono: var(--font-geist-mono);
   --spacing-1: 4px;
   --spacing-2: 8px;
@@ -18,10 +18,11 @@
   --spacing-6: 128px;
   --color-money: #ffb700;
   --color-mahogany: #461414;
+  --color-charlie: #662020;
   --color-padauk: #815555;
-  --color-vanilla: #FFF3C3;
-  --color-sand: #FFF8DD;
-  --color-bone: #FFFBEC;
+  --color-vanilla: #fff3c3;
+  --color-sand: #fff8dd;
+  --color-bone: #fffbec;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -34,10 +35,5 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-/* Utility: money text color */
-.text-money {
-  color: #ffb700;
+  font-family: var(--font-sans);
 }
