@@ -17,6 +17,11 @@
   --spacing-5: 64px;
   --spacing-6: 128px;
   --color-money: #ffb700;
+  --color-mahogany: #461414;
+  --color-padauk: #815555;
+  --color-vanilla: #FFF3C3;
+  --color-sand: #FFF8DD;
+  --color-bone: #FFFBEC;
 }
 
 @media (prefers-color-scheme: dark) {

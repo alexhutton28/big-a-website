@@ -1,46 +1,14 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import Image from 'next/image';
-import ColorButton from './ColorButton';
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [, setDrawing] = useState(false);
   const drawingRef = useRef(false);
   const [playerScore, setPlayerScore] = useState(0);
   const [prompt, setPrompt] = useState('Circle');
-  const [currentColor, setCurrentColor] = useState<string>('#ffffff');
-  const colorRef = useRef<string>(currentColor);
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
   const isEmptyRef = useRef(true);
-  const [shopOpen, setShopOpen] = useState(false);
-
-  // Define shop items and palette order
-  const SHOP_ITEMS = [
-    { name: 'Red', color: '#ef4444', cost: 200 },
-    { name: 'Orange', color: '#f97316', cost: 200 },
-    { name: 'Yellow', color: '#eab308', cost: 200 },
-    { name: 'Green', color: '#22c55e', cost: 200 },
-    { name: 'Blue', color: '#3b82f6', cost: 200 },
-    { name: 'Purple', color: '#6366f1', cost: 200 },
-  ] as const;
-  const PALETTE = ['#ffffff', ...SHOP_ITEMS.map((i) => i.color)];
-
-  // Track unlocked colors (white is always unlocked)
-  const [unlockedColors, setUnlockedColors] = useState<Set<string>>(() => new Set(['#ffffff']));
-
-  const isUnlocked = (color: string) => unlockedColors.has(color);
-  const canAfford = (cost: number) => playerScore >= cost;
-  const purchaseColor = (color: string, cost: number) => {
-    if (!canAfford(cost)) return; // not enough gold
-    setPlayerScore((s) => s - cost);
-    setUnlockedColors((prev) => {
-      const next = new Set(prev);
-      next.add(color);
-      return next;
-    });
-  };
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -55,6 +23,7 @@ export default function Canvas() {
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
       ctx.lineWidth = 4;
+      ctx.strokeStyle = '#461414';
       isEmptyRef.current = true;
       setIsCanvasEmpty(true);
     };
@@ -71,7 +40,6 @@ export default function Canvas() {
 
     const startDrawing = (e: MouseEvent | TouchEvent) => {
       drawingRef.current = true;
-      setDrawing(true);
       const { x, y } = getPos(e);
       ctx.beginPath();
       ctx.moveTo(x, y);
@@ -80,13 +48,10 @@ export default function Canvas() {
         isEmptyRef.current = false;
         setIsCanvasEmpty(false);
       }
-      // Use latest color without re-running effect
-      ctx.strokeStyle = colorRef.current;
     };
 
     const endDrawing = () => {
       drawingRef.current = false;
-      setDrawing(false);
       ctx.closePath();
     };
 
@@ -118,20 +83,14 @@ export default function Canvas() {
       canvas.removeEventListener('mouseleave', endDrawing);
       canvas.removeEventListener('mousemove', draw);
       canvas.removeEventListener('touchstart', startDrawing as EventListener);
+      canvas.removeEventListener('mouseleave', endDrawing);
+      canvas.removeEventListener('mousemove', draw);
+      canvas.removeEventListener('touchstart', startDrawing as EventListener);
       canvas.removeEventListener('touchend', endDrawing);
       canvas.removeEventListener('touchcancel', endDrawing);
       canvas.removeEventListener('touchmove', draw as EventListener);
     };
   }, []);
-
-  useEffect(() => {
-    colorRef.current = currentColor;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    ctx.strokeStyle = currentColor;
-  }, [currentColor]);
 
   const handleClear = () => {
     const canvas = canvasRef.current;
@@ -159,10 +118,10 @@ export default function Canvas() {
     }
   };
 
-  // Dont delete - for debugging
   const handleSubmitDebug = () => {
     setPlayerScore((s) => s + 500);
-    setShopOpen(true);
+    handleNewPrompt();
+    handleClear();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -189,7 +148,6 @@ export default function Canvas() {
 
       if (Number.isFinite(score)) {
         setPlayerScore((s) => s + score * 2);
-        setShopOpen(true);
       } else {
         console.warn('Received invalid score from AI', data.output);
       }
@@ -211,71 +169,20 @@ export default function Canvas() {
     setPlayerScore(0);
     handleNewPrompt();
     handleClear();
-    setShopOpen(false);
-    setUnlockedColors(new Set(['#ffffff']));
   };
-
-  const handleSetColor = (color: string) => setCurrentColor(color);
 
   const startGame = () => {
     resetGame();
   };
 
-  const handleDoneShopping = () => {
-    setShopOpen(false);
-    handleNewPrompt();
-    handleClear();
-  };
-
   return (
-    <div className="flex flex-col gap-3 items-center">
+    <div className="bg-bone flex flex-col gap-3 items-center">
       <div>an ai game about human art</div>
       <div className="flex flex-row gap-3">
         <canvas
           ref={canvasRef}
-          className="border-2 bg-black border-white w-[70vh] h-[70vh] max-w-[800px] max-h-[800px] z-[5]"
+          className="border-2 bg-white border-white w-[70vh] h-[70vh] max-w-[800px] max-h-[800px] z-[5]"
         />
-        <div
-          className={`relative flex flex-col pt-2 bg-gray-900 min-w-[150px] transition-all duration-300 ease-[ease] ${
-            shopOpen ? 'opacity-100 translate-x-0' : 'opacity-0 translate-x-[-50px]'
-          }`}
-        >
-          <div className="mb-1 text-center">shop</div>
-
-          {/* Shop buttons generated from items - hide owned items */}
-          {SHOP_ITEMS.filter((item) => !isUnlocked(item.color)).length === 0 ? (
-            <div className="text-sm opacity-70">All items purchased</div>
-          ) : (
-            SHOP_ITEMS.filter((item) => !isUnlocked(item.color)).map((item) => {
-              const affordable = canAfford(item.cost);
-              const disabled = !affordable;
-              const classes = `flex items-center gap-2 px-2 py-1 rounded justify-between ${
-                disabled ? 'opacity-60 cursor-not-allowed' : 'hover:bg-gray-800'
-              }`;
-              return (
-                <button
-                  key={item.name}
-                  onClick={() => purchaseColor(item.color, item.cost)}
-                  disabled={disabled}
-                  className={classes}
-                >
-                  <span>{item.name}</span>
-                  <span className="inline-flex items-center">
-                    <span className="text-money">{item.cost}</span>
-                    <Image src="/coin.svg" alt="Gold" width={24} height={24} />
-                  </span>
-                </button>
-              );
-            })
-          )}
-
-          <button
-            onClick={handleDoneShopping}
-            className="text-white px-4 py-2 text-black hover:bg-gray-800 mt-auto"
-          >
-            Done
-          </button>
-        </div>
       </div>
       <div className="flex gap-3">
         <button
@@ -309,19 +216,6 @@ export default function Canvas() {
         >
           Reset Game
         </button>
-      </div>
-      <div className="flex gap-2 items-center">
-        {/* Palette buttons reflect locked/unlocked state */}
-        {PALETTE.map((color) => (
-          <ColorButton
-            key={color}
-            color={color}
-            onClick={handleSetColor}
-            locked={!isUnlocked(color)}
-          />
-        ))}
-        <span className="ml-2 text-sm">Current:</span>
-        <span style={{ color: currentColor }}>■</span>
       </div>
       <div className="flex items-center gap-3">
         <div>Score: {playerScore}</div>
