@@ -3,15 +3,43 @@
 import { useEffect, useRef, useState } from 'react';
 import PromptDisplay, { type PromptDisplayHandle } from './PromptDisplay';
 import Image from 'next/image';
+import TimeAndScore from './TimeAndScore';
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawingRef = useRef(false);
   const promptRef = useRef<PromptDisplayHandle | null>(null);
   const [playerScore, setPlayerScore] = useState(0);
-  const [prompt, setPrompt] = useState('Circle');
+  const [prompt, setPrompt] = useState('Welcome to [Game Name]! Submit an image to begin.');
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
   const isEmptyRef = useRef(true);
+
+  // Countdown timer state + ref
+  const [timeLeft, setTimeLeft] = useState<number>(60);
+  const timerRef = useRef<number | null>(null);
+
+  // game active flag
+  const [gameActive, setGameActive] = useState<boolean>(false);
+
+  const startTimer = (seconds = 60) => {
+    setTimeLeft(seconds);
+    if (timerRef.current) {
+      clearInterval(timerRef.current);
+      timerRef.current = null;
+    }
+    timerRef.current = window.setInterval(() => {
+      setTimeLeft((t) => {
+        if (t <= 1) {
+          if (timerRef.current) {
+            clearInterval(timerRef.current);
+            timerRef.current = null;
+          }
+          return 0;
+        }
+        return t - 1;
+      });
+    }, 1000);
+  };
 
   useEffect(() => {
     const canvas = canvasRef.current!;
@@ -92,6 +120,15 @@ export default function Canvas() {
       canvas.removeEventListener('touchend', endDrawing);
       canvas.removeEventListener('touchcancel', endDrawing);
       canvas.removeEventListener('touchmove', draw as EventListener);
+    };
+  }, []);
+
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearInterval(timerRef.current);
+        timerRef.current = null;
+      }
     };
   }, []);
 
@@ -178,19 +215,21 @@ export default function Canvas() {
 
   const startGame = () => {
     resetGame();
+    startTimer(60);
   };
 
   return (
-    <div className="bg-bone flex flex-col gap-3 py-3 items-center">
+    <div className="bg-bone flex flex-col gap-3 py-3 items-center h-[100vh]">
       <PromptDisplay ref={promptRef} prompt={prompt} />
       <div className="mb-[50]">
         <canvas
           ref={canvasRef}
           className="absolute border-2 bg-white border-mahogany w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px] z-[5]"
         />
-        <div className="bg-mahogany relative top-[25] left-[25] w-[min(70vh,70vw)] h-[min(70vh,70vw)]" />
+        <div className="bg-mahogany relative top-[25] left-[25] w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px]" />
       </div>
       <div className="flex gap-3">
+        <TimeAndScore playerScore={playerScore} timeLeft={timeLeft} />
         <button
           onClick={startGame}
           className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
@@ -202,19 +241,6 @@ export default function Canvas() {
           className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
         >
           Clear
-        </button>
-        <button
-          onClick={handleSubmitDebug}
-          disabled={isCanvasEmpty}
-          className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200 disabled:opacity-60 disabled:cursor-not-allowed"
-        >
-          Submit
-        </button>
-        <button
-          onClick={handleSaveImage}
-          className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-        >
-          Save Image
         </button>
         <button
           className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer"
@@ -234,9 +260,6 @@ export default function Canvas() {
         >
           Reset Game
         </button>
-      </div>
-      <div className="flex items-center gap-3">
-        <div className="text-mahogany">Score: {playerScore}</div>
       </div>
     </div>
   );
