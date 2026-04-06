@@ -4,7 +4,7 @@ import { useState } from 'react';
 import GameOverScreen from './GameOverScreen';
 import GameScreen from './GameScreen';
 import MenuScreen from './MenuScreen';
-import { createRound, resolveGuess } from './gameLogic';
+import { createRound, resolveGuess, selectCarryItem } from './gameLogic';
 import { starterItems } from './starterItems';
 import type { GameItem, GamePhase, GameRound, GuessSide } from './types';
 
@@ -34,8 +34,10 @@ export default function LimitlessCheck() {
     setLastLoser(result.losingItem);
 
     if (result.isCorrect) {
+      const carryItem = selectCarryItem(result.winningItem, result.losingItem);
+
       setScore((currentScore) => currentScore + 1);
-      setCurrentRound(createRound(starterItems, result.winningItem));
+      setCurrentRound(createRound(starterItems, carryItem));
       return;
     }
 
@@ -47,7 +49,12 @@ export default function LimitlessCheck() {
       {phase === 'menu' && <MenuScreen onStart={startGame} />}
 
       {phase === 'playing' && currentRound && (
-        <GameScreen round={currentRound} score={score} onGuess={handleGuess} />
+        <GameScreen
+          key={`${currentRound.left.id}-${currentRound.right.id}`}
+          round={currentRound}
+          score={score}
+          onGuess={handleGuess}
+        />
       )}
 
       {phase === 'game-over' && (

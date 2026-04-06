@@ -219,48 +219,56 @@ export default function Canvas() {
   };
 
   return (
-    <div className="bg-bone flex flex-col gap-3 py-3 items-center h-[100vh]">
-      <PromptDisplay ref={promptRef} prompt={prompt} />
-      <div className="mb-[50]">
-        <canvas
-          ref={canvasRef}
-          className="absolute border-2 bg-white border-mahogany w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px] z-[5]"
-        />
-        <div className="bg-mahogany relative top-[25] left-[25] w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px]" />
+    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-60px)] bg-bone px-6 py-3">
+      <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-center gap-4">
+        <div className="flex md:flex-1 md:justify-end justify-center">
+          <TimeAndScore playerScore={playerScore} timeLeft={timeLeft} />
+        </div>
+        <div className="flex flex-col items-center gap-3">
+          <PromptDisplay ref={promptRef} prompt={prompt} />
+          <div className="mb-[50]">
+            <canvas
+              ref={canvasRef}
+              className="absolute border-2 bg-white border-mahogany w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px] z-[5]"
+            />
+            <div className="bg-mahogany relative top-[25] left-[25] w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px]" />
+          </div>
+        </div>
+        <div className="flex md:flex-1 md:justify-start justify-center">
+          <div className="flex flex-col gap-3">
+            <button
+              onClick={startGame}
+              className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+            >
+              Start Game
+            </button>
+            <button
+              onClick={handleClear}
+              className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+            >
+              Clear
+            </button>
+            <button
+              className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
+              onClick={handleSaveImage}
+            >
+              <Image src="/save.svg" alt="Save" width={24} height={24} />
+            </button>
+            <button
+              className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
+              onClick={handleSubmitDebug}
+            >
+              <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
+            </button>
+            <button
+              onClick={resetGame}
+              className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+            >
+              Reset Game
+            </button>
+          </div>
+        </div>
       </div>
-      <div className="flex gap-3">
-        <TimeAndScore playerScore={playerScore} timeLeft={timeLeft} />
-        <button
-          onClick={startGame}
-          className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-        >
-          Start Game
-        </button>
-        <button
-          onClick={handleClear}
-          className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-        >
-          Clear
-        </button>
-        <button
-          className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer"
-          onClick={handleSaveImage}
-        >
-          <Image src="/save.svg" alt="Save" width={24} height={24} />
-        </button>
-        <button
-          className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer"
-          onClick={handleSubmitDebug}
-        >
-          <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
-        </button>
-        <button
-          onClick={resetGame}
-          className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-        >
-          Reset Game
-        </button>
-      </div>
-    </div>
+    </section>
   );
 }

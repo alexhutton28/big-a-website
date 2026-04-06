@@ -1,5 +1,14 @@
+'use client';
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import type { GameRound, GuessSide } from './types';
+
+const ENTRY_COUNT_DURATION_MS = 900;
+const POST_RESULT_DELAY_MS = 2000;
+
+type EntryCountProps = {
+  value: number;
+};
 
 type GameScreenProps = {
   round: GameRound;
@@ -7,8 +16,80 @@ type GameScreenProps = {
   onGuess: (guess: GuessSide) => void;
 };
 
+function EntryCount({ value }: EntryCountProps) {
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    const animationStart = performance.now();
+    let frameId = 0;
+
+    const updateValue = (currentTime: number) => {
+      const progress = Math.min((currentTime - animationStart) / ENTRY_COUNT_DURATION_MS, 1);
+      setDisplayValue(Math.round(value * progress));
+
+      if (progress < 1) {
+        frameId = window.requestAnimationFrame(updateValue);
+      }
+    };
+
+    frameId = window.requestAnimationFrame(updateValue);
+
+    return () => window.cancelAnimationFrame(frameId);
+  }, [value]);
+
+  return (
+    <p className="text-center font-bold text-lg">
+      {displayValue.toLocaleString()} {displayValue === 1 ? 'entry' : 'entries'}
+    </p>
+  );
+}
+
 // Active round UI for comparing two items.
 export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
+  const [pendingGuess, setPendingGuess] = useState<GuessSide | null>(null);
+  const [showGuessResult, setShowGuessResult] = useState(false);
+  const winningSide: GuessSide = round.left.entries >= round.right.entries ? 'left' : 'right';
+
+  useEffect(() => {
+    if (pendingGuess === null) return;
+
+    const resultTimer = setTimeout(() => {
+      setShowGuessResult(true);
+    }, ENTRY_COUNT_DURATION_MS);
+
+    const timer = setTimeout(() => {
+      onGuess(pendingGuess);
+    }, ENTRY_COUNT_DURATION_MS + POST_RESULT_DELAY_MS);
+
+    return () => {
+      clearTimeout(resultTimer);
+      clearTimeout(timer);
+    };
+  }, [pendingGuess, onGuess]);
+
+  const handleGuess = (side: GuessSide) => {
+    if (pendingGuess !== null) return;
+    setShowGuessResult(false);
+    setPendingGuess(side);
+  };
+
+  const getButtonClassName = () => {
+    const hoverClass = pendingGuess === null ? 'hover:border-blissey' : '';
+
+    return `min-w-[300px] border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] duration-300 flex flex-col justify-center bg-jigglypuff cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
+  };
+
+  const getButtonOutlineColor = (side: GuessSide) => {
+    const isChosen = pendingGuess === side;
+    const showChosenResult = isChosen && showGuessResult;
+
+    if (!showChosenResult) {
+      return 'transparent';
+    }
+
+    return side === winningSide ? 'var(--color-bulbasaur)' : 'var(--color-scizor)';
+  };
+
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-8">
       <div className="flex items-center justify-between gap-4">
@@ -20,59 +101,69 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
       </div>
 
       <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
-        <button
-          className="min-w-[300px] border-2 border-transparent rounded transition duration-300 hover:border-blissey flex flex-col justify-center bg-jigglypuff cursor-pointer px-3"
-          onClick={() => onGuess('left')}
-          type="button"
-        >
-          <div className="flex flex-col text-left mx-auto py-5">
-            {round.left.image.length > 0 && (
-              <div className="mb-2 flex items-center gap-2">
-                {round.left.image.map((imageUrl, index) => (
-                  <Image
-                    alt={`${round.left.name} image ${index + 1}`}
-                    className="h-[30px] w-auto object-contain"
-                    height={30}
-                    key={`${round.left.id}-${imageUrl}`}
-                    src={imageUrl}
-                    width={30}
-                  />
-                ))}
-              </div>
-            )}
-            <h2 className="text-3xl font-bold mb-2">{round.left.name}</h2>
-            <span className="text-xs font-bold uppercase text-eevee">{round.left.type}</span>
-          </div>
-        </button>
+        <div className="round-option-enter flex flex-col gap-2">
+          <button
+            className={getButtonClassName()}
+            disabled={pendingGuess !== null}
+            onClick={() => handleGuess('left')}
+            style={{ outlineColor: getButtonOutlineColor('left') }}
+            type="button"
+          >
+            <div className="flex flex-col text-left py-4">
+              {round.left.image.length > 0 && (
+                <div className="mb-2 flex items-center gap-2">
+                  {round.left.image.map((imageUrl, index) => (
+                    <Image
+                      alt={`${round.left.name} image ${index + 1}`}
+                      className="h-[30px] w-auto object-contain"
+                      height={30}
+                      key={`${round.left.id}-${imageUrl}`}
+                      src={imageUrl}
+                      width={30}
+                    />
+                  ))}
+                </div>
+              )}
+              <h2 className="text-3xl font-bold mb-2">{round.left.name}</h2>
+              <span className="text-xs font-bold uppercase text-eevee">{round.left.type}</span>
+            </div>
+          </button>
+          {pendingGuess !== null && <EntryCount value={round.left.entries} />}
+        </div>
 
         <div className="flex items-center justify-center text-sm font-bold uppercase text-eevee">
           Vs
         </div>
 
-        <button
-          className="min-w-[300px] border-2 border-transparent rounded transition duration-300 hover:border-blissey flex flex-col justify-center bg-jigglypuff cursor-pointer px-3"
-          onClick={() => onGuess('right')}
-          type="button"
-        >
-          <div className="flex flex-col text-left mx-auto py-5">
-            {round.right.image.length > 0 && (
-              <div className="mb-2 flex items-center gap-2">
-                {round.right.image.map((imageUrl, index) => (
-                  <Image
-                    alt={`${round.right.name} image ${index + 1}`}
-                    className="h-[30px] w-auto object-contain"
-                    height={30}
-                    key={`${round.right.id}-${imageUrl}`}
-                    src={imageUrl}
-                    width={30}
-                  />
-                ))}
-              </div>
-            )}
-            <h2 className="text-3xl font-bold mb-2">{round.right.name}</h2>
-            <span className="text-xs font-bold uppercase text-eevee">{round.right.type}</span>
-          </div>
-        </button>
+        <div className="round-option-enter flex flex-col gap-2">
+          <button
+            className={getButtonClassName()}
+            disabled={pendingGuess !== null}
+            onClick={() => handleGuess('right')}
+            style={{ outlineColor: getButtonOutlineColor('right') }}
+            type="button"
+          >
+            <div className="flex flex-col text-left py-4">
+              {round.right.image.length > 0 && (
+                <div className="mb-2 flex items-center gap-2">
+                  {round.right.image.map((imageUrl, index) => (
+                    <Image
+                      alt={`${round.right.name} image ${index + 1}`}
+                      className="h-[30px] w-auto object-contain"
+                      height={30}
+                      key={`${round.right.id}-${imageUrl}`}
+                      src={imageUrl}
+                      width={30}
+                    />
+                  ))}
+                </div>
+              )}
+              <h2 className="text-3xl font-bold mb-2">{round.right.name}</h2>
+              <span className="text-xs font-bold uppercase text-eevee">{round.right.type}</span>
+            </div>
+          </button>
+          {pendingGuess !== null && <EntryCount value={round.right.entries} />}
+        </div>
       </div>
     </div>
   );
