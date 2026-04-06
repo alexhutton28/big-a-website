@@ -10,7 +10,7 @@ export default function Canvas() {
   const drawingRef = useRef(false);
   const promptRef = useRef<PromptDisplayHandle | null>(null);
   const [playerScore, setPlayerScore] = useState(0);
-  const [prompt, setPrompt] = useState('Welcome to [Game Name]! Submit an image to begin.');
+  const [prompt, setPrompt] = useState('Welcome to Art Something! Submit an image to begin.');
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
   const isEmptyRef = useRef(true);
 

@@ -9,24 +9,17 @@ export default function Home() {
         <h1 className="mb-4 text-5xl">big a website</h1>
         <div className="flex flex-row flex-wrap justify-center gap-3">
           <Link
-            href="/experiment-one"
+            href="/art-something"
             className="rounded bg-white px-8 py-4 text-black text-xl hover:bg-gray-200"
           >
-            Experiment One
+            art something
           </Link>
 
           <Link
-            href="/experiment-two"
+            href="/limitless-check"
             className="rounded bg-white px-8 py-4 text-black text-xl hover:bg-gray-200"
           >
-            Experiment Two
-          </Link>
-
-          <Link
-            href="/experiment-three"
-            className="rounded bg-white px-8 py-4 text-black text-xl hover:bg-gray-200"
-          >
-            Experiment Three
+            Limitless Check
           </Link>
         </div>
       </div>
