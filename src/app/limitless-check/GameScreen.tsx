@@ -76,7 +76,7 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
   const getButtonClassName = () => {
     const hoverClass = pendingGuess === null ? 'hover:border-blissey' : '';
 
-    return `min-w-[300px] border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] duration-300 flex flex-col justify-center bg-jigglypuff cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
+    return `w-full min-w-[300px] border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
   };
 
   const getButtonOutlineColor = (side: GuessSide) => {
@@ -100,8 +100,8 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
         <p className="max-w-md text-right text-sm text-eevee">Powered by LimitlessTCG</p>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-stretch">
-        <div className="round-option-enter flex flex-col gap-2">
+      <div className="grid gap-4 md:grid-cols-[1fr_auto_1fr] md:items-start">
+        <div className="round-option-enter md:col-start-1 md:row-start-1">
           <button
             className={getButtonClassName()}
             disabled={pendingGuess !== null}
@@ -128,14 +128,13 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
               <span className="text-xs font-bold uppercase text-eevee">{round.left.type}</span>
             </div>
           </button>
-          {pendingGuess !== null && <EntryCount value={round.left.entries} />}
         </div>
 
-        <div className="flex items-center justify-center text-sm font-bold uppercase text-eevee">
+        <div className="flex min-h-full items-center justify-center text-sm font-bold uppercase text-eevee md:col-start-2 md:row-start-1">
           Vs
         </div>
 
-        <div className="round-option-enter flex flex-col gap-2">
+        <div className="round-option-enter md:col-start-3 md:row-start-1">
           <button
             className={getButtonClassName()}
             disabled={pendingGuess !== null}
@@ -162,8 +161,19 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
               <span className="text-xs font-bold uppercase text-eevee">{round.right.type}</span>
             </div>
           </button>
-          {pendingGuess !== null && <EntryCount value={round.right.entries} />}
         </div>
+
+        {pendingGuess !== null && (
+          <>
+            <div className="md:col-start-1 md:row-start-2">
+              <EntryCount value={round.left.entries} />
+            </div>
+            <div className="hidden md:block md:col-start-2 md:row-start-2" />
+            <div className="md:col-start-3 md:row-start-2">
+              <EntryCount value={round.right.entries} />
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

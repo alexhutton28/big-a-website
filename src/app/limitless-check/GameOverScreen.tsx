@@ -4,6 +4,7 @@ type GameOverScreenProps = {
   score: number;
   winningItem: GameItem | null;
   losingItem: GameItem | null;
+  onHome: () => void;
   onRestart: () => void;
 };
 
@@ -12,6 +13,7 @@ export default function GameOverScreen({
   score,
   winningItem,
   losingItem,
+  onHome,
   onRestart,
 }: GameOverScreenProps) {
   const resultMessage = winningItem && losingItem && (
@@ -44,13 +46,22 @@ export default function GameOverScreen({
         <h1 className="text-5xl font-bold tracking-tight">Final Score: {score}</h1>
         <p className="text-lg text-eevee">{resultMessage || 'You missed the last guess.'}</p>
       </div>
-      <button
-        className="bg-houndoom px-3 py-3 text-sm font-bold text-togepi transition hover:bg-eevee cursor-pointer rounded"
-        onClick={onRestart}
-        type="button"
-      >
-        Play Again
-      </button>
+      <div className="flex items-center gap-3">
+        <button
+          className="bg-houndoom px-3 py-3 text-sm font-bold text-togepi transition hover:bg-eevee cursor-pointer rounded"
+          onClick={onRestart}
+          type="button"
+        >
+          Play Again
+        </button>
+        <button
+          className="border-2 border-houndoom px-3 py-3 text-sm font-bold text-houndoom transition hover:border-eevee hover:text-eevee cursor-pointer rounded"
+          onClick={onHome}
+          type="button"
+        >
+          Home
+        </button>
+      </div>
     </div>
   );
 }

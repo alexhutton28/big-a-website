@@ -5,22 +5,29 @@ import GameOverScreen from './GameOverScreen';
 import GameScreen from './GameScreen';
 import MenuScreen from './MenuScreen';
 import { createRound, resolveGuess, selectCarryItem } from './gameLogic';
-import { starterItems } from './starterItems';
-import type { GameItem, GamePhase, GameRound, GuessSide } from './types';
+import { getItemsForMode } from './starterItems';
+import type { GameItem, GameMode, GamePhase, GameRound, GuessSide } from './types';
 
 // Main client controller for menu, rounds, score, and restart flow.
 export default function LimitlessCheck() {
   const [phase, setPhase] = useState<GamePhase>('menu');
+  const [mode, setMode] = useState<GameMode>('all');
   const [score, setScore] = useState(0);
+  const [roundInstance, setRoundInstance] = useState(0);
   const [currentRound, setCurrentRound] = useState<GameRound | null>(null);
   const [lastWinner, setLastWinner] = useState<GameItem | null>(null);
   const [lastLoser, setLastLoser] = useState<GameItem | null>(null);
 
-  const startGame = () => {
+  const startGame = (selectedMode?: GameMode) => {
+    const modeToUse = selectedMode ?? mode;
+    const items = getItemsForMode(modeToUse);
+
+    setMode(modeToUse);
     setScore(0);
     setLastWinner(null);
     setLastLoser(null);
-    setCurrentRound(createRound(starterItems));
+    setCurrentRound(createRound(items));
+    setRoundInstance((currentRoundInstance) => currentRoundInstance + 1);
     setPhase('playing');
   };
 
@@ -28,6 +35,8 @@ export default function LimitlessCheck() {
     if (!currentRound) {
       return;
     }
+
+    const items = getItemsForMode(mode);
 
     const result = resolveGuess(currentRound, guess);
     setLastWinner(result.winningItem);
@@ -37,11 +46,20 @@ export default function LimitlessCheck() {
       const carryItem = selectCarryItem(result.winningItem, result.losingItem);
 
       setScore((currentScore) => currentScore + 1);
-      setCurrentRound(createRound(starterItems, carryItem));
+      setCurrentRound(createRound(items, carryItem));
+      setRoundInstance((currentRoundInstance) => currentRoundInstance + 1);
       return;
     }
 
     setPhase('game-over');
+  };
+
+  const goHome = () => {
+    setScore(0);
+    setCurrentRound(null);
+    setLastWinner(null);
+    setLastLoser(null);
+    setPhase('menu');
   };
 
   return (
@@ -49,12 +67,7 @@ export default function LimitlessCheck() {
       {phase === 'menu' && <MenuScreen onStart={startGame} />}
 
       {phase === 'playing' && currentRound && (
-        <GameScreen
-          key={`${currentRound.left.id}-${currentRound.right.id}`}
-          round={currentRound}
-          score={score}
-          onGuess={handleGuess}
-        />
+        <GameScreen key={roundInstance} round={currentRound} score={score} onGuess={handleGuess} />
       )}
 
       {phase === 'game-over' && (
@@ -62,7 +75,8 @@ export default function LimitlessCheck() {
           score={score}
           winningItem={lastWinner}
           losingItem={lastLoser}
-          onRestart={startGame}
+          onHome={goHome}
+          onRestart={() => startGame()}
         />
       )}
     </section>
