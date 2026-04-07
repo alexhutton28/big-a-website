@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 import type { GameMode } from './types';
 
 type MenuScreenProps = {
@@ -22,8 +23,16 @@ export default function MenuScreen({ onStart }: MenuScreenProps) {
   return (
     <div className="flex flex-col items-center justify-center gap-3 text-center">
       <div className="space-y-2 mb-3">
+        <Image
+          src="/limitless-check.svg"
+          alt="Limitless Check logo"
+          width={250}
+          height={230}
+          className="mx-auto mb-2 h-auto w-[80px]"
+          priority
+        />
         <h1 className="text-5xl font-bold">Limitless Check</h1>
-        <p className="text-lg text-eevee">A Higher-Lower Game</p>
+        <p className="text-xl text-eevee">A Higher-Lower Game</p>
       </div>
       <button
         className="bg-houndoom px-3 py-3 text-m font-bold text-togepi transition hover:bg-eevee cursor-pointer rounded"

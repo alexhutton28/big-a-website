@@ -1,7 +1,5 @@
 import type { GameItem, GameRound, GuessSide } from './types';
 
-const LOSING_ITEM_CARRY_CHANCE = 0.2;
-
 // Pure helpers for building rounds and checking guesses.
 export function createRound(items: GameItem[], carryItem?: GameItem): GameRound {
   if (items.length < 2) {
@@ -46,8 +44,4 @@ export function resolveGuess(round: GameRound, guess: GuessSide) {
     losingItem: losingSide === 'left' ? round.left : round.right,
     winningSide,
   };
-}
-
-export function selectCarryItem(winningItem: GameItem, losingItem: GameItem) {
-  return Math.random() < LOSING_ITEM_CARRY_CHANCE ? losingItem : winningItem;
 }

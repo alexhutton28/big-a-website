@@ -52,6 +52,25 @@ body {
   font-family: var(--font-sans);
 }
 
+html.limitless-check-scrollbar {
+  scrollbar-color: var(--color-houndoom) var(--color-rockruff);
+  scrollbar-width: thin;
+}
+
+html.limitless-check-scrollbar::-webkit-scrollbar {
+  width: 12px;
+}
+
+html.limitless-check-scrollbar::-webkit-scrollbar-track {
+  background: var(--color-rockruff);
+}
+
+html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-houndoom);
+  border-radius: 999px;
+  border: 2px solid var(--color-rockruff);
+}
+
 @keyframes round-option-in {
   from {
     opacity: 0;

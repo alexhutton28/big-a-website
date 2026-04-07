@@ -26,8 +26,10 @@ export default function GameOverScreen({
       >
         {winningItem.name}
       </a>{' '}
-      <span className="text-xs uppercase text-eevee/80">({winningItem.type})</span> has more
-      limitless entries than{' '}
+      <span className="text-xs uppercase text-eevee/80">
+        ({winningItem.type === 'Card' && winningItem.set ? winningItem.set : winningItem.type})
+      </span>{' '}
+      has more limitless entries than{' '}
       <a
         className="font-semibold underline decoration-eevee underline-offset-2 hover:text-houndoom"
         href={losingItem.hyperlink}
@@ -36,7 +38,10 @@ export default function GameOverScreen({
       >
         {losingItem.name}
       </a>{' '}
-      <span className="text-xs uppercase text-eevee/80">({losingItem.type})</span>.
+      <span className="text-xs uppercase text-eevee/80">
+        ({losingItem.type === 'Card' && losingItem.set ? losingItem.set : losingItem.type})
+      </span>
+      .
     </>
   );
 
@@ -55,7 +60,7 @@ export default function GameOverScreen({
           Play Again
         </button>
         <button
-          className="border-2 border-houndoom px-3 py-3 text-sm font-bold text-houndoom transition hover:border-eevee hover:text-eevee cursor-pointer rounded"
+          className="ring-2 ring-inset ring-houndoom px-3 py-3 text-sm font-bold text-houndoom transition hover:ring-eevee hover:text-eevee cursor-pointer rounded"
           onClick={onHome}
           type="button"
         >
