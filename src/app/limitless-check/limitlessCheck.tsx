@@ -91,7 +91,15 @@ export default function LimitlessCheck() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-start pt-3 pb-3 min-[800px]:pt-[10vh] min-h-[calc(100vh-80px)] bg-togepi px-3 min-[640px]:px-4 min-[1200px]:px-[120px] text-houndoom">
+    <section
+      className="flex flex-col items-center justify-start pt-3 pb-3 min-[800px]:pt-[10vh] min-h-[calc(100vh-62px)] px-3 min-[640px]:px-4 min-[1200px]:px-[120px] text-houndoom"
+      style={{
+        backgroundImage:
+          "linear-gradient(rgba(250, 247, 247, 0.5), rgba(250, 247, 247, 0.5)), url('/paper-bg.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+      }}
+    >
       {phase === 'menu' && <MenuScreen onStart={startGame} />}
 
       {phase === 'playing' && currentRound && (

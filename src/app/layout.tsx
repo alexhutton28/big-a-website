@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Lato } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 import Header from '../components/Header';
 
@@ -11,7 +13,10 @@ const lato = Lato({
 
 export const metadata: Metadata = {
   title: 'Big A Website',
-  description: "Alex Hutton's Big A Website experiments",
+  description: 'Big A Website',
+  icons: {
+    icon: '/big-a.svg',
+  },
 };
 
 export default function RootLayout({
@@ -24,6 +29,8 @@ export default function RootLayout({
       <body className={`${lato.variable} antialiased bg-white text-black`}>
         <Header />
         <main>{children}</main>
+        <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
