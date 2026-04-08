@@ -206,8 +206,11 @@ function nameToImageSlug(name) {
     );
   }
 
-  // Ogerpon form prefixes
-  n = n.replace(/^(Teal Mask|Wellspring Mask|Hearthflame Mask|Cornerstone Mask)\s+/i, '');
+  // Ogerpon masks use distinct art slugs except Teal Mask, which stays plain `ogerpon`.
+  if (/^Wellspring Mask Ogerpon/i.test(n)) return 'ogerpon-wellspring';
+  if (/^Hearthflame Mask Ogerpon/i.test(n)) return 'ogerpon-hearthflame';
+  if (/^Cornerstone Mask Ogerpon/i.test(n)) return 'ogerpon-cornerstone';
+  n = n.replace(/^Teal Mask\s+/i, '');
 
   // Strip card suffix (ex, v, vmax, vstar, gx, v-union)
   n = n.replace(/\s+(ex|v|vmax|vstar|gx|v-union)$/i, '');
