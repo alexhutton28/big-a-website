@@ -241,7 +241,7 @@ function renderGameItemTs(item) {
 }
 
 function renderGameItemsTs(items) {
-  const renderedItems = items.map(renderGameItemTs).join(',\n');
+  const renderedItems = items.map(renderGameItemTs).join(',\n') + ',';
   return `export const decks: GameItem[] = [\n${renderedItems}\n];\n`;
 }
 
@@ -315,6 +315,8 @@ async function fetchTournamentsSince(sinceDate) {
 
 function nameToImageSlug(name) {
   let n = String(name);
+
+  if (/^Paldean\s+Tauros/i.test(n)) return 'tauros';
 
   // Team Rocket cards use the base Pokemon art slug.
   n = n.replace(/^Team Rocket's\s+/i, '');
@@ -401,6 +403,10 @@ function isIdentityExcludedPokemon(name) {
   return IDENTITY_EXCLUDED_POKEMON.has(normalizeIdentityName(name));
 }
 
+function sortIdentityPokemon(names) {
+  return [...names].sort((a, b) => a.localeCompare(b));
+}
+
 function selectFallbackTitlePokemon(pokemonCards) {
   const ranked = rankPokemonCards(pokemonCards).filter(
     (entry) => !isIdentityExcludedPokemon(entry.name)
@@ -408,13 +414,11 @@ function selectFallbackTitlePokemon(pokemonCards) {
   const exCandidates = ranked.filter((entry) => isExLikePokemon(entry.name));
 
   if (exCandidates.length > 0) {
-    return exCandidates.slice(0, MAX_DECK_IMAGES).map((entry) => entry.name);
+    return sortIdentityPokemon(exCandidates.slice(0, MAX_DECK_IMAGES).map((entry) => entry.name));
   }
 
   const nonExCandidate = ranked[0];
   return nonExCandidate ? [nonExCandidate.name] : [];
-
-  return ranked.slice(0, MAX_DECK_IMAGES).map((x) => x.name);
 }
 
 function getNormalizedPokemonPool(pokemonCards) {
@@ -506,7 +510,6 @@ async function main() {
             current.count += 1;
             if (!current.latestDate || new Date(t.date) > new Date(current.latestDate)) {
               current.latestDate = t.date;
-              current.hyperlink = `https://play.limitlesstcg.com/tournament/${t.id}`;
             }
           } else {
             unclassifiedDecks.set(exampleName, {
@@ -515,7 +518,6 @@ async function main() {
               playerName: player.name ?? 'Unknown Player',
               imagePokemon: keyPokemon,
               latestDate: t.date,
-              hyperlink: `https://play.limitlesstcg.com/tournament/${t.id}`,
             });
           }
 
@@ -529,7 +531,6 @@ async function main() {
             entries: 0,
             imagePokemon: keyPokemon,
             latestDate: t.date,
-            hyperlink: `https://play.limitlesstcg.com/tournament/${t.id}`,
           });
         }
 
@@ -542,7 +543,6 @@ async function main() {
 
         if (!entry.latestDate || new Date(t.date) > new Date(entry.latestDate)) {
           entry.latestDate = t.date;
-          entry.hyperlink = `https://play.limitlesstcg.com/tournament/${t.id}`;
         }
       }
     } catch (err) {
@@ -559,7 +559,6 @@ async function main() {
       entries: data.count,
       imagePokemon: data.imagePokemon ?? [],
       latestDate: data.latestDate,
-      hyperlink: data.hyperlink,
     }));
 
   const outputDecks = [...archetypeMap.values(), ...promotedUnclassifiedDecks]
@@ -567,7 +566,7 @@ async function main() {
     .map((d) => ({
       id: d.id,
       name: d.name,
-      hyperlink: d.hyperlink,
+      hyperlink: '',
       entries: d.entries,
       image: (d.imagePokemon || [])
         .slice(0, MAX_DECK_IMAGES)
