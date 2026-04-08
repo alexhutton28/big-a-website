@@ -110,7 +110,7 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
             Who has more entries on{' '}
             <a
               className="underline underline-offset-2 hover:text-houndoom"
-              href="https://limitlesstcg.com"
+              href="https://play.limitlesstcg.com/tournaments?game=PTCG"
               rel="noreferrer"
               target="_blank"
             >

@@ -9,7 +9,8 @@
     "lint": "eslint",
     "stylelint": "stylelint \"src/**/*.{css,scss}\"",
     "format": "prettier --write .",
-    "fetch-cards": "node scripts/fetch-cards.mjs"
+    "fetch-cards": "node scripts/fetch-cards.mjs",
+    "fetch-decks": "node scripts/fetch-decks.mjs"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
