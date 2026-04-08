@@ -74,9 +74,9 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
   };
 
   const getButtonClassName = () => {
-    const hoverClass = pendingGuess === null ? 'hover:border-blissey' : '';
+    const hoverClass = pendingGuess === null ? 'hover:border-blissey hover:scale-102' : '';
 
-    return `w-full min-[800px]:min-w-[300px] border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
+    return `w-full min-[800px]:min-w-[300px] border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] transition-transform duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
   };
 
   const getButtonOutlineColor = (side: GuessSide) => {

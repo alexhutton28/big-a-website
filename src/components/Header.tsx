@@ -7,12 +7,13 @@ import { usePathname } from 'next/navigation';
 export default function Header() {
   const pathname = usePathname();
   const isLimitlessCheckPage = pathname.startsWith('/limitless-check');
+  const isArtSomethingPage = pathname === '/art-something';
 
   let headerClassName = 'w-full bg-black text-white';
 
   if (isLimitlessCheckPage) {
     headerClassName = 'w-full bg-houndoom text-togepi';
-  } else if (pathname === '/art-something') {
+  } else if (isArtSomethingPage) {
     headerClassName = 'w-full bg-mahogany text-white';
   }
 
@@ -31,6 +32,25 @@ export default function Header() {
                 priority
               />
               <h2 className="font-medium">Big A&apos;s Website</h2>
+            </span>
+          ) : isArtSomethingPage ? (
+            <span className="flex items-center gap-2">
+              <Image
+                src="/art-something-tan.svg"
+                alt="Art Something logo"
+                width={30}
+                height={30}
+                className="h-[30px] w-[30px]"
+                priority
+              />
+              <Image
+                src="/big-a-website-written-white.svg"
+                alt="Big A's Website"
+                width={120}
+                height={30}
+                className="h-auto"
+                priority
+              />
             </span>
           ) : (
             "big a's website"

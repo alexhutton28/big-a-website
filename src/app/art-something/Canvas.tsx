@@ -219,7 +219,7 @@ export default function Canvas() {
   };
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-60px)] bg-bone px-6 py-3">
+    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-62px)] bg-bone px-6 py-3">
       <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-center gap-4">
         <div className="flex md:flex-1 md:justify-end justify-center">
           <TimeAndScore playerScore={playerScore} timeLeft={timeLeft} />

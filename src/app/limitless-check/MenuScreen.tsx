@@ -28,18 +28,18 @@ export default function MenuScreen({ onStart }: MenuScreenProps) {
           alt="Limitless Check logo"
           width={250}
           height={230}
-          className="mx-auto mb-2 h-auto w-[80px]"
+          className="mx-auto mb-1 h-auto w-[80px]"
           priority
         />
-        <h1 className="text-5xl font-bold">Limitless Check</h1>
-        <p className="text-xl text-eevee">A Higher-Lower Game</p>
+        <h1 className="text-5xl font-bold mb-2">Limitless Check</h1>
+        <p className="text-l text-eevee">A Pokémon TCG Higher-Lower Game</p>
       </div>
       <button
-        className="bg-houndoom px-3 py-3 text-m font-bold text-togepi transition hover:bg-eevee cursor-pointer rounded"
+        className="mb-3 cursor-pointer rounded bg-houndoom px-4 py-3 text-xl font-bold text-togepi transition-colors transition-transform hover:scale-105 hover:bg-eevee"
         onClick={() => onStart(selectedMode)}
         type="button"
       >
-        Start Game
+        Play
       </button>
       <div
         className="relative grid w-full max-w-md grid-cols-4 rounded border-2 border-rockruff bg-togepi p-1"

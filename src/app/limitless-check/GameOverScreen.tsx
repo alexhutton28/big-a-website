@@ -53,14 +53,14 @@ export default function GameOverScreen({
       </div>
       <div className="flex items-center gap-3">
         <button
-          className="bg-houndoom px-3 py-3 text-sm font-bold text-togepi transition hover:bg-eevee cursor-pointer rounded"
+          className="bg-houndoom px-3 py-3 text-sm font-bold text-togepi transition-colors transition-transform hover:scale-105 hover:bg-eevee cursor-pointer rounded"
           onClick={onRestart}
           type="button"
         >
           Play Again
         </button>
         <button
-          className="ring-2 ring-inset ring-houndoom px-3 py-3 text-sm font-bold text-houndoom transition hover:ring-eevee hover:text-eevee cursor-pointer rounded"
+          className="ring-2 ring-inset ring-houndoom px-3 py-3 text-sm font-bold text-houndoom transition-colors transition-transform hover:scale-105 hover:ring-eevee hover:text-eevee cursor-pointer rounded"
           onClick={onHome}
           type="button"
         >
