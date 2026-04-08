@@ -65,37 +65,6 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-function normalizePokemonName(name) {
-  return name.replace(/^Team Rocket's\s+/i, '');
-}
-
-function normalizeStoredCardMap(rawCardMap = {}) {
-  const normalizedMap = {};
-
-  for (const [rawName, rawData] of Object.entries(rawCardMap)) {
-    const normalizedName = normalizePokemonName(rawName);
-    const existing = normalizedMap[normalizedName];
-
-    if (!existing) {
-      normalizedMap[normalizedName] = { ...rawData };
-      continue;
-    }
-
-    existing.count += rawData.count ?? 0;
-
-    if (
-      rawData.lastSeenDate &&
-      (!existing.lastSeenDate || new Date(rawData.lastSeenDate) > new Date(existing.lastSeenDate))
-    ) {
-      existing.lastSeenDate = rawData.lastSeenDate;
-      existing.set = rawData.set;
-      existing.number = rawData.number;
-    }
-  }
-
-  return normalizedMap;
-}
-
 function quoteTsString(value) {
   return `'${String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
 }
@@ -212,7 +181,10 @@ async function fetchTournamentsSince(sinceDate) {
 // ---------------------------------------------------------------------------
 
 function nameToImageSlug(name) {
-  let n = normalizePokemonName(name);
+  let n = name;
+
+  // Team Rocket cards use the base Pokemon art slug.
+  n = n.replace(/^Team Rocket's\s+/i, '');
 
   // Strip trainer possessives: "N's ", "Marnie's ", "Ash's ", etc.
   n = n.replace(/^[A-Z][a-zA-Z]*'s\s+/i, '');
@@ -247,7 +219,7 @@ function nameToImageSlug(name) {
 }
 
 function nameToId(name) {
-  return normalizePokemonName(name)
+  return name
     .toLowerCase()
     .replace(/'/g, '')
     .replace(/\s+/g, '-')
@@ -266,7 +238,6 @@ async function main() {
   try {
     const raw = readFileSync(DATA_JSON, 'utf-8');
     existingData = JSON.parse(raw);
-    existingData.cardMap = normalizeStoredCardMap(existingData.cardMap);
     console.log(`Loaded existing data from cards-data.json`);
     console.log(`  Last fetched : ${existingData.lastFetchedDate}`);
     console.log(`  Known cards  : ${Object.keys(existingData.cardMap).length}\n`);
@@ -353,12 +324,12 @@ async function main() {
 
         const seenInThisDecklist = new Set();
         for (const card of player.decklist.pokemon) {
-          const normalizedName = normalizePokemonName(card.name ?? '');
-          if (!normalizedName || seenInThisDecklist.has(normalizedName)) continue;
-          seenInThisDecklist.add(normalizedName);
+          const cardName = card.name ?? '';
+          if (!cardName || seenInThisDecklist.has(cardName)) continue;
+          seenInThisDecklist.add(cardName);
 
-          if (!cardMap.has(normalizedName)) {
-            cardMap.set(normalizedName, {
+          if (!cardMap.has(cardName)) {
+            cardMap.set(cardName, {
               count: 0,
               lastSeenDate: t.date,
               set: card.set,
@@ -366,7 +337,7 @@ async function main() {
             });
           }
 
-          const entry = cardMap.get(normalizedName);
+          const entry = cardMap.get(cardName);
           entry.count++;
 
           // Keep the most recent set/number for hyperlink + display
