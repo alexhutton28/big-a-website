@@ -9,8 +9,6 @@ type MenuScreenProps = {
 const modeOptions: { label: string; value: GameMode }[] = [
   { label: 'Cards', value: 'cards' },
   { label: 'Decks', value: 'decks' },
-  { label: 'Players', value: 'players' },
-  { label: 'All', value: 'all' },
 ];
 
 // Intro screen for the game title and first action.
@@ -42,14 +40,14 @@ export default function MenuScreen({ onStart }: MenuScreenProps) {
         Play
       </button>
       <div
-        className="relative grid w-full max-w-md grid-cols-4 rounded border-2 border-rockruff bg-togepi p-1"
+        className="relative grid w-full max-w-[8rem] grid-cols-2 rounded border-2 border-rockruff bg-togepi p-1"
         role="radiogroup"
         aria-label="Game mode"
       >
         <div
           className="pointer-events-none absolute bottom-1 left-1 top-1 rounded bg-rockruff transition-transform duration-300 ease-out"
           style={{
-            width: 'calc((100% - 0.5rem) / 4)',
+            width: 'calc((100% - 0.5rem) / 2)',
             transform: `translateX(${selectedModeIndex * 100}%)`,
           }}
         />
