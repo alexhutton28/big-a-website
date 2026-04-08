@@ -1,23 +1,29 @@
 /**
  * Limitless TCG Card Fetcher
  *
- * Fetches all PTCG tournament standings from the Limitless API and aggregates
- * Pokemon card appearance counts. Each card scores +1 per unique decklist it
- * appears in, regardless of how many copies are included.
+ * Fetches PTCG tournament standings from the Play Limitless API
+ * (https://play.limitlesstcg.com/api) and aggregates Pokemon card appearance
+ * counts. Each card scores +1 per unique decklist it appears in, regardless of
+ * how many copies are included.
  *
- * Output: top 100 most-recently-active cards with >= 50 appearances.
+ * IMPORTANT DATA-SOURCE NOTE:
+ * This script only sees tournaments that exist in the Play Limitless platform
+ * dataset. It does NOT include any major in-person events listed on
+ * https://limitlesstcg.com/tournaments
  *
- * Incremental mode: on repeat runs only new tournaments (since last fetch) are
- * processed, making subsequent runs much faster than the initial backfill.
- * To force a full re-run from scratch, delete cards-data.json first.
+ * Output: up to 500 most-recently-active cards with >= 100 entries.
+ *
+ * Rolling-window mode: each run rebuilds counts from scratch using only
+ * tournaments in the last 30 days. This keeps counts accurate for a moving
+ * 30-day view (for example: 300 -> 200 as older usage drops out of window).
+ *
+ * cards-data.json is used for checkpoint/resume safety during interrupted
+ * runs, not for long-term cumulative totals.
  *
  * Usage:
- *   npm run fetch-cards            — incremental update
+ *   npm run fetch-cards            — rebuild current 30-day snapshot
  *   node scripts/fetch-cards.mjs  — same
  *
- * NOTE on first run: Fetches the last 5 years of tournaments (~1-3 hours with
- * rate limiting). Progress is checkpointed every 50 tournaments — safe to
- * interrupt and resume. Subsequent incremental runs are fast (minutes).
  */
 
 import { writeFileSync, readFileSync } from 'node:fs';
@@ -29,32 +35,18 @@ const OUTPUT_TS = join(__dirname, '../src/app/limitless-check/cards-generated.ts
 const DATA_JSON = join(__dirname, '../src/app/limitless-check/cards-data.json');
 
 const BASE_URL = 'https://play.limitlesstcg.com/api';
-const MIN_APPEARANCES = 10; // lower threshold since we're only scanning majors
-const MAX_CARDS = 100;
+const MIN_APPEARANCES = 100; // include only cards with strong representation
+const MAX_CARDS = 500;
 const TOURNAMENT_LIMIT = 200; // max per page (API maximum)
 const REQUEST_DELAY_MS = 600; // ms between standings fetches (stay under rate limit)
 const PAGE_DELAY_MS = 300; // ms between tournament list pages
-const LOOKBACK_YEARS = 5; // default history window for first run
+const LOOKBACK_DAYS = 30; // rolling history window
 const CHECKPOINT_EVERY = 50; // save progress to disk every N tournaments
-const MIN_PLAYERS = 80; // ignore events below this player count
-// Keywords that identify official organised-play majors (case-insensitive)
-const MAJOR_EVENT_KEYWORDS = [
-  'regional',
-  'special event',
-  'champions league',
-  'euic',
-  'laic',
-  'naic',
-  'worlds',
-  'premier ball league',
-  'korean league',
-  'international championship',
-];
+const MIN_PLAYERS = 50; // ignore small events
 
-function isMajorEvent(tournament) {
+function isEligibleTournament(tournament) {
   if (tournament.players < MIN_PLAYERS) return false;
-  const name = tournament.name.toLowerCase();
-  return MAJOR_EVENT_KEYWORDS.some((kw) => name.includes(kw));
+  return tournament.format === 'STANDARD';
 }
 
 // ---------------------------------------------------------------------------
@@ -66,11 +58,20 @@ function sleep(ms) {
 }
 
 function quoteTsString(value) {
-  return `'${String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+  const normalized = String(value).replace(/\\/g, '\\\\');
+
+  // Prefer single quotes, but switch to double quotes when apostrophes appear
+  // so names like "Hop's Snorlax" stay readable.
+  if (normalized.includes("'")) {
+    return `"${normalized.replace(/\"/g, '\\\"')}"`;
+  }
+
+  return `'${normalized.replace(/'/g, "\\'")}'`;
 }
 
 function renderGameItemTs(item) {
   const setValue = item.set === null ? 'null' : quoteTsString(item.set);
+  const setsValue = `[${(item.sets ?? []).map(quoteTsString).join(', ')}]`;
   const imagesValue = `[${item.image.map(quoteTsString).join(', ')}]`;
 
   return [
@@ -82,6 +83,7 @@ function renderGameItemTs(item) {
     `    image: ${imagesValue},`,
     `    type: 'Card',`,
     `    set: ${setValue},`,
+    `    sets: ${setsValue},`,
     '  }',
   ].join('\n');
 }
@@ -135,7 +137,8 @@ async function apiFetch(url, retries = 3) {
 }
 
 // ---------------------------------------------------------------------------
-// Tournament list fetcher (paginated, stops early in incremental mode)
+// Tournament list fetcher from the Play API
+// (paginated, stops once events fall outside the lookback window)
 // ---------------------------------------------------------------------------
 
 async function fetchTournamentsSince(sinceDate) {
@@ -153,15 +156,15 @@ async function fetchTournamentsSince(sinceDate) {
       break;
     }
 
-    // In incremental mode: stop once we reach tournaments we've already seen.
-    // The API returns newest-first, so once a date is <= sinceDate we can stop.
+    // API returns newest-first; once a date is <= sinceDate, we've crossed
+    // the lookback boundary and can stop paging.
     let hitOld = false;
     for (const t of data) {
       if (sinceDate && new Date(t.date) <= new Date(sinceDate)) {
         hitOld = true;
         break;
       }
-      if (isMajorEvent(t)) tournaments.push(t);
+      if (isEligibleTournament(t)) tournaments.push(t);
     }
 
     console.log(
@@ -212,6 +215,9 @@ function nameToImageSlug(name) {
   if (/^Cornerstone Mask Ogerpon/i.test(n)) return 'ogerpon-cornerstone';
   n = n.replace(/^Teal Mask\s+/i, '');
 
+  // Bloodmoon Ursaluna art slug is ordered as "ursaluna-bloodmoon".
+  if (/^Bloodmoon\s+Ursaluna/i.test(n)) return 'ursaluna-bloodmoon';
+
   // Strip card suffix (ex, v, vmax, vstar, gx, v-union)
   n = n.replace(/\s+(ex|v|vmax|vstar|gx|v-union)$/i, '');
 
@@ -235,8 +241,10 @@ function nameToId(name) {
 
 async function main() {
   console.log('=== Limitless TCG Card Fetcher ===\n');
+  console.log('Data source: play.limitlesstcg.com/api (platform-hosted tournaments only)');
+  console.log('Note: this may exclude some majors listed on limitlesstcg.com/tournaments.\n');
 
-  // Load existing aggregated data (incremental mode)
+  // Load existing data (used for checkpoint resume metadata)
   let existingData = { generatedAt: null, lastFetchedDate: null, cardMap: {} };
   try {
     const raw = readFileSync(DATA_JSON, 'utf-8');
@@ -245,19 +253,16 @@ async function main() {
     console.log(`  Last fetched : ${existingData.lastFetchedDate}`);
     console.log(`  Known cards  : ${Object.keys(existingData.cardMap).length}\n`);
   } catch {
-    console.log('No existing cards-data.json found — starting full historical backfill.');
-    console.log('⚠️  First run may take 30-90+ minutes depending on tournament volume.\n');
+    console.log('No existing cards-data.json found — starting fresh rolling-window fetch.\n');
   }
 
-  // On first run, default to last LOOKBACK_YEARS years instead of full all-time history
+  // Always use a rolling 30-day window for tournament selection
   const defaultSince = new Date();
-  defaultSince.setFullYear(defaultSince.getFullYear() - LOOKBACK_YEARS);
-  const fetchSince = existingData.lastFetchedDate ?? defaultSince.toISOString();
+  defaultSince.setDate(defaultSince.getDate() - LOOKBACK_DAYS);
+  const fetchSince = defaultSince.toISOString();
 
   console.log(
-    existingData.lastFetchedDate
-      ? `Fetching tournaments after ${existingData.lastFetchedDate}...`
-      : `Fetching tournaments from the last ${LOOKBACK_YEARS} years (since ${defaultSince.toISOString().slice(0, 10)})...`
+    `Fetching STANDARD tournaments from the last ${LOOKBACK_DAYS} days (since ${defaultSince.toISOString().slice(0, 10)})...`
   );
 
   let newTournaments;
@@ -272,11 +277,24 @@ async function main() {
   newTournaments.sort((a, b) => new Date(b.date) - new Date(a.date));
   console.log(`\nNew tournaments to process: ${newTournaments.length}\n`);
 
-  // Hydrate existing cardMap and resume set (for interrupted runs)
-  const cardMap = new Map(
-    Object.entries(existingData.cardMap).map(([name, data]) => [name, { ...data }])
-  );
+  // Only restore the cardMap when resuming an interrupted run (processedIds non-empty).
+  // For a normal fresh run we always start empty so counts reflect only the current
+  // 30-day window — not accumulated totals from previous runs.
   const processedIds = new Set(existingData.processedIds ?? []);
+  const isResume = processedIds.size > 0;
+  const cardMap = isResume
+    ? new Map(
+        Object.entries(existingData.cardMap).map(([name, data]) => {
+          const hydrated = { ...data };
+          if (!Array.isArray(hydrated.sets)) hydrated.sets = [];
+          if (hydrated.set && hydrated.number) {
+            const latestSet = `${hydrated.set} ${hydrated.number}`;
+            if (!hydrated.sets.includes(latestSet)) hydrated.sets.push(latestSet);
+          }
+          return [name, hydrated];
+        })
+      )
+    : new Map();
   if (processedIds.size > 0) {
     console.log(
       `Resuming interrupted run — ${processedIds.size} tournaments already done, skipping.\n`
@@ -337,11 +355,19 @@ async function main() {
               lastSeenDate: t.date,
               set: card.set,
               number: card.number,
+              sets: [],
             });
           }
 
           const entry = cardMap.get(cardName);
           entry.count++;
+
+          // Track all unique observed set+number variants for this card name.
+          if (!Array.isArray(entry.sets)) entry.sets = [];
+          if (card.set && card.number) {
+            const setLabel = `${card.set} ${card.number}`;
+            if (!entry.sets.includes(setLabel)) entry.sets.push(setLabel);
+          }
 
           // Keep the most recent set/number for hyperlink + display
           if (!entry.lastSeenDate || new Date(t.date) > new Date(entry.lastSeenDate)) {
@@ -406,13 +432,16 @@ async function main() {
     id: nameToId(name),
     name,
     hyperlink:
-      data.set && data.number
-        ? `https://limitlesstcg.com/cards/${data.set}/${data.number}/decklists`
-        : '',
+      data.set && data.number ? `https://limitlesstcg.com/cards/${data.set}/${data.number}` : '',
     entries: data.count,
     image: [`https://r2.limitlesstcg.net/pokemon/gen9/${nameToImageSlug(name)}.png`],
     type: 'Card',
     set: data.set && data.number ? `${data.set} ${data.number}` : null,
+    sets: Array.isArray(data.sets)
+      ? data.sets
+      : data.set && data.number
+        ? [`${data.set} ${data.number}`]
+        : [],
   }));
 
   const warningBlock =
@@ -443,8 +472,10 @@ async function main() {
   if (failedCount > 0) {
     console.log(`\n⚠️  Partial data warning — failed tournaments:`);
     warnings.forEach((w) => console.log(`  • ${w}`));
-    console.log(`\n  Re-running will re-attempt these (they are within the unfetched window).`);
-    console.log(`  Or delete cards-data.json and re-run for a full clean backfill.`);
+    console.log(`\n  Re-running will re-attempt these tournaments within the 30-day window.`);
+    console.log(
+      `  If needed, delete cards-data.json and re-run for a fresh rolling-window rebuild.`
+    );
   }
 }
 

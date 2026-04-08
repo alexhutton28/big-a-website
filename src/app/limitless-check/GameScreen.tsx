@@ -91,8 +91,8 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
   };
 
   const getItemMetaLabel = (item: GameRound['left']) => {
-    if (item.type === 'Card' && item.set) {
-      return item.set;
+    if (item.type === 'Card' && Array.isArray(item.sets) && item.sets.length > 0) {
+      return item.sets.join(', ');
     }
 
     return item.type;
@@ -105,18 +105,21 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
           <p className="text-sm font-bold uppercase text-eevee">Score</p>
           <h1 className="text-4xl font-bold">{score}</h1>
         </div>
-        <p className="max-w-md text-right text-sm text-eevee">
-          Who has more entries on{' '}
-          <a
-            className="underline underline-offset-2 hover:text-houndoom"
-            href="https://limitlesstcg.com"
-            rel="noreferrer"
-            target="_blank"
-          >
-            LimitlessTCG
-          </a>
-          ?
-        </p>
+        <div>
+          <p className="max-w-md text-right text-sm text-eevee mb-1">
+            Who has more entries on{' '}
+            <a
+              className="underline underline-offset-2 hover:text-houndoom"
+              href="https://limitlesstcg.com"
+              rel="noreferrer"
+              target="_blank"
+            >
+              LimitlessTCG
+            </a>{' '}
+            <span className="whitespace-nowrap">in the last 30 days?</span>
+          </p>
+          <p className="text-xs text-right">Last Updated: 4/8/2026</p>
+        </div>
       </div>
 
       <div className="flex flex-col gap-4">

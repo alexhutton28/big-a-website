@@ -15,6 +15,7 @@ export type GameItem = {
   image: string[];
   type: GameItemType;
   set: string | null;
+  sets?: string[];
 };
 
 export type GameRound = {
