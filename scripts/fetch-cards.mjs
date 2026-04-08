@@ -29,13 +29,33 @@ const OUTPUT_TS = join(__dirname, '../src/app/limitless-check/cards-generated.ts
 const DATA_JSON = join(__dirname, '../src/app/limitless-check/cards-data.json');
 
 const BASE_URL = 'https://play.limitlesstcg.com/api';
-const MIN_APPEARANCES = 50;
+const MIN_APPEARANCES = 10; // lower threshold since we're only scanning majors
 const MAX_CARDS = 100;
 const TOURNAMENT_LIMIT = 200; // max per page (API maximum)
 const REQUEST_DELAY_MS = 600; // ms between standings fetches (stay under rate limit)
 const PAGE_DELAY_MS = 300; // ms between tournament list pages
 const LOOKBACK_YEARS = 5; // default history window for first run
 const CHECKPOINT_EVERY = 50; // save progress to disk every N tournaments
+const MIN_PLAYERS = 80; // ignore events below this player count
+// Keywords that identify official organised-play majors (case-insensitive)
+const MAJOR_EVENT_KEYWORDS = [
+  'regional',
+  'special event',
+  'champions league',
+  'euic',
+  'laic',
+  'naic',
+  'worlds',
+  'premier ball league',
+  'korean league',
+  'international championship',
+];
+
+function isMajorEvent(tournament) {
+  if (tournament.players < MIN_PLAYERS) return false;
+  const name = tournament.name.toLowerCase();
+  return MAJOR_EVENT_KEYWORDS.some((kw) => name.includes(kw));
+}
 
 // ---------------------------------------------------------------------------
 // Utilities
@@ -43,6 +63,64 @@ const CHECKPOINT_EVERY = 50; // save progress to disk every N tournaments
 
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+function normalizePokemonName(name) {
+  return name.replace(/^Team Rocket's\s+/i, '');
+}
+
+function normalizeStoredCardMap(rawCardMap = {}) {
+  const normalizedMap = {};
+
+  for (const [rawName, rawData] of Object.entries(rawCardMap)) {
+    const normalizedName = normalizePokemonName(rawName);
+    const existing = normalizedMap[normalizedName];
+
+    if (!existing) {
+      normalizedMap[normalizedName] = { ...rawData };
+      continue;
+    }
+
+    existing.count += rawData.count ?? 0;
+
+    if (
+      rawData.lastSeenDate &&
+      (!existing.lastSeenDate || new Date(rawData.lastSeenDate) > new Date(existing.lastSeenDate))
+    ) {
+      existing.lastSeenDate = rawData.lastSeenDate;
+      existing.set = rawData.set;
+      existing.number = rawData.number;
+    }
+  }
+
+  return normalizedMap;
+}
+
+function quoteTsString(value) {
+  return `'${String(value).replace(/\\/g, '\\\\').replace(/'/g, "\\'")}'`;
+}
+
+function renderGameItemTs(item) {
+  const setValue = item.set === null ? 'null' : quoteTsString(item.set);
+  const imagesValue = `[${item.image.map(quoteTsString).join(', ')}]`;
+
+  return [
+    '  {',
+    `    id: ${quoteTsString(item.id)},`,
+    `    name: ${quoteTsString(item.name)},`,
+    `    hyperlink: ${quoteTsString(item.hyperlink)},`,
+    `    entries: ${item.entries},`,
+    `    image: ${imagesValue},`,
+    `    type: 'Card',`,
+    `    set: ${setValue},`,
+    '  }',
+  ].join('\n');
+}
+
+function renderGameItemsTs(items) {
+  const renderedItems = items.map(renderGameItemTs).join(',\n');
+
+  return `export const cards: GameItem[] = [\n${renderedItems}\n];\n`;
 }
 
 /**
@@ -114,7 +192,7 @@ async function fetchTournamentsSince(sinceDate) {
         hitOld = true;
         break;
       }
-      tournaments.push(t);
+      if (isMajorEvent(t)) tournaments.push(t);
     }
 
     console.log(
@@ -134,7 +212,7 @@ async function fetchTournamentsSince(sinceDate) {
 // ---------------------------------------------------------------------------
 
 function nameToImageSlug(name) {
-  let n = name;
+  let n = normalizePokemonName(name);
 
   // Strip trainer possessives: "N's ", "Marnie's ", "Ash's ", etc.
   n = n.replace(/^[A-Z][a-zA-Z]*'s\s+/i, '');
@@ -169,7 +247,7 @@ function nameToImageSlug(name) {
 }
 
 function nameToId(name) {
-  return name
+  return normalizePokemonName(name)
     .toLowerCase()
     .replace(/'/g, '')
     .replace(/\s+/g, '-')
@@ -188,6 +266,7 @@ async function main() {
   try {
     const raw = readFileSync(DATA_JSON, 'utf-8');
     existingData = JSON.parse(raw);
+    existingData.cardMap = normalizeStoredCardMap(existingData.cardMap);
     console.log(`Loaded existing data from cards-data.json`);
     console.log(`  Last fetched : ${existingData.lastFetchedDate}`);
     console.log(`  Known cards  : ${Object.keys(existingData.cardMap).length}\n`);
@@ -213,11 +292,6 @@ async function main() {
   } catch (err) {
     console.error('Fatal: could not fetch tournament list:', err.message);
     process.exit(1);
-  }
-
-  if (newTournaments.length === 0) {
-    console.log('\nNo new tournaments found. cards-generated.ts is already up to date.');
-    process.exit(0);
   }
 
   // Sort newest → oldest so lastSeenDate tracking is correct
@@ -279,11 +353,12 @@ async function main() {
 
         const seenInThisDecklist = new Set();
         for (const card of player.decklist.pokemon) {
-          if (!card.name || seenInThisDecklist.has(card.name)) continue;
-          seenInThisDecklist.add(card.name);
+          const normalizedName = normalizePokemonName(card.name ?? '');
+          if (!normalizedName || seenInThisDecklist.has(normalizedName)) continue;
+          seenInThisDecklist.add(normalizedName);
 
-          if (!cardMap.has(card.name)) {
-            cardMap.set(card.name, {
+          if (!cardMap.has(normalizedName)) {
+            cardMap.set(normalizedName, {
               count: 0,
               lastSeenDate: t.date,
               set: card.set,
@@ -291,7 +366,7 @@ async function main() {
             });
           }
 
-          const entry = cardMap.get(card.name);
+          const entry = cardMap.get(normalizedName);
           entry.count++;
 
           // Keep the most recent set/number for hyperlink + display
@@ -380,7 +455,7 @@ async function main() {
       : '') +
     warningBlock +
     `\nimport type { GameItem } from './types';\n\n` +
-    `export const cards: GameItem[] = ${JSON.stringify(outputCards, null, 2)};\n`;
+    renderGameItemsTs(outputCards);
 
   writeFileSync(OUTPUT_TS, tsContent, 'utf-8');
 
