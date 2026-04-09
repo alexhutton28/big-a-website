@@ -122,8 +122,8 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
         </div>
       </div>
 
-      <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap gap-0 min-[800px]:gap-4 min-[800px]:flex-nowrap min-[800px]:items-stretch">
+      <div className="flex flex-col gap-3">
+        <div className="flex flex-wrap gap-3 min-[800px]:gap-4 min-[800px]:flex-nowrap min-[800px]:items-stretch">
           <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
             <button
               className={getButtonClassName()}
@@ -162,7 +162,10 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
             Vs
           </div>
 
-          <div className="round-option-enter mt-[28px] w-full min-[800px]:mt-0 min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
+          <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
+            <div className="mb-2 min-h-[28px] min-[800px]:hidden">
+              {pendingGuess !== null && <EntryCount value={round.right.entries} />}
+            </div>
             <button
               className={getButtonClassName()}
               disabled={pendingGuess !== null}
@@ -191,9 +194,6 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
                 </span>
               </div>
             </button>
-            <div className="mt-2 min-h-[28px] min-[800px]:hidden">
-              {pendingGuess !== null && <EntryCount value={round.right.entries} />}
-            </div>
           </div>
         </div>
 
