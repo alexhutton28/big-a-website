@@ -6,6 +6,8 @@
 
 import type { GameItem } from './types';
 
+export const cardsLastUpdated = '2026-04-08T15:22:58.618Z';
+
 export const cards: GameItem[] = [
   {
     id: 'snorunt',

@@ -242,7 +242,7 @@ function renderGameItemTs(item) {
 
 function renderGameItemsTs(items) {
   const renderedItems = items.map(renderGameItemTs).join(',\n') + ',';
-  return `export const decks: GameItem[] = [\n${renderedItems}\n];\n`;
+  return `export const decksLastUpdated = ${quoteTsString(new Date().toISOString())};\n\nexport const decks: GameItem[] = [\n${renderedItems}\n];\n`;
 }
 
 async function apiFetch(url, retries = 3) {

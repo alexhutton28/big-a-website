@@ -4,9 +4,25 @@ import { useEffect, useState } from 'react';
 import GameOverScreen from './GameOverScreen';
 import GameScreen from './GameScreen';
 import MenuScreen from './MenuScreen';
+import { cardsLastUpdated } from './cards';
+import { decksLastUpdated } from './decks';
 import { createRound, resolveGuess } from './gameLogic';
 import { getItemsForMode } from './starterItems';
 import type { GameItem, GameMode, GamePhase, GameRound, GuessSide } from './types';
+
+function formatDate(isoDate: string): string {
+  const date = new Date(isoDate);
+
+  if (Number.isNaN(date.getTime())) {
+    return 'Unknown';
+  }
+
+  return date.toLocaleDateString('en-US', {
+    month: 'numeric',
+    day: 'numeric',
+    year: 'numeric',
+  });
+}
 
 // Main client controller for menu, rounds, score, and restart flow.
 export default function LimitlessCheck() {
@@ -19,6 +35,9 @@ export default function LimitlessCheck() {
   const [lastLoser, setLastLoser] = useState<GameItem | null>(null);
   const [carryCount, setCarryCount] = useState(0);
   const [lastCarryItemId, setLastCarryItemId] = useState<string | null>(null);
+
+  const lastUpdatedIso = mode === 'decks' ? decksLastUpdated : cardsLastUpdated;
+  const lastUpdatedLabel = formatDate(lastUpdatedIso);
 
   useEffect(() => {
     document.documentElement.classList.add('limitless-check-scrollbar');
@@ -103,7 +122,13 @@ export default function LimitlessCheck() {
       {phase === 'menu' && <MenuScreen onStart={startGame} />}
 
       {(phase === 'playing' || phase === 'game-over') && currentRound && (
-        <GameScreen key={roundInstance} round={currentRound} score={score} onGuess={handleGuess} />
+        <GameScreen
+          key={roundInstance}
+          round={currentRound}
+          score={score}
+          onGuess={handleGuess}
+          lastUpdatedLabel={lastUpdatedLabel}
+        />
       )}
 
       {phase === 'game-over' && (

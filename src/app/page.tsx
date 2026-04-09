@@ -1,26 +1,45 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
 export default function Home() {
   return (
     <>
-      <div className="flex flex-col h-screen items-center text-white bg-black pt-4">
-        <h1 className="mb-4 text-5xl">big a website</h1>
-        <div className="flex flex-row flex-wrap justify-center gap-3">
-          <Link
-            href="/art-something"
-            className="rounded bg-white px-8 py-4 text-black text-xl hover:bg-gray-200"
-          >
-            art something
-          </Link>
+      <div className="home-stars relative flex min-h-[calc(100vh-62px)] flex-col items-center overflow-hidden bg-black pt-4 text-white">
+        <div aria-hidden="true" className="home-stars-layer home-stars-layer-1" />
+        <div aria-hidden="true" className="home-stars-layer home-stars-layer-2" />
+        <div aria-hidden="true" className="home-stars-layer home-stars-layer-3" />
 
-          <Link
-            href="/limitless-check"
-            className="rounded bg-white px-8 py-4 text-black text-xl hover:bg-gray-200"
-          >
-            Limitless Check
-          </Link>
+        <div className="relative z-10 flex flex-col items-center">
+          <h1 className="mb-4 text-5xl">big a website</h1>
+          <div className="flex flex-row flex-wrap justify-center gap-4">
+            <Link
+              href="/art-something"
+              className="group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
+            >
+              <Image
+                alt="Art Something preview"
+                className="h-[140px] w-[260px] object-cover transition-transform duration-300 group-hover:scale-102"
+                height={600}
+                src="/art-something-og.png"
+                width={1200}
+              />
+            </Link>
+
+            <Link
+              href="/limitless-check"
+              className="group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
+            >
+              <Image
+                alt="Limitless Check preview"
+                className="h-[140px] w-[260px] object-cover transition-transform duration-300 group-hover:scale-102"
+                height={600}
+                src="/limitless-check-og.png"
+                width={1200}
+              />
+            </Link>
+          </div>
         </div>
       </div>
     </>

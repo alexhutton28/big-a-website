@@ -14,6 +14,7 @@ type GameScreenProps = {
   round: GameRound;
   score: number;
   onGuess: (guess: GuessSide) => void;
+  lastUpdatedLabel: string;
 };
 
 function EntryCount({ value }: EntryCountProps) {
@@ -45,7 +46,7 @@ function EntryCount({ value }: EntryCountProps) {
 }
 
 // Active round UI for comparing two items.
-export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
+export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: GameScreenProps) {
   const [pendingGuess, setPendingGuess] = useState<GuessSide | null>(null);
   const [showGuessResult, setShowGuessResult] = useState(false);
   const winningSide: GuessSide = round.left.entries >= round.right.entries ? 'left' : 'right';
@@ -118,7 +119,7 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
             </a>{' '}
             <span className="whitespace-nowrap">in the last 30 days?</span>
           </p>
-          <p className="text-xs text-right">Last Updated: 4/8/2026</p>
+          <p className="text-xs text-right">Last Updated: {lastUpdatedLabel}</p>
         </div>
       </div>
 

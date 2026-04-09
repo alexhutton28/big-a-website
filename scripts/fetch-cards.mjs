@@ -88,10 +88,10 @@ function renderGameItemTs(item) {
   ].join('\n');
 }
 
-function renderGameItemsTs(items) {
+function renderGameItemsTs(items, lastUpdatedIso) {
   const renderedItems = items.map(renderGameItemTs).join(',\n');
 
-  return `export const cards: GameItem[] = [\n${renderedItems}\n];\n`;
+  return `export const cardsLastUpdated = ${quoteTsString(lastUpdatedIso)};\n\nexport const cards: GameItem[] = [\n${renderedItems}\n];\n`;
 }
 
 /**
@@ -458,7 +458,7 @@ async function main() {
       : '') +
     warningBlock +
     `\nimport type { GameItem } from './types';\n\n` +
-    renderGameItemsTs(outputCards);
+    renderGameItemsTs(outputCards, updatedData.generatedAt);
 
   writeFileSync(OUTPUT_TS, tsContent, 'utf-8');
 

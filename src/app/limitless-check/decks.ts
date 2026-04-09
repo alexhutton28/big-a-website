@@ -7,6 +7,8 @@
 
 import type { GameItem } from './types';
 
+export const decksLastUpdated = '2026-04-08T19:06:12.579Z';
+
 export const decks: GameItem[] = [
   {
     id: 'dragapult-ex',
