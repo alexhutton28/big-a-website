@@ -15,8 +15,8 @@ export const metadata: Metadata = {
   title: 'Big A Website',
   description: 'Big A Website',
   icons: {
-    icon: '/art-something-tan.svg',
-    shortcut: '/art-something-tan.svg',
+    icon: '/big-a.svg',
+    shortcut: '/big-a.svg',
   },
 };
 
