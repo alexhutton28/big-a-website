@@ -14,9 +14,22 @@ const lato = Lato({
 export const metadata: Metadata = {
   title: 'Big A Website',
   description: 'Big A Website',
-  icons: {
-    icon: '/big-a.svg',
-    shortcut: '/big-a.svg',
+  openGraph: {
+    title: 'Big A Website',
+    description: 'Big A Website',
+    type: 'website',
+    images: [
+      {
+        url: '/big-a-website-og.png',
+        alt: 'Big A Website',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Big A Website',
+    description: 'Big A Website',
+    images: ['/big-a-website-og.png'],
   },
 };
 

@@ -92,7 +92,7 @@ export default function LimitlessCheck() {
 
   return (
     <section
-      className="flex flex-col items-center justify-start pt-3 pb-3 min-[800px]:pt-[10vh] min-h-[calc(100vh-62px)] px-3 min-[640px]:px-4 min-[1200px]:px-[120px] text-houndoom"
+      className="relative flex flex-col items-center justify-start pt-3 pb-3 min-[800px]:pt-[10vh] min-h-[calc(100vh-62px)] px-3 min-[640px]:px-4 min-[1200px]:px-[120px] text-houndoom"
       style={{
         backgroundImage:
           "linear-gradient(rgba(250, 247, 247, 0.5), rgba(250, 247, 247, 0.5)), url('/paper-bg.jpg')",
@@ -102,18 +102,20 @@ export default function LimitlessCheck() {
     >
       {phase === 'menu' && <MenuScreen onStart={startGame} />}
 
-      {phase === 'playing' && currentRound && (
+      {(phase === 'playing' || phase === 'game-over') && currentRound && (
         <GameScreen key={roundInstance} round={currentRound} score={score} onGuess={handleGuess} />
       )}
 
       {phase === 'game-over' && (
-        <GameOverScreen
-          score={score}
-          winningItem={lastWinner}
-          losingItem={lastLoser}
-          onHome={goHome}
-          onRestart={() => startGame()}
-        />
+        <div className="game-over-overlay-enter fixed inset-0 z-50 flex items-center justify-center bg-houndoom/45 px-4 backdrop-blur-[2px]">
+          <GameOverScreen
+            score={score}
+            winningItem={lastWinner}
+            losingItem={lastLoser}
+            onHome={goHome}
+            onRestart={() => startGame()}
+          />
+        </div>
       )}
     </section>
   );

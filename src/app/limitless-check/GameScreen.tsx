@@ -76,7 +76,7 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
   const getButtonClassName = () => {
     const hoverClass = pendingGuess === null ? 'hover:border-blissey hover:scale-102' : '';
 
-    return `w-full min-[800px]:min-w-[300px] border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] transition-transform duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
+    return `w-full min-[800px]:min-w-[300px] min-[800px]:h-full border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] transition-transform duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
   };
 
   const getButtonOutlineColor = (side: GuessSide) => {
@@ -123,8 +123,8 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
       </div>
 
       <div className="flex flex-col gap-4">
-        <div className="flex flex-wrap gap-4 min-[800px]:flex-nowrap min-[800px]:items-center">
-          <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1">
+        <div className="flex flex-wrap gap-0 min-[800px]:gap-4 min-[800px]:flex-nowrap min-[800px]:items-stretch">
+          <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
             <button
               className={getButtonClassName()}
               disabled={pendingGuess !== null}
@@ -153,18 +153,16 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
                 </span>
               </div>
             </button>
-            {pendingGuess !== null && (
-              <div className="mt-2 min-[800px]:hidden">
-                <EntryCount value={round.left.entries} />
-              </div>
-            )}
+            <div className="mt-2 min-h-[28px] min-[800px]:hidden">
+              {pendingGuess !== null && <EntryCount value={round.left.entries} />}
+            </div>
           </div>
 
           <div className="flex w-full items-center justify-center text-sm font-bold uppercase text-eevee min-[800px]:w-auto">
             Vs
           </div>
 
-          <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1">
+          <div className="round-option-enter mt-[28px] w-full min-[800px]:mt-0 min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
             <button
               className={getButtonClassName()}
               disabled={pendingGuess !== null}
@@ -193,11 +191,9 @@ export default function GameScreen({ round, score, onGuess }: GameScreenProps) {
                 </span>
               </div>
             </button>
-            {pendingGuess !== null && (
-              <div className="mt-2 min-[800px]:hidden">
-                <EntryCount value={round.right.entries} />
-              </div>
-            )}
+            <div className="mt-2 min-h-[28px] min-[800px]:hidden">
+              {pendingGuess !== null && <EntryCount value={round.right.entries} />}
+            </div>
           </div>
         </div>
 

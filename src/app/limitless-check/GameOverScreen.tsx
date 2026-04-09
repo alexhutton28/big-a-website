@@ -16,6 +16,28 @@ export default function GameOverScreen({
   onHome,
   onRestart,
 }: GameOverScreenProps) {
+  const handleShare = async () => {
+    if (typeof window === 'undefined' || typeof navigator === 'undefined') {
+      return;
+    }
+
+    const isMobileDevice = /Android|iPhone|iPad|iPod|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+
+    if (!isMobileDevice || typeof navigator.share !== 'function') {
+      return;
+    }
+
+    const shareText = `I Scored ${score} on Limitless Check!\nTry it for yourself: https://big-a.fun/limitless-check`;
+
+    try {
+      await navigator.share({ text: shareText });
+    } catch {
+      // Ignore dismiss/cancel errors from the native share sheet.
+    }
+  };
+
   const resultMessage = winningItem && losingItem && (
     <>
       <a
@@ -46,26 +68,35 @@ export default function GameOverScreen({
   );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4 text-center">
+    <div className="game-over-panel-enter w-full max-w-[max(50vw,300px)] rounded-xl border-2 border-rockruff bg-togepi/95 p-4 shadow-2xl flex flex-col items-center justify-center gap-3 text-center">
       <div className="space-y-3">
         <h1 className="text-5xl font-bold tracking-tight">Final Score: {score}</h1>
         <p className="text-lg text-eevee">{resultMessage || 'You missed the last guess.'}</p>
       </div>
-      <div className="flex items-center gap-3">
+      <div className="mt-2 flex min-w-[200px] flex-col gap-3 items-center">
         <button
-          className="bg-houndoom px-3 py-3 text-sm font-bold text-togepi transition-colors transition-transform hover:scale-105 hover:bg-eevee cursor-pointer rounded"
+          className="bg-houndoom w-full rounded px-4 py-3 text-m font-bold text-togepi transition-colors transition-transform hover:scale-102 hover:bg-eevee cursor-pointer"
           onClick={onRestart}
           type="button"
         >
           Play Again
         </button>
-        <button
-          className="ring-2 ring-inset ring-houndoom px-3 py-3 text-sm font-bold text-houndoom transition-colors transition-transform hover:scale-105 hover:ring-eevee hover:text-eevee cursor-pointer rounded"
-          onClick={onHome}
-          type="button"
-        >
-          Home
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            className="ring-2 ring-inset ring-houndoom px-4 py-2 text-sm font-bold text-houndoom transition-colors transition-transform hover:scale-102 hover:ring-eevee hover:text-eevee cursor-pointer rounded"
+            onClick={onHome}
+            type="button"
+          >
+            Home
+          </button>
+          <button
+            className="ring-2 ring-inset ring-houndoom px-4 py-2 text-sm font-bold text-houndoom transition-colors transition-transform hover:scale-102 hover:ring-eevee hover:text-eevee cursor-pointer rounded min-[800px]:hidden"
+            onClick={handleShare}
+            type="button"
+          >
+            Share
+          </button>
+        </div>
       </div>
     </div>
   );
