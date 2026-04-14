@@ -36,6 +36,9 @@ const DATA_JSON = join(__dirname, '../src/app/limitless-check/cards-data.json');
 
 const BASE_URL = 'https://play.limitlesstcg.com/api';
 const MIN_APPEARANCES = 100; // include only cards with strong representation
+const OUT_PATH = path.join(__dirname, '../src/app/guess-that-flavor-text/cards.json');
+const OUTPUT_TS = join(__dirname, '../src/app/limitless-check/cards-generated.ts');
+const DATA_JSON = join(__dirname, '../src/app/limitless-check/cards-data.json');
 const MAX_CARDS = 500;
 const TOURNAMENT_LIMIT = 200; // max per page (API maximum)
 const REQUEST_DELAY_MS = 600; // ms between standings fetches (stay under rate limit)

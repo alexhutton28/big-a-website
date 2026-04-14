@@ -8,6 +8,7 @@ export default function Header() {
   const pathname = usePathname();
   const isLimitlessCheckPage = pathname.startsWith('/limitless-check');
   const isArtSomethingPage = pathname === '/art-something';
+  const isGuessThatFlavorTextPage = pathname.startsWith('/guess-that-flavor-text');
 
   let headerClassName = 'w-full bg-black text-white';
 
@@ -15,6 +16,8 @@ export default function Header() {
     headerClassName = 'w-full bg-houndoom text-togepi';
   } else if (isArtSomethingPage) {
     headerClassName = 'w-full bg-mahogany text-white';
+  } else if (isGuessThatFlavorTextPage) {
+    headerClassName = 'w-full bg-splash text-white';
   }
 
   return (
@@ -52,6 +55,15 @@ export default function Header() {
                 priority
               />
             </span>
+          ) : isGuessThatFlavorTextPage ? (
+            <Image
+              src="/big-a-website-gtft.svg"
+              alt="Big A's Website Guess That Flavor Text"
+              width={170}
+              height={30}
+              className="h-[30px] w-auto"
+              priority
+            />
           ) : (
             "big a's website"
           )}

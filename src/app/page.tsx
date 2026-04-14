@@ -39,6 +39,19 @@ export default function Home() {
                 width={1200}
               />
             </Link>
+
+            <Link
+              href="/guess-that-flavor-text"
+              className="hidden group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
+            >
+              <Image
+                alt="Guess That Flavor Text preview"
+                className="h-[140px] w-[260px] object-cover transition-transform duration-300 group-hover:scale-102"
+                height={600}
+                src="/guess-that-flavor-text-og.png"
+                width={1200}
+              />
+            </Link>
           </div>
         </div>
       </div>

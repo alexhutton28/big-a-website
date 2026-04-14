@@ -9,6 +9,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'r2.limitlesstcg.net',
       },
+      {
+        protocol: 'https',
+        hostname: 'images.pokemontcg.io',
+      },
     ],
   },
 };

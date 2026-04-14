@@ -10,7 +10,8 @@
     "stylelint": "stylelint \"src/**/*.{css,scss}\"",
     "format": "prettier --write .",
     "fetch-cards": "node scripts/fetch-cards.mjs",
-    "fetch-decks": "node scripts/fetch-decks.mjs"
+    "fetch-decks": "node scripts/fetch-decks.mjs",
+    "fetch-flavor-cards": "npx tsx scripts/fetch-flavor-cards.mts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",

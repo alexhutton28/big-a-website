@@ -9,6 +9,8 @@
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --font-sans: var(--font-lato);
+  --font-barlow-body: var(--font-barlow);
+  --font-barlow-cond: var(--font-barlow-condensed);
   --font-mono: var(--font-geist-mono);
   --spacing-1: 4px;
   --spacing-2: 8px;
@@ -32,6 +34,13 @@
   --color-blissey: #e08c8c;
   --color-togepi: #faf7f7;
   --color-jigglypuff: #f7efef;
+  --color-tide: #2561eb;
+  --color-wave: #2876ec;
+  --color-splash: #7aa6ff;
+  --color-stone: #8496b1;
+  --color-slate: #47679c;
+  --color-ghost: #f7f7fa;
+  --color-drop: #e4f0ff;
 }
 
 @media (prefers-color-scheme: dark) {

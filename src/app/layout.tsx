@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { Lato } from 'next/font/google';
+import { Barlow, Barlow_Condensed, Lato } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -9,6 +9,18 @@ const lato = Lato({
   variable: '--font-lato',
   subsets: ['latin'],
   weight: ['300', '400', '700'],
+});
+
+const barlow = Barlow({
+  variable: '--font-barlow',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
+});
+
+const barlowCondensed = Barlow_Condensed({
+  variable: '--font-barlow-condensed',
+  subsets: ['latin'],
+  weight: ['400', '500', '600', '700'],
 });
 
 export const metadata: Metadata = {
@@ -40,7 +52,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.variable} antialiased bg-white text-black`}>
+      <body
+        className={`${lato.variable} ${barlow.variable} ${barlowCondensed.variable} antialiased bg-white text-black`}
+      >
         <Header />
         <main>{children}</main>
         <Analytics />
