@@ -11,6 +11,8 @@ export default function GTFTResultPage({
   defaultState,
   setDayState,
   setPage,
+  today,
+  gameNumber,
 }: {
   card: Card;
   correct: boolean;
@@ -20,6 +22,8 @@ export default function GTFTResultPage({
   defaultState: DayState;
   setDayState: React.Dispatch<React.SetStateAction<DayState>>;
   setPage: React.Dispatch<React.SetStateAction<0 | 1 | 2>>;
+  today: Date;
+  gameNumber: number;
 }) {
   return (
     <section className="min-h-[calc(100vh-62px)] flex flex-col items-center w-full pt-2 sm:pt-5">
@@ -61,7 +65,7 @@ export default function GTFTResultPage({
       <button
         className="barlow-cond text-white font-bold bg-tide px-3 py-2 rounded text-[18px] cursor-pointer hover:bg-wave transition-colors"
         onClick={() => {
-          const shareText = `Guess That Flavor Text\n${correct ? '✅' : '❌'} ${score}/4\n${card.flavorText}\n${window.location.href}`;
+          const shareText = `Guess That Flavor Text #${gameNumber}\n${correct ? '✅' : '❌'} ${score}/4\n${window.location.href}`;
           if (navigator.share) {
             navigator.share({ text: shareText });
           } else {

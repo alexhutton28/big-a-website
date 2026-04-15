@@ -25,6 +25,11 @@ function namesMatch(guess: string, answer: string) {
 }
 
 export default function GuessThatFlavorText() {
+  // Calculate game date and number once
+  const today = new Date();
+  const start = new Date(2026, 3, 16); // April is month 3 (0-indexed)
+  const diff = Math.floor((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+  const gameNumber = diff + 1;
   // State
   const [page, setPage] = useState<0 | 1 | 2>(0);
   const [card, setCard] = useState<Card | null>(null);
@@ -172,7 +177,7 @@ export default function GuessThatFlavorText() {
   const { correct, score, usedLifelines, guess } = dayState;
   // PAGE 1: Intro
   if (page === 0) {
-    return <GTFTIntroPage onPlay={() => setPage(1)} />;
+    return <GTFTIntroPage onPlay={() => setPage(1)} today={today} gameNumber={gameNumber} />;
   }
   // PAGE 2: Game
   if (page === 1 && card) {
@@ -206,6 +211,8 @@ export default function GuessThatFlavorText() {
         defaultState={defaultState}
         setDayState={setDayState}
         setPage={setPage}
+        today={today}
+        gameNumber={gameNumber}
       />
     );
   }

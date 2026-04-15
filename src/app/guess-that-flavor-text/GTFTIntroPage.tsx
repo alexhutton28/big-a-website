@@ -1,6 +1,14 @@
 import Image from 'next/image';
 
-export default function GTFTIntroPage({ onPlay }: { onPlay: () => void }) {
+export default function GTFTIntroPage({
+  onPlay,
+  today,
+  gameNumber,
+}: {
+  onPlay: () => void;
+  today: Date;
+  gameNumber: number;
+}) {
   return (
     <section className="min-h-[calc(100vh-62px)] flex flex-col items-center justify-start pt-2 sm:pt-5">
       <Image
@@ -24,20 +32,12 @@ export default function GTFTIntroPage({ onPlay }: { onPlay: () => void }) {
         Play
       </button>
       <div className="text-stone text-xs mt-2 flex flex-col items-center gap-1">
-        {new Date().toLocaleDateString(undefined, {
+        {today.toLocaleDateString(undefined, {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
         })}
-        <p>
-          No.{' '}
-          {(() => {
-            const start = new Date(2026, 3, 16); // April is month 3 (0-indexed)
-            const now = new Date();
-            const diff = Math.floor((now.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-            return diff + 1;
-          })()}
-        </p>
+        <p>No. {gameNumber}</p>
       </div>
     </section>
   );
