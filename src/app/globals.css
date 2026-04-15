@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+/* Font utility classes */
+.barlow {
+  font-family: var(--font-barlow), sans-serif;
+}
+
+.barlow-cond {
+  font-family: var(--font-barlow-condensed), sans-serif;
+}
+
 :root {
   --background: #faf7f7;
   --foreground: #4e0a0a;
@@ -208,4 +217,15 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   .home-stars-layer-3 {
     animation: none;
   }
+}
+
+/* Dot grid + gradient background for Guess That Flavor Text */
+.dot-gradient-bg {
+  background-image:
+    radial-gradient(circle, var(--color-drop) 2.5px, transparent 2.5px),
+    linear-gradient(180deg, #fff 0%, var(--color-ghost) 100%);
+  background-size:
+    20px 20px,
+    100% 100%;
+  background-repeat: repeat;
 }

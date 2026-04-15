@@ -16,7 +16,7 @@ export default function Home() {
           <div className="flex flex-row flex-wrap justify-center gap-4">
             <Link
               href="/art-something"
-              className="group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
+              className="hidden group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
             >
               <Image
                 alt="Art Something preview"
@@ -42,7 +42,7 @@ export default function Home() {
 
             <Link
               href="/guess-that-flavor-text"
-              className="hidden group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
+              className="group relative overflow-hidden rounded border border-white/20 shadow-[0_0_14px_rgba(255,255,255,0.2)]"
             >
               <Image
                 alt="Guess That Flavor Text preview"
