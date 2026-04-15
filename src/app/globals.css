@@ -59,10 +59,11 @@
   }
 }
 
-/* html,
+html,
 body {
   overscroll-behavior: none;
-} */
+  overflow: hidden;
+}
 
 body {
   background: var(--background);

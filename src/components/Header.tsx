@@ -20,13 +20,8 @@ export default function Header() {
     headerClassName = 'w-full bg-splash text-white';
   }
 
-  // Add style for safe area inset top
-  const headerStyle: React.CSSProperties = {
-    paddingTop: 'env(safe-area-inset-top)',
-  };
-
   return (
-    <header className={headerClassName} style={headerStyle}>
+    <header className={headerClassName}>
       <div className="flex items-center justify-between p-3">
         <Link href="/" className="text-lg hover:text-gray-300 transition-colors">
           {isLimitlessCheckPage ? (
@@ -39,7 +34,7 @@ export default function Header() {
                 className="h-[30px] w-[30px]"
                 priority
               />
-              <h2 className="font-medium">Big A&apos;s Website</h2>
+              <h2 className="font-medium">Big A Website</h2>
             </span>
           ) : isArtSomethingPage ? (
             <span className="flex items-center gap-2">
