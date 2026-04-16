@@ -63,7 +63,7 @@ export default function GTFTGamePage({
   }, [card.flavorText, words]);
 
   return (
-    <section className="min-h-[calc(100vh-62px)] flex flex-col items-center justify-start pt-2 sm:pt-5">
+    <section className="min-h-[calc(100vh-62px)] flex flex-col items-center justify-start pt-4 sm:pt-5">
       <Image
         src="/unknown-q.svg"
         alt="Guess That Flavor Text Logo"
