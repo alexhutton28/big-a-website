@@ -104,7 +104,6 @@ export default function GTFTGamePage({
                 height={32}
                 style={{
                   objectFit: 'contain',
-                  background: '#f8f8f8',
                   borderRadius: 4,
                   height: 'auto',
                 }}
@@ -151,7 +150,6 @@ export default function GTFTGamePage({
                       height={24}
                       style={{
                         objectFit: 'contain',
-                        background: '#f8f8f8',
                         borderRadius: 4,
                         width: 'auto',
                       }}
@@ -184,7 +182,7 @@ export default function GTFTGamePage({
             Each lifeline used will subtract 1 point from the 4 point total
           </p>
         </div>
-        <div className="flex w-full justify-between gap-3">
+        <div className="flex w-full justify-between gap-3 mb-3">
           <div className="flex flex-col gap-0 rounded">
             <button
               onClick={() => activateLifeline(LIFELINES[0])}

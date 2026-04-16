@@ -141,7 +141,7 @@ export default function GTFTResultPage({
         />
         <span className="barlow text-sm text-stone font-bold">{streak} Day Streak</span>
       </div>
-      <p className="barlow text-xs text-slate">Next card in: {countdown}</p>
+      <p className="barlow text-xs text-slate pb-3">Next card in: {countdown}</p>
 
       {/* Developer-only reset button */}
       {typeof window !== 'undefined' &&
