@@ -16,9 +16,9 @@ export default function GTFTIntroPage({
         alt="Guess That Flavor Text Logo"
         width={170}
         height={36}
-        className="mb-0"
+        className="mb-0 w-[85px] sm:w-[100px] h-auto"
       />
-      <div className="flex flex-col items-center light -mt-4">
+      <div className="flex flex-col items-center light">
         <h1 className="barlow text-[32px] italic font-italic mb-2 text-tide">Guess That</h1>
         <h1 className="barlow-cond text-[50px] font-bold mb-2 text-tide -mt-4">FLAVOR TEXT</h1>
       </div>

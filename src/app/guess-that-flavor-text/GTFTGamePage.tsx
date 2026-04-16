@@ -69,7 +69,7 @@ export default function GTFTGamePage({
         alt="Guess That Flavor Text Logo"
         width={170}
         height={36}
-        className="mb-0 w-[85px] sm:w-[170px] h-auto"
+        className="mb-3 w-[85px] sm:w-[100px] h-auto"
       />
       <div className="flex w-full max-w-[max(60vw,350px)] bg-white rounded px-3 py-2 border border-splash mb-4">
         <p className="flex justify-center items-center flex-wrap gap-x-[0.3em] italic text-center text-[20px] text-wave break-words w-full min-h-[60px]">
