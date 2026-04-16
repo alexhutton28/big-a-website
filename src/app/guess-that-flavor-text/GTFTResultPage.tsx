@@ -26,7 +26,7 @@ export default function GTFTResultPage({
   gameNumber: number;
 }) {
   return (
-    <section className="min-h-[calc(100vh-62px)] flex flex-col items-center w-full pt-2 sm:pt-5">
+    <section className="min-h-[calc(100dvh-62px)] flex flex-col items-center w-full pt-2 sm:pt-5">
       <div className="flex flex-col gap-0 items-center mb-4">
         <h1 className="barlow-cond font-bold text-[45px] text-tide mb-0">
           {correct ? 'CORRECT' : 'INCORRECT'}

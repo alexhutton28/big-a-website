@@ -102,7 +102,12 @@ export default function GTFTGamePage({
                 alt={selectedPokemon}
                 width={32}
                 height={32}
-                style={{ objectFit: 'contain', background: '#f8f8f8', borderRadius: 4 }}
+                style={{
+                  objectFit: 'contain',
+                  background: '#f8f8f8',
+                  borderRadius: 4,
+                  height: 'auto',
+                }}
                 unoptimized
               />
             )}
@@ -148,6 +153,7 @@ export default function GTFTGamePage({
                         objectFit: 'contain',
                         background: '#f8f8f8',
                         borderRadius: 4,
+                        width: 'auto',
                       }}
                       onError={(e) => {
                         e.currentTarget.style.display = 'none';
