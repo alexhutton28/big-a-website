@@ -25,6 +25,60 @@ export default function GTFTResultPage({
   today: Date;
   gameNumber: number;
 }) {
+  // --- Streak logic ---
+  const [streak, setStreak] = React.useState(1);
+  React.useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const streakKey = 'flavor-game-streak';
+    const lastPlayedKey = 'flavor-game-last-played';
+    const todayStr = today.toISOString().slice(0, 10); // YYYY-MM-DD
+    let newStreak = 1;
+    try {
+      const lastPlayed = localStorage.getItem(lastPlayedKey);
+      const streakVal = parseInt(localStorage.getItem(streakKey) || '1', 10);
+      if (lastPlayed) {
+        const last = new Date(lastPlayed);
+        const diffDays = Math.floor((today.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+          newStreak = streakVal + 1;
+        } else if (diffDays === 0) {
+          newStreak = streakVal;
+        } else {
+          newStreak = 1;
+        }
+      }
+      localStorage.setItem(streakKey, String(newStreak));
+      localStorage.setItem(lastPlayedKey, todayStr);
+    } catch {}
+    setStreak(newStreak);
+  }, [today]);
+
+  // --- Countdown logic ---
+  const [countdown, setCountdown] = React.useState('');
+  React.useEffect(() => {
+    function updateCountdown() {
+      const now = new Date();
+      const nextMidnight = new Date(now);
+      nextMidnight.setHours(24, 0, 0, 0);
+      const diff = nextMidnight.getTime() - now.getTime();
+      if (diff <= 0) {
+        setCountdown('00:00:00');
+        return;
+      }
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+      setCountdown(
+        `${hours.toString().padStart(2, '0')}:` +
+          `${minutes.toString().padStart(2, '0')}:` +
+          `${seconds.toString().padStart(2, '0')}`
+      );
+    }
+    updateCountdown();
+    const timer = setInterval(updateCountdown, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   return (
     <section className="min-h-[calc(100dvh-62px)] flex flex-col items-center w-full pt-2 sm:pt-5">
       <div className="flex flex-col gap-0 items-center mb-4">
@@ -63,7 +117,7 @@ export default function GTFTResultPage({
       )}
       {/* Share button */}
       <button
-        className="barlow-cond text-white font-bold bg-tide px-3 py-2 rounded text-[18px] cursor-pointer hover:bg-wave transition-colors"
+        className="barlow-cond text-white font-bold bg-tide px-3 py-2 rounded text-[18px] cursor-pointer hover:bg-wave transition-colors mb-3"
         onClick={() => {
           const shareText = `Guess That Flavor Text #${gameNumber}\n${correct ? '✅' : '❌'} ${score}/4\n${window.location.href}`;
           if (navigator.share) {
@@ -76,6 +130,19 @@ export default function GTFTResultPage({
       >
         Share
       </button>
+
+      <div className="bg-ghost border border-solid border-stone px-2 py-1 rounded flex items-center gap-2 mb-1">
+        <Image
+          src="/fire-energy.png"
+          alt="Fire Energy"
+          width={17}
+          height={17}
+          style={{ width: 17, height: 17 }}
+        />
+        <span className="barlow text-sm text-stone font-bold">{streak} Day Streak</span>
+      </div>
+      <p className="barlow text-xs text-slate">Next card in: {countdown}</p>
+
       {/* Developer-only reset button */}
       {typeof window !== 'undefined' &&
         (window.location.hostname === 'localhost' || window.location.search.includes('dev')) && (
