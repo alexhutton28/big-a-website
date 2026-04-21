@@ -20,8 +20,18 @@ function getDailyIndex(length: number) {
   // Simple daily index based on date
   return (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) % length;
 }
+import { POKEMON_NAMES } from './pokemon-names';
 function namesMatch(guess: string, answer: string) {
-  return guess.trim().toLowerCase() === answer.trim().toLowerCase();
+  const guessNorm = guess.trim().toLowerCase();
+  const answerNorm = answer.trim().toLowerCase();
+  // If answer is in the official Pokémon names list, require exact match
+  if (POKEMON_NAMES.map((n) => n.toLowerCase()).includes(answerNorm)) {
+    return guessNorm === answerNorm;
+  }
+  // Otherwise, allow partial match (guess is contained in answer or vice versa)
+  return (
+    guessNorm === answerNorm || answerNorm.includes(guessNorm) || guessNorm.includes(answerNorm)
+  );
 }
 
 export default function GuessThatFlavorText() {

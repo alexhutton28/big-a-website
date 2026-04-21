@@ -2048,17 +2048,6 @@ const flavorCards = [
     image: 'https://images.pokemontcg.io/bw2/2.png',
   },
   {
-    id: 'det1-10',
-    name: 'Detective Pikachu',
-    flavorText:
-      'He loves to show off his vast knowledge. This expressive this Pokémon is like a middle-aged man.',
-    attack: 'Scout',
-    stage: 'Basic',
-    set: 'Detective Pikachu',
-    type: 'Lightning',
-    image: 'https://images.pokemontcg.io/det1/10.png',
-  },
-  {
     id: 'xy4-6',
     name: 'Swadloon',
     flavorText:
@@ -2638,17 +2627,6 @@ const flavorCards = [
     image: 'https://images.pokemontcg.io/sm9/10.png',
   },
   {
-    id: 'pop7-10',
-    name: 'Wormadam Sandy Cloak',
-    flavorText:
-      "When BURMY evolved, it this Pokémon became a part of this Pokémon's body. The this Pokémon is never shed.",
-    attack: 'Push Over',
-    stage: 'Stage 1',
-    set: 'POP Series 7',
-    type: 'Fighting',
-    image: 'https://images.pokemontcg.io/pop7/10.png',
-  },
-  {
     id: 'si1-11',
     name: 'Marill',
     flavorText:
@@ -2866,17 +2844,6 @@ const flavorCards = [
     set: 'Secret Wonders',
     type: 'Colorless',
     image: 'https://images.pokemontcg.io/dp3/12.png',
-  },
-  {
-    id: 'pop7-11',
-    name: 'Burmy Plant Cloak',
-    flavorText:
-      'To shelter itself from cold, wintry winds, it covers itself with a this Pokémon made of twigs and leaves.',
-    attack: 'Plant Cloak Tackle',
-    stage: 'Basic',
-    set: 'POP Series 7',
-    type: 'Grass',
-    image: 'https://images.pokemontcg.io/pop7/11.png',
   },
   {
     id: 'sm75-9',
@@ -3119,17 +3086,6 @@ const flavorCards = [
     set: 'POP Series 6',
     type: 'Colorless',
     image: 'https://images.pokemontcg.io/pop6/10.png',
-  },
-  {
-    id: 'pop7-12',
-    name: 'Burmy Sandy Cloak',
-    flavorText:
-      'To shelter itself from cold, wintry winds, it covers itself with a this Pokémon made of twigs and leaves.',
-    attack: 'Sandy Cloak Tackle',
-    stage: 'Basic',
-    set: 'POP Series 7',
-    type: 'Grass',
-    image: 'https://images.pokemontcg.io/pop7/12.png',
   },
   {
     id: 'hgss3-6',
@@ -7493,17 +7449,6 @@ const flavorCards = [
     image: 'https://images.pokemontcg.io/bw9/35.png',
   },
   {
-    id: 'dp3-41',
-    name: 'Wormadam Plant Cloak',
-    flavorText:
-      "When BURMY evolved, its this Pokémon became a part of this Pokémon's body. The this Pokémon is never shed.",
-    attack: 'Leaf Hurricane',
-    stage: 'Stage 1',
-    set: 'Secret Wonders',
-    type: 'Grass',
-    image: 'https://images.pokemontcg.io/dp3/41.png',
-  },
-  {
     id: 'swshp-SWSH028',
     name: 'Duraludon',
     flavorText:
@@ -7787,17 +7732,6 @@ const flavorCards = [
     set: 'Guardians Rising',
     type: 'Water',
     image: 'https://images.pokemontcg.io/sm2/39.png',
-  },
-  {
-    id: 'dp3-43',
-    name: 'Wormadam Trash Cloak',
-    flavorText:
-      "When BURMY evolved, its this Pokémon became a part of this Pokémon's body. The this Pokémon is never shed.",
-    attack: 'Iron Tackle',
-    stage: 'Stage 1',
-    set: 'Secret Wonders',
-    type: 'Metal',
-    image: 'https://images.pokemontcg.io/dp3/43.png',
   },
   {
     id: 'bw3-36',
@@ -9085,17 +9019,6 @@ const flavorCards = [
     set: 'Dragon Majesty',
     type: 'Dragon',
     image: 'https://images.pokemontcg.io/sm75/54.png',
-  },
-  {
-    id: 'pl4-58',
-    name: 'Burmy Trash Cloak',
-    flavorText:
-      'Even if it is born where there are no cocooning materials, it somehow always ends up with a this Pokémon.',
-    attack: 'Tackle',
-    stage: 'Basic',
-    set: 'Arceus',
-    type: 'Grass',
-    image: 'https://images.pokemontcg.io/pl4/58.png',
   },
   {
     id: 'xy2-64',
