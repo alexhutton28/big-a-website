@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { BottomSpacer, TopSpacer } from './Spacers';
 
 export default function GTFTIntroPage({
   onPlay,
@@ -10,7 +11,8 @@ export default function GTFTIntroPage({
   gameNumber: number;
 }) {
   return (
-    <section className="min-h-full flex flex-col items-center justify-center pt-4 sm:pt-5 pb-[8vh] sm:pb-[14vh]">
+    <section className="min-h-full flex flex-col items-center pt-4 sm:pt-5 pb-4">
+      <TopSpacer />
       <Image
         src="/unknown-q.svg"
         alt="Guess That Flavor Text Logo"
@@ -39,6 +41,7 @@ export default function GTFTIntroPage({
         })}
         <p>No. {gameNumber}</p>
       </div>
+      <BottomSpacer />
     </section>
   );
 }
