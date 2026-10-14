@@ -21,7 +21,12 @@ export default function Header() {
   }
 
   return (
-    <header className={headerClassName} style={{ paddingTop: 'env(safe-area-inset-top)' }}>
+    // Sticky so iOS 26 Safari tints the status-bar strip with the header color
+    // (it samples fixed/sticky elements at the top; it no longer reads theme-color)
+    <header
+      className={`${headerClassName} sticky top-0 z-40`}
+      style={{ paddingTop: 'env(safe-area-inset-top)' }}
+    >
       <div className="flex items-center justify-between p-3">
         <Link href="/" className="text-lg hover:text-gray-300 transition-colors">
           {isLimitlessCheckPage ? (

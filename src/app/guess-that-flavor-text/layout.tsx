@@ -1,4 +1,10 @@
+import type { Viewport } from 'next';
 import type { ReactNode } from 'react';
+
+// Browser bar color matches the header (splash)
+export const viewport: Viewport = {
+  themeColor: '#7aa6ff',
+};
 
 export default function GuessThatFlavorTextLayout({ children }: { children: ReactNode }) {
   return (
