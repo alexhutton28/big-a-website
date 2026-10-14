@@ -8,6 +8,11 @@ updates:
     schedule:
       interval: weekly
     open-pull-requests-limit: 5
+    # Major upgrades (e.g. TypeScript 7, ESLint 10) are done deliberately, not by bot.
+    # Security fixes are almost always minor/patch releases, so they still arrive.
+    ignore:
+      - dependency-name: '*'
+        update-types: ['version-update:semver-major']
     groups:
       # Batch routine minor/patch bumps into one PR instead of one per package
       minor-and-patch:
