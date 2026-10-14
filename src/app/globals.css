@@ -5,10 +5,6 @@
   font-family: var(--font-barlow), sans-serif;
 }
 
-.barlow-cond {
-  font-family: var(--font-barlow-condensed), sans-serif;
-}
-
 :root {
   --background: #faf7f7;
   --foreground: #4e0a0a;
@@ -19,7 +15,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-lato);
   --font-barlow-body: var(--font-barlow);
-  --font-barlow-cond: var(--font-barlow-condensed);
   --font-mono: var(--font-geist-mono);
   --spacing-1: 4px;
   --spacing-2: 8px;
@@ -50,13 +45,8 @@
   --color-slate: #47679c;
   --color-ghost: #f7f7fa;
   --color-drop: #e4f0ff;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-mist: #f3f6fb;
+  --color-abyss: #1c2a44;
 }
 
 html,
@@ -88,6 +78,222 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   background: var(--color-houndoom);
   border-radius: 999px;
   border: 2px solid var(--color-rockruff);
+}
+
+.gtft-scrollbar {
+  scrollbar-color: var(--color-wave) transparent;
+  scrollbar-width: thin;
+}
+
+.gtft-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.gtft-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.gtft-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-wave);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+
+/* Lifeline answer reveal: fades up like the flavor-text words */
+@keyframes lifeline-reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.lifeline-reveal {
+  animation: lifeline-reveal 300ms ease-out both;
+}
+
+.lifeline-reveal-delayed {
+  animation: lifeline-reveal 300ms ease-out 120ms both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lifeline-reveal,
+  .lifeline-reveal-delayed {
+    animation: none;
+  }
+}
+
+/* Result card reveal: the card starts covered in abyss, a spotlight works up the card
+   (flavor text, attacks, art, name), widens to fill it, then the cover fades and the
+   card pops. The result heading and stars fade in once the card is showing. */
+@property --spot-x {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 68%;
+}
+
+@property --spot-y {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 87%;
+}
+
+@property --spot-r {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 0;
+}
+
+@keyframes spotlight-roam {
+  0% {
+    --spot-x: 68%;
+    --spot-y: 92%;
+    --spot-r: 0;
+  }
+
+  12% {
+    --spot-x: 68%;
+    --spot-y: 87%;
+    --spot-r: 55px;
+  }
+
+  35% {
+    --spot-x: 35%;
+    --spot-y: 62%;
+    --spot-r: 55px;
+  }
+
+  58% {
+    --spot-x: 62%;
+    --spot-y: 35%;
+    --spot-r: 55px;
+  }
+
+  80% {
+    --spot-x: 30%;
+    --spot-y: 12%;
+    --spot-r: 55px;
+  }
+
+  100% {
+    --spot-x: 50%;
+    --spot-y: 50%;
+    --spot-r: 420px;
+  }
+}
+
+@keyframes spotlight-clear {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes card-pop {
+  0% {
+    transform: scale(1);
+  }
+
+  45% {
+    transform: scale(1.04);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes result-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card-reveal {
+  animation: card-pop 450ms ease-out 2.6s both;
+}
+
+.card-reveal-cover {
+  --spot-x: 68%;
+  --spot-y: 92%;
+  --spot-r: 0;
+
+  background: var(--color-abyss);
+  mask-image: radial-gradient(
+    circle var(--spot-r) at var(--spot-x) var(--spot-y),
+    transparent 0,
+    transparent 70%,
+    #000 100%
+  );
+  animation:
+    spotlight-roam 2.6s ease-in-out both,
+    spotlight-clear 400ms ease-out 2.6s both;
+}
+
+.result-heading-in {
+  animation: result-fade-up 400ms ease-out 3s both;
+}
+
+.result-stars-in {
+  animation: result-fade-up 400ms ease-out 3.25s both;
+}
+
+/* Hold the whole sequence on the dark cover until the card image has loaded */
+.reveal-pending .card-reveal,
+.reveal-pending .card-reveal-cover,
+.reveal-pending .result-heading-in,
+.reveal-pending .result-stars-in {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-reveal,
+  .result-heading-in,
+  .result-stars-in {
+    animation: none;
+  }
+
+  .card-reveal-cover {
+    display: none;
+  }
+}
+
+/* Nudge for when Guess is clicked before a Pokémon is picked */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-4px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(4px);
+  }
+}
+
+.shake {
+  animation: shake 400ms ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shake {
+    animation: none;
+  }
 }
 
 @keyframes round-option-in {
@@ -220,8 +426,9 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   }
 }
 
-/* Dot grid + gradient background for Guess That Flavor Text */
-.dot-gradient-bg {
+/* Dot grid + gradient background for Guess That Flavor Text. Applied to the body so
+   it fills the whole screen, including behind the mobile browser toolbar */
+body:has(.dot-gradient-bg) {
   background-image:
     radial-gradient(circle, var(--color-drop) 2.5px, transparent 2.5px),
     linear-gradient(180deg, #fff 0%, var(--color-ghost) 100%);

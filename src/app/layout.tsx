@@ -1,5 +1,5 @@
-import type { Metadata } from 'next';
-import { Barlow, Barlow_Condensed, Lato } from 'next/font/google';
+import type { Metadata, Viewport } from 'next';
+import { Barlow, Lato } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -14,13 +14,8 @@ const lato = Lato({
 const barlow = Barlow({
   variable: '--font-barlow',
   subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
-});
-
-const barlowCondensed = Barlow_Condensed({
-  variable: '--font-barlow-condensed',
-  subsets: ['latin'],
-  weight: ['400', '500', '600', '700'],
+  weight: ['300', '400', '500', '600', '700'],
+  style: ['normal', 'italic'],
 });
 
 export const metadata: Metadata = {
@@ -45,6 +40,11 @@ export const metadata: Metadata = {
   },
 };
 
+// Lets the page draw under the iOS status bar so the header's safe-area padding takes effect
+export const viewport: Viewport = {
+  viewportFit: 'cover',
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -52,9 +52,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${lato.variable} ${barlow.variable} ${barlowCondensed.variable} antialiased bg-white text-black`}
-      >
+      <body className={`${lato.variable} ${barlow.variable} antialiased bg-white text-black`}>
         <Header />
         <main>{children}</main>
         <Analytics />

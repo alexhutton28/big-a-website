@@ -35,6 +35,7 @@ export default function Home() {
                 alt="Limitless Check preview"
                 className="h-[140px] w-[260px] object-cover transition-transform duration-300 group-hover:scale-102"
                 height={600}
+                loading="eager"
                 src="/limitless-check-og.png"
                 width={1200}
               />

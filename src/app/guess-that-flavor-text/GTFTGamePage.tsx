@@ -1,13 +1,16 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import { getPokemonSpriteUrl } from './pokemon-names';
 import type { Lifeline, Card } from './types.ts';
 
 interface GTFTGamePageProps {
   card: Card;
   names: string[];
   usedLifelines: Lifeline[];
+  revealedLifelines: Lifeline[];
   LIFELINES: Lifeline[];
   inputValue: string;
+  selectedPokemon: string | null;
   suggestions: string[];
   activeIndex: number;
   inputRef: React.RefObject<HTMLInputElement>;
@@ -19,11 +22,83 @@ interface GTFTGamePageProps {
   submitGuess: () => void;
 }
 
+// A point star in the current text color: filled while the point is still available, outlined once spent
+function Star({ size = 12, filled = true }: { size?: number; filled?: boolean }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill={filled ? 'currentColor' : 'none'}
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M12 2.5l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.5l-5.87 3.08 1.12-6.54L2.5 9.41l6.56-.95L12 2.5z" />
+    </svg>
+  );
+}
+
+// Shows what a lifeline costs; hidden once it's been used
+function LifelineCost({ used }: { used: boolean }) {
+  if (used) return null;
+  return (
+    <span
+      className="barlow absolute -top-2 -right-1 z-10 flex items-center gap-0.5 whitespace-nowrap rounded-md border border-slate bg-slate px-1 py-0.5 text-[11px] font-medium leading-none text-white"
+      aria-label="costs 1 point"
+    >
+      <span aria-hidden="true">−1</span>
+      <Star size={11} />
+    </span>
+  );
+}
+
+// A lifeline button that reveals its answer in place once used: the prompt is swapped
+// for a small gray label and the answer, so the row never changes layout
+function LifelineCard({
+  used,
+  onUse,
+  prompt,
+  label,
+  answer,
+}: {
+  used: boolean;
+  onUse: () => void;
+  prompt: React.ReactNode;
+  label: string;
+  answer: string | undefined;
+}) {
+  return (
+    <button
+      onClick={onUse}
+      disabled={used}
+      className={`barlow relative flex flex-col flex-1 basis-0 min-w-0 justify-center text-left border border-slate rounded-xs p-2 transition-colors duration-300 ${used ? 'bg-drop cursor-default' : 'bg-mist text-slate cursor-pointer [&:hover]:bg-drop'}`}
+    >
+      <LifelineCost used={used} />
+      {used ? (
+        <>
+          <span className="lifeline-reveal font-light text-xs leading-tight text-stone">
+            {label}
+          </span>
+          <span className="lifeline-reveal-delayed font-medium text-sm leading-tight text-slate break-words">
+            {answer}
+          </span>
+        </>
+      ) : (
+        prompt
+      )}
+    </button>
+  );
+}
+
 export default function GTFTGamePage({
   card,
   usedLifelines,
+  revealedLifelines,
   LIFELINES,
   inputValue,
+  selectedPokemon,
   suggestions,
   activeIndex,
   inputRef,
@@ -35,7 +110,21 @@ export default function GTFTGamePage({
   submitGuess,
 }: GTFTGamePageProps) {
   const [visibleCount, setVisibleCount] = useState(0);
-  const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
+  const [shaking, setShaking] = useState(false);
+  // Used by the player, or shown automatically after their guess
+  const isRevealed = (lifeline: Lifeline) =>
+    usedLifelines.includes(lifeline) || revealedLifelines.includes(lifeline);
+
+  // Guess only submits a picked Pokémon; otherwise shake the search box to point at it
+  function handleGuessClick() {
+    if (selectedPokemon) {
+      submitGuess();
+      return;
+    }
+    setShaking(true);
+    setTimeout(() => setShaking(false), 400);
+    inputRef.current?.focus();
+  }
   const words = card.flavorText.split(' ');
 
   useEffect(() => {
@@ -63,16 +152,16 @@ export default function GTFTGamePage({
   }, [card.flavorText, words]);
 
   return (
-    <section className="min-h-[calc(100vh-62px)] flex flex-col items-center justify-start pt-4 sm:pt-5">
+    <section className="min-h-full w-full flex flex-col items-center justify-start px-3 pt-4 sm:pt-5">
       <Image
         src="/unknown-q.svg"
         alt="Guess That Flavor Text Logo"
         width={170}
         height={36}
-        className="mb-3 w-[85px] sm:w-[100px] h-auto"
+        className="mb-3 w-[85px] sm:w-[100px] h-auto drop-shadow-[0_6px_12px_#47679c4d]"
       />
-      <div className="flex w-full max-w-[max(60vw,350px)] bg-white rounded px-3 py-2 border border-splash mb-4">
-        <p className="flex justify-center items-center flex-wrap gap-x-[0.3em] italic text-center text-[20px] text-wave break-words w-full min-h-[60px]">
+      <div className="flex w-fit max-w-[min(100%,max(60vw,350px))] bg-white rounded px-3 py-2 border border-splash mb-4">
+        <p className="flex justify-center items-center flex-wrap gap-x-[0.3em] italic font-normal text-center text-[20px] text-wave break-words w-full min-h-[60px]">
           {words.map((word, i) => {
             let displayWord = word;
             if (i === 0) displayWord = '"' + word;
@@ -94,18 +183,23 @@ export default function GTFTGamePage({
       </div>
 
       <div className="relative w-full max-w-[max(60vw,350px)] sm:max-w-[480px]">
-        <div className="flex gap-3 mb-1">
-          <div className="flex items-center flex-1 border border-splash px-3 py-2 bg-white outline-none mb-0 rounded gap-2">
+        <div className="flex items-start gap-3 mb-2">
+          <div
+            className={`flex items-center flex-1 min-w-0 min-h-[52px] border border-slate px-3 py-2 bg-white outline-none mb-0 rounded gap-2 ${shaking ? 'shake' : ''}`}
+          >
             {selectedPokemon && (
               <Image
-                src={`https://r2.limitlesstcg.net/pokemon/gen9/${selectedPokemon.toLowerCase().replace(/[^a-z0-9]/g, '')}.png`}
+                src={getPokemonSpriteUrl(selectedPokemon)}
                 alt={selectedPokemon}
                 width={32}
                 height={32}
                 style={{
                   objectFit: 'contain',
                   borderRadius: 4,
+                  width: 'auto',
                   height: 'auto',
+                  maxWidth: 34,
+                  maxHeight: 34,
                 }}
                 unoptimized
               />
@@ -114,136 +208,116 @@ export default function GTFTGamePage({
               ref={inputRef}
               type="text"
               value={inputValue}
-              onChange={(e) => {
-                handleInputChange(e.target.value);
-                setSelectedPokemon(null);
-              }}
+              onChange={(e) => handleInputChange(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Search Pokémon name…"
               autoComplete="off"
-              className="flex-1 bg-white text-stone outline-none mb-0 border-0 shadow-none"
+              className="flex-1 bg-white text-stone placeholder:text-stone outline-none mb-0 border-0 shadow-none"
               style={{ minWidth: 0 }}
             />
           </div>
           {suggestions.length > 0 && (
             <ul
               ref={listRef}
-              className="absolute left-0 right-0 top-[42px] z-10 mt-1 max-h-52 overflow-y-auto rounded border border-wave bg-white shadow-md list-none p-0"
+              className="absolute left-0 right-0 top-[52px] z-30 mt-1 max-h-52 overflow-y-auto rounded border border-slate bg-white shadow-md list-none p-0 gtft-scrollbar"
             >
               {suggestions.map((name, i) => {
-                const imgName = name.toLowerCase().replace(/[^a-z0-9]/g, '');
-                const imgUrl = `https://r2.limitlesstcg.net/pokemon/gen9/${imgName}.png`;
                 return (
                   <li
                     key={name}
-                    className={`cursor-pointer px-2 py-2 text-wave hover:bg-drop transition-colors flex items-center gap-2 ${i === activeIndex ? 'bg-[#2876EC] text-white' : 'bg-white text-[#222]'}`}
-                    onMouseDown={() => {
-                      setSelectedPokemon(name);
-                      selectSuggestion(name);
-                    }}
+                    className={`cursor-pointer h-[50px] px-2 py-0 transition-colors flex items-center gap-2 ${i === activeIndex ? 'bg-wave text-white' : 'text-slate [&:hover]:bg-drop'}`}
+                    onMouseDown={() => selectSuggestion(name)}
                     tabIndex={-1}
                   >
-                    <Image
-                      src={imgUrl}
-                      alt={name}
-                      width={24}
-                      height={24}
-                      style={{
-                        objectFit: 'contain',
-                        borderRadius: 4,
-                        width: 'auto',
-                      }}
-                      onError={(e) => {
-                        e.currentTarget.style.display = 'none';
-                      }}
-                      unoptimized
-                    />
+                    <div className="flex items-center justify-center shrink-0 w-[34px] h-[34px]">
+                      <Image
+                        src={getPokemonSpriteUrl(name)}
+                        alt={name}
+                        width={24}
+                        height={24}
+                        style={{
+                          objectFit: 'contain',
+                          borderRadius: 4,
+                          width: 'auto',
+                          height: 'auto',
+                          maxWidth: 34,
+                          maxHeight: 34,
+                        }}
+                        onError={(e) => {
+                          e.currentTarget.style.display = 'none';
+                        }}
+                        unoptimized
+                      />
+                    </div>
                     {name}
                   </li>
                 );
               })}
             </ul>
           )}
-          <button
-            onClick={submitGuess}
-            disabled={!inputValue.trim()}
-            className="barlow-cond text-white font-bold bg-tide px-4 rounded text-l cursor-pointer hover:bg-wave transition-colors"
-          >
-            Guess
-          </button>
-        </div>
-        <div className="barlow-cond w-full text-right mb-3 text-sm text-tide">
-          {4 - usedLifelines.length} POINT{4 - usedLifelines.length === 1 ? '' : 'S'}
-        </div>
-
-        <div className="flex flex-col mb-3">
-          <h2 className="barlow-cond font-bold text-tide text-xl">Use a Lifeline</h2>
-          <p className="barlow-cond italic text-wave">
-            Each lifeline used will subtract 1 point from the 4 point total
-          </p>
-        </div>
-        <div className="flex w-full justify-between gap-3 mb-3">
-          <div className="flex flex-col gap-0 rounded">
+          {/* Guess with the remaining points underneath, sharing the button's width */}
+          <div className="flex flex-col shrink-0 gap-1">
             <button
-              onClick={() => activateLifeline(LIFELINES[0])}
-              disabled={usedLifelines.includes(LIFELINES[0])}
-              className="flex flex-col flex-start bg-tide text-white p-2 hover:bg-wave transition-colors cursor-pointer disabled:cursor-default disabled:hover:bg-tide"
+              onClick={handleGuessClick}
+              className="barlow text-white font-medium bg-tide border border-tide h-[52px] px-4 rounded-xs text-base cursor-pointer [&:hover]:bg-wave [&:hover]:border-wave transition-colors"
             >
-              <h3 className="barlow font-bold text-md text-left leading-tight">What Set</h3>
-              <p className="barlow font-light text-left leading-tight text-xs whitespace-nowrap">
-                Is the card from?
-              </p>
+              Guess
             </button>
             <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${usedLifelines.includes(LIFELINES[0]) ? 'max-h-20' : 'max-h-0'}`}
+              className="barlow flex items-center justify-end gap-2 text-sm text-tide"
+              aria-label={`${4 - usedLifelines.length} point${4 - usedLifelines.length === 1 ? '' : 's'}`}
             >
-              <div className="barlow text-xl p-2 bg-white border border-wave text-tide">
-                {card.set}
-              </div>
+              <span className="flex items-center gap-0.5">
+                {/* Spent points come off the left, so the remaining filled stars sit next to POINTS */}
+                {Array.from({ length: 4 }, (_, i) => (
+                  <Star key={i} filled={i >= usedLifelines.length} />
+                ))}
+              </span>
+              <span aria-hidden="true">POINTS</span>
             </div>
           </div>
+        </div>
 
-          <div className="flex flex-col gap-0">
-            <button
-              onClick={() => activateLifeline(LIFELINES[2])}
-              disabled={usedLifelines.includes(LIFELINES[2])}
-              className="flex flex-col flex-start bg-tide text-white p-2 hover:bg-wave transition-colors cursor-pointer disabled:cursor-default disabled:hover:bg-tide"
-            >
-              <h3 className="barlow font-bold text-md text-left leading-tight whitespace-nowrap">
-                What Stage
-              </h3>
-              <p className="barlow font-light text-left leading-tight text-xs whitespace-nowrap">
-                Is the card?
-              </p>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${usedLifelines.includes(LIFELINES[2]) ? 'max-h-20' : 'max-h-0'}`}
-            >
-              <div className="barlow text-xl p-2 bg-white border border-wave text-tide">
-                {card.stage}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col gap-0">
-            <button
-              onClick={() => activateLifeline(LIFELINES[1])}
-              disabled={usedLifelines.includes(LIFELINES[1])}
-              className="flex flex-col flex-start bg-tide text-white p-2 hover:bg-wave transition-colors cursor-pointer disabled:cursor-default disabled:hover:bg-tide"
-            >
-              <p className="barlow font-light text-left leading-tight text-xs whitespace-nowrap">
-                Read An
-              </p>
-              <h3 className="barlow font-bold text-md text-left leading-tight">Attack Name</h3>
-            </button>
-            <div
-              className={`overflow-hidden transition-all duration-300 ease-in-out ${usedLifelines.includes(LIFELINES[1]) ? 'max-h-20' : 'max-h-0'}`}
-            >
-              <div className="barlow text-xl p-2 bg-white border border-wave text-tide">
-                {card.attack || 'None'}
-              </div>
-            </div>
-          </div>
+        <div className="flex flex-col mb-2">
+          <h2 className="barlow font-bold text-slate text-base">Use a Lifeline</h2>
+        </div>
+        <div className="flex w-full gap-3 mb-3">
+          <LifelineCard
+            used={isRevealed(LIFELINES[0])}
+            onUse={() => activateLifeline(LIFELINES[0])}
+            prompt={
+              <>
+                <h3 className="font-medium text-sm leading-tight">What Set</h3>
+                <p className="font-light text-xs leading-tight">Is the card from?</p>
+              </>
+            }
+            label="Set"
+            answer={card.set}
+          />
+          <LifelineCard
+            used={isRevealed(LIFELINES[2])}
+            onUse={() => activateLifeline(LIFELINES[2])}
+            prompt={
+              <>
+                <h3 className="font-medium text-sm leading-tight whitespace-nowrap">What Stage</h3>
+                <p className="font-light text-xs leading-tight">Is the card?</p>
+              </>
+            }
+            label="Stage"
+            answer={card.stage}
+          />
+          <LifelineCard
+            used={isRevealed(LIFELINES[1])}
+            onUse={() => activateLifeline(LIFELINES[1])}
+            prompt={
+              <>
+                <p className="font-light text-xs leading-tight">Read An</p>
+                <h3 className="font-medium text-sm leading-tight">Attack Name</h3>
+              </>
+            }
+            label="Attack"
+            answer={card.attack || 'None'}
+          />
         </div>
       </div>
     </section>

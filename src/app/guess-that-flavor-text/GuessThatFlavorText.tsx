@@ -11,6 +11,8 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { Card, DayState, Lifeline } from './types.ts';
 const LIFELINES: Lifeline[] = ['Set', 'Attack', 'Stage'];
+// Pause between each automatic lifeline reveal after a guess, and before the result page
+const REVEAL_GAP_MS = 1000;
 function getTodayKey() {
   const now = new Date();
   return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
@@ -58,6 +60,11 @@ export default function GuessThatFlavorText() {
   const [dayState, setDayState] = useState<DayState>(defaultState);
   // Autocomplete
   const [inputValue, setInputValue] = useState('');
+  // The Pokémon picked from the suggestions; guesses are only allowed once this is set
+  const [selectedPokemon, setSelectedPokemon] = useState<string | null>(null);
+  // Lifelines shown automatically after a guess; display only, never affects the score
+  const [autoRevealed, setAutoRevealed] = useState<Lifeline[]>([]);
+  const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null!) as React.RefObject<HTMLInputElement>;
@@ -112,6 +119,12 @@ export default function GuessThatFlavorText() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // Cancel any pending post-guess reveals if the component goes away
+  useEffect(() => {
+    const timers = revealTimers.current;
+    return () => timers.forEach(clearTimeout);
+  }, []);
+
   // Persist state
   useEffect(() => {
     if (!loading) {
@@ -121,9 +134,22 @@ export default function GuessThatFlavorText() {
     }
   }, [dayState, loading, storageKey]);
 
+  // Close suggestions when clicking outside the input or dropdown
+  useEffect(() => {
+    function handlePointerDown(e: PointerEvent) {
+      const target = e.target as Node;
+      if (inputRef.current?.contains(target) || listRef.current?.contains(target)) return;
+      setSuggestions([]);
+      setActiveIndex(-1);
+    }
+    document.addEventListener('pointerdown', handlePointerDown);
+    return () => document.removeEventListener('pointerdown', handlePointerDown);
+  }, [inputRef, listRef]);
+
   // Autocomplete handlers
   function handleInputChange(value: string) {
     setInputValue(value);
+    setSelectedPokemon(null);
     setActiveIndex(-1);
     if (!value.trim() || value.length < 3) {
       setSuggestions([]);
@@ -135,6 +161,7 @@ export default function GuessThatFlavorText() {
   }
   function selectSuggestion(name: string) {
     setInputValue(name);
+    setSelectedPokemon(name);
     setSuggestions([]);
     setActiveIndex(-1);
     inputRef.current?.focus();
@@ -169,9 +196,8 @@ export default function GuessThatFlavorText() {
     }));
   }
   function submitGuess() {
-    if (dayState.completed || !card) return;
-    const guess = inputValue.trim();
-    if (!guess) return;
+    if (dayState.completed || !card || !selectedPokemon) return;
+    const guess = selectedPokemon;
     setSuggestions([]);
     const correct = namesMatch(guess, card.name);
     setDayState((prev: DayState) => ({
@@ -181,7 +207,32 @@ export default function GuessThatFlavorText() {
       correct,
       score: correct ? prev.score : 0,
     }));
-    setPage(2);
+
+    // Reveal the unused lifelines left to right, one every REVEAL_GAP_MS, then show the result
+    const displayOrder: Lifeline[] = ['Set', 'Stage', 'Attack'];
+    const remaining = displayOrder.filter((l) => !dayState.usedLifelines.includes(l));
+    remaining.forEach((lifeline, i) => {
+      revealTimers.current.push(
+        setTimeout(() => setAutoRevealed((prev) => [...prev, lifeline]), i * REVEAL_GAP_MS)
+      );
+    });
+    revealTimers.current.push(setTimeout(() => setPage(2), remaining.length * REVEAL_GAP_MS));
+  }
+
+  // Dev reset: clear today's saved game and every bit of in-progress UI state
+  function resetGame() {
+    revealTimers.current.forEach(clearTimeout);
+    revealTimers.current = [];
+    try {
+      localStorage.removeItem(storageKey);
+    } catch {}
+    setDayState(defaultState);
+    setAutoRevealed([]);
+    setInputValue('');
+    setSelectedPokemon(null);
+    setSuggestions([]);
+    setActiveIndex(-1);
+    setPage(0);
   }
 
   const { correct, score, usedLifelines, guess } = dayState;
@@ -196,8 +247,10 @@ export default function GuessThatFlavorText() {
         card={card}
         names={names}
         usedLifelines={usedLifelines}
+        revealedLifelines={autoRevealed}
         LIFELINES={LIFELINES}
         inputValue={inputValue}
+        selectedPokemon={selectedPokemon}
         suggestions={suggestions}
         activeIndex={activeIndex}
         inputRef={inputRef}
@@ -217,10 +270,7 @@ export default function GuessThatFlavorText() {
         correct={correct}
         score={score}
         guess={guess}
-        storageKey={storageKey}
-        defaultState={defaultState}
-        setDayState={setDayState}
-        setPage={setPage}
+        onReset={resetGame}
         today={today}
         gameNumber={gameNumber}
       />
