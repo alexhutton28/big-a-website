@@ -122,7 +122,7 @@ export default function GTFTResultPage({
 
   return (
     <section
-      className={`min-h-full flex flex-col items-center w-full pt-2 sm:pt-5 pb-4 ${cardLoaded ? '' : 'reveal-pending'}`}
+      className={`min-h-full flex flex-col items-center w-full py-3 ${cardLoaded ? '' : 'reveal-pending'}`}
     >
       <TopSpacer />
       {/* Result text waits for the card reveal below to finish (see .card-reveal in globals.css) */}

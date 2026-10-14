@@ -165,7 +165,7 @@ export default function GTFTGamePage({
   }, [card.flavorText]);
 
   return (
-    <section className="min-h-full w-full flex flex-col items-center px-3 pt-4 sm:pt-5 pb-4">
+    <section className="min-h-full w-full flex flex-col items-center px-3 py-3">
       <TopSpacer />
       <Image
         src="/unknown-q.svg"

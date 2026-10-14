@@ -11,7 +11,7 @@ export default function GTFTIntroPage({
   gameNumber: number;
 }) {
   return (
-    <section className="min-h-full flex flex-col items-center pt-4 sm:pt-5 pb-4">
+    <section className="min-h-full flex flex-col items-center py-3">
       <TopSpacer />
       <Image
         src="/unknown-q.svg"
