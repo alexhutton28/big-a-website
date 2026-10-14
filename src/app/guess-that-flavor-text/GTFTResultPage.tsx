@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Image from 'next/image';
 import type { Card } from './types.ts';
+import { daysBetween, localDateKey, parseDateKey } from './dates';
 
 export default function GTFTResultPage({
   card,
@@ -20,19 +21,21 @@ export default function GTFTResultPage({
   gameNumber: number;
 }) {
   // --- Streak logic ---
-  const [streak, setStreak] = React.useState(1);
-  React.useEffect(() => {
-    if (typeof window === 'undefined') return;
+  // Worked out once when the result first shows. This page only renders in the browser
+  // (after the game loads), and re-running it the same day gives the same answer.
+  const [streak] = React.useState(() => {
+    if (typeof window === 'undefined') return 1;
     const streakKey = 'flavor-game-streak';
     const lastPlayedKey = 'flavor-game-last-played';
-    const todayStr = today.toISOString().slice(0, 10); // YYYY-MM-DD
+    // Local calendar dates on both sides; toISOString would store the UTC date, which is
+    // already tomorrow for US evening players and broke the day difference
+    const todayStr = localDateKey(today);
     let newStreak = 1;
     try {
       const lastPlayed = localStorage.getItem(lastPlayedKey);
       const streakVal = parseInt(localStorage.getItem(streakKey) || '1', 10);
       if (lastPlayed) {
-        const last = new Date(lastPlayed);
-        const diffDays = Math.floor((today.getTime() - last.getTime()) / (1000 * 60 * 60 * 24));
+        const diffDays = daysBetween(parseDateKey(lastPlayed), today);
         if (diffDays === 1) {
           newStreak = streakVal + 1;
         } else if (diffDays === 0) {
@@ -44,8 +47,8 @@ export default function GTFTResultPage({
       localStorage.setItem(streakKey, String(newStreak));
       localStorage.setItem(lastPlayedKey, todayStr);
     } catch {}
-    setStreak(newStreak);
-  }, [today]);
+    return newStreak;
+  });
 
   // --- Share ---
   // Phones and tablets get the native share sheet; desktop copies the same message

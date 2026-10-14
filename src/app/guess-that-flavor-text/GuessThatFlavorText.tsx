@@ -13,43 +13,46 @@ import type { Card, DayState, Lifeline } from './types.ts';
 const LIFELINES: Lifeline[] = ['Set', 'Attack', 'Stage'];
 // Pause between each automatic lifeline reveal after a guess, and before the result page
 const REVEAL_GAP_MS = 1000;
-function getTodayKey() {
-  const now = new Date();
-  return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+// Storage key format predates localDateKey (no zero padding); kept so saved games still load
+function getDayKey(date: Date) {
+  return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 }
-function getDailyIndex(length: number) {
-  const now = new Date();
+function getDailyIndex(date: Date, length: number) {
   // Simple daily index based on date
-  return (now.getFullYear() * 10000 + (now.getMonth() + 1) * 100 + now.getDate()) % length;
+  return (date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate()) % length;
 }
 import { POKEMON_NAMES } from './pokemon-names';
+import { daysBetween } from './dates';
+
+// Case- and spacing-insensitive form, so 'Nidoran♀' matches a card named 'Nidoran ♀'
+const compactName = (name: string) => name.trim().toLowerCase().replace(/\s+/g, '');
+// Lowercased with single spaces and padded, for whole-word phrase matching
+const spacedName = (name: string) => ` ${name.trim().toLowerCase().replace(/\s+/g, ' ')} `;
+const POKEMON_NAMES_COMPACT = new Set(POKEMON_NAMES.map(compactName));
+
 function namesMatch(guess: string, answer: string) {
-  const guessNorm = guess.trim().toLowerCase();
-  const answerNorm = answer.trim().toLowerCase();
-  // If answer is in the official Pokémon names list, require exact match
-  if (POKEMON_NAMES.map((n) => n.toLowerCase()).includes(answerNorm)) {
-    return guessNorm === answerNorm;
-  }
-  // Otherwise, allow partial match (guess is contained in answer or vice versa)
-  return (
-    guessNorm === answerNorm || answerNorm.includes(guessNorm) || guessNorm.includes(answerNorm)
-  );
+  if (compactName(guess) === compactName(answer)) return true;
+  // A card named exactly after a Pokémon needs that exact Pokémon
+  if (POKEMON_NAMES_COMPACT.has(compactName(answer))) return false;
+  // Other card names ('Shining Volcanion', 'Tapu Koko ◇', 'Cool Porygon') accept the
+  // Pokémon's name as whole words, so 'Porygon' matches 'Cool Porygon' but 'Mew' doesn't match 'Mewtwo ex'
+  return spacedName(answer).includes(spacedName(guess));
 }
 
 export default function GuessThatFlavorText() {
-  // Calculate game date and number once
-  const today = new Date();
+  // The day is fixed when the page opens; once the date changes the page reloads into the
+  // new puzzle (see the day-change effect below), and an unfinished game is dropped
+  const [today] = useState(() => new Date());
+  const isNewDay = () => getDayKey(new Date()) !== getDayKey(today);
   const start = new Date(2026, 3, 16); // April is month 3 (0-indexed)
-  const diff = Math.floor((today.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
-  const gameNumber = diff + 1;
+  const gameNumber = daysBetween(start, today) + 1;
   // State
   const [page, setPage] = useState<0 | 1 | 2>(0);
   const [card, setCard] = useState<Card | null>(null);
   const [names, setNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   // Game state
-  const todayKey = getTodayKey();
-  const storageKey = `flavor-game-${todayKey}`;
+  const storageKey = `flavor-game-${getDayKey(today)}`;
   const defaultState: DayState = {
     guess: null,
     usedLifelines: [],
@@ -88,7 +91,7 @@ export default function GuessThatFlavorText() {
           );
         }
         const valid = cardsData.filter(isValidCard);
-        const idx = getDailyIndex(valid.length);
+        const idx = getDailyIndex(today, valid.length);
         const dailyCard = valid[idx] ?? null;
         // Only set card if stage is not null (should be filtered already, but extra guard)
         if (dailyCard && dailyCard.stage !== null) {
@@ -118,6 +121,22 @@ export default function GuessThatFlavorText() {
       });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  // A new day means a new puzzle: reload as soon as the date changes, checking regularly
+  // and whenever the tab comes back into view
+  useEffect(() => {
+    function reloadIfNewDay() {
+      if (getDayKey(new Date()) !== getDayKey(today)) window.location.reload();
+    }
+    const interval = setInterval(reloadIfNewDay, 30_000);
+    document.addEventListener('visibilitychange', reloadIfNewDay);
+    window.addEventListener('focus', reloadIfNewDay);
+    return () => {
+      clearInterval(interval);
+      document.removeEventListener('visibilitychange', reloadIfNewDay);
+      window.removeEventListener('focus', reloadIfNewDay);
+    };
+  }, [today]);
 
   // Cancel any pending post-guess reveals if the component goes away
   useEffect(() => {
@@ -197,6 +216,11 @@ export default function GuessThatFlavorText() {
   }
   function submitGuess() {
     if (dayState.completed || !card || !selectedPokemon) return;
+    // Yesterday's puzzle is over once the date changes; don't record a guess for it
+    if (isNewDay()) {
+      window.location.reload();
+      return;
+    }
     const guess = selectedPokemon;
     setSuggestions([]);
     const correct = namesMatch(guess, card.name);
@@ -221,8 +245,9 @@ export default function GuessThatFlavorText() {
 
   // Dev reset: clear today's saved game and every bit of in-progress UI state
   function resetGame() {
+    // Empty in place: the unmount cleanup holds a reference to this same array
     revealTimers.current.forEach(clearTimeout);
-    revealTimers.current = [];
+    revealTimers.current.length = 0;
     try {
       localStorage.removeItem(storageKey);
     } catch {}

@@ -127,8 +127,10 @@ export default function GTFTGamePage({
   }
   const words = card.flavorText.split(' ');
 
+  // Keyed on the text itself rather than `words`, which is a new array every render
   useEffect(() => {
-    if (words.length === 0) return;
+    const textWords = card.flavorText.split(' ');
+    if (textWords.length === 0) return;
 
     const BASE_DELAY = 200;
     const PERIOD_EXTRA_DELAY = BASE_DELAY * 2;
@@ -136,7 +138,7 @@ export default function GTFTGamePage({
     let totalDelay = 50;
     const timers: NodeJS.Timeout[] = [];
 
-    words.forEach((word, i) => {
+    textWords.forEach((word, i) => {
       timers.push(setTimeout(() => setVisibleCount(i + 1), totalDelay));
 
       totalDelay += BASE_DELAY;
@@ -149,7 +151,7 @@ export default function GTFTGamePage({
     return () => {
       timers.forEach(clearTimeout);
     };
-  }, [card.flavorText, words]);
+  }, [card.flavorText]);
 
   return (
     <section className="min-h-full w-full flex flex-col items-center justify-start px-3 pt-4 sm:pt-5">
