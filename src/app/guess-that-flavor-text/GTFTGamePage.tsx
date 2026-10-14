@@ -1,11 +1,11 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import { getPokemonSpriteUrl } from './pokemon-names';
+import Star from './Star';
 import type { Lifeline, Card } from './types.ts';
 
 interface GTFTGamePageProps {
   card: Card;
-  names: string[];
   usedLifelines: Lifeline[];
   revealedLifelines: Lifeline[];
   LIFELINES: Lifeline[];
@@ -22,24 +22,6 @@ interface GTFTGamePageProps {
   submitGuess: () => void;
 }
 
-// A point star in the current text color: filled while the point is still available, outlined once spent
-function Star({ size = 12, filled = true }: { size?: number; filled?: boolean }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill={filled ? 'currentColor' : 'none'}
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M12 2.5l2.94 5.96 6.56.95-4.75 4.63 1.12 6.54L12 17.5l-5.87 3.08 1.12-6.54L2.5 9.41l6.56-.95L12 2.5z" />
-    </svg>
-  );
-}
-
 // Shows what a lifeline costs; hidden once it's been used
 function LifelineCost({ used }: { used: boolean }) {
   if (used) return null;
@@ -52,6 +34,34 @@ function LifelineCost({ used }: { used: boolean }) {
       <Star size={11} />
     </span>
   );
+}
+
+// What each lifeline card asks before it's used
+const LIFELINE_PROMPTS: Record<Lifeline, React.ReactNode> = {
+  Set: (
+    <>
+      <h3 className="font-medium text-sm leading-tight">What Set</h3>
+      <p className="font-light text-xs leading-tight">Is the card from?</p>
+    </>
+  ),
+  Stage: (
+    <>
+      <h3 className="font-medium text-sm leading-tight whitespace-nowrap">What Stage</h3>
+      <p className="font-light text-xs leading-tight">Is the card?</p>
+    </>
+  ),
+  Attack: (
+    <>
+      <p className="font-light text-xs leading-tight">Read An</p>
+      <h3 className="font-medium text-sm leading-tight">Attack Name</h3>
+    </>
+  ),
+};
+
+function lifelineAnswer(card: Card, lifeline: Lifeline) {
+  if (lifeline === 'Set') return card.set;
+  if (lifeline === 'Stage') return card.stage;
+  return card.attack || 'None';
 }
 
 // A lifeline button that reveals its answer in place once used: the prompt is swapped
@@ -284,42 +294,16 @@ export default function GTFTGamePage({
           <h2 className="barlow font-bold text-slate text-base">Use a Lifeline</h2>
         </div>
         <div className="flex w-full gap-3 mb-3">
-          <LifelineCard
-            used={isRevealed(LIFELINES[0])}
-            onUse={() => activateLifeline(LIFELINES[0])}
-            prompt={
-              <>
-                <h3 className="font-medium text-sm leading-tight">What Set</h3>
-                <p className="font-light text-xs leading-tight">Is the card from?</p>
-              </>
-            }
-            label="Set"
-            answer={card.set}
-          />
-          <LifelineCard
-            used={isRevealed(LIFELINES[2])}
-            onUse={() => activateLifeline(LIFELINES[2])}
-            prompt={
-              <>
-                <h3 className="font-medium text-sm leading-tight whitespace-nowrap">What Stage</h3>
-                <p className="font-light text-xs leading-tight">Is the card?</p>
-              </>
-            }
-            label="Stage"
-            answer={card.stage}
-          />
-          <LifelineCard
-            used={isRevealed(LIFELINES[1])}
-            onUse={() => activateLifeline(LIFELINES[1])}
-            prompt={
-              <>
-                <p className="font-light text-xs leading-tight">Read An</p>
-                <h3 className="font-medium text-sm leading-tight">Attack Name</h3>
-              </>
-            }
-            label="Attack"
-            answer={card.attack || 'None'}
-          />
+          {LIFELINES.map((lifeline) => (
+            <LifelineCard
+              key={lifeline}
+              used={isRevealed(lifeline)}
+              onUse={() => activateLifeline(lifeline)}
+              prompt={LIFELINE_PROMPTS[lifeline]}
+              label={lifeline}
+              answer={lifelineAnswer(card, lifeline)}
+            />
+          ))}
         </div>
       </div>
     </section>

@@ -10,7 +10,8 @@ import { useEffect, useRef, useState } from 'react';
 // ---------------------------------------------------------------------------
 
 import type { Card, DayState, Lifeline } from './types.ts';
-const LIFELINES: Lifeline[] = ['Set', 'Attack', 'Stage'];
+// In on-screen order, left to right; also the order they auto-reveal after a guess
+const LIFELINES: Lifeline[] = ['Set', 'Stage', 'Attack'];
 // Pause between each automatic lifeline reveal after a guess, and before the result page
 const REVEAL_GAP_MS = 1000;
 // Storage key format predates localDateKey (no zero padding); kept so saved games still load
@@ -49,7 +50,6 @@ export default function GuessThatFlavorText() {
   // State
   const [page, setPage] = useState<0 | 1 | 2>(0);
   const [card, setCard] = useState<Card | null>(null);
-  const [names, setNames] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   // Game state
   const storageKey = `flavor-game-${getDayKey(today)}`;
@@ -75,10 +75,10 @@ export default function GuessThatFlavorText() {
 
   // Load dataset
   useEffect(() => {
-    Promise.all([import('./flavor-cards'), import('./pokemon-names')])
-      .then(([cardsModule, namesModule]) => {
+    // Only the card data is loaded lazily; the Pokémon names are already imported above
+    import('./flavor-cards')
+      .then((cardsModule) => {
         const cardsData = cardsModule.default;
-        const namesData = namesModule.POKEMON_NAMES;
         // Only accept cards with valid flavorText and where 'stage' is string or undefined (not null)
         function isValidCard(card: unknown): card is Card {
           if (typeof card !== 'object' || card === null) return false;
@@ -99,11 +99,6 @@ export default function GuessThatFlavorText() {
         } else {
           setCard(null);
         }
-        setNames(
-          namesData && namesData.length
-            ? namesData
-            : Array.from(new Set(valid.map((c) => c.name))).sort()
-        );
         // Hydrate from localStorage
         try {
           const saved = localStorage.getItem(storageKey);
@@ -175,7 +170,7 @@ export default function GuessThatFlavorText() {
       return;
     }
     const lower = value.toLowerCase();
-    const matches = names.filter((n) => n.toLowerCase().includes(lower)).slice(0, 8);
+    const matches = POKEMON_NAMES.filter((n) => n.toLowerCase().includes(lower)).slice(0, 8);
     setSuggestions(matches);
   }
   function selectSuggestion(name: string) {
@@ -233,8 +228,7 @@ export default function GuessThatFlavorText() {
     }));
 
     // Reveal the unused lifelines left to right, one every REVEAL_GAP_MS, then show the result
-    const displayOrder: Lifeline[] = ['Set', 'Stage', 'Attack'];
-    const remaining = displayOrder.filter((l) => !dayState.usedLifelines.includes(l));
+    const remaining = LIFELINES.filter((l) => !dayState.usedLifelines.includes(l));
     remaining.forEach((lifeline, i) => {
       revealTimers.current.push(
         setTimeout(() => setAutoRevealed((prev) => [...prev, lifeline]), i * REVEAL_GAP_MS)
@@ -270,7 +264,6 @@ export default function GuessThatFlavorText() {
     return (
       <GTFTGamePage
         card={card}
-        names={names}
         usedLifelines={usedLifelines}
         revealedLifelines={autoRevealed}
         LIFELINES={LIFELINES}

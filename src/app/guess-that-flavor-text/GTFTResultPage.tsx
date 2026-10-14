@@ -2,6 +2,7 @@ import * as React from 'react';
 import Image from 'next/image';
 import type { Card } from './types.ts';
 import { daysBetween, localDateKey, parseDateKey } from './dates';
+import Star from './Star';
 
 export default function GTFTResultPage({
   card,
@@ -141,9 +142,13 @@ export default function GTFTResultPage({
           )}
         </div>
         {correct && (
-          <div className="result-stars-in text-[22px] text-wave -mt-[8px]">
-            {'★'.repeat(score)}
-            {'☆'.repeat(4 - score)}
+          <div
+            className="result-stars-in flex items-center gap-1 text-wave mt-1"
+            aria-label={`${score} of 4 points`}
+          >
+            {Array.from({ length: 4 }, (_, i) => (
+              <Star key={i} size={20} filled={i < score} />
+            ))}
           </div>
         )}
       </div>
