@@ -8,7 +8,6 @@ export default function GTFTResultPage({
   card,
   correct,
   score,
-  guess,
   onReset,
   today,
   gameNumber,
@@ -16,7 +15,6 @@ export default function GTFTResultPage({
   card: Card;
   correct: boolean;
   score: number;
-  guess: string | null;
   onReset: () => void;
   today: Date;
   gameNumber: number;

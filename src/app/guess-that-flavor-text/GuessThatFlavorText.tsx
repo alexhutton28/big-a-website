@@ -254,7 +254,7 @@ export default function GuessThatFlavorText() {
     setPage(0);
   }
 
-  const { correct, score, usedLifelines, guess } = dayState;
+  const { correct, score, usedLifelines } = dayState;
   // PAGE 1: Intro
   if (page === 0) {
     return <GTFTIntroPage onPlay={() => setPage(1)} today={today} gameNumber={gameNumber} />;
@@ -287,7 +287,6 @@ export default function GuessThatFlavorText() {
         card={card}
         correct={correct}
         score={score}
-        guess={guess}
         onReset={resetGame}
         today={today}
         gameNumber={gameNumber}
