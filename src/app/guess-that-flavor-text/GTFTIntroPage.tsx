@@ -10,7 +10,7 @@ export default function GTFTIntroPage({
   gameNumber: number;
 }) {
   return (
-    <section className="min-h-full flex flex-col items-center justify-start pt-4 sm:pt-5 pb-2">
+    <section className="min-h-full flex flex-col items-center justify-center pt-4 sm:pt-5 pb-[8vh] sm:pb-[14vh]">
       <Image
         src="/unknown-q.svg"
         alt="Guess That Flavor Text Logo"
