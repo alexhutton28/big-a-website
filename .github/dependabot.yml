@@ -1,0 +1,21 @@
+# Weekly pull requests to keep dependencies current. Security fixes are opened as
+# soon as an advisory is published once Dependabot security updates are enabled
+# in the repo's Settings → Code security.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 5
+    groups:
+      # Batch routine minor/patch bumps into one PR instead of one per package
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly

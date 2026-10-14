@@ -1638,5 +1638,5 @@ export const cards: GameItem[] = [
     type: 'Card',
     set: 'MEW 151',
     sets: ['MEW 151'],
-  }
+  },
 ];

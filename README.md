@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Big A Website
 
-## Getting Started
+A small collection of Pokémon TCG games, live at **[big-a.fun](https://big-a.fun)**.
 
-First, run the development server:
+## Games
+
+| Game                       | Path                      | What it is                                                                                                                                                                                    |
+| -------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Guess That Flavor Text** | `/guess-that-flavor-text` | A daily puzzle: read a card's flavor text and guess the Pokémon. Lifelines (set, stage, attack name) give hints but cost a point each. One card per day, with streaks and a shareable result. |
+| **Limitless Check**        | `/limitless-check`        | A higher-or-lower game: which card or deck has appeared in more recent tournament decklists on [Play Limitless](https://play.limitlesstcg.com)?                                               |
+| **Art Something**          | `/art-something`          | Work in progress and not released yet. It's hidden from the home page, but the route still exists.                                                                                            |
+
+## Getting started
+
+Requires Node.js 20 or newer (developed on Node 24).
 
 ```bash
+npm install
+cp .env.example .env.local   # then fill in any keys you need
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000). Pages reload automatically as you edit.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+`OPENAI_API_KEY` is only needed for Art Something (`/api/ai`). Guess That Flavor Text and Limitless Check run without any keys.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Scripts
 
-## Learn More
+| Command                      | What it does                                                                                                                                              |
+| ---------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `npm run dev`                | Start the dev server                                                                                                                                      |
+| `npm run build`              | Production build (also type-checks)                                                                                                                       |
+| `npm run lint`               | ESLint, including Prettier formatting                                                                                                                     |
+| `npm run stylelint`          | Lint CSS                                                                                                                                                  |
+| `npm run format`             | Format everything with Prettier                                                                                                                           |
+| `npm run fetch-flavor-cards` | Refresh Guess That Flavor Text's card data from the [Pokémon TCG API](https://pokemontcg.io), written to `src/app/guess-that-flavor-text/flavor-cards.ts` |
+| `npm run fetch-cards`        | Rebuild Limitless Check's card usage counts (last 30 days of Play Limitless tournaments), written to `src/app/limitless-check/cards-generated.ts`         |
+| `npm run fetch-decks`        | Rebuild Limitless Check's deck usage counts, written to `src/app/limitless-check/decks.ts`                                                                |
 
-To learn more about Next.js, take a look at the following resources:
+The files those fetch scripts write are generated, so don't edit them by hand; re-run the script instead.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Project layout
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+src/
+  app/
+    page.tsx                  Home page (links to each game)
+    layout.tsx                Root layout, fonts (Lato default, Barlow for Guess That Flavor Text)
+    globals.css               Tailwind setup, brand colors (@theme), shared animations
+    guess-that-flavor-text/   One folder per game
+    limitless-check/
+    art-something/
+    api/ai/                   OpenAI-backed route used by Art Something
+  components/Header.tsx       Site header (themed per game)
+scripts/                      Data fetch scripts (see above)
+public/                       Images and icons
+```
 
-## Deploy on Vercel
+Built with [Next.js](https://nextjs.org) (App Router), React and [Tailwind CSS](https://tailwindcss.com) v4.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deploying
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Pushing to `main` deploys to big-a.fun. Every push also runs the build check in `.github/workflows/ci.yml` (lint, type-check and production build).

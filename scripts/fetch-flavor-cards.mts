@@ -3,7 +3,7 @@
  *
  * Fetches cards with flavor text from https://api.pokemontcg.io/v2/cards,
  * normalises each card, deduplicates by name (first occurrence wins), and
- * writes the result to /public/cards.json.
+ * writes the result to src/app/guess-that-flavor-text/flavor-cards.ts.
  *
  * Usage:
  *   npm run fetch-flavor-cards

@@ -89,7 +89,8 @@ function renderGameItemTs(item) {
 }
 
 function renderGameItemsTs(items, lastUpdatedIso) {
-  const renderedItems = items.map(renderGameItemTs).join(',\n');
+  // Trailing comma after the last item, matching Prettier (and fetch-decks.mjs)
+  const renderedItems = items.map(renderGameItemTs).join(',\n') + ',';
 
   return `export const cardsLastUpdated = ${quoteTsString(lastUpdatedIso)};\n\nexport const cards: GameItem[] = [\n${renderedItems}\n];\n`;
 }

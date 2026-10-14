@@ -58,6 +58,7 @@ body {
 body {
   background: var(--background);
   color: var(--foreground);
+
   /* --font-sans lives in @theme inline, so it never exists as a real CSS variable;
      use the variable next/font sets on <body> directly */
   font-family: var(--font-lato), sans-serif;

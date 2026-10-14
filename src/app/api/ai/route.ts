@@ -1,14 +1,14 @@
 import OpenAI from 'openai';
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: Request) {
   try {
     if (!process.env.OPENAI_API_KEY) {
       return Response.json({ error: 'Missing OPENAI_API_KEY on server' }, { status: 500 });
     }
+
+    // Created per request after the key check: the OpenAI client throws on construction
+    // without a key, which would otherwise break builds on machines without one (e.g. CI)
+    const client = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
     const { text, imageUrl } = (await req.json()) as { text: string; imageUrl: string };
 
