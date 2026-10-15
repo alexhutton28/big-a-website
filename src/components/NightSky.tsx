@@ -9,6 +9,7 @@ import { useEffect, useRef } from 'react';
 // - Every star twinkles on its own phase and rhythm; only some twinkle noticeably
 // - Movement is time-based (px per second), so it runs the same at 60Hz and 120Hz
 // - Sharp on high-DPI screens; rare shooting stars fall at natural angles
+// - Now and then a satellite glides slowly across with a blinking beacon
 // - Respects prefers-reduced-motion with a single still frame
 
 type Star = {
@@ -37,6 +38,17 @@ type ShootingStar = {
   life: number; // seconds
 };
 
+// A slow, steady light crossing the sky with a small blinking beacon
+type Satellite = {
+  x: number;
+  y: number;
+  vx: number; // px per second
+  vy: number;
+  age: number; // seconds
+  life: number; // seconds to cross the screen
+  blinkOffset: number; // so the first flash doesn't always land at the same moment
+};
+
 // Per layer, far → near: stars per megapixel, size range, brightness range, drift px/s
 const LAYERS = [
   { density: 230, size: [0.6, 1.1], alpha: [0.25, 0.6], drift: 1.5 },
@@ -50,13 +62,26 @@ const TINTS = ['255,255,255', '255,255,255', '255,255,255', '210,225,255', '255,
 // Seconds between shooting stars
 const SHOOTING_STAR_GAP: [number, number] = [7, 16];
 
-// Pointer interaction: stars inside this radius slide out to its edge. Nearer layers
-// clear the full distance, farther ones only partway, so the bubble has depth.
+// Satellites: the first appears 15–30s in, then one every 40–80s after the last leaves.
+// Each takes 25–35s to cross and flashes its beacon briefly every BLINK_PERIOD seconds.
+const SATELLITE_FIRST: [number, number] = [15, 30];
+const SATELLITE_GAP: [number, number] = [40, 80];
+const SATELLITE_CROSSING: [number, number] = [25, 35];
+const BLINK_PERIOD = 2.2;
+const BLINK_LENGTH = 0.14;
+// Faintly golden, like sunlight off gold foil, so it reads apart from the white stars
+const SATELLITE_COLOR = '#ffe2a8';
+const SATELLITE_GLOW_CORE = '255,226,168';
+const SATELLITE_GLOW_EDGE = '255,196,120';
+
+// Pointer interaction: stars within this radius of the pointer are pushed straight
+// away from it (never sideways or around it), then drift slowly back home. Nearer
+// layers are pushed harder, so the effect has depth.
 const POINTER_RADIUS = 120;
 const POINTER_STRENGTH = [0.45, 0.75, 1];
-// How quickly stars move out of the way vs. drift back (higher = snappier)
-const DODGE_RATE = 12;
-const RETURN_RATE = 2.5;
+// How fast stars are pushed out (per px of overlap) and how slowly they return
+const PUSH_RATE = 6;
+const RETURN_RATE = 0.8;
 
 // Stars fade out over this many px above the planet's edge
 const HORIZON_FADE = 70;
@@ -89,19 +114,40 @@ function createStars(width: number, height: number): Star[] {
   return stars;
 }
 
-// A soft round halo, rendered once and stamped behind the brightest stars
-function createGlowSprite() {
+// A soft round halo, rendered once and stamped behind bright points. Cool blue for
+// stars and shooting stars; warm gold for the satellite.
+function createGlowSprite(core = '200,225,255', edge = '170,205,255') {
   const size = 32;
   const sprite = document.createElement('canvas');
   sprite.width = sprite.height = size;
   const g = sprite.getContext('2d')!;
   const gradient = g.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-  gradient.addColorStop(0, 'rgba(200,225,255,0.55)');
-  gradient.addColorStop(0.35, 'rgba(170,205,255,0.18)');
-  gradient.addColorStop(1, 'rgba(170,205,255,0)');
+  gradient.addColorStop(0, `rgba(${core},0.55)`);
+  gradient.addColorStop(0.35, `rgba(${edge},0.18)`);
+  gradient.addColorStop(1, `rgba(${edge},0)`);
   g.fillStyle = gradient;
   g.fillRect(0, 0, size, size);
   return sprite;
+}
+
+function createSatellite(width: number, height: number): Satellite {
+  // Enters just off one side and leaves off the other on a gently tilted line in the
+  // upper sky
+  const goingRight = Math.random() < 0.5;
+  const startX = goingRight ? -20 : width + 20;
+  const endX = goingRight ? width + 20 : -20;
+  const startY = rand(height * 0.08, height * 0.4);
+  const endY = startY + rand(-height * 0.05, height * 0.12);
+  const life = rand(...SATELLITE_CROSSING);
+  return {
+    x: startX,
+    y: startY,
+    vx: (endX - startX) / life,
+    vy: (endY - startY) / life,
+    age: 0,
+    life,
+    blinkOffset: Math.random() * BLINK_PERIOD,
+  };
 }
 
 function createShootingStar(width: number, height: number): ShootingStar {
@@ -131,12 +177,15 @@ export default function NightSky({ className }: { className?: string }) {
 
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     const glowSprite = createGlowSprite();
+    const satelliteGlowSprite = createGlowSprite(SATELLITE_GLOW_CORE, SATELLITE_GLOW_EDGE);
 
     let width = 0;
     let height = 0;
     let stars: Star[] = [];
     let shootingStar: ShootingStar | null = null;
     let nextShootingStar = rand(3, 8); // first one comes a little sooner
+    let satellite: Satellite | null = null;
+    let nextSatellite = rand(...SATELLITE_FIRST);
     let elapsed = 0;
     let last = performance.now();
     let frame = 0;
@@ -257,6 +306,33 @@ export default function NightSky({ className }: { className?: string }) {
         ctx!.drawImage(glowSprite, s.x - 8, s.y - 8, 16, 16);
       }
 
+      if (satellite) {
+        const sat = satellite;
+        // Fade in/out over the first and last 8% of the crossing
+        const t = sat.age / sat.life;
+        const edgeFade = Math.max(0, Math.min(1, t / 0.08, (1 - t) / 0.08));
+        // Beacon: a sharp flash that decays over BLINK_LENGTH, once per BLINK_PERIOD
+        const blinkPhase = (sat.age + sat.blinkOffset) % BLINK_PERIOD;
+        const flash = blinkPhase < BLINK_LENGTH ? 1 - blinkPhase / BLINK_LENGTH : 0;
+
+        if (flash > 0) {
+          const haloSize = 10 + flash * 10;
+          ctx!.globalAlpha = flash * edgeFade;
+          ctx!.drawImage(
+            satelliteGlowSprite,
+            sat.x - haloSize / 2,
+            sat.y - haloSize / 2,
+            haloSize,
+            haloSize
+          );
+        }
+        ctx!.globalAlpha = (0.55 + flash * 0.45) * edgeFade;
+        ctx!.fillStyle = SATELLITE_COLOR;
+        ctx!.beginPath();
+        ctx!.arc(sat.x, sat.y, 0.9 + flash * 0.4, 0, Math.PI * 2);
+        ctx!.fill();
+      }
+
       ctx!.restore();
       ctx!.globalAlpha = 1;
     }
@@ -267,35 +343,34 @@ export default function NightSky({ className }: { className?: string }) {
       last = now;
       elapsed += dt;
 
-      // Frame-rate independent easing factors
-      const dodge = 1 - Math.exp(-DODGE_RATE * dt);
-      const settle = 1 - Math.exp(-RETURN_RATE * dt);
+      // Frame-rate independent decay back toward each star's home position
+      const settle = Math.exp(-RETURN_RATE * dt);
 
       for (const star of stars) {
         star.x -= LAYERS[star.layer].drift * dt;
         if (star.x < -3) star.x += width + 6;
 
-        // Where this star should sit: pushed out to the edge of the pointer's radius
-        // (scaled by depth), or back home when the pointer is away
-        let targetX = 0;
-        let targetY = 0;
+        // Always drift slowly back home...
+        star.ox *= settle;
+        star.oy *= settle;
+
+        // ...and while the pointer overlaps the star's current position, push it
+        // straight away from the pointer. Only ever outward along that line, so stars
+        // part and settle rather than sliding around the pointer.
         if (pointer) {
-          const dx = star.x - pointer.x;
-          const dy = star.y - pointer.y;
+          const dx = star.x + star.ox - pointer.x;
+          const dy = star.y + star.oy - pointer.y;
           const distance = Math.hypot(dx, dy);
           if (distance < POINTER_RADIUS) {
-            const push = (POINTER_RADIUS - distance) * POINTER_STRENGTH[star.layer];
-            // A star exactly under the pointer gets nudged in a random-ish direction
+            const overlap = POINTER_RADIUS - distance;
+            const step = overlap * POINTER_STRENGTH[star.layer] * PUSH_RATE * dt;
+            // A star exactly under the pointer gets pushed in a fixed per-star direction
             const nx = distance > 0.01 ? dx / distance : Math.cos(star.phase);
             const ny = distance > 0.01 ? dy / distance : Math.sin(star.phase);
-            targetX = nx * push;
-            targetY = ny * push;
+            star.ox += nx * step;
+            star.oy += ny * step;
           }
         }
-        const moving = targetX !== 0 || targetY !== 0;
-        const rate = moving ? dodge : settle;
-        star.ox += (targetX - star.ox) * rate;
-        star.oy += (targetY - star.oy) * rate;
       }
 
       nextShootingStar -= dt;
@@ -308,6 +383,20 @@ export default function NightSky({ className }: { className?: string }) {
         shootingStar.x += shootingStar.dx * shootingStar.speed * dt;
         shootingStar.y += shootingStar.dy * shootingStar.speed * dt;
         if (shootingStar.age >= shootingStar.life) shootingStar = null;
+      }
+
+      // The gap to the next satellite only counts down once the sky is clear of one
+      if (!satellite) {
+        nextSatellite -= dt;
+        if (nextSatellite <= 0) satellite = createSatellite(width, height);
+      } else {
+        satellite.age += dt;
+        satellite.x += satellite.vx * dt;
+        satellite.y += satellite.vy * dt;
+        if (satellite.age >= satellite.life) {
+          satellite = null;
+          nextSatellite = rand(...SATELLITE_GAP);
+        }
       }
 
       draw();
