@@ -423,6 +423,16 @@ body:has(.home-sky) {
   mask-image: radial-gradient(circle closest-side, #000 calc(100% - 32px), transparent 100%);
 }
 
+/* Home page hero title. Light Google Sans Flex with a touch of roundness (ROND); its
+   optical size axis adjusts automatically at display sizes. Light weights read better
+   with near-normal tracking than with the tight tracking bold titles use. */
+.home-title {
+  font-family: var(--font-google-sans-flex), sans-serif;
+  font-weight: 300;
+  font-variation-settings: 'ROND' 40;
+  letter-spacing: -0.005em;
+}
+
 /* Home game cards: on hover/focus they catch starlight instead of casting a shadow
    (a shadow below reads as a smudge on a dark sky). The card lifts slightly, its
    border brightens, and a cool glow blooms around it.
