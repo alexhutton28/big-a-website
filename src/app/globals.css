@@ -345,86 +345,192 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   animation: overlay-panel-in 300ms ease-out both;
 }
 
-@keyframes stars-drift-slow {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
+/* Home page night sky. Back to front: a deep navy sky that brightens toward the
+   horizon, the NightSky canvas (components/NightSky.tsx), an atmosphere glow, and a
+   planet whose edge curves across the bottom. Inspired by the "Gravity" CodePen
+   poster, but the planet is a true circle sized from the viewport width so the curve
+   looks right at any aspect ratio, and the glow is built from gradient bands placed
+   at the planet's edge instead of 30–200px CSS blurs. */
+.home-sky {
+  --horizon: clamp(96px, 20vh, 220px); /* how much of the planet shows */
+  --planet-size: max(230vw, 1500px);
+  --glow: 180px; /* how far the atmosphere reaches past the planet's edge */
 
-  to {
-    transform: translate3d(0, -20px, 0);
-  }
-}
-
-@keyframes stars-drift-fast {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-
-  to {
-    transform: translate3d(0, -35px, 0);
-  }
-}
-
-@keyframes stars-twinkle {
-  0%,
-  100% {
-    opacity: 0.2;
-  }
-
-  50% {
-    opacity: 0.6;
-  }
-}
-
-.home-stars {
   isolation: isolate;
+  background:
+    radial-gradient(ellipse 120% 60% at 50% 100%, #12305c 0%, #0a1a33 40%, transparent 75%),
+    linear-gradient(180deg, #03050b 0%, #060c18 55%, #0b1830 100%);
 }
 
-.home-stars-layer {
+/* The body behind the home page matches the planet, so a mismatch between the
+   header's height and the sky's min-height (or a phone's bottom toolbar) never
+   shows the light default background */
+body:has(.home-sky) {
+  background: #010205;
+}
+
+.home-atmosphere,
+.home-planet {
   pointer-events: none;
   position: absolute;
-  inset: 0;
-  z-index: 0;
+  left: 50%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  translate: -50% 0;
 }
 
-.home-stars-layer-1 {
-  background-image:
-    radial-gradient(1px 1px at 15px 25px, rgb(255 255 255 / 80%), transparent),
-    radial-gradient(1px 1px at 85px 55px, rgb(255 255 255 / 65%), transparent),
-    radial-gradient(1px 1px at 140px 110px, rgb(255 255 255 / 85%), transparent),
-    radial-gradient(1px 1px at 220px 80px, rgb(255 255 255 / 75%), transparent);
-  background-repeat: repeat;
-  background-size: 240px 160px;
-  opacity: 0.45;
-  animation: stars-drift-slow 28s linear infinite alternate;
+.home-atmosphere {
+  --edge: calc(var(--planet-size) / 2);
+
+  z-index: 1;
+  top: calc(100% - var(--horizon) - var(--glow));
+  width: calc(var(--planet-size) + var(--glow) * 2);
+
+  /* Starts inside the planet's feathered edge and eases out, so the planet,
+     its rim light and the haze read as one soft gradient with no line */
+  background: radial-gradient(
+    circle closest-side,
+    transparent calc(var(--edge) - 40px),
+    rgb(100 175 255 / 18%) calc(var(--edge) - 16px),
+    rgb(110 185 255 / 32%) var(--edge),
+    rgb(70 150 255 / 22%) calc(var(--edge) + 30px),
+    rgb(45 110 200 / 10%) calc(var(--edge) + 85px),
+    rgb(33 84 150 / 4%) calc(var(--edge) + 135px),
+    transparent calc(var(--edge) + var(--glow))
+  );
+
+  /* Brightest at the top of the curve, like light from just behind the planet */
+  mask-image: radial-gradient(ellipse 45% 50% at 50% 0%, #000 30%, rgb(0 0 0 / 45%) 100%);
+  animation: atmosphere-breathe 12s ease-in-out infinite alternate;
 }
 
-.home-stars-layer-2 {
-  background-image:
-    radial-gradient(1.5px 1.5px at 30px 20px, rgb(255 255 255 / 80%), transparent),
-    radial-gradient(1.5px 1.5px at 120px 95px, rgb(255 255 255 / 70%), transparent),
-    radial-gradient(1.5px 1.5px at 190px 60px, rgb(255 255 255 / 75%), transparent);
-  background-repeat: repeat;
-  background-size: 260px 190px;
-  opacity: 0.3;
-  animation: stars-drift-fast 20s linear infinite alternate;
+.home-planet {
+  z-index: 2;
+  top: calc(100% - var(--horizon));
+  width: var(--planet-size);
+  background: radial-gradient(circle at 50% 0%, #0d1a2e 0%, #050a14 14%, #010205 34%);
+  box-shadow:
+    inset 0 16px 32px -12px rgb(140 200 255 / 35%),
+    inset 0 48px 90px -40px rgb(56 140 255 / 28%);
+
+  /* Feather the outer 32px so the edge fades into the atmosphere instead of a hard
+     line (cheaper than filter: blur on an element this large) */
+  mask-image: radial-gradient(circle closest-side, #000 calc(100% - 32px), transparent 100%);
 }
 
-.home-stars-layer-3 {
-  background-image:
-    radial-gradient(2px 2px at 50px 40px, rgb(255 255 255 / 85%), transparent),
-    radial-gradient(2px 2px at 170px 120px, rgb(255 255 255 / 80%), transparent),
-    radial-gradient(2px 2px at 260px 70px, rgb(255 255 255 / 75%), transparent);
-  background-repeat: repeat;
-  background-size: 320px 220px;
-  opacity: 0.25;
-  animation: stars-twinkle 4.5s ease-in-out infinite;
+/* Home game cards: on hover/focus they catch starlight instead of casting a shadow
+   (a shadow below reads as a smudge on a dark sky). The card lifts slightly, its
+   border brightens, and a cool glow blooms around it.
+   Plain :hover (not Tailwind's hover-capable-only variant) so it works everywhere.
+   Never sets display, so a card can still be hidden with Tailwind's `hidden`. */
+.home-card {
+  border: 1px solid rgb(255 255 255 / 18%);
+  box-shadow: 0 0 14px rgb(200 220 255 / 15%);
+  transition:
+    transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 350ms ease,
+    border-color 350ms ease;
+}
+
+.home-card img {
+  transition: scale 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.home-card:hover,
+.home-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: rgb(255 255 255 / 55%);
+  outline: none;
+  box-shadow:
+    0 0 0 1px rgb(255 255 255 / 20%),
+    0 0 18px rgb(220 235 255 / 45%),
+    0 0 48px rgb(120 175 255 / 30%),
+    0 16px 40px rgb(0 0 0 / 45%);
+}
+
+.home-card:hover img,
+.home-card:focus-visible img {
+  scale: 1.03;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .home-stars-layer-1,
-  .home-stars-layer-2,
-  .home-stars-layer-3 {
+  .home-card,
+  .home-card img {
+    transition:
+      box-shadow 200ms ease,
+      border-color 200ms ease;
+  }
+
+  .home-card:hover,
+  .home-card:focus-visible {
+    transform: none;
+  }
+
+  .home-card:hover img,
+  .home-card:focus-visible img {
+    scale: 1;
+  }
+}
+
+/* Social links: white icons centered near the bottom of the planet, kept clear of
+   the iPhone home bar. On hover/focus they brighten and catch the same cool glow
+   as the game cards. */
+.home-socials {
+  position: absolute;
+  bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px));
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  gap: 8px;
+  translate: -50% 0;
+}
+
+.home-socials a {
+  display: grid;
+  place-items: center;
+  width: 44px; /* comfortable tap target */
+  height: 44px;
+  border-radius: 999px;
+  color: rgb(255 255 255 / 85%);
+  transition:
+    color 250ms ease,
+    filter 250ms ease,
+    transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.home-socials a:hover,
+.home-socials a:focus-visible {
+  color: #fff;
+  outline: none;
+  filter: drop-shadow(0 0 6px rgb(220 235 255 / 70%)) drop-shadow(0 0 16px rgb(120 175 255 / 45%));
+  transform: translateY(-2px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-socials a {
+    transition:
+      color 200ms ease,
+      filter 200ms ease;
+  }
+
+  .home-socials a:hover,
+  .home-socials a:focus-visible {
+    transform: none;
+  }
+}
+
+@keyframes atmosphere-breathe {
+  from {
+    opacity: 0.75;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-atmosphere {
     animation: none;
   }
 }
