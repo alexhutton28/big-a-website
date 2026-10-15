@@ -441,7 +441,7 @@ body:has(.home-sky) {
   font-weight: 300;
   font-variation-settings: 'ROND' 40;
   letter-spacing: 0.02em;
-  color: rgb(255 255 255 / 60%);
+  color: rgb(255 255 255 / 72%);
 }
 
 /* Home game cards: on hover/focus they catch starlight instead of casting a shadow
