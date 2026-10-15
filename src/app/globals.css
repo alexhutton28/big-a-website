@@ -433,6 +433,17 @@ body:has(.home-sky) {
   letter-spacing: -0.005em;
 }
 
+/* Tagline under the hero title: same family, much smaller and dimmer, so it clearly
+   sits beneath the title rather than competing with it */
+.home-subtitle {
+  font-family: var(--font-google-sans-flex), sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  font-variation-settings: 'ROND' 40;
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 60%);
+}
+
 /* Home game cards: on hover/focus they catch starlight instead of casting a shadow
    (a shadow below reads as a smudge on a dark sky). The card lifts slightly, its
    border brightens, and a cool glow blooms around it.
