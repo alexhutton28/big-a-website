@@ -43,6 +43,9 @@ export const metadata: Metadata = {
 // Lets the page draw under the iOS status bar so the header's safe-area padding takes effect
 export const viewport: Viewport = {
   viewportFit: 'cover',
+  // Browser bar color on older iOS Safari and Android Chrome; matches the home header.
+  // Each game's route sets its own to match its header.
+  themeColor: '#000000',
 };
 
 export default function RootLayout({

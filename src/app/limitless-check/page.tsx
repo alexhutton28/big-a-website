@@ -1,4 +1,9 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
+
+// Browser bar color matches the header (houndoom)
+export const viewport: Viewport = {
+  themeColor: '#4e0a0a',
+};
 import LimitlessCheck from './limitlessCheck';
 
 export const metadata: Metadata = {
