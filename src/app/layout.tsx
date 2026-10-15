@@ -45,7 +45,7 @@ export const viewport: Viewport = {
   viewportFit: 'cover',
   // Browser bar color on older iOS Safari and Android Chrome; matches the home header.
   // Each game's route sets its own to match its header.
-  themeColor: '#000000',
+  themeColor: '#060c18', // night
 };
 
 export default function RootLayout({

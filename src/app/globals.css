@@ -47,6 +47,7 @@
   --color-drop: #e4f0ff;
   --color-mist: #f3f6fb;
   --color-abyss: #1c2a44;
+  --color-night: #060c18;
 }
 
 html,
@@ -359,14 +360,14 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   isolation: isolate;
   background:
     radial-gradient(ellipse 120% 60% at 50% 100%, #12305c 0%, #0a1a33 40%, transparent 75%),
-    linear-gradient(180deg, #03050b 0%, #060c18 55%, #0b1830 100%);
+    linear-gradient(180deg, var(--color-night) 0%, var(--color-night) 40%, #0b1830 100%);
 }
 
 /* The body behind the home page matches the planet, so a mismatch between the
    header's height and the sky's min-height (or a phone's bottom toolbar) never
    shows the light default background */
 body:has(.home-sky) {
-  background: #060c18; /* the planet's surface color (see .home-planet) */
+  background: var(--color-night); /* the planet's surface color (see .home-planet) */
 }
 
 .home-atmosphere,
@@ -412,7 +413,7 @@ body:has(.home-sky) {
   /* Settles to one solid navy within 140px of the horizon (fixed lengths, so it's the
      same at every planet size), matching the body below so the planet runs seamlessly
      into the area behind a phone's bottom toolbar */
-  background: radial-gradient(circle at 50% 0%, #0d1a2e 0, #081224 70px, #060c18 140px);
+  background: radial-gradient(circle at 50% 0%, #0d1a2e 0, #081224 70px, var(--color-night) 140px);
   box-shadow:
     inset 0 16px 32px -12px rgb(140 200 255 / 35%),
     inset 0 48px 90px -40px rgb(56 140 255 / 28%);
