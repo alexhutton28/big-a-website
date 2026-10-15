@@ -14,7 +14,7 @@ export default function Header() {
   const isArtSomethingPage = pathname === '/art-something';
   const isGuessThatFlavorTextPage = pathname.startsWith('/guess-that-flavor-text');
 
-  let headerClassName = 'w-full bg-black text-white';
+  let headerClassName = 'w-full bg-night text-white';
 
   if (isLimitlessCheckPage) {
     headerClassName = 'w-full bg-houndoom text-togepi';
