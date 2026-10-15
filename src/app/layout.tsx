@@ -24,7 +24,7 @@ const googleSansFlex = Google_Sans_Flex({
   variable: '--font-google-sans-flex',
   subsets: ['latin'],
   weight: 'variable',
-  axes: ['ROND', 'opsz'],
+  axes: ['ROND', 'opsz', 'wdth'],
   preload: false,
 });
 
