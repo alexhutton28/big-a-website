@@ -8,7 +8,7 @@ import SocialLinks from '../components/SocialLinks';
 export default function Home() {
   return (
     <>
-      <div className="home-sky relative flex min-h-[calc(100dvh-62px)] flex-col items-center overflow-hidden pt-4 text-white">
+      <div className="home-sky relative flex min-h-dvh flex-col items-center overflow-hidden pt-[calc(env(safe-area-inset-top)_+_clamp(64px,12vh,128px))] text-white">
         {/* Back to front: starfield, atmosphere glow on the horizon, then the planet */}
         <NightSky />
         <div aria-hidden="true" className="home-atmosphere" />

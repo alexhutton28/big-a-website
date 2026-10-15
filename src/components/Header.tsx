@@ -6,6 +6,10 @@ import { usePathname } from 'next/navigation';
 
 export default function Header() {
   const pathname = usePathname();
+  // The home page has its own title and is where the header links to, so it goes
+  // without; the sky runs to the top of the screen instead
+  if (pathname === '/') return null;
+
   const isLimitlessCheckPage = pathname.startsWith('/limitless-check');
   const isArtSomethingPage = pathname === '/art-something';
   const isGuessThatFlavorTextPage = pathname.startsWith('/guess-that-flavor-text');
