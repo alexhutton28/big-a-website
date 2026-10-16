@@ -155,7 +155,7 @@ export default function GTFTResultPage({
 
       {/* Card image: starts blacked out, a spotlight roams over it, then it's revealed */}
       {card.image && (
-        <div className="flex mb-4">
+        <div className="flex justify-center mb-4">
           <div className="card-reveal relative overflow-hidden rounded-xl shadow-[0_8px_24px_#47679c40]">
             <Image
               src={card.image}
@@ -174,37 +174,41 @@ export default function GTFTResultPage({
           </div>
         </div>
       )}
-      {/* Share button */}
-      <button
-        className="barlow text-white font-medium bg-tide h-[52px] px-4 rounded-xs text-base cursor-pointer [&:hover]:bg-wave transition-colors mb-3"
-        onClick={handleShare}
-      >
-        Share
-      </button>
+      {/* Share, streak, countdown and dev reset fade in after the card reveal and the
+          result heading (see .result-details-in in globals.css) */}
+      <div className="result-details-in flex flex-col items-center">
+        {/* Share button */}
+        <button
+          className="barlow text-white font-medium bg-tide h-[52px] px-4 rounded-xs text-base cursor-pointer [&:hover]:bg-wave transition-colors mb-3"
+          onClick={handleShare}
+        >
+          Share
+        </button>
 
-      <div className="bg-ghost border border-solid border-stone px-2 py-1 rounded flex items-center gap-2 mb-1">
-        <Image
-          src="/fire-energy.png"
-          alt="Fire Energy"
-          width={17}
-          height={17}
-          style={{ width: 17, height: 17 }}
-        />
-        <span className="barlow text-sm text-stone font-bold">{streak} Day Streak</span>
+        <div className="bg-ghost border border-solid border-stone px-2 py-1 rounded flex items-center gap-2 mb-1">
+          <Image
+            src="/fire-energy.png"
+            alt="Fire Energy"
+            width={17}
+            height={17}
+            style={{ width: 17, height: 17 }}
+          />
+          <span className="barlow text-sm text-stone font-bold">{streak} Day Streak</span>
+        </div>
+        <p className="barlow text-xs text-slate pb-3">Next card in: {countdown}</p>
+
+        {/* Developer-only reset button */}
+        {typeof window !== 'undefined' &&
+          (window.location.hostname === 'localhost' || window.location.search.includes('dev')) && (
+            <button
+              className="mt-2 bg-none border border-dashed border-slate text-wave rounded-lg px-5 py-1.5 text-[13px] cursor-pointer block mx-auto"
+              onClick={onReset}
+              title="Reset game (developer only)"
+            >
+              Reset (dev)
+            </button>
+          )}
       </div>
-      <p className="barlow text-xs text-slate pb-3">Next card in: {countdown}</p>
-
-      {/* Developer-only reset button */}
-      {typeof window !== 'undefined' &&
-        (window.location.hostname === 'localhost' || window.location.search.includes('dev')) && (
-          <button
-            className="mt-2 bg-none border border-dashed border-slate text-wave rounded-lg px-5 py-1.5 text-[13px] cursor-pointer block mx-auto"
-            onClick={onReset}
-            title="Reset game (developer only)"
-          >
-            Reset (dev)
-          </button>
-        )}
 
       {/* Toast for desktop share */}
       <div
