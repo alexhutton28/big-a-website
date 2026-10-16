@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Barlow, Lato } from 'next/font/google';
+import { Barlow, Google_Sans_Flex, Lato } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
@@ -16,6 +16,16 @@ const barlow = Barlow({
   subsets: ['latin'],
   weight: ['300', '400', '500', '600', '700'],
   style: ['normal', 'italic'],
+});
+
+// Home page hero title. Not preloaded, so only the home page (the only place it's
+// used) downloads it.
+const googleSansFlex = Google_Sans_Flex({
+  variable: '--font-google-sans-flex',
+  subsets: ['latin'],
+  weight: 'variable',
+  axes: ['ROND', 'opsz', 'wdth'],
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -55,7 +65,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${lato.variable} ${barlow.variable} antialiased bg-white text-black`}>
+      <body
+        className={`${lato.variable} ${barlow.variable} ${googleSansFlex.variable} antialiased bg-white text-black`}
+      >
         <Header />
         <main>{children}</main>
         <Analytics />

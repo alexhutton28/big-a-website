@@ -15,7 +15,8 @@ export default function Home() {
         <div aria-hidden="true" className="home-planet" data-night-sky-horizon />
 
         <div className="relative z-10 flex flex-col items-center">
-          <h1 className="mb-5 text-5xl">big a&apos;s website</h1>
+          <h1 className="home-title text-5xl">big a&apos;s website</h1>
+          <p className="home-subtitle mt-2 mb-5">Games &amp; Portfolio by Alex Hutton</p>
           <div className="flex flex-row flex-wrap justify-center gap-4">
             <Link
               href="/art-something"

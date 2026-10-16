@@ -423,6 +423,37 @@ body:has(.home-sky) {
   mask-image: radial-gradient(circle closest-side, #000 calc(100% - 32px), transparent 100%);
 }
 
+/* Home page hero title. Light Google Sans Flex, fully rounded (ROND) and a little wide
+   (wdth) so it reads softer and less like Google's own default styling; its
+   optical size axis adjusts automatically at display sizes. Light weights read better
+   with near-normal tracking than with the tight tracking bold titles use. */
+.home-title {
+  font-family: var(--font-google-sans-flex), sans-serif;
+
+  /* The wide setting makes the title long; scale it down on narrow phones so it keeps
+     side margins, up to the full 48px from ~560px wide */
+  font-size: clamp(32px, 9.5vw, 48px);
+  line-height: 1.1;
+  font-weight: 300;
+  font-variation-settings:
+    'ROND' 100,
+    'wdth' 108;
+  letter-spacing: -0.005em;
+}
+
+/* Tagline under the hero title: same family, much smaller and dimmer, so it clearly
+   sits beneath the title rather than competing with it */
+.home-subtitle {
+  font-family: var(--font-google-sans-flex), sans-serif;
+  font-size: 17px;
+  font-weight: 300;
+  font-variation-settings:
+    'ROND' 100,
+    'wdth' 104;
+  letter-spacing: 0.02em;
+  color: rgb(255 255 255 / 72%);
+}
+
 /* Home game cards: on hover/focus they catch starlight instead of casting a shadow
    (a shadow below reads as a smudge on a dark sky). The card lifts slightly, its
    border brightens, and a cool glow blooms around it.
