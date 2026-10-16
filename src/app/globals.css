@@ -252,18 +252,25 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   animation: result-fade-up 400ms ease-out 3.25s both;
 }
 
+/* Share, streak and countdown follow once the result is shown */
+.result-details-in {
+  animation: result-fade-up 400ms ease-out 3.5s both;
+}
+
 /* Hold the whole sequence on the dark cover until the card image has loaded */
 .reveal-pending .card-reveal,
 .reveal-pending .card-reveal-cover,
 .reveal-pending .result-heading-in,
-.reveal-pending .result-stars-in {
+.reveal-pending .result-stars-in,
+.reveal-pending .result-details-in {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .card-reveal,
   .result-heading-in,
-  .result-stars-in {
+  .result-stars-in,
+  .result-details-in {
     animation: none;
   }
 

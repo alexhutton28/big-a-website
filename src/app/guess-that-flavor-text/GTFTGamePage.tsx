@@ -84,7 +84,7 @@ function LifelineCard({
     <button
       onClick={onUse}
       disabled={used}
-      className={`barlow relative flex flex-col flex-1 basis-0 min-w-0 text-left border border-slate rounded-xs p-2 transition-colors duration-300 ${used ? 'bg-drop cursor-default' : 'bg-mist text-slate cursor-pointer [&:hover]:bg-drop'}`}
+      className={`barlow relative flex flex-col flex-1 basis-0 min-w-0 justify-center text-left border border-slate rounded-xs p-2 transition-colors duration-300 ${used ? 'bg-drop cursor-default' : 'bg-mist text-slate cursor-pointer [&:hover]:bg-drop'}`}
     >
       <LifelineCost used={used} />
       {used ? (
@@ -175,7 +175,7 @@ export default function GTFTGamePage({
         className="mb-3 w-[85px] sm:w-[100px] h-auto drop-shadow-[0_6px_12px_#47679c4d]"
       />
       <div className="flex w-fit max-w-[min(100%,max(60vw,350px))] bg-white rounded px-3 py-2 border border-splash mb-4">
-        <p className="flex items-center flex-wrap gap-x-[0.3em] italic font-normal text-center text-[20px] text-wave break-words w-full min-h-[60px]">
+        <p className="flex justify-center items-center flex-wrap gap-x-[0.3em] italic font-normal text-center text-[20px] text-wave break-words w-full min-h-[60px]">
           {words.map((word, i) => {
             let displayWord = word;
             if (i === 0) displayWord = '"' + word;
@@ -243,7 +243,7 @@ export default function GTFTGamePage({
                     onMouseDown={() => selectSuggestion(name)}
                     tabIndex={-1}
                   >
-                    <div className="flex items-center shrink-0 w-[34px] h-[34px]">
+                    <div className="flex items-center justify-center shrink-0 w-[34px] h-[34px]">
                       <Image
                         src={getPokemonSpriteUrl(name)}
                         alt={name}

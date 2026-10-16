@@ -26,6 +26,10 @@ const googleSansFlex = Google_Sans_Flex({
   weight: 'variable',
   axes: ['ROND', 'opsz', 'wdth'],
   preload: false,
+  // Next.js has no size metrics for this font yet, so it can't generate a matched
+  // fallback (and warns on every compile). Skip that and fall back to system fonts.
+  adjustFontFallback: false,
+  fallback: ['system-ui', 'sans-serif'],
 });
 
 export const metadata: Metadata = {
