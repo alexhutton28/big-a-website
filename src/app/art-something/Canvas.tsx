@@ -4,40 +4,97 @@ import { useEffect, useRef, useState } from 'react';
 import PromptDisplay, { type PromptDisplayHandle } from './PromptDisplay';
 import Image from 'next/image';
 import TimeAndScore from './TimeAndScore';
+import { randomPrompt, type Prompt } from './prompts';
+
+const ROUND_SECONDS = 60;
+const STROKE_COLOR = '#461414';
+const STROKE_WIDTH = 4;
+// Drawings are sent to the scorer at 512px: OpenAI's "low" detail scores images at
+// 512x512 for a small fixed cost, so anything bigger only adds upload time
+const SCORE_IMAGE_SIZE = 512;
+
+type Phase = 'idle' | 'playing' | 'over';
+
+// Copies the drawing onto a white background (the canvas itself is transparent; its
+// white is only CSS), optionally resized
+function drawingOnWhite(canvas: HTMLCanvasElement, size?: number) {
+  const out = document.createElement('canvas');
+  out.width = size ?? canvas.width;
+  out.height = size ?? canvas.height;
+  const ctx = out.getContext('2d')!;
+  ctx.fillStyle = '#fff';
+  ctx.fillRect(0, 0, out.width, out.height);
+  ctx.drawImage(canvas, 0, 0, out.width, out.height);
+  return out;
+}
+
+// Smallest practical upload for scoring: WebP (about 1/4 the size of PNG for a sketch),
+// or JPEG on browsers that can't encode WebP (they quietly return PNG instead)
+function exportForScoring(canvas: HTMLCanvasElement) {
+  const small = drawingOnWhite(canvas, SCORE_IMAGE_SIZE);
+  const webp = small.toDataURL('image/webp', 0.8);
+  return webp.startsWith('data:image/webp') ? webp : small.toDataURL('image/jpeg', 0.8);
+}
 
 export default function Canvas() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const drawingRef = useRef(false);
   const promptRef = useRef<PromptDisplayHandle | null>(null);
   const [playerScore, setPlayerScore] = useState(0);
-  const [prompt, setPrompt] = useState('Welcome to Art Something! Submit an image to begin.');
   const [isCanvasEmpty, setIsCanvasEmpty] = useState(true);
   const isEmptyRef = useRef(true);
 
-  // Countdown timer state + ref
-  const [timeLeft, setTimeLeft] = useState<number>(60);
+  // Game state. Refs mirror the values the canvas event handlers and timer read.
+  const [phase, setPhase] = useState<Phase>('idle');
+  const phaseRef = useRef<Phase>('idle');
+  const [currentPrompt, setCurrentPrompt] = useState<Prompt | null>(null);
+  // While a drawing is being scored (and the next prompt slides in) the clock is
+  // paused and drawing/submitting is blocked, so waiting on the AI never costs time
+  const [scoring, setScoring] = useState(false);
+  const scoringRef = useRef(false);
+
+  const [timeLeft, setTimeLeft] = useState<number>(ROUND_SECONDS);
+  const timeLeftRef = useRef(ROUND_SECONDS);
   const timerRef = useRef<number | null>(null);
+  const [finalScore, setFinalScore] = useState<number | null>(null);
+  const scoreRef = useRef(0);
 
-  // game active flag
-  const [gameActive, setGameActive] = useState<boolean>(false);
+  const setPhaseBoth = (next: Phase) => {
+    phaseRef.current = next;
+    setPhase(next);
+  };
+  const setScoringBoth = (next: boolean) => {
+    scoringRef.current = next;
+    setScoring(next);
+  };
+  const addScore = (points: number) => {
+    scoreRef.current += points;
+    setPlayerScore(scoreRef.current);
+  };
 
-  const startTimer = (seconds = 60) => {
-    setTimeLeft(seconds);
+  const stopTimer = () => {
     if (timerRef.current) {
       clearInterval(timerRef.current);
       timerRef.current = null;
     }
+  };
+
+  const endGame = () => {
+    stopTimer();
+    drawingRef.current = false;
+    setFinalScore(scoreRef.current);
+    setPhaseBoth('over');
+  };
+
+  const startTimer = () => {
+    stopTimer();
+    timeLeftRef.current = ROUND_SECONDS;
+    setTimeLeft(ROUND_SECONDS);
     timerRef.current = window.setInterval(() => {
-      setTimeLeft((t) => {
-        if (t <= 1) {
-          if (timerRef.current) {
-            clearInterval(timerRef.current);
-            timerRef.current = null;
-          }
-          return 0;
-        }
-        return t - 1;
-      });
+      if (scoringRef.current) return; // paused while scoring
+      timeLeftRef.current -= 1;
+      setTimeLeft(timeLeftRef.current);
+      if (timeLeftRef.current <= 0) endGame();
     }, 1000);
   };
 
@@ -45,22 +102,52 @@ export default function Canvas() {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
 
+    const applyPen = () => {
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.lineWidth = STROKE_WIDTH;
+      ctx.strokeStyle = STROKE_COLOR;
+      ctx.fillStyle = STROKE_COLOR;
+    };
+
+    // Resizing a canvas wipes it, so keep a copy of the drawing and paint it back
+    // scaled to the new size (e.g. a phone's address bar or rotating the device)
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1;
       const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.floor(rect.width * dpr);
-      canvas.height = Math.floor(rect.height * dpr);
+      const width = Math.floor(rect.width * dpr);
+      const height = Math.floor(rect.height * dpr);
+      if (width === canvas.width && height === canvas.height) return;
+
+      let saved: HTMLCanvasElement | null = null;
+      if (!isEmptyRef.current && canvas.width > 0 && canvas.height > 0) {
+        saved = document.createElement('canvas');
+        saved.width = canvas.width;
+        saved.height = canvas.height;
+        saved.getContext('2d')!.drawImage(canvas, 0, 0);
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      if (saved) {
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.drawImage(saved, 0, 0, width, height);
+      }
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-      ctx.lineWidth = 4;
-      ctx.strokeStyle = '#461414';
-      isEmptyRef.current = true;
-      setIsCanvasEmpty(true);
+      applyPen();
     };
 
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
+
+    const canDraw = () => phaseRef.current === 'playing' && !scoringRef.current;
+
+    const markDrawn = () => {
+      if (isEmptyRef.current) {
+        isEmptyRef.current = false;
+        setIsCanvasEmpty(false);
+      }
+    };
 
     const getPos = (e: MouseEvent | TouchEvent) => {
       const rect = canvas.getBoundingClientRect();
@@ -70,15 +157,17 @@ export default function Canvas() {
     };
 
     const startDrawing = (e: MouseEvent | TouchEvent) => {
+      if (!canDraw()) return;
+      if (e instanceof TouchEvent) e.preventDefault();
       drawingRef.current = true;
       const { x, y } = getPos(e);
+      // A dot, so a tap or click without moving still leaves a mark
+      ctx.beginPath();
+      ctx.arc(x, y, STROKE_WIDTH / 2, 0, Math.PI * 2);
+      ctx.fill();
       ctx.beginPath();
       ctx.moveTo(x, y);
-      // Mark canvas as non-empty on first interaction
-      if (isEmptyRef.current) {
-        isEmptyRef.current = false;
-        setIsCanvasEmpty(false);
-      }
+      markDrawn();
     };
 
     const endDrawing = () => {
@@ -87,15 +176,12 @@ export default function Canvas() {
     };
 
     const draw = (e: MouseEvent | TouchEvent) => {
-      if (!drawingRef.current) return;
+      if (!drawingRef.current || !canDraw()) return;
       if (e instanceof TouchEvent) e.preventDefault();
       const { x, y } = getPos(e);
       ctx.lineTo(x, y);
       ctx.stroke();
-      if (isEmptyRef.current) {
-        isEmptyRef.current = false;
-        setIsCanvasEmpty(false);
-      }
+      markDrawn();
     };
 
     canvas.addEventListener('mousedown', startDrawing);
@@ -113,110 +199,109 @@ export default function Canvas() {
       canvas.removeEventListener('mouseup', endDrawing);
       canvas.removeEventListener('mouseleave', endDrawing);
       canvas.removeEventListener('mousemove', draw);
-      canvas.removeEventListener('touchstart', startDrawing as EventListener);
-      canvas.removeEventListener('mouseleave', endDrawing);
-      canvas.removeEventListener('mousemove', draw);
-      canvas.removeEventListener('touchstart', startDrawing as EventListener);
+      canvas.removeEventListener('touchstart', startDrawing);
       canvas.removeEventListener('touchend', endDrawing);
       canvas.removeEventListener('touchcancel', endDrawing);
-      canvas.removeEventListener('touchmove', draw as EventListener);
+      canvas.removeEventListener('touchmove', draw);
     };
   }, []);
 
-  useEffect(() => {
-    return () => {
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-        timerRef.current = null;
-      }
-    };
-  }, []);
+  // Stop the clock if the page goes away mid-round
+  useEffect(() => stopTimer, []);
 
   const handleClear = () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    const ctx = canvas?.getContext('2d');
+    if (!canvas || !ctx) return;
+    ctx.save();
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
     ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.restore();
     isEmptyRef.current = true;
     setIsCanvasEmpty(true);
   };
 
-  const handleNewPrompt = async () => {
-    promptRef.current?.triggerSubmitAnimation();
-    await new Promise((res) => setTimeout(res, 1000));
-    try {
-      const res = await fetch('/prompts.txt', { cache: 'no-store' });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const text = await res.text();
-      const prompts = text
-        .split(/\r?\n/)
-        .map((l) => l.trim())
-        .filter(Boolean);
-      if (prompts.length === 0) return;
-      setPrompt(prompts[Math.floor(Math.random() * prompts.length)]);
-    } catch (err) {
-      console.error('Failed to load prompts:', err);
-    }
-  };
-
-  const handleSubmitDebug = () => {
-    setPlayerScore((s) => s + 500);
-    handleClear();
-    handleNewPrompt();
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async () => {
     const canvas = canvasRef.current;
-    if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
+    if (!canvas || !currentPrompt) return;
+    if (phaseRef.current !== 'playing' || scoringRef.current || isEmptyRef.current) return;
 
+    setScoringBoth(true); // pauses the clock and blocks drawing
+    drawingRef.current = false;
+
+    let points: number | null = null;
     try {
-      const imageUrl = canvas.toDataURL('image/png');
-
       const res = await fetch('/api/ai', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: prompt, imageUrl }),
+        body: JSON.stringify({
+          prompt: currentPrompt,
+          imageUrl: exportForScoring(canvas),
+        }),
       });
-
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
-
       const data = await res.json();
       const score =
         typeof data.output === 'number' ? data.output : parseInt(String(data.output), 10);
-
-      if (Number.isFinite(score)) {
-        setPlayerScore((s) => s + score * 2);
-      } else {
-        console.warn('Received invalid score from AI', data.output);
-      }
+      if (Number.isFinite(score)) points = score * 2;
+      else console.warn('Received invalid score from AI', data.output);
     } catch (err) {
       console.error('Submit failed:', err);
     }
+
+    if (points === null) {
+      // Scoring failed: keep the drawing so the player can try submitting again
+      setScoringBoth(false);
+      return;
+    }
+
+    addScore(points);
+    // Slide the prompt away, then bring in a fresh canvas and the next prompt
+    promptRef.current?.triggerSubmitAnimation();
+    await new Promise((res) => setTimeout(res, 1000));
+    handleClear();
+    setCurrentPrompt((previous) => randomPrompt(previous ?? undefined));
+    setScoringBoth(false);
   };
 
   const handleSaveImage = () => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const link = document.createElement('a');
-    link.download = `${prompt}.png`;
-    link.href = canvas.toDataURL();
+    link.download = `${currentPrompt ?? 'art-something'}.png`;
+    link.href = drawingOnWhite(canvas).toDataURL('image/png');
     link.click();
   };
 
+  // Back to the start screen
   const resetGame = () => {
+    stopTimer();
+    scoreRef.current = 0;
     setPlayerScore(0);
-    handleNewPrompt();
+    timeLeftRef.current = ROUND_SECONDS;
+    setTimeLeft(ROUND_SECONDS);
+    setFinalScore(null);
+    setScoringBoth(false);
+    setCurrentPrompt(null);
     handleClear();
+    setPhaseBoth('idle');
   };
 
   const startGame = () => {
     resetGame();
-    startTimer(60);
+    setCurrentPrompt(randomPrompt());
+    setPhaseBoth('playing');
+    startTimer();
   };
+
+  const promptText =
+    phase === 'playing' && currentPrompt
+      ? currentPrompt
+      : phase === 'over'
+        ? `Time's up! Final score: ${finalScore ?? playerScore}. Press Start Game to play again.`
+        : 'Welcome to Art Something! Draw each prompt (no words or numbers!). Press Start Game to begin.';
+
+  const canSubmit = phase === 'playing' && !scoring && !isCanvasEmpty;
 
   return (
     <section className="flex flex-col items-center justify-center min-h-[calc(100vh-62px)] bg-bone px-6 py-3">
@@ -225,7 +310,7 @@ export default function Canvas() {
           <TimeAndScore playerScore={playerScore} timeLeft={timeLeft} />
         </div>
         <div className="flex flex-col items-center gap-3">
-          <PromptDisplay ref={promptRef} prompt={prompt} />
+          <PromptDisplay ref={promptRef} prompt={promptText} />
           <div className="mb-[50]">
             <canvas
               ref={canvasRef}
@@ -256,7 +341,9 @@ export default function Canvas() {
             </button>
             <button
               className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
-              onClick={handleSubmitDebug}
+              onClick={handleSubmit}
+              disabled={!canSubmit}
+              aria-busy={scoring}
             >
               <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
             </button>
