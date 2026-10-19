@@ -299,7 +299,7 @@ export default function Canvas() {
       ? currentPrompt
       : phase === 'over'
         ? `Time's up! Final score: ${finalScore ?? playerScore}. Press Start Game to play again.`
-        : 'Welcome to Art Something! Draw each prompt (no words or numbers!). Press Start Game to begin.';
+        : 'Welcome to Art Something! Submit an image to begin.';
 
   const canSubmit = phase === 'playing' && !scoring && !isCanvasEmpty;
 
