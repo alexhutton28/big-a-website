@@ -21,7 +21,7 @@ const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) =
   return (
     <div
       className={
-        `bg-vanilla w-(--art-canvas-size) p-4 rounded-md transition-transform ease-in-out duration-2000 transform ` +
+        `bg-vanilla w-(--art-canvas-size) p-4 rounded-2xl transition-transform ease-in-out duration-2000 transform ` +
         (animating ? 'translate-y-[120px]' : 'translate-y-0')
       }
     >
