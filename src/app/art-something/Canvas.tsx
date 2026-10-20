@@ -329,19 +329,20 @@ export default function Canvas() {
           {phase === 'idle' && (
             <svg
               aria-hidden="true"
-              className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-500 ${isCanvasEmpty ? 'opacity-100' : 'opacity-0'}`}
+              className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-750 ${isCanvasEmpty ? 'opacity-100' : 'opacity-0'}`}
               viewBox="0 0 100 100"
             >
-              <circle
-                cx="50"
-                cy="50"
-                r="26.5"
+              {/* Open at the upper right, like an unfinished sketch: clockwise from
+                  -20deg round to -63deg. pathLength matches the dash pattern's total,
+                  so the arc starts and ends on a dash. */}
+              <path
+                d="M74.9 40.94 A26.5 26.5 0 1 1 62.03 26.39"
+                pathLength="85.5"
                 fill="none"
                 stroke="var(--color-vanilla)"
                 strokeWidth="2.2"
                 strokeLinecap="round"
-                strokeDasharray="4 6 3 7 5 6 2 7 4 5 3 8 4 6 3 7 5 6 3 7 4 6 3 8"
-                transform="rotate(-80 50 50)"
+                strokeDasharray="3 4.5 2.5 5 3.5 4.5 2 5 3 4 2.5 5 3 4.5 2.5 5 3.5 4.5 2.5 5 3 4.5 3 99"
               />
             </svg>
           )}

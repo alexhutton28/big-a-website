@@ -618,6 +618,7 @@ body:has(.art-page) {
 
 .art-prompt {
   grid-area: prompt;
+  margin-bottom: -16px; /* sits closer to the canvas: half the usual 32px gap */
 }
 
 .art-canvas {
