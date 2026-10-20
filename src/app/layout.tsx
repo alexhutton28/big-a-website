@@ -8,7 +8,7 @@ import Header from '../components/Header';
 const lato = Lato({
   variable: '--font-lato',
   subsets: ['latin'],
-  weight: ['300', '400', '700'],
+  weight: ['300', '400', '700', '900'],
 });
 
 const barlow = Barlow({

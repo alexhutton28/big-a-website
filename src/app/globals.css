@@ -589,3 +589,83 @@ body:has(.dot-gradient-bg) {
     100% 100%;
   background-repeat: repeat;
 }
+
+/* Art Something: the page's cream fills the whole screen, including behind the
+   mobile browser toolbar */
+body:has(.art-page) {
+  background: var(--color-bone);
+}
+
+/* Prompt over the canvas, the time and score box to its left and the save/submit
+   buttons to its right, both centered on the canvas. On phones the box and buttons
+   sit in a row under the canvas instead. */
+.art-layout {
+  /* Phones: as wide as the screen allows, leaving the 16px gutters and the shadow */
+  --art-canvas-size: min(100vw - 57px, 70vh);
+
+  display: grid;
+  grid-template-areas:
+    'prompt prompt'
+    'canvas canvas'
+    'stats actions'
+    'debug debug';
+  grid-template-columns: 1fr 1fr;
+  gap: 32px;
+  align-items: center;
+  width: var(--art-canvas-size);
+  margin-inline: auto;
+}
+
+.art-prompt {
+  grid-area: prompt;
+}
+
+.art-canvas {
+  grid-area: canvas;
+}
+
+.art-stats {
+  grid-area: stats;
+  justify-self: start;
+}
+
+.art-actions {
+  grid-area: actions;
+  justify-self: end;
+}
+
+.art-debug {
+  grid-area: debug;
+  justify-self: center;
+  margin-top: 25px; /* clear the canvas's shadow */
+}
+
+/* Clear the canvas's shadow, which sits outside its box */
+@media (width < 48rem) {
+  .art-stats,
+  .art-actions {
+    margin-top: 25px;
+  }
+}
+
+@media (width >= 48rem) {
+  .art-layout {
+    --art-canvas-size: min(70vh, 70vw, 800px);
+
+    grid-template-areas:
+      '. prompt .'
+      'stats canvas actions'
+      '. debug .';
+    grid-template-columns: 1fr auto 1fr;
+    column-gap: 48px;
+    width: 100%;
+  }
+
+  .art-stats {
+    justify-self: end;
+  }
+
+  .art-actions {
+    justify-self: start;
+  }
+}
