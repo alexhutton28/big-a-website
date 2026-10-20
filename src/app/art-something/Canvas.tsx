@@ -140,7 +140,8 @@ export default function Canvas() {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    const canDraw = () => phaseRef.current === 'playing' && !scoringRef.current;
+    // Drawing is open before the game too: the first submitted drawing starts it
+    const canDraw = () => phaseRef.current !== 'over' && !scoringRef.current;
 
     const markDrawn = () => {
       if (isEmptyRef.current) {
@@ -223,11 +224,22 @@ export default function Canvas() {
 
   const handleSubmit = async () => {
     const canvas = canvasRef.current;
-    if (!canvas || !currentPrompt) return;
-    if (phaseRef.current !== 'playing' || scoringRef.current || isEmptyRef.current) return;
+    if (!canvas || phaseRef.current === 'over' || scoringRef.current || isEmptyRef.current) return;
 
     setScoringBoth(true); // pauses the clock and blocks drawing
     drawingRef.current = false;
+
+    // The first drawing isn't scored (0 points), it just starts the game
+    if (phaseRef.current === 'idle') {
+      promptRef.current?.triggerSubmitAnimation();
+      await new Promise((res) => setTimeout(res, 1000));
+      startGame();
+      return;
+    }
+    if (!currentPrompt) {
+      setScoringBoth(false);
+      return;
+    }
 
     let points: number | null = null;
     try {
@@ -299,61 +311,80 @@ export default function Canvas() {
       ? currentPrompt
       : phase === 'over'
         ? `Time's up! Final score: ${finalScore ?? playerScore}. Press Start Game to play again.`
-        : 'Welcome to Art Something! Submit an image to begin.';
+        : 'Draw something to get started.';
 
-  const canSubmit = phase === 'playing' && !scoring && !isCanvasEmpty;
+  const canSubmit = phase !== 'over' && !scoring && !isCanvasEmpty;
 
   return (
-    <section className="flex flex-col items-center justify-center min-h-[calc(100vh-62px)] bg-bone px-6 py-3">
-      <div className="w-full max-w-[1400px] flex flex-col md:flex-row items-center md:items-center gap-4">
-        <div className="flex md:flex-1 md:justify-end justify-center">
+    // The page scrolls itself: html and body don't scroll (see globals.css)
+    <section className="art-page h-[calc(100dvh_-_62px_-_env(safe-area-inset-top))] overflow-y-auto bg-bone px-3 pt-3 pb-[calc(32px_+_env(safe-area-inset-bottom))]">
+      <div className="art-layout">
+        <div className="art-prompt">
+          <PromptDisplay ref={promptRef} prompt={promptText} />
+        </div>
+        <div className="art-canvas relative size-(--art-canvas-size) border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
+          {/* Before the game: a dashed circle to get the first drawing going. It sits
+              under the (transparent) canvas, so it's never part of the drawing. */}
+          {phase === 'idle' && (
+            <svg
+              aria-hidden="true"
+              className="pointer-events-none absolute inset-0 size-full"
+              viewBox="0 0 100 100"
+            >
+              <circle
+                cx="50"
+                cy="50"
+                r="26.5"
+                fill="none"
+                stroke="var(--color-vanilla)"
+                strokeWidth="2.2"
+                strokeLinecap="round"
+                strokeDasharray="4 6 3 7 5 6 2 7 4 5 3 8 4 6 3 7 5 6 3 7 4 6 3 8"
+                transform="rotate(-80 50 50)"
+              />
+            </svg>
+          )}
+          <canvas ref={canvasRef} className="absolute inset-0 block size-full" />
+        </div>
+        <div className="art-stats">
           <TimeAndScore playerScore={playerScore} timeLeft={timeLeft} />
         </div>
-        <div className="flex flex-col items-center gap-3">
-          <PromptDisplay ref={promptRef} prompt={promptText} />
-          <div className="mb-[50]">
-            <canvas
-              ref={canvasRef}
-              className="absolute border-2 bg-white border-mahogany w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px] z-[5]"
-            />
-            <div className="bg-mahogany relative top-[25] left-[25] w-[min(70vh,70vw)] h-[min(70vh,70vw)] max-w-[800px] max-h-[800px]" />
-          </div>
+        <div className="art-actions flex flex-row md:flex-col gap-3">
+          <button
+            className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
+            onClick={handleSaveImage}
+          >
+            <Image src="/save.svg" alt="Save" width={24} height={24} />
+          </button>
+          <button
+            className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
+            onClick={handleSubmit}
+            disabled={!canSubmit}
+            aria-busy={scoring}
+          >
+            <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
+          </button>
         </div>
-        <div className="flex md:flex-1 md:justify-start justify-center">
-          <div className="flex flex-col gap-3">
-            <button
-              onClick={startGame}
-              className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-            >
-              Start Game
-            </button>
-            <button
-              onClick={handleClear}
-              className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-            >
-              Clear
-            </button>
-            <button
-              className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
-              onClick={handleSaveImage}
-            >
-              <Image src="/save.svg" alt="Save" width={24} height={24} />
-            </button>
-            <button
-              className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
-              onClick={handleSubmit}
-              disabled={!canSubmit}
-              aria-busy={scoring}
-            >
-              <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
-            </button>
-            <button
-              onClick={resetGame}
-              className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-            >
-              Reset Game
-            </button>
-          </div>
+        {/* Temporary controls until the game has its own start/end screens */}
+        <div className="art-debug flex flex-row flex-wrap justify-center gap-3">
+          <button
+            onClick={startGame}
+            className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+          >
+            Start Game
+          </button>
+          <button
+            onClick={handleClear}
+            className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+          >
+            Clear
+          </button>
+          <button
+            onClick={resetGame}
+            className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
+          >
+            Reset Game
+          </button>
         </div>
       </div>
     </section>

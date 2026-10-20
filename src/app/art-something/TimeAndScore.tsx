@@ -9,11 +9,12 @@ type Props = {
 
 export default function TimeAndScore({ playerScore, timeLeft }: Props) {
   return (
-    <div className="p-2 flex flex-col items-end items-center bg-white">
-      <div className="text-padauk font-light text-4xl">{timeLeft}</div>
-      <div className="text-mahogany font-bold text-xs">TIME</div>
-      <div className="text-padauk font-light text-4xl">{playerScore}</div>
-      <div className="text-mahogany font-bold text-xs">SCORE</div>
+    // Offset shadow like the canvas's, in the lighter padauk
+    <div className="flex min-w-[74px] flex-col items-start border border-mahogany bg-white px-2 py-1 shadow-[10px_10px_0_var(--color-padauk)]">
+      <div className="text-padauk font-light text-4xl leading-none tabular-nums">{timeLeft}</div>
+      <div className="text-mahogany font-black text-[11px] mb-1">TIME</div>
+      <div className="text-padauk font-light text-4xl leading-none tabular-nums">{playerScore}</div>
+      <div className="text-mahogany font-black text-[11px]">SCORE</div>
     </div>
   );
 }
