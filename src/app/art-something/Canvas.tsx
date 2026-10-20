@@ -324,11 +324,12 @@ export default function Canvas() {
         </div>
         <div className="art-canvas relative size-(--art-canvas-size) border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
           {/* Before the game: a dashed circle to get the first drawing going. It sits
-              under the (transparent) canvas, so it's never part of the drawing. */}
+              under the (transparent) canvas, so it's never part of the drawing, and
+              fades out once the player starts drawing. */}
           {phase === 'idle' && (
             <svg
               aria-hidden="true"
-              className="pointer-events-none absolute inset-0 size-full"
+              className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-500 ${isCanvasEmpty ? 'opacity-100' : 'opacity-0'}`}
               viewBox="0 0 100 100"
             >
               <circle
