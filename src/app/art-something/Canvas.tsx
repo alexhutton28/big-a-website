@@ -311,13 +311,14 @@ export default function Canvas() {
   // prompt bar (and its clock) comes back once the prompt has finished sliding in.
   const nextPrompt = async () => {
     setPromptBarShownBoth(false);
-    const slidIn = promptRef.current?.triggerSubmitAnimation();
-    await new Promise((res) => setTimeout(res, 1000));
+    const slide = promptRef.current?.triggerSubmitAnimation();
+    // Swap in the next prompt only once the old one is out of sight
+    await slide?.hidden;
     handleClear();
     setCurrentPrompt((previous) => randomPrompt(previous ?? undefined));
     resetPromptTimer();
     setScoringBoth(false);
-    await showPromptBarAfter(slidIn);
+    await showPromptBarAfter(slide?.done);
   };
 
   const handleSubmit = async () => {
@@ -330,11 +331,11 @@ export default function Canvas() {
 
     // The first drawing isn't scored (0 points), it just starts the game
     if (phaseRef.current === 'idle') {
-      const slidIn = promptRef.current?.triggerSubmitAnimation();
-      await new Promise((res) => setTimeout(res, 1000));
+      const slide = promptRef.current?.triggerSubmitAnimation();
+      await slide?.hidden;
       startGame();
       setPromptBarShownBoth(false); // startGame resets it to shown
-      await showPromptBarAfter(slidIn);
+      await showPromptBarAfter(slide?.done);
       return;
     }
     if (!currentPrompt) {
@@ -423,7 +424,7 @@ export default function Canvas() {
           {/* Time left for this prompt */}
           <div
             aria-hidden="true"
-            className={`mt-3 h-[16px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
+            className={`mt-2 h-[8px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
           >
             {/* The short linear transition smooths the clock's 50ms steps */}
             <div

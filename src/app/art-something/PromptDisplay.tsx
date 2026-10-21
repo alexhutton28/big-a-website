@@ -8,8 +8,9 @@ type Props = { prompt: string };
 const SLIDE_MS = 2000;
 
 export type PromptDisplayHandle = {
-  // Resolves once the prompt is back in place
-  triggerSubmitAnimation: () => Promise<void>;
+  // `hidden` resolves once the prompt is fully down behind the canvas (the moment to
+  // swap in the next one), `done` once it's back in place
+  triggerSubmitAnimation: () => { hidden: Promise<void>; done: Promise<void> };
 };
 
 const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) => {
@@ -18,7 +19,10 @@ const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) =
   const triggerSubmitAnimation = () => {
     setAnimating(true);
     setTimeout(() => setAnimating(false), SLIDE_MS);
-    return new Promise<void>((resolve) => setTimeout(resolve, SLIDE_MS * 2));
+    return {
+      hidden: new Promise<void>((resolve) => setTimeout(resolve, SLIDE_MS)),
+      done: new Promise<void>((resolve) => setTimeout(resolve, SLIDE_MS * 2)),
+    };
   };
 
   useImperativeHandle(ref, () => ({ triggerSubmitAnimation }));
@@ -27,7 +31,9 @@ const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) =
     <div
       className={
         `bg-vanilla w-(--art-canvas-size) p-4 rounded-2xl transition-transform ease-in-out duration-2000 transform ` +
-        (animating ? 'translate-y-[120px]' : 'translate-y-0')
+        // Far enough to be fully hidden behind the canvas, even when the text wraps:
+        // its own height plus the timer bar and gaps below it
+        (animating ? 'translate-y-[max(120px,calc(100%_+_40px))]' : 'translate-y-0')
       }
     >
       <div className="text-mahogany text-center text-lg font-semibold">{prompt}</div>
