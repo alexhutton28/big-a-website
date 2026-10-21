@@ -61,11 +61,20 @@ export default function Canvas() {
   const [finalScore, setFinalScore] = useState<number | null>(null);
   const scoreRef = useRef(0);
 
-  // The prompt clock runs every frame, so it's kept out of React state: the bar's
+  // The prompt clock ticks every 50ms, so it's kept out of React state: the bar's
   // width is set directly
   const promptMsRef = useRef(PROMPT_MS);
   const promptBarRef = useRef<HTMLDivElement>(null);
   const onPromptTimeUpRef = useRef<() => void>(() => {});
+  // The bar fades out when a drawing is submitted and back in once the next prompt
+  // has finished sliding in; the prompt clock only runs while it's shown
+  const [promptBarShown, setPromptBarShown] = useState(true);
+  const promptBarShownRef = useRef(true);
+  const promptChangeRef = useRef(0); // counts prompt changes, see showPromptBarAfter
+  const setPromptBarShownBoth = (next: boolean) => {
+    promptBarShownRef.current = next;
+    setPromptBarShown(next);
+  };
 
   const drawPromptBar = () => {
     if (promptBarRef.current) {
@@ -243,7 +252,7 @@ export default function Canvas() {
       const now = performance.now();
       const elapsed = now - last;
       last = now;
-      if (!scoringRef.current && promptMsRef.current > 0) {
+      if (!scoringRef.current && promptBarShownRef.current && promptMsRef.current > 0) {
         promptMsRef.current -= elapsed;
         drawPromptBar();
         if (promptMsRef.current <= 0) onPromptTimeUpRef.current();
@@ -276,6 +285,7 @@ export default function Canvas() {
     setCurrentPrompt(null);
     handleClear();
     resetPromptTimer();
+    setPromptBarShownBoth(true);
     setPhaseBoth('idle');
   };
 
@@ -286,15 +296,28 @@ export default function Canvas() {
     startTimer();
   };
 
+  // Brings the bar back once the prompt is in place, unless the player has already
+  // submitted again (a newer change owns the bar then)
+  const showPromptBarAfter = async (slidIn: Promise<void> | undefined) => {
+    const change = ++promptChangeRef.current;
+    await slidIn;
+    if (change === promptChangeRef.current && phaseRef.current === 'playing') {
+      setPromptBarShownBoth(true);
+    }
+  };
+
   // Slide the prompt away, then bring in a fresh canvas, the next prompt and a full
-  // prompt clock. Called while scoringRef is set, so both clocks stay paused.
+  // prompt clock. Called while scoringRef is set, so both clocks stay paused. The
+  // prompt bar (and its clock) comes back once the prompt has finished sliding in.
   const nextPrompt = async () => {
-    promptRef.current?.triggerSubmitAnimation();
+    setPromptBarShownBoth(false);
+    const slidIn = promptRef.current?.triggerSubmitAnimation();
     await new Promise((res) => setTimeout(res, 1000));
     handleClear();
     setCurrentPrompt((previous) => randomPrompt(previous ?? undefined));
     resetPromptTimer();
     setScoringBoth(false);
+    await showPromptBarAfter(slidIn);
   };
 
   const handleSubmit = async () => {
@@ -303,16 +326,20 @@ export default function Canvas() {
 
     setScoringBoth(true); // pauses the clock and blocks drawing
     drawingRef.current = false;
+    setPromptBarShownBoth(false);
 
     // The first drawing isn't scored (0 points), it just starts the game
     if (phaseRef.current === 'idle') {
-      promptRef.current?.triggerSubmitAnimation();
+      const slidIn = promptRef.current?.triggerSubmitAnimation();
       await new Promise((res) => setTimeout(res, 1000));
       startGame();
+      setPromptBarShownBoth(false); // startGame resets it to shown
+      await showPromptBarAfter(slidIn);
       return;
     }
     if (!currentPrompt) {
       setScoringBoth(false);
+      setPromptBarShownBoth(true);
       return;
     }
 
@@ -344,6 +371,7 @@ export default function Canvas() {
       }
       // Scoring failed: keep the drawing so the player can try submitting again
       setScoringBoth(false);
+      setPromptBarShownBoth(true);
       return;
     }
 
@@ -393,7 +421,10 @@ export default function Canvas() {
         <div className="art-prompt">
           <PromptDisplay ref={promptRef} prompt={promptText} />
           {/* Time left for this prompt */}
-          <div aria-hidden="true" className="mt-3 h-[16px] overflow-hidden rounded bg-vanilla">
+          <div
+            aria-hidden="true"
+            className={`mt-3 h-[16px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
+          >
             {/* The short linear transition smooths the clock's 50ms steps */}
             <div
               ref={promptBarRef}
