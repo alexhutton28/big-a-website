@@ -421,17 +421,20 @@ export default function Canvas() {
       <div className="art-layout">
         <div className="art-prompt">
           <PromptDisplay ref={promptRef} prompt={promptText} />
-          {/* Time left for this prompt */}
-          <div
-            aria-hidden="true"
-            className={`mt-2 h-[8px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
-          >
-            {/* The short linear transition smooths the clock's 50ms steps */}
+          {/* Time left for this prompt. Not on the intro screen, which has no prompt
+              to time (and keeps no space for it). */}
+          {phase !== 'idle' && (
             <div
-              ref={promptBarRef}
-              className="h-full w-full rounded bg-mahogany transition-[width] duration-100 ease-linear"
-            />
-          </div>
+              aria-hidden="true"
+              className={`mt-2 h-[8px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
+            >
+              {/* The short linear transition smooths the clock's 50ms steps */}
+              <div
+                ref={promptBarRef}
+                className="h-full w-full rounded bg-mahogany transition-[width] duration-100 ease-linear"
+              />
+            </div>
+          )}
         </div>
         <div className="art-canvas relative size-(--art-canvas-size) border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
           {/* Before the game: a dashed circle to get the first drawing going. It sits
