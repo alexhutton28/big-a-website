@@ -4,8 +4,12 @@ import React, { useState, useImperativeHandle, forwardRef } from 'react';
 
 type Props = { prompt: string };
 
+// The prompt slides down, then back up (the transition below runs each way)
+const SLIDE_MS = 2000;
+
 export type PromptDisplayHandle = {
-  triggerSubmitAnimation: () => void;
+  // Resolves once the prompt is back in place
+  triggerSubmitAnimation: () => Promise<void>;
 };
 
 const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) => {
@@ -13,7 +17,8 @@ const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) =
 
   const triggerSubmitAnimation = () => {
     setAnimating(true);
-    setTimeout(() => setAnimating(false), 2000);
+    setTimeout(() => setAnimating(false), SLIDE_MS);
+    return new Promise<void>((resolve) => setTimeout(resolve, SLIDE_MS * 2));
   };
 
   useImperativeHandle(ref, () => ({ triggerSubmitAnimation }));
