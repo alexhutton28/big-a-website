@@ -652,7 +652,16 @@ body:has(.art-page) {
    shadow utility, which stacks it with four empty shadows: the press when a drawing
    is scored (TimeAndScore.tsx) would then fade it out instead of tucking it in. */
 .art-score-box {
-  box-shadow: 10px 10px 0 var(--color-padauk);
+  --art-score-shadow: 10px;
+
+  box-shadow: var(--art-score-shadow) var(--art-score-shadow) 0 var(--color-padauk);
+}
+
+/* Phones: a smaller shadow, in balance with the canvas's halved one */
+@media (width < 48rem) {
+  .art-score-box {
+    --art-score-shadow: 6px;
+  }
 }
 
 /* When a drawing is scored, the points earned float up beside the box: on the left

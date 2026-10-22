@@ -45,21 +45,27 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
 
     // Press into the shadow and spring back. A fresh Web Animation every time: toggling
     // a CSS animation class doesn't reliably replay it.
+    // It sinks 70% of the way into its shadow, whatever the shadow's size (smaller on
+    // phones, see .art-score-box)
+    const boxStyle = getComputedStyle(box);
     const padauk =
       getComputedStyle(document.documentElement).getPropertyValue('--color-padauk').trim() ||
       '#815555';
+    const shadow = parseFloat(boxStyle.getPropertyValue('--art-score-shadow')) || 10;
+    const sink = shadow * 0.7;
+    const rest = { transform: 'translate(0, 0)', boxShadow: `${shadow}px ${shadow}px 0 ${padauk}` };
     // The springy easing runs on each leg (in and back out), so it overshoots both ways
     const spring = 'cubic-bezier(0.3, 0.7, 0.4, 1.4)';
     box.animate(
       [
-        { transform: 'translate(0, 0)', boxShadow: `10px 10px 0 ${padauk}`, easing: spring },
+        { ...rest, easing: spring },
         {
-          transform: 'translate(7px, 7px)',
-          boxShadow: `3px 3px 0 ${padauk}`,
+          transform: `translate(${sink}px, ${sink}px)`,
+          boxShadow: `${shadow - sink}px ${shadow - sink}px 0 ${padauk}`,
           offset: 0.35,
           easing: spring,
         },
-        { transform: 'translate(0, 0)', boxShadow: `10px 10px 0 ${padauk}` },
+        rest,
       ],
       420
     );
@@ -95,7 +101,7 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
     // the box sits under it.
     <div
       ref={boxRef}
-      className="art-score-box relative flex flex-col gap-1 max-md:flex-row max-md:gap-4 rounded-tl-lg border-2 border-mahogany bg-white px-2 py-1"
+      className="art-score-box relative flex flex-col gap-1 max-md:flex-row max-md:gap-3 rounded-tl-lg border-2 border-mahogany bg-white px-2 py-1"
     >
       <div className="flex flex-col items-start">
         <div className="text-padauk font-light text-4xl leading-none tabular-nums min-w-[3ch]">
