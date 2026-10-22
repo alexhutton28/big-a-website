@@ -600,8 +600,9 @@ body:has(.art-page) {
    canvas (which stays centered on the page). On phones the box sits under the
    canvas instead. */
 .art-layout {
-  /* Phones: as wide as the screen allows, leaving the 16px gutters and the shadow */
-  --art-canvas-size: min(100vw - 57px, 70vh);
+  /* Phones: as wide as the screen allows, leaving the 16px gutters and the 12px
+     shadow (half the desktop one, to save room) */
+  --art-canvas-size: min(100vw - 44px, 70vh);
 
   display: grid;
   grid-template-areas:
@@ -712,7 +713,7 @@ body:has(.art-page) {
 /* Clear the canvas's shadow, which sits outside its box */
 @media (width < 48rem) {
   .art-stats {
-    margin-top: 25px;
+    margin-top: 12px;
   }
 }
 
