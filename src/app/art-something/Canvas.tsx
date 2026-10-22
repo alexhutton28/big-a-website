@@ -488,11 +488,12 @@ export default function Canvas() {
         <div className="art-canvas relative size-(--art-canvas-size) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
           {/* Between games: a dashed circle to get the next drawing going. It sits
               under the (transparent) canvas, so it's never part of the drawing, and
-              fades out once the player starts drawing. */}
+              fades out once the player starts drawing. It stays hidden while that
+              drawing is submitted, though the board is already clear by then. */}
           {phase !== 'playing' && (
             <svg
               aria-hidden="true"
-              className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-750 ${isCanvasEmpty ? 'opacity-100' : 'opacity-0'}`}
+              className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-750 ${isCanvasEmpty && !scoring ? 'opacity-100' : 'opacity-0'}`}
               viewBox="0 0 100 100"
             >
               {/* Open at the upper right, like an unfinished sketch: clockwise from
