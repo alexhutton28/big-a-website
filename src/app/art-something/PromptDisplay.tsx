@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useImperativeHandle, forwardRef } from 'react';
+import React, { useEffect, useImperativeHandle, useRef, useState, forwardRef } from 'react';
 
 type Props = { prompt: string };
 
@@ -15,6 +15,18 @@ export type PromptDisplayHandle = {
 
 const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) => {
   const [animating, setAnimating] = useState(false);
+  const textRef = useRef<HTMLDivElement>(null);
+  // The text's height, measured, so the bubble eases between one and two lines (and
+  // the board below slides along) instead of jumping
+  const [textHeight, setTextHeight] = useState<number | null>(null);
+
+  useEffect(() => {
+    const text = textRef.current;
+    if (!text) return;
+    const observer = new ResizeObserver(() => setTextHeight(text.offsetHeight));
+    observer.observe(text);
+    return () => observer.disconnect();
+  }, []);
 
   const triggerSubmitAnimation = () => {
     setAnimating(true);
@@ -36,7 +48,14 @@ const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) =
         (animating ? 'translate-y-[max(120px,calc(100%_+_40px))]' : 'translate-y-0')
       }
     >
-      <div className="text-mahogany text-center text-lg font-semibold">{prompt}</div>
+      <div
+        className="overflow-hidden transition-[height] duration-500 ease-in-out"
+        style={textHeight === null ? undefined : { height: textHeight }}
+      >
+        <div ref={textRef} className="text-mahogany text-center text-lg font-semibold">
+          {prompt}
+        </div>
+      </div>
     </div>
   );
 });
