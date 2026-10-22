@@ -37,10 +37,26 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
       return;
     }
 
-    // Press (restart the animation if it's still running from the last score)
-    box.classList.remove('art-score-press');
-    void box.offsetWidth;
-    box.classList.add('art-score-press');
+    // Press into the shadow and spring back. A fresh Web Animation every time: toggling
+    // a CSS animation class doesn't reliably replay it.
+    const padauk =
+      getComputedStyle(document.documentElement).getPropertyValue('--color-padauk').trim() ||
+      '#815555';
+    // The springy easing runs on each leg (in and back out), so it overshoots both ways
+    const spring = 'cubic-bezier(0.3, 0.7, 0.4, 1.4)';
+    box.animate(
+      [
+        { transform: 'translate(0, 0)', boxShadow: `10px 10px 0 ${padauk}`, easing: spring },
+        {
+          transform: 'translate(7px, 7px)',
+          boxShadow: `3px 3px 0 ${padauk}`,
+          offset: 0.35,
+          easing: spring,
+        },
+        { transform: 'translate(0, 0)', boxShadow: `10px 10px 0 ${padauk}` },
+      ],
+      420
+    );
 
     const gain = document.createElement('span');
     gain.className = 'art-score-gain';
