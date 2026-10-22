@@ -7,8 +7,9 @@ import TimeAndScore from './TimeAndScore';
 import { randomPrompt, type Prompt } from './prompts';
 
 const ROUND_SECONDS = 60;
-// Each prompt also has its own short clock, shown as the bar under the prompt
-const PROMPT_MS = 5000;
+// Each prompt also has its own short clock, shown as the bar under the prompt. Both
+// clocks run and pause together, so a round is exactly 10 full-length prompts.
+const PROMPT_MS = 6000;
 const STROKE_COLOR = '#461414';
 const STROKE_WIDTH = 4;
 // Drawings are sent to the scorer at 512px: OpenAI's "low" detail scores images at
@@ -50,24 +51,31 @@ export default function Canvas() {
   const [phase, setPhase] = useState<Phase>('idle');
   const phaseRef = useRef<Phase>('idle');
   const [currentPrompt, setCurrentPrompt] = useState<Prompt | null>(null);
+  // Prompts already drawn this round, so none comes up twice
+  const usedPromptsRef = useRef<Prompt[]>([]);
+  const pickPrompt = () => {
+    const next = randomPrompt(usedPromptsRef.current);
+    usedPromptsRef.current.push(next);
+    return next;
+  };
   // While a drawing is being scored (and the next prompt slides in) the clock is
   // paused and drawing/submitting is blocked, so waiting on the AI never costs time
   const [scoring, setScoring] = useState(false);
   const scoringRef = useRef(false);
 
+  // Round clock: the ms left are a ref (the clocks tick every 50ms); the whole
+  // seconds shown in the time box are state
   const [timeLeft, setTimeLeft] = useState<number>(ROUND_SECONDS);
-  const timeLeftRef = useRef(ROUND_SECONDS);
-  const timerRef = useRef<number | null>(null);
+  const roundMsRef = useRef(ROUND_SECONDS * 1000);
   const [finalScore, setFinalScore] = useState<number | null>(null);
   const scoreRef = useRef(0);
 
-  // The prompt clock ticks every 50ms, so it's kept out of React state: the bar's
-  // width is set directly
+  // The prompt clock is kept out of React state too: the bar's width is set directly
   const promptMsRef = useRef(PROMPT_MS);
   const promptBarRef = useRef<HTMLDivElement>(null);
-  const onPromptTimeUpRef = useRef<() => void>(() => {});
+  const onTimeUpRef = useRef<() => void>(() => {});
   // The bar fades out when a drawing is submitted and back in once the next prompt
-  // has finished sliding in; the prompt clock only runs while it's shown
+  // has finished sliding in; both clocks only run while it's shown
   const [promptBarShown, setPromptBarShown] = useState(true);
   const promptBarShownRef = useRef(true);
   const promptChangeRef = useRef(0); // counts prompt changes, see showPromptBarAfter
@@ -99,32 +107,23 @@ export default function Canvas() {
     setPlayerScore(scoreRef.current);
   };
 
-  const stopTimer = () => {
-    if (timerRef.current) {
-      clearInterval(timerRef.current);
-      timerRef.current = null;
-    }
+  // Under 1ms counts as over: the round is the sum of many small clock steps, which
+  // can leave a rounding sliver after the last prompt
+  const isRoundOver = () => roundMsRef.current < 1;
+  const resetRoundTimer = () => {
+    roundMsRef.current = ROUND_SECONDS * 1000;
+    setTimeLeft(ROUND_SECONDS);
   };
 
   const endGame = () => {
-    stopTimer();
     drawingRef.current = false;
     setFinalScore(scoreRef.current);
+    roundMsRef.current = 0;
+    setTimeLeft(0);
     promptMsRef.current = 0;
     drawPromptBar();
+    setScoringBoth(false);
     setPhaseBoth('over');
-  };
-
-  const startTimer = () => {
-    stopTimer();
-    timeLeftRef.current = ROUND_SECONDS;
-    setTimeLeft(ROUND_SECONDS);
-    timerRef.current = window.setInterval(() => {
-      if (scoringRef.current) return; // paused while scoring
-      timeLeftRef.current -= 1;
-      setTimeLeft(timeLeftRef.current);
-      if (timeLeftRef.current <= 0) endGame();
-    }, 1000);
   };
 
   useEffect(() => {
@@ -239,24 +238,25 @@ export default function Canvas() {
     };
   }, []);
 
-  // Stop the clock if the page goes away mid-round
-  useEffect(() => stopTimer, []);
-
-  // The prompt clock: runs down during a round, paused (like the round clock) while
-  // a drawing is scored. Measured from timestamps on a short interval rather than
-  // animation frames, which stop in a background tab while the round clock goes on.
+  // Both clocks run down together during a round, paused while a drawing is scored
+  // and while the prompt changes (the bar is hidden), so neither costs time.
+  // Measured from timestamps on a short interval rather than animation frames, which
+  // stop in a background tab.
   useEffect(() => {
     if (phase !== 'playing') return;
     let last = performance.now();
     const id = window.setInterval(() => {
       const now = performance.now();
-      const elapsed = now - last;
+      // Capped at the prompt's time left: a late tick (background tabs tick about
+      // once a second) mustn't take more from the round than the prompt had
+      const elapsed = Math.min(now - last, Math.max(0, promptMsRef.current));
       last = now;
-      if (!scoringRef.current && promptBarShownRef.current && promptMsRef.current > 0) {
-        promptMsRef.current -= elapsed;
-        drawPromptBar();
-        if (promptMsRef.current <= 0) onPromptTimeUpRef.current();
-      }
+      if (scoringRef.current || !promptBarShownRef.current || promptMsRef.current <= 0) return;
+      promptMsRef.current -= elapsed;
+      roundMsRef.current -= elapsed;
+      drawPromptBar();
+      setTimeLeft(Math.max(0, Math.ceil(roundMsRef.current / 1000)));
+      if (promptMsRef.current <= 0 || isRoundOver()) onTimeUpRef.current();
     }, 50);
     return () => clearInterval(id);
   }, [phase]);
@@ -275,11 +275,9 @@ export default function Canvas() {
 
   // Back to the start screen
   const resetGame = () => {
-    stopTimer();
     scoreRef.current = 0;
     setPlayerScore(0);
-    timeLeftRef.current = ROUND_SECONDS;
-    setTimeLeft(ROUND_SECONDS);
+    resetRoundTimer();
     setFinalScore(null);
     setScoringBoth(false);
     setCurrentPrompt(null);
@@ -291,9 +289,9 @@ export default function Canvas() {
 
   const startGame = () => {
     resetGame();
-    setCurrentPrompt(randomPrompt());
+    usedPromptsRef.current = [];
+    setCurrentPrompt(pickPrompt());
     setPhaseBoth('playing');
-    startTimer();
   };
 
   // Brings the bar back once the prompt is in place, unless the player has already
@@ -310,12 +308,17 @@ export default function Canvas() {
   // prompt clock. Called while scoringRef is set, so both clocks stay paused. The
   // prompt bar (and its clock) comes back once the prompt has finished sliding in.
   const nextPrompt = async () => {
+    // That was the round's last drawing
+    if (isRoundOver()) {
+      endGame();
+      return;
+    }
     setPromptBarShownBoth(false);
     const slide = promptRef.current?.triggerSubmitAnimation();
     // Swap in the next prompt only once the old one is out of sight
     await slide?.hidden;
     handleClear();
-    setCurrentPrompt((previous) => randomPrompt(previous ?? undefined));
+    setCurrentPrompt(pickPrompt());
     resetPromptTimer();
     setScoringBoth(false);
     await showPromptBarAfter(slide?.done);
@@ -365,8 +368,8 @@ export default function Canvas() {
     }
 
     if (points === null) {
-      if (promptMsRef.current <= 0) {
-        // Out of time for this prompt anyway: no points, move on
+      if (promptMsRef.current <= 0 || isRoundOver()) {
+        // Out of time for this prompt anyway: no points, move on (or end the round)
         await nextPrompt();
         return;
       }
@@ -380,12 +383,12 @@ export default function Canvas() {
     await nextPrompt();
   };
 
-  // A prompt's time ran out: whatever is drawn gets scored; a blank canvas scores
-  // nothing and the game moves on to the next prompt. Refreshed after every render
-  // so the prompt clock always calls the latest handleSubmit (which reads this
-  // render's prompt).
+  // The prompt's (or the round's) time ran out: whatever is drawn gets scored; a
+  // blank canvas scores nothing. Then the next prompt, or the end of the round
+  // (nextPrompt decides). Refreshed after every render so the clock always calls the
+  // latest handleSubmit (which reads this render's prompt).
   useEffect(() => {
-    onPromptTimeUpRef.current = () => {
+    onTimeUpRef.current = () => {
       if (phaseRef.current !== 'playing' || scoringRef.current) return;
       if (!isEmptyRef.current) {
         void handleSubmit();
