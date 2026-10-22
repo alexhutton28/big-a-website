@@ -12,18 +12,21 @@ const ROUND_SECONDS = 30;
 const PROMPT_MS = 6000;
 const STROKE_COLOR = '#461414';
 const STROKE_WIDTH = 4;
-// Drawings are sent to the scorer at 512px: OpenAI's "low" detail scores images at
-// 512x512 for a small fixed cost, so anything bigger only adds upload time
+// Drawings are sent to the scorer at most 512px on their longest side: OpenAI's "low"
+// detail scores images at 512x512 for a small fixed cost, so anything bigger only adds
+// upload time
 const SCORE_IMAGE_SIZE = 512;
 
 type Phase = 'idle' | 'playing' | 'over';
 
 // Copies the drawing onto a white background (the canvas itself is transparent; its
-// white is only CSS), optionally resized
-function drawingOnWhite(canvas: HTMLCanvasElement, size?: number) {
+// white is only CSS), scaled to fit `maxSide` and keeping its shape (the board is
+// taller than wide on tall phones)
+function drawingOnWhite(canvas: HTMLCanvasElement, maxSide: number) {
+  const scale = maxSide / Math.max(canvas.width, canvas.height);
   const out = document.createElement('canvas');
-  out.width = size ?? canvas.width;
-  out.height = size ?? canvas.height;
+  out.width = Math.round(canvas.width * scale);
+  out.height = Math.round(canvas.height * scale);
   const ctx = out.getContext('2d')!;
   ctx.fillStyle = '#fff';
   ctx.fillRect(0, 0, out.width, out.height);
@@ -490,7 +493,7 @@ export default function Canvas() {
             </div>
           )}
         </div>
-        <div className="art-canvas relative size-(--art-canvas-size) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)] max-md:shadow-[12px_12px_0_var(--color-mahogany)]">
+        <div className="art-canvas relative w-(--art-canvas-size) h-(--art-canvas-height) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)] max-md:shadow-[12px_12px_0_var(--color-mahogany)]">
           {/* Between games: a dashed circle to get the next drawing going. It sits
               under the (transparent) canvas, so it's never part of the drawing, and
               fades out once the player starts drawing. It stays hidden while that
