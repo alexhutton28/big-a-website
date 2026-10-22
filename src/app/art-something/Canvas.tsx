@@ -6,9 +6,9 @@ import TimeAndScore from './TimeAndScore';
 import { randomPrompt, type Prompt } from './prompts';
 import { crumbleInto } from './crumble';
 
-const ROUND_SECONDS = 60;
+const ROUND_SECONDS = 30;
 // Each prompt also has its own short clock, shown as the bar under the prompt. Both
-// clocks run and pause together, so a round is exactly 10 full-length prompts.
+// clocks run and pause together, so a round is exactly 5 full-length prompts.
 const PROMPT_MS = 6000;
 const STROKE_COLOR = '#461414';
 const STROKE_WIDTH = 4;
