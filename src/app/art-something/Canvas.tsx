@@ -2,7 +2,6 @@
 
 import { useEffect, useRef, useState } from 'react';
 import PromptDisplay, { type PromptDisplayHandle } from './PromptDisplay';
-import Image from 'next/image';
 import TimeAndScore from './TimeAndScore';
 import { randomPrompt, type Prompt } from './prompts';
 import { crumbleInto } from './crumble';
@@ -82,6 +81,15 @@ export default function Canvas() {
   const [promptBarShown, setPromptBarShown] = useState(true);
   const promptBarShownRef = useRef(true);
   const promptChangeRef = useRef(0); // counts prompt changes, see showPromptBarAfter
+  // Between games, the player's first stroke starts a count-in on the timer bar; the
+  // drawing then starts the game when it runs out
+  const [countingIn, setCountingIn] = useState(false);
+  const countingInRef = useRef(false);
+  const onFirstMarkRef = useRef<() => void>(() => {});
+  const setCountingInBoth = (next: boolean) => {
+    countingInRef.current = next;
+    setCountingIn(next);
+  };
   const setPromptBarShownBoth = (next: boolean) => {
     promptBarShownRef.current = next;
     setPromptBarShown(next);
@@ -179,14 +187,14 @@ export default function Canvas() {
     const resizeObserver = new ResizeObserver(resizeCanvas);
     resizeObserver.observe(canvas);
 
-    // Drawing is open before the game too: the first submitted drawing starts it
-    // Drawing is open between games too: the next submitted drawing starts one
+    // Drawing is open between games too: drawing starts the next one
     const canDraw = () => !scoringRef.current;
 
     const markDrawn = () => {
       if (isEmptyRef.current) {
         isEmptyRef.current = false;
         setIsCanvasEmpty(false);
+        onFirstMarkRef.current();
       }
     };
 
@@ -248,11 +256,11 @@ export default function Canvas() {
   }, []);
 
   // Both clocks run down together during a round, paused while a drawing is scored
-  // and while the prompt changes (the bar is hidden), so neither costs time.
-  // Measured from timestamps on a short interval rather than animation frames, which
-  // stop in a background tab.
+  // and while the prompt changes (the bar is hidden), so neither costs time. During
+  // the count-in only the prompt clock runs. Measured from timestamps on a short
+  // interval rather than animation frames, which stop in a background tab.
   useEffect(() => {
-    if (phase !== 'playing') return;
+    if (phase !== 'playing' && !countingIn) return;
     let last = performance.now();
     const id = window.setInterval(() => {
       const now = performance.now();
@@ -262,13 +270,17 @@ export default function Canvas() {
       last = now;
       if (scoringRef.current || !promptBarShownRef.current || promptMsRef.current <= 0) return;
       promptMsRef.current -= elapsed;
-      roundMsRef.current -= elapsed;
       drawPromptBar();
-      setTimeLeft(Math.max(0, Math.ceil(roundMsRef.current / 1000)));
-      if (promptMsRef.current <= 0 || isRoundOver()) onTimeUpRef.current();
+      if (phaseRef.current === 'playing') {
+        roundMsRef.current -= elapsed;
+        setTimeLeft(Math.max(0, Math.ceil(roundMsRef.current / 1000)));
+      }
+      if (promptMsRef.current <= 0 || (phaseRef.current === 'playing' && isRoundOver())) {
+        onTimeUpRef.current();
+      }
     }, 50);
     return () => clearInterval(id);
-  }, [phase]);
+  }, [phase, countingIn]);
 
   const handleClear = () => {
     const canvas = canvasRef.current;
@@ -283,14 +295,9 @@ export default function Canvas() {
   };
 
   // Clears the board with the crumble animation (straight away with reduced motion).
-  // `restore` puts the drawing back, for when scoring fails.
+  // Resolves once the drawing has gone into the score box.
   const crumbleDrawing = () => {
     const canvas = canvasRef.current!;
-    const saved = document.createElement('canvas');
-    saved.width = canvas.width;
-    saved.height = canvas.height;
-    saved.getContext('2d')!.drawImage(canvas, 0, 0);
-
     const overlay = overlayRef.current;
     const scoreBox = statsRef.current?.querySelector('.art-score-box');
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -299,17 +306,7 @@ export default function Canvas() {
         ? crumbleInto(canvas, overlay, scoreBox.getBoundingClientRect(), STROKE_COLOR)
         : Promise.resolve();
     handleClear();
-
-    const restore = () => {
-      const ctx = canvas.getContext('2d')!;
-      ctx.save();
-      ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.drawImage(saved, 0, 0, canvas.width, canvas.height);
-      ctx.restore();
-      isEmptyRef.current = false;
-      setIsCanvasEmpty(false);
-    };
-    return { done, restore };
+    return done;
   };
 
   // Back to the start screen
@@ -322,7 +319,8 @@ export default function Canvas() {
     setCurrentPrompt(null);
     handleClear();
     resetPromptTimer();
-    setPromptBarShownBoth(true);
+    setPromptBarShownBoth(false);
+    setCountingInBoth(false);
     setPhaseBoth('idle');
   };
 
@@ -371,14 +369,13 @@ export default function Canvas() {
     drawingRef.current = false;
     setPromptBarShownBoth(false);
 
-    // Before a game (or after one), a drawing isn't scored (0 points): it starts a game
+    // The count-in's drawing isn't scored (0 points): it starts the game
     if (phaseRef.current !== 'playing') {
       // It still crumbles into the score box, like a scored drawing
-      const crumble = crumbleDrawing();
+      const crumbled = crumbleDrawing();
       const slide = promptRef.current?.triggerSubmitAnimation();
-      await Promise.all([crumble.done, slide?.hidden]);
+      await Promise.all([crumbled, slide?.hidden]);
       startGame();
-      setPromptBarShownBoth(false); // startGame resets it to shown
       await showPromptBarAfter(slide?.done);
       return;
     }
@@ -391,7 +388,7 @@ export default function Canvas() {
     // The drawing crumbles into the score box while the AI scores it; the score lands
     // once both are done
     const imageUrl = exportForScoring(canvas);
-    const crumble = crumbleDrawing();
+    const crumbled = crumbleDrawing();
 
     let points: number | null = null;
     try {
@@ -409,22 +406,10 @@ export default function Canvas() {
     } catch (err) {
       console.error('Submit failed:', err);
     }
-    await crumble.done;
+    await crumbled;
 
-    if (points === null) {
-      if (promptMsRef.current <= 0 || isRoundOver()) {
-        // Out of time for this prompt anyway: no points, move on (or end the round)
-        await nextPrompt();
-        return;
-      }
-      // Scoring failed: put the drawing back so the player can try submitting again
-      crumble.restore();
-      setScoringBoth(false);
-      setPromptBarShownBoth(true);
-      return;
-    }
-
-    addScore(points);
+    // If scoring failed, the drawing just gets no points
+    if (points !== null) addScore(points);
     await nextPrompt();
   };
 
@@ -434,7 +419,13 @@ export default function Canvas() {
   // latest handleSubmit (which reads this render's prompt).
   useEffect(() => {
     onTimeUpRef.current = () => {
-      if (phaseRef.current !== 'playing' || scoringRef.current) return;
+      if (scoringRef.current) return;
+      // The count-in ran out: its drawing starts the game
+      if (countingInRef.current) {
+        void handleSubmit();
+        return;
+      }
+      if (phaseRef.current !== 'playing') return;
       if (!isEmptyRef.current) {
         void handleSubmit();
         return;
@@ -445,14 +436,18 @@ export default function Canvas() {
     };
   });
 
-  const handleSaveImage = () => {
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const link = document.createElement('a');
-    link.download = `${currentPrompt ?? 'art-something'}.png`;
-    link.href = drawingOnWhite(canvas).toDataURL('image/png');
-    link.click();
-  };
+  // Between games, the first mark on the board starts the count-in: the timer bar
+  // fades in, and when it runs out that drawing starts the game. Refreshed after every
+  // render, like onTimeUpRef.
+  useEffect(() => {
+    onFirstMarkRef.current = () => {
+      if (phaseRef.current === 'playing' || countingInRef.current) return;
+      resetPromptTimer();
+      setCountingInBoth(true);
+      // Mount the bar hidden first, so it fades in
+      window.setTimeout(() => setPromptBarShownBoth(true), 30);
+    };
+  });
 
   const promptText =
     phase === 'playing' && currentPrompt
@@ -461,18 +456,22 @@ export default function Canvas() {
         ? `Time's up! Final score: ${finalScore ?? playerScore}. Draw something to play again.`
         : 'Draw something to get started.';
 
-  const canSubmit = !scoring && !isCanvasEmpty;
+  const showTimerBar = phase === 'playing' || countingIn;
 
   return (
     // The page scrolls itself: html and body don't scroll (see globals.css)
     <section className="art-page h-[calc(100dvh_-_62px_-_env(safe-area-inset-top))] overflow-y-auto bg-bone px-3 pt-3 pb-[calc(32px_+_env(safe-area-inset-bottom))]">
       <div className="art-layout">
-        {/* The intro screen has no timer bar; its space (8px bar + 8px gap) goes above
-            the prompt instead, so the canvas sits in the same spot all game */}
-        <div className={`art-prompt ${phase === 'idle' ? 'pt-3' : ''}`}>
-          <PromptDisplay ref={promptRef} prompt={promptText} />
-          {/* Time left for this prompt */}
-          {phase !== 'idle' && (
+        {/* Between games there's no timer bar until the player starts drawing; its space
+            (8px bar + 8px gap) goes above the prompt instead, so the canvas sits in the
+            same spot all game. When the count-in starts, the bar takes over that space at
+            once (so nothing else moves) and the prompt slides up into place. */}
+        <div className={`art-prompt ${showTimerBar ? '' : 'pt-3'}`}>
+          <div className={countingIn ? 'art-prompt-rise' : ''}>
+            <PromptDisplay ref={promptRef} prompt={promptText} />
+          </div>
+          {/* Time left for this prompt (or the count-in) */}
+          {showTimerBar && (
             <div
               aria-hidden="true"
               className={`mt-2 h-[8px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
@@ -521,43 +520,6 @@ export default function Canvas() {
           aria-hidden="true"
           className="pointer-events-none fixed inset-0 z-30 size-full"
         />
-        <div className="art-actions flex flex-row md:flex-col gap-3">
-          <button
-            className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
-            onClick={handleSaveImage}
-          >
-            <Image src="/save.svg" alt="Save" width={24} height={24} />
-          </button>
-          <button
-            className="bg-mahogany hover:bg-charlie hover:border-mahogany border-1 p-2 rounded cursor-pointer w-fit"
-            onClick={handleSubmit}
-            disabled={!canSubmit}
-            aria-busy={scoring}
-          >
-            <Image src="/arrow-right.svg" alt="Submit" width={24} height={24} />
-          </button>
-        </div>
-        {/* Temporary controls until the game has its own start/end screens */}
-        <div className="art-debug flex flex-row flex-wrap justify-center gap-3">
-          <button
-            onClick={startGame}
-            className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-          >
-            Start Game
-          </button>
-          <button
-            onClick={handleClear}
-            className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-          >
-            Clear
-          </button>
-          <button
-            onClick={resetGame}
-            className="rounded bg-white px-4 py-2 text-black hover:bg-gray-200"
-          >
-            Reset Game
-          </button>
-        </div>
       </div>
     </section>
   );
