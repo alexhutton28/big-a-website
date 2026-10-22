@@ -11,16 +11,17 @@ const SHOW_ART_SOMETHING = process.env.NODE_ENV === 'development';
 
 export default function Home() {
   return (
-    <>
-      <div className="home-sky relative flex min-h-dvh flex-col items-center overflow-hidden pt-[calc(env(safe-area-inset-top)_+_clamp(64px,12vh,128px))] text-white">
+    // The page scrolls itself (html and body don't, see globals.css). It only needs to
+    // on very short screens: the bottom padding keeps the cards clear of the planet,
+    // which there makes the sky taller than the screen.
+    <div className="h-dvh overflow-y-auto">
+      <div className="home-sky relative flex min-h-dvh flex-col items-center overflow-hidden pt-[calc(env(safe-area-inset-top)_+_clamp(64px,12vh,128px))] pb-[calc(var(--horizon)_+_16px)] text-white">
         {/* Back to front: starfield, atmosphere glow on the horizon, then the planet */}
         <NightSky />
         <div aria-hidden="true" className="home-atmosphere" />
         <div aria-hidden="true" className="home-planet" data-night-sky-horizon />
 
-        {/* Above the atmosphere glow but behind the planet (z-index 2), so on short
-            phones the last card fades behind the planet's feathered edge */}
-        <div className="relative z-[1] flex flex-col items-center">
+        <div className="relative z-10 flex flex-col items-center">
           <h1 className="home-title text-5xl">big a&apos;s website</h1>
           <p className="home-subtitle mt-2 mb-4 md:mb-5">Games &amp; Portfolio by Alex Hutton</p>
           {/* On phones the cards stack, so they're a little smaller (same shape) and
@@ -70,6 +71,6 @@ export default function Home() {
 
         <SocialLinks />
       </div>
-    </>
+    </div>
   );
 }
