@@ -419,10 +419,11 @@ export default function Canvas() {
     // The page scrolls itself: html and body don't scroll (see globals.css)
     <section className="art-page h-[calc(100dvh_-_62px_-_env(safe-area-inset-top))] overflow-y-auto bg-bone px-3 pt-3 pb-[calc(32px_+_env(safe-area-inset-bottom))]">
       <div className="art-layout">
-        <div className="art-prompt">
+        {/* The intro screen has no timer bar; its space (8px bar + 8px gap) goes above
+            the prompt instead, so the canvas sits in the same spot all game */}
+        <div className={`art-prompt ${phase === 'idle' ? 'pt-3' : ''}`}>
           <PromptDisplay ref={promptRef} prompt={promptText} />
-          {/* Time left for this prompt. Not on the intro screen, which has no prompt
-              to time (and keeps no space for it). */}
+          {/* Time left for this prompt */}
           {phase !== 'idle' && (
             <div
               aria-hidden="true"
