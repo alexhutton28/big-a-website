@@ -604,6 +604,15 @@ body:has(.art-page) {
      shadow (half the desktop one, to save room) */
   --art-canvas-size: min(100vw - 44px, 70vh);
 
+  /* ...and taller than wide on tall phones, filling the height the rest of the page
+     leaves (about 352px: header, prompt and timer bar, score box, gaps and padding),
+     up to 4:3. Square when there's no room to spare. */
+  --art-canvas-height: clamp(
+    var(--art-canvas-size),
+    100dvh - 352px - env(safe-area-inset-top, 0px) - env(safe-area-inset-bottom, 0px),
+    var(--art-canvas-size) * 4 / 3
+  );
+
   display: grid;
   grid-template-areas:
     'prompt'
@@ -729,6 +738,7 @@ body:has(.art-page) {
 @media (width >= 48rem) {
   .art-layout {
     --art-canvas-size: min(70vh, 70vw, 800px);
+    --art-canvas-height: var(--art-canvas-size); /* always square */
 
     grid-template-areas:
       '. prompt .'
