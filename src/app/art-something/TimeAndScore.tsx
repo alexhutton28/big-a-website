@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
 type Props = {
   playerScore: number;
@@ -16,10 +16,12 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
   const scoreRef = useRef<HTMLSpanElement>(null);
   const gainsRef = useRef<HTMLDivElement>(null);
   const shownRef = useRef<number | null>(null);
+  // Never changes, so React never touches the score's text after the first render
+  const [initialScore] = useState(playerScore);
 
   // When the score goes up: the box presses into its shadow, the points earned float
   // out beside it, and the score counts up to the new total. The score's text is
-  // written here rather than rendered, since it changes every frame while counting.
+  // updated here rather than re-rendered, since it changes every frame while counting.
   useEffect(() => {
     const score = scoreRef.current;
     const box = boxRef.current;
@@ -29,7 +31,11 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
     const from = shownRef.current ?? playerScore;
     const to = playerScore;
     shownRef.current = to;
-    const show = (value: number) => (score.textContent = String(value));
+    // Updates the text node React rendered, rather than replacing it
+    const show = (value: number) => {
+      if (score.firstChild) score.firstChild.nodeValue = String(value);
+      else score.textContent = String(value);
+    };
 
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (to <= from || reduced || document.hidden) {
@@ -85,20 +91,29 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
   return (
     // art-score-box: offset shadow like the canvas's, in the lighter padauk (see
     // globals.css). The numbers are at least 3 digits wide (ch is a digit's width at
-    // their size).
+    // their size). Time above score beside the canvas; side by side on phones, where
+    // the box sits under it.
     <div
       ref={boxRef}
-      className="art-score-box relative flex flex-col items-start rounded-tl-lg border-2 border-mahogany bg-white px-2 py-1"
+      className="art-score-box relative flex flex-col gap-1 max-md:flex-row max-md:gap-4 rounded-tl-lg border-2 border-mahogany bg-white px-2 py-1"
     >
-      <div className="text-padauk font-light text-4xl leading-none tabular-nums min-w-[3ch]">
-        {timeLeft}
+      <div className="flex flex-col items-start">
+        <div className="text-padauk font-light text-4xl leading-none tabular-nums min-w-[3ch]">
+          {timeLeft}
+        </div>
+        <div className="text-mahogany font-black text-[11px]">TIME</div>
       </div>
-      <div className="text-mahogany font-black text-[11px] mb-1">TIME</div>
-      <span
-        ref={scoreRef}
-        className="text-padauk font-light text-4xl leading-none tabular-nums min-w-[3ch]"
-      />
-      <div className="text-mahogany font-black text-[11px]">SCORE</div>
+      <div className="flex flex-col items-start">
+        {/* Rendered once with the starting score so it shows straight away; after
+            that the effect above updates it */}
+        <span
+          ref={scoreRef}
+          className="text-padauk font-light text-4xl leading-none tabular-nums min-w-[3ch]"
+        >
+          {initialScore}
+        </span>
+        <div className="text-mahogany font-black text-[11px]">SCORE</div>
+      </div>
       {/* The "+points" for each scored drawing float up from here */}
       <div ref={gainsRef} aria-hidden="true" className="art-score-gains" />
     </div>

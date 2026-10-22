@@ -84,6 +84,8 @@ export default function Canvas() {
   // Between games, the player's first stroke starts a count-in on the timer bar; the
   // drawing then starts the game when it runs out
   const [countingIn, setCountingIn] = useState(false);
+  // The dashed circle waits for the game-over message to finish sliding in
+  const [circleReady, setCircleReady] = useState(true);
   const countingInRef = useRef(false);
   const onFirstMarkRef = useRef<() => void>(() => {});
   const setCountingInBoth = (next: boolean) => {
@@ -136,10 +138,14 @@ export default function Canvas() {
     promptMsRef.current = 0;
     drawPromptBar();
     setPromptBarShownBoth(false);
+    setCircleReady(false);
     const slide = promptRef.current?.triggerSubmitAnimation();
     await slide?.hidden;
     setPhaseBoth('over');
     setScoringBoth(false);
+    // The circle fades back in once the final score has finished sliding in
+    await slide?.done;
+    setCircleReady(true);
   };
 
   useEffect(() => {
@@ -484,31 +490,30 @@ export default function Canvas() {
             </div>
           )}
         </div>
-        <div className="art-canvas relative size-(--art-canvas-size) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
+        <div className="art-canvas relative size-(--art-canvas-size) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)] max-md:shadow-[12px_12px_0_var(--color-mahogany)]">
           {/* Between games: a dashed circle to get the next drawing going. It sits
               under the (transparent) canvas, so it's never part of the drawing, and
               fades out once the player starts drawing. It stays hidden while that
-              drawing is submitted, though the board is already clear by then. */}
-          {phase !== 'playing' && (
-            <svg
-              aria-hidden="true"
-              className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-750 ${isCanvasEmpty && !scoring ? 'opacity-100' : 'opacity-0'}`}
-              viewBox="0 0 100 100"
-            >
-              {/* Open at the upper right, like an unfinished sketch: clockwise from
+              drawing is submitted, though the board is already clear by then. Always
+              mounted, so it fades in and out rather than popping. */}
+          <svg
+            aria-hidden="true"
+            className={`pointer-events-none absolute inset-0 size-full transition-opacity duration-750 ${phase !== 'playing' && circleReady && isCanvasEmpty && !scoring ? 'opacity-100' : 'opacity-0'}`}
+            viewBox="0 0 100 100"
+          >
+            {/* Open at the upper right, like an unfinished sketch: clockwise from
                   -20deg round to -63deg. pathLength matches the dash pattern's total,
                   so the arc starts and ends on a dash. */}
-              <path
-                d="M74.9 40.94 A26.5 26.5 0 1 1 62.03 26.39"
-                pathLength="85.5"
-                fill="none"
-                stroke="var(--color-vanilla)"
-                strokeWidth="2.2"
-                strokeLinecap="round"
-                strokeDasharray="3 4.5 2.5 5 3.5 4.5 2 5 3 4 2.5 5 3 4.5 2.5 5 3.5 4.5 2.5 5 3 4.5 3 99"
-              />
-            </svg>
-          )}
+            <path
+              d="M74.9 40.94 A26.5 26.5 0 1 1 62.03 26.39"
+              pathLength="85.5"
+              fill="none"
+              stroke="var(--color-vanilla)"
+              strokeWidth="2.2"
+              strokeLinecap="round"
+              strokeDasharray="3 4.5 2.5 5 3.5 4.5 2 5 3 4 2.5 5 3 4.5 2.5 5 3.5 4.5 2.5 5 3 4.5 3 99"
+            />
+          </svg>
           <canvas ref={canvasRef} className="absolute inset-0 block size-full" />
         </div>
         <div ref={statsRef} className="art-stats">
