@@ -373,8 +373,10 @@ export default function Canvas() {
 
     // Before a game (or after one), a drawing isn't scored (0 points): it starts a game
     if (phaseRef.current !== 'playing') {
+      // It still crumbles into the score box, like a scored drawing
+      const crumble = crumbleDrawing();
       const slide = promptRef.current?.triggerSubmitAnimation();
-      await slide?.hidden;
+      await Promise.all([crumble.done, slide?.hidden]);
       startGame();
       setPromptBarShownBoth(false); // startGame resets it to shown
       await showPromptBarAfter(slide?.done);
