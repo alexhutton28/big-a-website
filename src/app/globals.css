@@ -596,20 +596,19 @@ body:has(.art-page) {
   background: var(--color-bone);
 }
 
-/* Prompt over the canvas, the time and score box to its left and the save/submit
-   buttons to its right, both centered on the canvas. On phones the box and buttons
-   sit in a row under the canvas instead. */
+/* Prompt over the canvas and the time and score box to its left, centered on the
+   canvas (which stays centered on the page). On phones the box sits under the
+   canvas instead. */
 .art-layout {
   /* Phones: as wide as the screen allows, leaving the 16px gutters and the shadow */
   --art-canvas-size: min(100vw - 57px, 70vh);
 
   display: grid;
   grid-template-areas:
-    'prompt prompt'
-    'canvas canvas'
-    'stats actions'
-    'debug debug';
-  grid-template-columns: 1fr 1fr;
+    'prompt'
+    'canvas'
+    'stats';
+  grid-template-columns: 1fr;
   gap: 32px;
   align-items: center;
   width: var(--art-canvas-size);
@@ -621,6 +620,24 @@ body:has(.art-page) {
   margin-bottom: -16px; /* sits closer to the canvas: half the usual 32px gap */
 }
 
+/* The prompt sliding up from where it sat on the intro screen (16px lower) when the
+   count-in's timer bar appears */
+.art-prompt-rise {
+  animation: art-prompt-rise 500ms ease-out;
+}
+
+@keyframes art-prompt-rise {
+  from {
+    transform: translateY(16px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .art-prompt-rise {
+    animation: none;
+  }
+}
+
 .art-canvas {
   grid-area: canvas;
 }
@@ -628,17 +645,6 @@ body:has(.art-page) {
 .art-stats {
   grid-area: stats;
   justify-self: start;
-}
-
-.art-actions {
-  grid-area: actions;
-  justify-self: end;
-}
-
-.art-debug {
-  grid-area: debug;
-  justify-self: center;
-  margin-top: 25px; /* clear the canvas's shadow */
 }
 
 /* The time and score box's offset shadow. Set here rather than with Tailwind's
@@ -705,8 +711,7 @@ body:has(.art-page) {
 
 /* Clear the canvas's shadow, which sits outside its box */
 @media (width < 48rem) {
-  .art-stats,
-  .art-actions {
+  .art-stats {
     margin-top: 25px;
   }
 }
@@ -717,8 +722,7 @@ body:has(.art-page) {
 
     grid-template-areas:
       '. prompt .'
-      'stats canvas actions'
-      '. debug .';
+      'stats canvas .';
     grid-template-columns: 1fr auto 1fr;
     column-gap: 48px;
     width: 100%;
@@ -726,9 +730,5 @@ body:has(.art-page) {
 
   .art-stats {
     justify-self: end;
-  }
-
-  .art-actions {
-    justify-self: start;
   }
 }
