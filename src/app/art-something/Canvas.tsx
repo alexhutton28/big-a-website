@@ -440,7 +440,7 @@ export default function Canvas() {
             </div>
           )}
         </div>
-        <div className="art-canvas relative size-(--art-canvas-size) border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
+        <div className="art-canvas relative size-(--art-canvas-size) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)]">
           {/* Before the game: a dashed circle to get the first drawing going. It sits
               under the (transparent) canvas, so it's never part of the drawing, and
               fades out once the player starts drawing. */}
