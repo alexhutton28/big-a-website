@@ -61,7 +61,6 @@ export const PROMPTS = [
   'Flower',
   'Cactus',
   'Mountain',
-  'Rainbow',
   'Cloud',
   'Sun',
   'Moon',
