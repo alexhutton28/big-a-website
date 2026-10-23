@@ -5,6 +5,10 @@ import Link from 'next/link';
 import NightSky from '../components/NightSky';
 import SocialLinks from '../components/SocialLinks';
 
+// TODO(launch): Art Something is still unreleased, so its card is only shown when
+// running locally (`npm run dev`). Make it visible for everyone once it's ready.
+const SHOW_ART_SOMETHING = process.env.NODE_ENV === 'development';
+
 export default function Home() {
   return (
     <>
@@ -20,7 +24,7 @@ export default function Home() {
           <div className="flex flex-row flex-wrap justify-center gap-4">
             <Link
               href="/art-something"
-              className="hidden home-card group relative overflow-hidden rounded"
+              className={`${SHOW_ART_SOMETHING ? '' : 'hidden'} home-card group relative overflow-hidden rounded`}
             >
               <Image
                 alt="Art Something preview"
