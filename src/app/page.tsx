@@ -11,8 +11,12 @@ const SHOW_ART_SOMETHING = process.env.NODE_ENV === 'development';
 
 export default function Home() {
   return (
-    <>
-      <div className="home-sky relative flex min-h-dvh flex-col items-center overflow-hidden pt-[calc(env(safe-area-inset-top)_+_clamp(64px,12vh,128px))] text-white">
+    // The page scrolls itself (html and body don't, see globals.css), as a fallback for
+    // screens too short to fit everything. The bottom padding keeps the cards clear of
+    // the planet; on short screens (700px tall or less, like an iPhone SE) the padding
+    // is trimmed so it all fits without scrolling.
+    <div className="h-dvh overflow-y-auto">
+      <div className="home-sky relative flex min-h-dvh flex-col items-center overflow-hidden pt-[calc(env(safe-area-inset-top)_+_clamp(64px,12vh,128px))] pb-[calc(var(--horizon)_+_16px)] text-white [@media(max-height:700px)]:pt-[calc(env(safe-area-inset-top)_+_48px)] [@media(max-height:700px)]:pb-0">
         {/* Back to front: starfield, atmosphere glow on the horizon, then the planet */}
         <NightSky />
         <div aria-hidden="true" className="home-atmosphere" />
@@ -20,15 +24,17 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="home-title text-5xl">big a&apos;s website</h1>
-          <p className="home-subtitle mt-2 mb-5">Games &amp; Portfolio by Alex Hutton</p>
-          <div className="flex flex-row flex-wrap justify-center gap-4">
+          <p className="home-subtitle mt-2 mb-4 md:mb-5">Games &amp; Portfolio by Alex Hutton</p>
+          {/* On phones the cards stack, so they're a little smaller (same shape) and
+              closer together */}
+          <div className="flex flex-row flex-wrap justify-center gap-3 md:gap-4">
             <Link
               href="/art-something"
               className={`${SHOW_ART_SOMETHING ? '' : 'hidden'} home-card group relative overflow-hidden rounded`}
             >
               <Image
                 alt="Art Something preview"
-                className="h-[140px] w-[260px] object-cover"
+                className="h-[116px] w-[216px] object-cover md:h-[140px] md:w-[260px]"
                 height={600}
                 src="/art-something-og.png"
                 width={1200}
@@ -41,7 +47,7 @@ export default function Home() {
             >
               <Image
                 alt="Limitless Check preview"
-                className="h-[140px] w-[260px] object-cover"
+                className="h-[116px] w-[216px] object-cover md:h-[140px] md:w-[260px]"
                 height={600}
                 loading="eager"
                 src="/limitless-check-og.png"
@@ -55,7 +61,7 @@ export default function Home() {
             >
               <Image
                 alt="Guess That Flavor Text preview"
-                className="h-[140px] w-[260px] object-cover"
+                className="h-[116px] w-[216px] object-cover md:h-[140px] md:w-[260px]"
                 height={600}
                 src="/guess-that-flavor-text-og.png"
                 width={1200}
@@ -66,6 +72,6 @@ export default function Home() {
 
         <SocialLinks />
       </div>
-    </>
+    </div>
   );
 }
