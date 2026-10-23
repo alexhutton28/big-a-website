@@ -65,6 +65,17 @@ body {
   font-family: var(--font-lato), sans-serif;
 }
 
+/* Buttons, links and images are things to press, not text to select: no selection
+   highlight from a double-click, drag or select-all, and images can't be dragged off */
+button,
+a,
+img,
+canvas,
+[role='button'] {
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 html.limitless-check-scrollbar {
   scrollbar-color: var(--color-houndoom) var(--color-rockruff);
   scrollbar-width: thin;
