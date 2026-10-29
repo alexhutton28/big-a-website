@@ -5,10 +5,6 @@ import Link from 'next/link';
 import NightSky from '../components/NightSky';
 import SocialLinks from '../components/SocialLinks';
 
-// TODO(launch): Art Something is still unreleased, so its card is only shown when
-// running locally (`npm run dev`). Make it visible for everyone once it's ready.
-const SHOW_ART_SOMETHING = process.env.NODE_ENV === 'development';
-
 export default function Home() {
   return (
     // The page scrolls itself (html and body don't, see globals.css), as a fallback for
@@ -30,12 +26,13 @@ export default function Home() {
           <div className="flex flex-row flex-wrap justify-center gap-3 md:gap-4">
             <Link
               href="/art-something"
-              className={`${SHOW_ART_SOMETHING ? '' : 'hidden'} home-card group relative overflow-hidden rounded`}
+              className="home-card group relative overflow-hidden rounded"
             >
               <Image
                 alt="Art Something preview"
                 className="h-[116px] w-[216px] object-cover md:h-[140px] md:w-[260px]"
-                height={600}
+                height={630}
+                loading="eager"
                 src="/art-something-og.png"
                 width={1200}
               />
@@ -48,7 +45,7 @@ export default function Home() {
               <Image
                 alt="Limitless Check preview"
                 className="h-[116px] w-[216px] object-cover md:h-[140px] md:w-[260px]"
-                height={600}
+                height={630}
                 loading="eager"
                 src="/limitless-check-og.png"
                 width={1200}
@@ -62,7 +59,7 @@ export default function Home() {
               <Image
                 alt="Guess That Flavor Text preview"
                 className="h-[116px] w-[216px] object-cover md:h-[140px] md:w-[260px]"
-                height={600}
+                height={630}
                 src="/guess-that-flavor-text-og.png"
                 width={1200}
               />
