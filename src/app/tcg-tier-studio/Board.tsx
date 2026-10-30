@@ -1,6 +1,6 @@
 'use client';
 
-import Konva from 'konva';
+import type Konva from 'konva';
 import React from 'react';
 import { Group, Image as KonvaImage, Layer, Rect, Stage, Text } from 'react-konva';
 import { loadImage } from './cards';
@@ -115,25 +115,9 @@ export default function Board({
 }
 
 const LABEL_PADDING = 12;
-const MAX_FONT_SIZE = 52;
-const MIN_FONT_SIZE = 16;
-
-// Largest font size (down to MIN_FONT_SIZE) at which the name fits the label, wrapping
-// at spaces but never mid-word
-function fitFontSize(name: string, fontFamily: string) {
-  const width = LABEL_WIDTH - LABEL_PADDING * 2;
-  const height = TIER_HEIGHT - LABEL_PADDING * 2;
-  const words = name.split(/\s+/);
-  for (let size = MAX_FONT_SIZE; size > MIN_FONT_SIZE; size -= 2) {
-    const props = { fontFamily, fontSize: size, fontStyle: '700', lineHeight: 1 };
-    const longestWord = Math.max(
-      ...words.map((w) => new Konva.Text({ ...props, text: w }).width())
-    );
-    const wrapped = new Konva.Text({ ...props, text: name, width, wrap: 'word' });
-    if (longestWord <= width && wrapped.height() <= height) return size;
-  }
-  return MIN_FONT_SIZE;
-}
+// Inter Black
+const LABEL_FONT_SIZE = 30;
+const LABEL_FONT_WEIGHT = '900';
 
 function TierLabel({
   name,
@@ -148,7 +132,6 @@ function TierLabel({
   fontFamily: string;
   onEdit: () => void;
 }) {
-  const fontSize = React.useMemo(() => fitFontSize(name, fontFamily), [name, fontFamily]);
   return (
     <Group y={y} onDblClick={onEdit} onDblTap={onEdit}>
       <Rect width={LABEL_WIDTH} height={TIER_HEIGHT} fill={color} />
@@ -163,11 +146,11 @@ function TierLabel({
         wrap="word"
         lineHeight={1}
         fontFamily={fontFamily}
-        fontStyle="700"
-        fontSize={fontSize}
+        fontStyle={LABEL_FONT_WEIGHT}
+        fontSize={LABEL_FONT_SIZE}
         fill="#ffffff"
         stroke="#1b1b1b"
-        strokeWidth={fontSize / 6}
+        strokeWidth={LABEL_FONT_SIZE / 6}
         fillAfterStrokeEnabled
         lineJoin="round"
       />

@@ -87,11 +87,13 @@ export default function TierStudio() {
     return () => window.removeEventListener('resize', fit);
   }, []);
 
-  // Canvas text needs the font loaded first; next/font gives it a generated family name
+  // Canvas text needs the font loaded first; next/font gives it a generated family name,
+  // set on the studio's layout
   React.useEffect(() => {
-    const family = getComputedStyle(document.body).getPropertyValue('--font-barlow').trim();
+    const box = boardBoxRef.current;
+    const family = box && getComputedStyle(box).getPropertyValue('--font-inter').trim();
     if (!family) return;
-    document.fonts.load(`700 40px ${family}`).then(() => setFontFamily(family));
+    document.fonts.load(`900 30px ${family}`).then(() => setFontFamily(family));
   }, []);
 
   const removeSelected = React.useCallback(() => {

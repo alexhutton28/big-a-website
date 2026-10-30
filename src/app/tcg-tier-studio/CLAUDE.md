@@ -21,5 +21,5 @@ from rendering. Styling is deliberately minimal for now.
 - Every image is loaded through `/api/tcg-tier-studio/image`: Limitless sends no CORS headers, and a canvas with cross-origin images can't be exported. The proxy only allows the hosts listed in its route; add a host there to use a new image source (e.g. Pokémon HOME sprites).
 - Limitless has no card API, so lookups read its pages. Image numbers aren't predictable (MEG pads to 3 digits, TWM doesn't), so image URLs always come from the page. Search results are newest set first; a name-only import picks the lowest number in the newest set.
 - The editor-only layer (selection outline) is named `editor` and hidden while exporting.
-- Canvas text needs the font loaded first: labels use Barlow 700 via the `--font-barlow` family name, loaded with `document.fonts.load` before they draw.
+- Canvas text needs the font loaded first: tier labels are Inter Black (900) at 30px, loaded with `next/font` in `layout.tsx` (`--font-inter`) and then `document.fonts.load` before they draw. Long names wrap at spaces.
 - The document autosaves to `localStorage` (`tcg-tier-studio-doc`); Save/Load JSON writes and reads the same shape (`parseDoc`). Changing the shape means bumping `version`.
