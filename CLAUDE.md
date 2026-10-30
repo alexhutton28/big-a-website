@@ -35,11 +35,12 @@ Vercel.
 
 ## Design
 
-- Colors are tokens in `globals.css`. Each area has its own palette:
-  - Home: `night` #060c18 sky/planet, blue atmosphere glow, white title (Google Sans Flex 300), gold satellite `#ffe2a8`.
-  - Art Something: `mahogany` #461414, `charlie` #662020, `padauk` #815555, `vanilla` #fff3c3, `bone` #fffbec; Lato.
-  - Guess That Flavor Text: `tide`/`wave`/`splash` blues, `ghost`, `drop`, `mist`, `abyss`; Barlow.
-  - Limitless Check: Pokémon-named reds/browns (`houndoom`, `eevee`, `rockruff`, …).
+- Colors and the spacing scale are defined once, as tokens in the `@theme` block at the top of `src/app/globals.css`; read them there rather than copying values. Use the tokens (`bg-mahogany`, `var(--color-night)`), not raw hex. Each area has its own set:
+  - Home: `night`, plus the sky, planet and glow styles under `.home-*` in `globals.css`. The canvas colors (stars, shooting stars, satellite) are constants at the top of `src/components/NightSky.tsx`.
+  - Art Something: `mahogany`, `charlie`, `padauk`, `vanilla`, `bone`.
+  - Guess That Flavor Text: `tide`, `wave`, `splash`, `stone`, `slate`, `ghost`, `drop`, `mist`, `abyss`.
+  - Limitless Check: the Pokémon-named tokens (`houndoom`, `eevee`, `rockruff`, …).
+- Fonts are loaded in `src/app/layout.tsx` (`next/font`): Google Sans Flex for the home page title, Lato for Art Something and the default body, Barlow for Guess That Flavor Text.
 - Share images and home cards use one file per game: `public/<game>-og.png`, 1200×630, exported at 1x. The home card crops ~2.5% off each side. Favicon: `src/app/icon.png` (512×512); each game also has its own `icon.png`.
 - Alex reviews design work visually. For new animations or visual options, build a side-by-side demo page (artifact) of a few variants in the game's palette first; build the chosen one into the game after.
 - When asked to fix functionality only, don't change layout, copy or design.
