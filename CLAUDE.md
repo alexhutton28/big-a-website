@@ -1,7 +1,7 @@
 # big a's website
 
 Alex Hutton's personal site, live at big-a.fun: an animated night-sky home page plus
-three games. Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, deployed on
+three games, and a hidden tier-list tool. Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, deployed on
 Vercel. Versions and scripts are in `package.json`.
 
 | Route                     | What it is                                       | Notes                                      |
@@ -10,6 +10,7 @@ Vercel. Versions and scripts are in `package.json`.
 | `/art-something`          | Drawing game, scored by OpenAI through `/api/ai` | `src/app/art-something/CLAUDE.md`          |
 | `/guess-that-flavor-text` | Daily puzzle: name the Pokémon from flavor text  | `src/app/guess-that-flavor-text/CLAUDE.md` |
 | `/limitless-check`        | Higher-or-lower on Pokémon TCG tournament usage  | `src/app/limitless-check/CLAUDE.md`        |
+| `/tcg-tier-studio`        | Hidden tool: make and export TCG tier lists      | `src/app/tcg-tier-studio/CLAUDE.md`        |
 
 ## Workflow
 
