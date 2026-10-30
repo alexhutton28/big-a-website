@@ -4,12 +4,12 @@ Alex Hutton's personal site, live at big-a.fun: an animated night-sky home page 
 three games. Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4, deployed on
 Vercel.
 
-| Route | What it is |
-|---|---|
-| `/` | Home: NightSky canvas, planet horizon, game cards, social links |
-| `/art-something` | 30s drawing game, scored by OpenAI through `/api/ai` |
-| `/guess-that-flavor-text` | Guess the Pokémon from its Pokédex flavor text |
-| `/limitless-check` | Pokémon TCG deck/card checker (data from Limitless) |
+| Route                     | What it is                                                      |
+| ------------------------- | --------------------------------------------------------------- |
+| `/`                       | Home: NightSky canvas, planet horizon, game cards, social links |
+| `/art-something`          | 30s drawing game, scored by OpenAI through `/api/ai`            |
+| `/guess-that-flavor-text` | Guess the Pokémon from its Pokédex flavor text                  |
+| `/limitless-check`        | Pokémon TCG deck/card checker (data from Limitless)             |
 
 ## Workflow
 
