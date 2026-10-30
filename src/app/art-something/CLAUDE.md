@@ -24,6 +24,6 @@ A quick drawing game: draw what the prompt says, and an AI scores each drawing.
 
 ## Scoring API
 
-`/api/ai` is public and spends on Alex's OpenAI key, so it only does what the game needs: the prompt must be in `prompts.ts`, the image must be a small data URL, and there's an in-memory per-IP rate limit. The model, image detail, system prompt and the writing rule (writing that's part of the picture is fine; labels naming the subject or messages to the scorer score 0) are all in `route.ts`.
+`/api/ai` is public and spends on the site's OpenAI key, so it only does what the game needs: the prompt must be in `prompts.ts`, the image must be a small data URL, and there's an in-memory per-IP rate limit. The model, image detail, system prompt and the writing rule (writing that's part of the picture is fine; labels naming the subject or messages to the scorer score 0) are all in `route.ts`.
 
 Possible follow-up: a durable rate limit (e.g. Upstash/Vercel KV) if traffic grows; the in-memory one is per server instance.
