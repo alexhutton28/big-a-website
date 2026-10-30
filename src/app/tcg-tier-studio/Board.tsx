@@ -114,10 +114,40 @@ export default function Board({
   );
 }
 
-const LABEL_PADDING = 12;
+const LABEL_PADDING = 6;
 // Inter Black
 const LABEL_FONT_SIZE = 30;
 const LABEL_FONT_WEIGHT = '900';
+const LABEL_STROKE = LABEL_FONT_SIZE / 6;
+
+let measureContext: CanvasRenderingContext2D | null = null;
+
+// Wraps a label at spaces to fit its box. Words are never split: a word too long for
+// the box gets a line to itself and overflows evenly on both sides. (Konva's own word
+// wrap splits words that don't fit, e.g. "Commen" / "t".)
+function wrapLabel(name: string, fontFamily: string) {
+  measureContext ??= document.createElement('canvas').getContext('2d');
+  if (!measureContext) return name;
+  const ctx = measureContext;
+  ctx.font = `${LABEL_FONT_WEIGHT} ${LABEL_FONT_SIZE}px ${fontFamily}`;
+  // The outline adds half its width on each side
+  const maxWidth = LABEL_WIDTH - LABEL_PADDING * 2 - LABEL_STROKE;
+  return name
+    .split('\n')
+    .map((paragraph) => {
+      const lines: string[] = [];
+      for (const word of paragraph.split(/\s+/).filter(Boolean)) {
+        const last = lines.at(-1);
+        if (last !== undefined && ctx.measureText(`${last} ${word}`).width <= maxWidth) {
+          lines[lines.length - 1] = `${last} ${word}`;
+        } else {
+          lines.push(word);
+        }
+      }
+      return lines.join('\n');
+    })
+    .join('\n');
+}
 
 function TierLabel({
   name,
@@ -132,25 +162,24 @@ function TierLabel({
   fontFamily: string;
   onEdit: () => void;
 }) {
+  const text = React.useMemo(() => wrapLabel(name, fontFamily), [name, fontFamily]);
   return (
     <Group y={y} onDblClick={onEdit} onDblTap={onEdit}>
       <Rect width={LABEL_WIDTH} height={TIER_HEIGHT} fill={color} />
       <Text
-        text={name}
-        x={LABEL_PADDING}
-        y={LABEL_PADDING}
-        width={LABEL_WIDTH - LABEL_PADDING * 2}
-        height={TIER_HEIGHT - LABEL_PADDING * 2}
+        text={text}
+        width={LABEL_WIDTH}
+        height={TIER_HEIGHT}
         align="center"
         verticalAlign="middle"
-        wrap="word"
+        wrap="none"
         lineHeight={1}
         fontFamily={fontFamily}
         fontStyle={LABEL_FONT_WEIGHT}
         fontSize={LABEL_FONT_SIZE}
         fill="#ffffff"
         stroke="#1b1b1b"
-        strokeWidth={LABEL_FONT_SIZE / 6}
+        strokeWidth={LABEL_STROKE}
         fillAfterStrokeEnabled
         lineJoin="round"
       />

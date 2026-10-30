@@ -3,6 +3,7 @@
 import type Konva from 'konva';
 import React from 'react';
 import Board from './Board';
+import ColorField from './ColorField';
 import { fetchCard, loadImage, mapLimit, searchCards, type CardResult } from './cards';
 import { parseImport, type ImportLine } from './importText';
 import {
@@ -303,14 +304,14 @@ export default function TierStudio() {
         >
           New board
         </button>
-        <label className="flex items-center gap-[4px]">
+        <span className="flex items-center gap-[4px]">
           Background
-          <input
-            type="color"
+          <ColorField
+            label="Background color"
             value={doc.background}
-            onChange={(e) => setDoc((d) => ({ ...d, background: e.target.value }))}
+            onChange={(background) => setDoc((d) => ({ ...d, background }))}
           />
-        </label>
+        </span>
       </div>
 
       {status && <p className="whitespace-pre-line">{status}</p>}
@@ -320,10 +321,10 @@ export default function TierStudio() {
           <h2 className="font-bold">Tiers</h2>
           {doc.tiers.map((tier, i) => (
             <div key={tier.id} className="flex gap-[8px] items-start">
-              <input
-                type="color"
+              <ColorField
+                label={`${tier.name} color`}
                 value={tier.color}
-                onChange={(e) => updateTier(i, { color: e.target.value })}
+                onChange={(color) => updateTier(i, { color })}
               />
               <textarea
                 ref={(el) => {
