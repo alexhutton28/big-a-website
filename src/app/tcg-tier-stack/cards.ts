@@ -11,18 +11,18 @@ export type CardResult = {
 
 export async function fetchCard(set: string, number: string): Promise<CardResult | null> {
   const params = new URLSearchParams({ set, number });
-  const res = await fetch(`/api/tcg-tier-studio/card?${params}`);
+  const res = await fetch(`/api/tcg-tier-stack/card?${params}`);
   return res.ok ? res.json() : null;
 }
 
 export async function searchCards(query: string): Promise<CardResult[]> {
-  const res = await fetch(`/api/tcg-tier-studio/search?q=${encodeURIComponent(query)}`);
+  const res = await fetch(`/api/tcg-tier-stack/search?q=${encodeURIComponent(query)}`);
   if (!res.ok) return [];
   return (await res.json()).results;
 }
 
 export function proxied(url: string) {
-  return `/api/tcg-tier-studio/image?url=${encodeURIComponent(url)}`;
+  return `/api/tcg-tier-stack/image?url=${encodeURIComponent(url)}`;
 }
 
 // One load per image URL for the whole session

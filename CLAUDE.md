@@ -10,7 +10,7 @@ Vercel. Versions and scripts are in `package.json`.
 | `/art-something`          | Drawing game, scored by OpenAI through `/api/ai` | `src/app/art-something/CLAUDE.md`          |
 | `/guess-that-flavor-text` | Daily puzzle: name the Pokémon from flavor text  | `src/app/guess-that-flavor-text/CLAUDE.md` |
 | `/limitless-check`        | Higher-or-lower on Pokémon TCG tournament usage  | `src/app/limitless-check/CLAUDE.md`        |
-| `/tcg-tier-studio`        | Hidden tool: make and export TCG tier lists      | `src/app/tcg-tier-studio/CLAUDE.md`        |
+| `/tcg-tier-stack`         | Hidden tool: make and export TCG tier lists      | `src/app/tcg-tier-stack/CLAUDE.md`         |
 
 ## Workflow
 

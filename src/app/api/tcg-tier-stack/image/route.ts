@@ -40,7 +40,7 @@ export async function GET(req: Request) {
       },
     });
   } catch (e) {
-    console.error('API /api/tcg-tier-studio/image error:', e);
+    console.error('API /api/tcg-tier-stack/image error:', e);
     return Response.json({ error: 'Image fetch failed.' }, { status: 502 });
   }
 }

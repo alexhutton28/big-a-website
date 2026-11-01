@@ -20,7 +20,7 @@ import {
 // The tier list editor: the board plus a plain control panel. Kept deliberately
 // unstyled; it's a tool for making images, not a page people visit.
 
-const STORAGE_KEY = 'tcg-tier-studio-doc';
+const STORAGE_KEY = 'tcg-tier-stack-doc';
 
 function loadSaved() {
   try {
@@ -54,7 +54,7 @@ function toItem(card: CardResult, name: string): CardItem {
 
 const button = 'border border-black px-[8px] py-[2px] bg-white disabled:opacity-50';
 
-export default function TierStudio() {
+export default function TierStack() {
   const [doc, setDoc] = React.useState<TierListDoc>(loadSaved);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [scale, setScale] = React.useState(1);
@@ -255,7 +255,7 @@ export default function TierStudio() {
   }
 
   return (
-    <div className="tier-studio-page w-full max-w-[1240px] p-[20px] flex flex-col gap-[16px] text-[14px] text-black">
+    <div className="tier-stack-page w-full max-w-[1240px] p-[20px] flex flex-col gap-[16px] text-[14px] text-black">
       <div ref={boardBoxRef} className="w-full">
         <Board
           doc={doc}

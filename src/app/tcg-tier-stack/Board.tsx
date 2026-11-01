@@ -21,7 +21,7 @@ import {
 } from './tierList';
 
 // The tier list on a Konva canvas, drawn at design size and scaled to fit the editor.
-// Konva is browser-only, so TierStudio loads this with ssr: false.
+// Konva is browser-only, so TierStack loads this with ssr: false.
 
 type Props = {
   doc: TierListDoc;
