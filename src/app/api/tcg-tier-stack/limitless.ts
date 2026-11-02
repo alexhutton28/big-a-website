@@ -46,7 +46,8 @@ export async function lookupCard(set: string, number: string) {
 }
 
 export async function searchCards(query: string): Promise<CardResult[]> {
-  const page = await getPage(`${SITE}/cards?q=${encodeURIComponent(query)}`);
+  // show=all: every match on one page (otherwise 50 per page), same order
+  const page = await getPage(`${SITE}/cards?q=${encodeURIComponent(query)}&show=all`);
   if (!page) return [];
 
   // A search with exactly one match redirects to that card's page

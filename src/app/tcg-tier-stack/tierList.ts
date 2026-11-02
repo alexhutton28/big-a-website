@@ -110,6 +110,18 @@ export function moveCard(doc: TierListDoc, id: string, tierIndex: number, index:
   return { ...doc, tiers };
 }
 
+// Adds a new card at a position, or returns null if that tier is full
+export function insertCard(doc: TierListDoc, item: CardItem, tierIndex: number, index: number) {
+  if (doc.tiers[tierIndex].items.length >= MAX_CARDS_PER_TIER) return null;
+  const tiers = doc.tiers.map((t, i) => {
+    if (i !== tierIndex) return t;
+    const items = [...t.items];
+    items.splice(index, 0, item);
+    return { ...t, items };
+  });
+  return { ...doc, tiers };
+}
+
 // Accepts a saved document if it has the shape this version expects
 export function parseDoc(value: unknown): TierListDoc | null {
   const doc = value as TierListDoc | null;

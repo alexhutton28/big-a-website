@@ -11,6 +11,8 @@ import {
   EXPORT_SCALE,
   MAX_CARDS_PER_TIER,
   defaultDoc,
+  dropTarget,
+  insertCard,
   newId,
   parseDoc,
   type CardItem,
@@ -69,6 +71,8 @@ export default function TierStack() {
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
   const tierNameRefs = React.useRef<(HTMLTextAreaElement | null)[]>([]);
+  // Search result being dragged onto the board
+  const draggedResult = React.useRef<CardResult | null>(null);
 
   // Autosave
   React.useEffect(() => {
@@ -188,6 +192,26 @@ export default function TierStack() {
     updateTier(targetTier, { items: [...doc.tiers[targetTier].items, item] });
   }
 
+  // A search result dropped on the board lands in the tier and position under the pointer
+  function dropResult(e: React.DragEvent) {
+    const card = draggedResult.current;
+    const stage = stageRef.current;
+    draggedResult.current = null;
+    if (!card || !stage) return;
+    e.preventDefault();
+    const box = stage.container().getBoundingClientRect();
+    const x = (e.clientX - box.left) / scale;
+    const y = (e.clientY - box.top) / scale;
+    const target = dropTarget(doc, '', x, y);
+    const item = toItem(card, query.trim());
+    const next = insertCard(doc, item, target.tierIndex, target.index);
+    if (!next) {
+      setStatus(`That tier is full (${MAX_CARDS_PER_TIER} cards).`);
+      return;
+    }
+    setDoc(next);
+  }
+
   // Waits for card images, then draws the board at export size without editor marks
   async function renderBlob() {
     const stage = stageRef.current;
@@ -256,7 +280,14 @@ export default function TierStack() {
 
   return (
     <div className="tier-stack-page w-full max-w-[1240px] p-[20px] flex flex-col gap-[16px] text-[14px] text-black">
-      <div ref={boardBoxRef} className="w-full">
+      <div
+        ref={boardBoxRef}
+        className="w-full"
+        onDragOver={(e) => {
+          if (draggedResult.current) e.preventDefault();
+        }}
+        onDrop={dropResult}
+      >
         <Board
           doc={doc}
           scale={scale}
@@ -366,7 +397,7 @@ export default function TierStack() {
         </section>
 
         <section className="flex flex-col gap-[8px]">
-          <h2 className="font-bold">Find a card</h2>
+          <h2 className="font-bold">Add a card</h2>
           <form onSubmit={runSearch} className="flex gap-[8px]">
             <input
               className="border border-black px-[4px] flex-1"
@@ -379,7 +410,7 @@ export default function TierStack() {
             </button>
           </form>
           <label className="flex gap-[8px] items-center">
-            {selectedId ? 'Click a result to swap the selected card.' : 'Add to'}
+            {selectedId ? 'Click a result to swap the selected card.' : 'Click to add to'}
             {!selectedId && (
               <select
                 className="border border-black"
@@ -394,16 +425,47 @@ export default function TierStack() {
               </select>
             )}
           </label>
+          {results.length > 0 && (
+            <p className="text-[12px]">
+              {results.length} {results.length === 1 ? 'match' : 'matches'}. Or drag one onto the
+              board.
+            </p>
+          )}
           <div className="grid grid-cols-5 gap-[4px] max-h-[360px] overflow-y-auto">
             {results.map((card) => (
-              <button
+              // A div, not a button: Firefox won't start a drag from a button
+              <div
                 key={`${card.set}-${card.number}`}
+                role="button"
+                tabIndex={0}
                 title={`${card.set} ${card.number}`}
+                className="cursor-grab text-center text-[11px]"
+                draggable
+                onDragStart={(e) => {
+                  draggedResult.current = card;
+                  e.dataTransfer.effectAllowed = 'copy';
+                  e.dataTransfer.setData('text/plain', `${card.set} ${card.number}`);
+                }}
+                onDragEnd={() => {
+                  draggedResult.current = null;
+                }}
                 onClick={() => pickResult(card)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    pickResult(card);
+                  }
+                }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element -- remote thumbnails, no optimization needed */}
-                <img src={card.thumb} alt={`${card.set} ${card.number}`} loading="lazy" />
-              </button>
+                <img
+                  src={card.thumb}
+                  alt={`${card.set} ${card.number}`}
+                  loading="lazy"
+                  draggable={false}
+                />
+                {card.set} {card.number}
+              </div>
             ))}
           </div>
         </section>
