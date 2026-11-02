@@ -67,6 +67,7 @@ export default function TierStack() {
   const [query, setQuery] = React.useState('');
   const [results, setResults] = React.useState<CardResult[]>([]);
   const [targetTier, setTargetTier] = React.useState(0);
+  const [confirmingNew, setConfirmingNew] = React.useState(false);
 
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
@@ -305,17 +306,29 @@ export default function TierStack() {
         <button className={button} onClick={removeSelected} disabled={!selectedId}>
           Remove selected card
         </button>
-        <button
-          className={button}
-          onClick={() => {
-            if (confirm('Start a new board? This clears the current one.')) {
-              setDoc(defaultDoc());
-              setSelectedId(null);
-            }
-          }}
-        >
-          New board
-        </button>
+        {/* Confirmed on the page: some browsers (the in-app one) never show confirm() */}
+        {confirmingNew ? (
+          <span className="flex items-center gap-[8px]">
+            Clear the board?
+            <button
+              className={button}
+              onClick={() => {
+                setDoc(defaultDoc());
+                setSelectedId(null);
+                setConfirmingNew(false);
+              }}
+            >
+              Yes
+            </button>
+            <button className={button} onClick={() => setConfirmingNew(false)}>
+              Cancel
+            </button>
+          </span>
+        ) : (
+          <button className={button} onClick={() => setConfirmingNew(true)}>
+            New board
+          </button>
+        )}
       </div>
 
       {status && <p className="whitespace-pre-line">{status}</p>}
