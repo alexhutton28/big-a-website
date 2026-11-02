@@ -123,7 +123,7 @@ export default function TierStack() {
   }, []);
 
   // Canvas text needs the font loaded first; next/font gives it a generated family name,
-  // set on the studio's layout
+  // set on this route's layout
   React.useEffect(() => {
     const box = boardBoxRef.current;
     const family = box && getComputedStyle(box).getPropertyValue('--font-inter').trim();

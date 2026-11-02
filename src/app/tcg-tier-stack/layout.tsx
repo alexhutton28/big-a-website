@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google';
 import type { ReactNode } from 'react';
 
-// Tier labels: Inter Black. Only the studio uses it, so it's loaded here.
+// Tier labels: Inter Black. Only tcgTierStack uses it, so it's loaded here.
 const inter = Inter({
   variable: '--font-inter',
   subsets: ['latin'],

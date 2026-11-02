@@ -1,5 +1,5 @@
 // Serves card and sprite images from our own origin. Canvas export refuses to read
-// images from hosts that don't send CORS headers (Limitless doesn't), so the studio
+// images from hosts that don't send CORS headers (Limitless doesn't), so tcgTierStack
 // loads every image through here. Only known image hosts are allowed, so this can't
 // be used as an open proxy.
 const ALLOWED_HOSTS = new Set([
