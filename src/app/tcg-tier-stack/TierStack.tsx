@@ -136,26 +136,36 @@ export default function TierStack() {
     for (const line of lines) {
       if (!found.get(line)) errors.push(`Line ${line.line}: couldn't find "${line.name}".`);
     }
-    setDoc((d) => ({
-      ...d,
-      tiers: d.tiers.map((tier, i) => {
-        const imported = tiers[i];
-        const items = (imported?.cards ?? []).flatMap((line) => found.get(line) ?? []);
-        if (items.length > MAX_CARDS_PER_TIER) {
-          errors.push(
-            `${imported?.name ?? tier.name}: only the first ${MAX_CARDS_PER_TIER} cards fit.`
-          );
-        }
-        return {
-          ...tier,
-          name: imported?.name ?? tier.name,
-          items: items.slice(0, MAX_CARDS_PER_TIER),
-        };
-      }),
-    }));
-    setSelectedId(null);
+    // Imported cards go after the ones already in each tier. Pure, so it can run on the
+    // latest board (it may have changed while cards were looking up)
+    const addImported = (d: TierListDoc) => {
+      const overflow: string[] = [];
+      const next = {
+        ...d,
+        tiers: d.tiers.map((tier, i) => {
+          const imported = tiers[i];
+          const items = [
+            ...tier.items,
+            ...(imported?.cards ?? []).flatMap((line) => found.get(line) ?? []),
+          ];
+          const name = imported?.name ?? tier.name;
+          if (items.length > MAX_CARDS_PER_TIER) {
+            overflow.push(
+              `${name}: ${items.length - MAX_CARDS_PER_TIER} cards didn't fit (${MAX_CARDS_PER_TIER} per tier).`
+            );
+          }
+          return { ...tier, name, items: items.slice(0, MAX_CARDS_PER_TIER) };
+        }),
+      };
+      return { next, overflow };
+    };
+    setDoc((d) => addImported(d).next);
     setBusy(false);
-    setStatus(errors.length ? errors.join('\n') : `Imported ${lines.length} cards.`);
+    errors.push(...addImported(doc).overflow);
+    const added = resolved.filter(Boolean).length;
+    setStatus(
+      errors.length ? errors.join('\n') : `Added ${added} ${added === 1 ? 'card' : 'cards'}.`
+    );
   }
 
   async function runSearch(e: React.FormEvent) {
@@ -377,24 +387,27 @@ export default function TierStack() {
           </p>
         </section>
 
-        <section className="flex flex-col gap-[8px]">
-          <h2 className="font-bold">Bulk import</h2>
-          <textarea
-            rows={10}
-            className="border border-black px-[4px] font-mono text-[12px]"
-            placeholder={'# EZ Dub\nMew ex MEW 151\nAlakazam\n# 50/50\nDragapult ex TWM 130'}
-            value={importText}
-            onChange={(e) => setImportText(e.target.value)}
-          />
-          <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
-            Import (replaces all cards)
-          </button>
-          <p className="text-[12px]">
-            <code>#</code> starts the next tier (text after it renames the tier; <code>\n</code>{' '}
-            breaks the line). Cards are <code>Name SET 123</code>, or just a name for its newest
-            regular print.
-          </p>
-        </section>
+        {/* Collapsed by default; the content is wrapped since <details> doesn't lay out as flex everywhere */}
+        <details>
+          <summary className="font-bold cursor-pointer">Bulk import</summary>
+          <div className="flex flex-col gap-[8px] mt-[8px]">
+            <textarea
+              rows={10}
+              className="border border-black px-[4px] font-mono text-[12px]"
+              placeholder={'# EZ Dub\nMew ex MEW 151\nAlakazam\n# 50/50\nDragapult ex TWM 130'}
+              value={importText}
+              onChange={(e) => setImportText(e.target.value)}
+            />
+            <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
+              Import (adds to the board)
+            </button>
+            <p className="text-[12px]">
+              <code>#</code> starts the next tier (text after it renames the tier; <code>\n</code>{' '}
+              breaks the line). Cards are <code>Name SET 123</code>, or just a name for its newest
+              regular print.
+            </p>
+          </div>
+        </details>
 
         <section className="flex flex-col gap-[8px]">
           <h2 className="font-bold">Add a card</h2>

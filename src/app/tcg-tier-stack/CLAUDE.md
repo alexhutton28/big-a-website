@@ -11,7 +11,7 @@ from rendering. Styling is deliberately minimal for now.
 - `Board.tsx`: draws the document with react-konva (canvas): tier labels, cards, dragging, selection.
 - `TierStack.tsx`: editor state and the control panel: import, card search, export, save/load. Search results can be clicked (add to the chosen tier, or swap the selected card's print) or dragged onto the board (HTML drag and drop on the board's wrapper, placed with `dropTarget` and `insertCard`; no touch support).
 - `TierStackLoader.tsx`: loads the studio with `ssr: false` (Konva needs a browser canvas).
-- `importText.ts`: the bulk import format (documented at the top of the file).
+- `importText.ts`: the bulk import format (documented at the top of the file). Import adds cards after the ones already in each tier (cards past 12 are left out and reported); it never clears the board. The import panel is a `<details>`, collapsed by default.
 - `cards.ts`: client calls to the API routes, and image loading through the proxy.
 - `../api/tcg-tier-stack/`: `card` (by set + number), `search` (by name), `image` (proxy), and `limitless.ts`, which reads limitlesstcg.com pages.
 
