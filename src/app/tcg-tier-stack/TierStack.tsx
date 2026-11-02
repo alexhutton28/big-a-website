@@ -53,9 +53,15 @@ async function resolveCard(line: ImportLine): Promise<CardItem | null> {
   return { id: newId(), kind: 'card', ...top, ...(bottom ? { split: bottom } : {}) };
 }
 
+// Special sets of reprints, listed before regular sets in Limitless search results
+const SPECIAL_SETS = new Set(['30C', 'CEL']);
+
 // Search results come newest set first. Within a set, alt arts are numbered after the
-// regular card, so the lowest number in the newest set is its usual print.
-function defaultPrint(results: CardResult[]) {
+// regular card, so the lowest number in the newest set is its usual print. Special
+// sets and subset numbers (CC21, TG05, SV103) are skipped while a regular print exists.
+function defaultPrint(all: CardResult[]) {
+  const regular = all.filter((r) => !SPECIAL_SETS.has(r.set) && /^\d+$/.test(r.number));
+  const results = regular.length ? regular : all;
   const newest = results.filter((r) => r.set === results[0]?.set);
   const number = (r: CardResult) => parseInt(r.number, 10) || Infinity;
   return newest.sort((a, b) => number(a) - number(b))[0];
