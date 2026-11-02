@@ -4,7 +4,7 @@ import type Konva from 'konva';
 import React from 'react';
 import Board from './Board';
 import ColorField from './ColorField';
-import { fetchCard, loadImage, mapLimit, searchCards, type CardResult } from './cards';
+import { fetchCard, loadImage, mapLimit, proxied, searchCards, type CardResult } from './cards';
 import { parseImport, type ImportLine } from './importText';
 import {
   BOARD_WIDTH,
@@ -443,6 +443,11 @@ export default function TierStack() {
                   alt={`${card.set} ${card.number}`}
                   loading="lazy"
                   draggable={false}
+                  // The CDN occasionally fails a load; retry once through the image proxy
+                  onError={(e) => {
+                    const proxy = proxied(card.thumb);
+                    if (!e.currentTarget.src.endsWith(proxy)) e.currentTarget.src = proxy;
+                  }}
                 />
                 {card.set} {card.number}
               </div>
