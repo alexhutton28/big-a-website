@@ -2,7 +2,7 @@
 // the name; `\n` is a line break). Each other line is a card, in deck-list form with an
 // optional count:
 //
-//   # EZ Dub
+//   # Goated
 //   Mew ex MEW 151
 //   1 Dipplin TWM 18
 //   Alakazam            <- name only: the newest regular print

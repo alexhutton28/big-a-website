@@ -52,10 +52,10 @@ export function newId() {
 
 export function defaultDoc(): TierListDoc {
   const tiers: [string, string][] = [
-    ['EZ Dub', '#d9532b'],
-    ['50/50', '#f0912f'],
-    ['Slightly Losing', '#f5c95b'],
-    ['No Comment', '#7cc05a'],
+    ['Goated', '#d9532b'],
+    ['Solid', '#f0912f'],
+    ['Mid', '#f5c95b'],
+    ['Fraud', '#7cc05a'],
   ];
   return {
     version: 1,

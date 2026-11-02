@@ -361,7 +361,7 @@ export default function TierStack() {
             <textarea
               rows={10}
               className="border border-black px-[4px] font-mono text-[12px]"
-              placeholder={'# EZ Dub\nMew ex MEW 151\nAlakazam\n# 50/50\nDragapult ex TWM 130'}
+              placeholder={'# Goated\nMew ex MEW 151\nAlakazam\n# Solid\nDragapult ex TWM 130'}
               value={importText}
               onChange={(e) => setImportText(e.target.value)}
             />
