@@ -311,22 +311,15 @@ export default function TierStack() {
         >
           New board
         </button>
-        <span className="flex items-center gap-[4px]">
-          Background
-          <ColorField
-            label="Background color"
-            value={doc.background}
-            onChange={(background) => setDoc((d) => ({ ...d, background }))}
-          />
-        </span>
       </div>
 
       {status && <p className="whitespace-pre-line">{status}</p>}
 
       <div className="grid gap-[16px] md:grid-cols-3">
         <details ref={tiersPanelRef}>
-          <summary className="font-bold cursor-pointer">Tiers</summary>
+          <summary className="font-bold cursor-pointer">Customize Board</summary>
           <div className="flex flex-col gap-[8px] mt-[8px]">
+            <h3 className="font-bold">Tiers</h3>
             {doc.tiers.map((tier, i) => (
               <div key={tier.id} className="flex gap-[8px] items-start">
                 <ColorField
@@ -352,6 +345,12 @@ export default function TierStack() {
               Drag cards to move them. Click a card and press Delete to remove it. Double-click a
               tier label to rename it.
             </p>
+            <h3 className="font-bold">Background</h3>
+            <ColorField
+              label="Background color"
+              value={doc.background}
+              onChange={(background) => setDoc((d) => ({ ...d, background }))}
+            />
           </div>
         </details>
 
