@@ -71,6 +71,7 @@ export default function TierStack() {
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
   const tierNameRefs = React.useRef<(HTMLTextAreaElement | null)[]>([]);
+  const tiersPanelRef = React.useRef<HTMLDetailsElement>(null);
   // Search result being dragged onto the board
   const draggedResult = React.useRef<CardResult | null>(null);
 
@@ -262,32 +263,6 @@ export default function TierStack() {
     }
   }
 
-  function saveJson() {
-    const url = URL.createObjectURL(
-      new Blob([JSON.stringify(doc, null, 2)], { type: 'application/json' })
-    );
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'tier-list.json';
-    a.click();
-    URL.revokeObjectURL(url);
-  }
-
-  async function loadJson(e: React.ChangeEvent<HTMLInputElement>) {
-    const file = e.target.files?.[0];
-    e.target.value = '';
-    if (!file) return;
-    try {
-      const loaded = parseDoc(JSON.parse(await file.text()));
-      if (!loaded) throw new Error('bad doc');
-      setDoc(loaded);
-      setSelectedId(null);
-      setStatus('Loaded.');
-    } catch {
-      setStatus("That file isn't a tier list.");
-    }
-  }
-
   return (
     <div className="tier-stack-page w-full max-w-[1240px] p-[20px] flex flex-col gap-[16px] text-[14px] text-black">
       <div
@@ -305,7 +280,10 @@ export default function TierStack() {
           selectedId={selectedId}
           onChange={setDoc}
           onSelect={setSelectedId}
-          onEditTier={(i) => tierNameRefs.current[i]?.focus()}
+          onEditTier={(i) => {
+            if (tiersPanelRef.current) tiersPanelRef.current.open = true;
+            tierNameRefs.current[i]?.focus();
+          }}
           onStage={(stage) => {
             stageRef.current = stage;
           }}
@@ -319,18 +297,6 @@ export default function TierStack() {
         <button className={button} onClick={copyPng} disabled={busy}>
           Copy PNG
         </button>
-        <button className={button} onClick={saveJson}>
-          Save JSON
-        </button>
-        <label className={button}>
-          Load JSON
-          <input
-            type="file"
-            accept="application/json,.json"
-            className="hidden"
-            onChange={loadJson}
-          />
-        </label>
         <button className={button} onClick={removeSelected} disabled={!selectedId}>
           Remove selected card
         </button>
@@ -358,34 +324,36 @@ export default function TierStack() {
       {status && <p className="whitespace-pre-line">{status}</p>}
 
       <div className="grid gap-[16px] md:grid-cols-3">
-        <section className="flex flex-col gap-[8px]">
-          <h2 className="font-bold">Tiers</h2>
-          {doc.tiers.map((tier, i) => (
-            <div key={tier.id} className="flex gap-[8px] items-start">
-              <ColorField
-                label={`${tier.name} color`}
-                value={tier.color}
-                onChange={(color) => updateTier(i, { color })}
-              />
-              <textarea
-                ref={(el) => {
-                  tierNameRefs.current[i] = el;
-                }}
-                rows={2}
-                className="border border-black px-[4px] flex-1"
-                value={tier.name}
-                onChange={(e) => updateTier(i, { name: e.target.value })}
-              />
-              <button className={button} onClick={() => updateTier(i, { items: [] })}>
-                Clear
-              </button>
-            </div>
-          ))}
-          <p className="text-[12px]">
-            Drag cards to move them. Click a card and press Delete to remove it. Double-click a tier
-            label to rename it.
-          </p>
-        </section>
+        <details ref={tiersPanelRef}>
+          <summary className="font-bold cursor-pointer">Tiers</summary>
+          <div className="flex flex-col gap-[8px] mt-[8px]">
+            {doc.tiers.map((tier, i) => (
+              <div key={tier.id} className="flex gap-[8px] items-start">
+                <ColorField
+                  label={`${tier.name} color`}
+                  value={tier.color}
+                  onChange={(color) => updateTier(i, { color })}
+                />
+                <textarea
+                  ref={(el) => {
+                    tierNameRefs.current[i] = el;
+                  }}
+                  rows={2}
+                  className="border border-black px-[4px] flex-1"
+                  value={tier.name}
+                  onChange={(e) => updateTier(i, { name: e.target.value })}
+                />
+                <button className={button} onClick={() => updateTier(i, { items: [] })}>
+                  Clear
+                </button>
+              </div>
+            ))}
+            <p className="text-[12px]">
+              Drag cards to move them. Click a card and press Delete to remove it. Double-click a
+              tier label to rename it.
+            </p>
+          </div>
+        </details>
 
         {/* Collapsed by default; the content is wrapped since <details> doesn't lay out as flex everywhere */}
         <details>

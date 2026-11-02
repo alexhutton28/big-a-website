@@ -1,5 +1,5 @@
 // The tier list document and its layout. The document is plain JSON (saved to
-// localStorage and to files), separate from rendering, so new kinds of boards and
+// localStorage), separate from rendering, so new kinds of boards and
 // elements can be added without touching how existing ones are stored.
 
 export type CardItem = {
