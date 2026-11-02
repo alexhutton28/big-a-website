@@ -6,15 +6,22 @@
 //   Mew ex MEW 151
 //   1 Dipplin TWM 18
 //   Alakazam            <- name only: the newest regular print
+//   Dragapult ex TWM 130 / Pidgeot ex   <- a split card: top / bottom
 //
 // Cards before the first `#` go in the first tier.
 
 import { TIER_COUNT } from './tierList';
 
-export type ImportLine = { name: string; set?: string; number?: string; line: number };
+export type ImportCard = { name: string; set?: string; number?: string };
+export type ImportLine = ImportCard & { line: number; split?: ImportCard };
 export type ImportTier = { name?: string; cards: ImportLine[] };
 
 const WITH_SET = /^(.+?)\s+([A-Z][A-Z0-9-]{1,7})\s+([A-Za-z0-9-]{1,8})$/;
+
+function parseCard(text: string): ImportCard {
+  const match = text.trim().match(WITH_SET);
+  return match ? { name: match[1], set: match[2], number: match[3] } : { name: text.trim() };
+}
 
 export function parseImport(text: string): { tiers: ImportTier[]; errors: string[] } {
   const tiers: ImportTier[] = [{ cards: [] }];
@@ -31,13 +38,12 @@ export function parseImport(text: string): { tiers: ImportTier[]; errors: string
       if (name) tiers[tiers.length - 1].name = name;
       return;
     }
-    const card = line.replace(/^\d+\s+/, '');
-    const match = card.match(WITH_SET);
-    tiers[tiers.length - 1].cards.push(
-      match
-        ? { name: match[1], set: match[2], number: match[3], line: i + 1 }
-        : { name: card, line: i + 1 }
-    );
+    const [top, bottom] = line.replace(/^\d+\s+/, '').split(/\s+\/\s+/);
+    tiers[tiers.length - 1].cards.push({
+      ...parseCard(top),
+      ...(bottom ? { split: parseCard(bottom) } : {}),
+      line: i + 1,
+    });
   });
 
   if (tiers.length > TIER_COUNT) {

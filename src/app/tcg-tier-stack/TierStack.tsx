@@ -5,16 +5,18 @@ import React from 'react';
 import Board from './Board';
 import ColorField from './ColorField';
 import { fetchCard, loadImage, mapLimit, proxied, searchCards, type CardResult } from './cards';
-import { parseImport, type ImportLine } from './importText';
+import { parseImport, type ImportCard, type ImportLine } from './importText';
 import {
   BOARD_WIDTH,
   EXPORT_SCALE,
   MAX_CARDS_PER_TIER,
   defaultDoc,
   dropTarget,
+  faceOf,
   insertCard,
   newId,
   parseDoc,
+  type CardFace,
   type CardItem,
   type TierListDoc,
 } from './tierList';
@@ -32,14 +34,23 @@ function loadSaved() {
   }
 }
 
-async function resolveCard(line: ImportLine): Promise<CardItem | null> {
-  if (line.set && line.number) {
-    const card = await fetchCard(line.set, line.number);
-    if (card) return toItem(card, card.name ?? line.name);
+async function resolveFace(card: ImportCard): Promise<CardFace | null> {
+  if (card.set && card.number) {
+    const found = await fetchCard(card.set, card.number);
+    if (found) return toFace(found, found.name ?? card.name);
   }
-  const results = await searchCards(line.name);
-  const pick = defaultPrint(results);
-  return pick ? toItem(pick, line.name) : null;
+  const pick = defaultPrint(await searchCards(card.name));
+  return pick ? toFace(pick, card.name) : null;
+}
+
+// A split card needs both halves found
+async function resolveCard(line: ImportLine): Promise<CardItem | null> {
+  const [top, bottom] = await Promise.all([
+    resolveFace(line),
+    line.split ? resolveFace(line.split) : null,
+  ]);
+  if (!top || (line.split && !bottom)) return null;
+  return { id: newId(), kind: 'card', ...top, ...(bottom ? { split: bottom } : {}) };
 }
 
 // Search results come newest set first. Within a set, alt arts are numbered after the
@@ -50,8 +61,12 @@ function defaultPrint(results: CardResult[]) {
   return newest.sort((a, b) => number(a) - number(b))[0];
 }
 
+function toFace(card: CardResult, name: string): CardFace {
+  return { name, set: card.set, number: card.number, image: card.image };
+}
+
 function toItem(card: CardResult, name: string): CardItem {
-  return { id: newId(), kind: 'card', name, set: card.set, number: card.number, image: card.image };
+  return { id: newId(), kind: 'card', ...toFace(card, name) };
 }
 
 const button = 'border border-black px-[8px] py-[2px] bg-white disabled:opacity-50';
@@ -71,8 +86,9 @@ export default function TierStack() {
   // Menu for a clicked card, positioned in the board's on-screen pixels
   const [cardMenu, setCardMenu] = React.useState<{ id: string; x: number; y: number } | null>(null);
   const cardMenuRef = React.useRef<HTMLDivElement>(null);
-  // Card being replaced: the next search result clicked takes its place
-  const [replacingId, setReplacingId] = React.useState<string | null>(null);
+  // Card face being picked from search: the next result clicked replaces the card (or a
+  // split card's top half), or becomes its bottom half, making it a split card
+  const [picking, setPicking] = React.useState<{ id: string; part: 'top' | 'bottom' } | null>(null);
   const searchInputRef = React.useRef<HTMLInputElement>(null);
 
   const stageRef = React.useRef<Konva.Stage | null>(null);
@@ -128,7 +144,7 @@ export default function TierStack() {
       if (!typing && (e.key === 'Delete' || e.key === 'Backspace')) removeSelected();
       if (e.key === 'Escape') {
         setCardMenu(null);
-        setReplacingId(null);
+        setPicking(null);
       }
       if (!typing && e.key === 'Escape') setSelectedId(null);
     };
@@ -160,7 +176,10 @@ export default function TierStack() {
     const resolved = await mapLimit(lines, 4, resolveCard);
     const found = new Map(lines.map((line, i) => [line, resolved[i]]));
     for (const line of lines) {
-      if (!found.get(line)) errors.push(`Line ${line.line}: couldn't find "${line.name}".`);
+      if (!found.get(line)) {
+        const name = line.split ? `${line.name} / ${line.split.name}` : line.name;
+        errors.push(`Line ${line.line}: couldn't find "${name}".`);
+      }
     }
     // Imported cards go after the ones already in each tier. Pure, so it can run on the
     // latest board (it may have changed while cards were looking up)
@@ -208,35 +227,68 @@ export default function TierStack() {
     setBusy(false);
   }
 
-  // Replace card: searches the card's name (its other prints), and the next result
-  // clicked takes its place
-  function startReplacing(id: string) {
-    const item = doc.tiers.flatMap((t) => t.items).find((i) => i.id === id);
+  const findCard = (id: string | undefined) =>
+    doc.tiers.flatMap((t) => t.items).find((i) => i.id === id);
+
+  const updateCard = (id: string, change: (item: CardItem) => CardItem) =>
+    setDoc((d) => ({
+      ...d,
+      tiers: d.tiers.map((t) => ({
+        ...t,
+        items: t.items.map((i) => (i.id === id ? change(i) : i)),
+      })),
+    }));
+
+  // Puts the search in picking mode for a card's top or bottom face. Replacing searches
+  // that face's name (its other prints); a new split card starts with an empty search.
+  function startPicking(id: string, part: 'top' | 'bottom') {
+    const item = findCard(id);
     if (!item) return;
-    setReplacingId(id);
-    setQuery(item.name);
+    const name = part === 'top' ? item.name : (item.split?.name ?? '');
+    setPicking({ id, part });
+    setQuery(name);
+    setResults([]);
     searchInputRef.current?.scrollIntoView({ block: 'center' });
     searchInputRef.current?.focus();
-    search(item.name);
+    search(name);
   }
 
-  const replacing = doc.tiers.flatMap((t) => t.items).find((i) => i.id === replacingId);
+  const pickingCard = findCard(picking?.id);
+
+  const cardMenuItems = (id: string) =>
+    findCard(id)?.split
+      ? ([
+          'Remove card',
+          'Replace top half',
+          'Replace bottom half',
+          'Swap halves',
+          'Unsplit',
+        ] as const)
+      : (['Remove card', 'Replace card', 'Make split card'] as const);
+
+  function runCardMenuItem(id: string, label: ReturnType<typeof cardMenuItems>[number]) {
+    if (label === 'Remove card') removeCard(id);
+    if (label === 'Replace card' || label === 'Replace top half') startPicking(id, 'top');
+    if (label === 'Make split card' || label === 'Replace bottom half') startPicking(id, 'bottom');
+    if (label === 'Swap halves') {
+      updateCard(id, (i) => (i.split ? { ...i, ...i.split, split: faceOf(i) } : i));
+    }
+    // Keeps the top card
+    if (label === 'Unsplit') updateCard(id, (i) => ({ ...i, split: undefined }));
+  }
 
   function pickResult(card: CardResult) {
-    if (replacing) {
-      const name = query.trim() || replacing.name;
-      setDoc((d) => ({
-        ...d,
-        tiers: d.tiers.map((t) => ({
-          ...t,
-          items: t.items.map((i) =>
-            i.id === replacing.id
-              ? { ...i, name, set: card.set, number: card.number, image: card.image }
-              : i
-          ),
-        })),
-      }));
-      setReplacingId(null);
+    if (picking && pickingCard) {
+      const face = {
+        name: query.trim() || `${card.set} ${card.number}`,
+        set: card.set,
+        number: card.number,
+        image: card.image,
+      };
+      updateCard(picking.id, (i) =>
+        picking.part === 'top' ? { ...i, ...face } : { ...i, split: face }
+      );
+      setPicking(null);
       return;
     }
     if (doc.tiers[targetTier].items.length >= MAX_CARDS_PER_TIER) {
@@ -272,7 +324,11 @@ export default function TierStack() {
     const stage = stageRef.current;
     if (!stage) return null;
     setSelectedId(null);
-    await Promise.allSettled(doc.tiers.flatMap((t) => t.items.map((i) => loadImage(i.image))));
+    await Promise.allSettled(
+      doc.tiers.flatMap((t) =>
+        t.items.flatMap((i) => [i.image, ...(i.split ? [i.split.image] : [])]).map(loadImage)
+      )
+    );
     await document.fonts.ready;
     // Let React draw the cards whose images just finished loading
     await new Promise((resolve) => setTimeout(resolve, 100));
@@ -344,33 +400,19 @@ export default function TierStack() {
               top: cardMenu.y,
             }}
           >
-            <button
-              role="menuitem"
-              className="px-[8px] py-[4px] text-left hover:bg-black/10"
-              onClick={() => {
-                removeCard(cardMenu.id);
-                setCardMenu(null);
-              }}
-            >
-              Remove card
-            </button>
-            <button
-              role="menuitem"
-              className="px-[8px] py-[4px] text-left hover:bg-black/10"
-              onClick={() => {
-                startReplacing(cardMenu.id);
-                setCardMenu(null);
-              }}
-            >
-              Replace card
-            </button>
-            <button
-              role="menuitem"
-              className="px-[8px] py-[4px] text-left disabled:opacity-50"
-              disabled
-            >
-              Make split card
-            </button>
+            {cardMenuItems(cardMenu.id).map((label) => (
+              <button
+                key={label}
+                role="menuitem"
+                className="px-[8px] py-[4px] text-left hover:bg-black/10"
+                onClick={() => {
+                  runCardMenuItem(cardMenu.id, label);
+                  setCardMenu(null);
+                }}
+              >
+                {label}
+              </button>
+            ))}
           </div>
         )}
       </div>
@@ -434,10 +476,16 @@ export default function TierStack() {
               Search
             </button>
           </form>
-          {replacing ? (
+          {picking && pickingCard ? (
             <p className="flex gap-[8px] items-center">
-              Replacing {replacing.name}
-              <button className={button} onClick={() => setReplacingId(null)}>
+              {picking.part === 'top'
+                ? pickingCard.split
+                  ? `Replacing the top half (${pickingCard.name})`
+                  : `Replacing ${pickingCard.name}`
+                : pickingCard.split
+                  ? `Replacing the bottom half (${pickingCard.split.name})`
+                  : `Splitting ${pickingCard.name}: pick the bottom card`}
+              <button className={button} onClick={() => setPicking(null)}>
                 Cancel
               </button>
             </p>

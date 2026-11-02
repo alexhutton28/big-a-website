@@ -17,6 +17,7 @@ import {
   dropTarget,
   layoutCards,
   moveCard,
+  type CardFace,
   type CardItem,
   type TierListDoc,
 } from './tierList';
@@ -89,7 +90,12 @@ export default function Board({
             item={item}
             x={x}
             y={y}
-            borderColor={doc.tierCardBorders ? doc.tiers[tierIndex].color : null}
+            // Split cards always have a border: the tier's color if that's on, else the
+            // board's border color
+            borderColor={
+              doc.tierCardBorders ? doc.tiers[tierIndex].color : item.split ? doc.border : null
+            }
+            dividerColor={doc.border}
             onSelect={() => onSelect(item.id)}
             onMenu={(menuX, menuY) => onCardMenu(item.id, menuX, menuY)}
             onDrop={(centerX, centerY) => {
@@ -205,11 +211,69 @@ function coverCrop(img: HTMLImageElement) {
   return { x: 0, y: (img.height - height) / 2, width: img.width, height };
 }
 
+// One card image (or a placeholder while it loads), drawn into a box at (0, y). A half
+// shows the top half of the card.
+function Face({
+  face,
+  y = 0,
+  height,
+  half = false,
+}: {
+  face: CardFace;
+  y?: number;
+  height: number;
+  half?: boolean;
+}) {
+  const [image, setImage] = React.useState<HTMLImageElement | null>(null);
+  const [failed, setFailed] = React.useState(false);
+
+  React.useEffect(() => {
+    let current = true;
+    loadImage(face.image).then(
+      (img) => current && setImage(img),
+      () => current && setFailed(true)
+    );
+    return () => {
+      current = false;
+    };
+  }, [face.image]);
+
+  if (image) {
+    const crop = coverCrop(image);
+    return (
+      <KonvaImage
+        image={image}
+        y={y}
+        crop={half ? { ...crop, height: crop.height / 2 } : crop}
+        width={CARD_WIDTH}
+        height={height}
+      />
+    );
+  }
+  return (
+    <>
+      <Rect y={y} width={CARD_WIDTH} height={height} fill="#2c4e5e" cornerRadius={6} />
+      <Text
+        text={failed ? `${face.name}\n(no image)` : face.name}
+        y={y}
+        width={CARD_WIDTH}
+        height={height}
+        padding={6}
+        align="center"
+        verticalAlign="middle"
+        fontSize={13}
+        fill="#ffffff"
+      />
+    </>
+  );
+}
+
 function Card({
   item,
   x,
   y,
   borderColor,
+  dividerColor,
   onSelect,
   onMenu,
   onDrop,
@@ -218,29 +282,17 @@ function Card({
   x: number;
   y: number;
   borderColor: string | null;
+  dividerColor: string;
   onSelect: () => void;
   onMenu: (x: number, y: number) => void;
   onDrop: (centerX: number, centerY: number) => void;
 }) {
-  const [image, setImage] = React.useState<HTMLImageElement | null>(null);
-  const [failed, setFailed] = React.useState(false);
   const zIndex = React.useRef(0);
 
   const openMenu = (stage: Konva.Stage | null) => {
     const pointer = stage?.getPointerPosition();
     if (pointer) onMenu(pointer.x, pointer.y);
   };
-
-  React.useEffect(() => {
-    let current = true;
-    loadImage(item.image).then(
-      (img) => current && setImage(img),
-      () => current && setFailed(true)
-    );
-    return () => {
-      current = false;
-    };
-  }, [item.image]);
 
   return (
     <Group
@@ -267,22 +319,28 @@ function Card({
         node.zIndex(zIndex.current);
       }}
     >
-      {image ? (
-        <KonvaImage image={image} crop={coverCrop(image)} width={CARD_WIDTH} height={CARD_HEIGHT} />
-      ) : (
+      {item.split ? (
         <>
-          <Rect width={CARD_WIDTH} height={CARD_HEIGHT} fill="#2c4e5e" cornerRadius={6} />
-          <Text
-            text={failed ? `${item.name}\n(no image)` : item.name}
+          {/* Behind the halves, so the bottom card's rounded top corners at the seam
+              show the divider's color, not the board */}
+          <Rect
             width={CARD_WIDTH}
             height={CARD_HEIGHT}
-            padding={6}
-            align="center"
-            verticalAlign="middle"
-            fontSize={13}
-            fill="#ffffff"
+            fill={dividerColor}
+            cornerRadius={CARD_CORNER_RADIUS}
+          />
+          <Face face={item} height={CARD_HEIGHT / 2} half />
+          <Face face={item.split} y={CARD_HEIGHT / 2} height={CARD_HEIGHT / 2} half />
+          <Rect
+            y={(CARD_HEIGHT - CARD_BORDER_WIDTH) / 2}
+            width={CARD_WIDTH}
+            height={CARD_BORDER_WIDTH}
+            fill={dividerColor}
+            listening={false}
           />
         </>
+      ) : (
+        <Face face={item} height={CARD_HEIGHT} />
       )}
       {borderColor && (
         // Konva centers strokes on the path, so the path is inset by half the width

@@ -2,15 +2,25 @@
 // localStorage), separate from rendering, so new kinds of boards and
 // elements can be added without touching how existing ones are stored.
 
-export type CardItem = {
-  id: string;
-  kind: 'card';
+// One printed card
+export type CardFace = {
   name: string;
   set?: string;
   number?: string;
   // Full-size image on its source host; loaded through the image proxy
   image: string;
 };
+
+export type CardItem = CardFace & {
+  id: string;
+  kind: 'card';
+  // A split card: the top halves of this card (top) and `split` (bottom)
+  split?: CardFace;
+};
+
+export function faceOf({ name, set, number, image }: CardFace): CardFace {
+  return { name, set, number, image };
+}
 
 export type Tier = {
   id: string;
@@ -48,7 +58,8 @@ const CARDS_RIGHT_PADDING = 35;
 const CARDS_AREA_WIDTH = BOARD_WIDTH - CARDS_LEFT - CARDS_RIGHT_PADDING;
 export const TIER_HEIGHT = BOARD_HEIGHT / TIER_COUNT;
 export const SEPARATOR_WIDTH = 3;
-// Tier-colored card border, drawn inside the card's edge
+// Card border (tier-colored, or the board's border color on split cards), drawn inside
+// the card's edge; also the width of a split card's divider
 export const CARD_BORDER_WIDTH = 3;
 // Card images have rounded corners: about 21px on the 460px-wide originals
 export const CARD_CORNER_RADIUS = 4.5;
