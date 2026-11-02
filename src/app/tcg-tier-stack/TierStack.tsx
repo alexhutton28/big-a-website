@@ -171,7 +171,12 @@ export default function TierStack() {
 
   async function runSearch(e: React.FormEvent) {
     e.preventDefault();
-    if (!query.trim()) return;
+    // A blank search clears the results
+    if (!query.trim()) {
+      setResults([]);
+      setStatus('');
+      return;
+    }
     setBusy(true);
     const found = await searchCards(query.trim());
     setResults(found);
