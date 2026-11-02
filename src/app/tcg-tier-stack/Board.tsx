@@ -1,6 +1,6 @@
 'use client';
 
-import type Konva from 'konva';
+import Konva from 'konva';
 import React from 'react';
 import { Group, Image as KonvaImage, Layer, Rect, Stage, Text } from 'react-konva';
 import { loadImage } from './cards';
@@ -298,6 +298,11 @@ function Card({
     <Group
       x={x}
       y={y}
+      // Rounded like the card images; a split card's bottom half (the middle of a card)
+      // would otherwise have square corners
+      clipFunc={(ctx) =>
+        Konva.Util.drawRoundedRectPath(ctx, CARD_WIDTH, CARD_HEIGHT, CARD_CORNER_RADIUS)
+      }
       draggable
       onMouseDown={onSelect}
       // Konva fires click/tap only when the card wasn't dragged
