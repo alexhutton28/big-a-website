@@ -70,7 +70,7 @@ export default function TierStack() {
 
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
-  const tierNameRefs = React.useRef<(HTMLTextAreaElement | null)[]>([]);
+  const tierNameRefs = React.useRef<(HTMLInputElement | null)[]>([]);
   const tiersPanelRef = React.useRef<HTMLDetailsElement>(null);
   // Search result being dragged onto the board
   const draggedResult = React.useRef<CardResult | null>(null);
@@ -316,66 +316,6 @@ export default function TierStack() {
       {status && <p className="whitespace-pre-line">{status}</p>}
 
       <div className="grid gap-[16px] md:grid-cols-3">
-        <details ref={tiersPanelRef}>
-          <summary className="font-bold cursor-pointer">Customize Board</summary>
-          <div className="flex flex-col gap-[8px] mt-[8px]">
-            <h3 className="font-bold">Tiers</h3>
-            {doc.tiers.map((tier, i) => (
-              <div key={tier.id} className="flex gap-[8px] items-start">
-                <ColorField
-                  label={`${tier.name} color`}
-                  value={tier.color}
-                  onChange={(color) => updateTier(i, { color })}
-                />
-                <textarea
-                  ref={(el) => {
-                    tierNameRefs.current[i] = el;
-                  }}
-                  rows={2}
-                  className="border border-black px-[4px] flex-1"
-                  value={tier.name}
-                  onChange={(e) => updateTier(i, { name: e.target.value })}
-                />
-                <button className={button} onClick={() => updateTier(i, { items: [] })}>
-                  Clear
-                </button>
-              </div>
-            ))}
-            <p className="text-[12px]">
-              Drag cards to move them. Click a card and press Delete to remove it. Double-click a
-              tier label to rename it.
-            </p>
-            <h3 className="font-bold">Background</h3>
-            <ColorField
-              label="Background color"
-              value={doc.background}
-              onChange={(background) => setDoc((d) => ({ ...d, background }))}
-            />
-          </div>
-        </details>
-
-        {/* Collapsed by default; the content is wrapped since <details> doesn't lay out as flex everywhere */}
-        <details>
-          <summary className="font-bold cursor-pointer">Bulk import</summary>
-          <div className="flex flex-col gap-[8px] mt-[8px]">
-            <textarea
-              rows={10}
-              className="border border-black px-[4px] font-mono text-[12px]"
-              placeholder={'# Goated\nMew ex MEW 151\nAlakazam\n# Solid\nDragapult ex TWM 130'}
-              value={importText}
-              onChange={(e) => setImportText(e.target.value)}
-            />
-            <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
-              Import (adds to the board)
-            </button>
-            <p className="text-[12px]">
-              <code>#</code> starts the next tier (text after it renames the tier; <code>\n</code>{' '}
-              breaks the line). Cards are <code>Name SET 123</code>, or just a name for its newest
-              regular print.
-            </p>
-          </div>
-        </details>
-
         <section className="flex flex-col gap-[8px]">
           <h2 className="font-bold">Add a card</h2>
           <form onSubmit={runSearch} className="flex gap-[8px]">
@@ -389,9 +329,9 @@ export default function TierStack() {
               Search
             </button>
           </form>
-          <label className="flex gap-[8px] items-center">
-            {selectedId ? 'Click a result to swap the selected card.' : 'Click to add to'}
-            {!selectedId && (
+          {!selectedId && (
+            <label className="flex gap-[8px] items-center">
+              Add to
               <select
                 className="border border-black"
                 value={targetTier}
@@ -403,13 +343,7 @@ export default function TierStack() {
                   </option>
                 ))}
               </select>
-            )}
-          </label>
-          {results.length > 0 && (
-            <p className="text-[12px]">
-              {results.length} {results.length === 1 ? 'match' : 'matches'}. Or drag one onto the
-              board.
-            </p>
+            </label>
           )}
           <div className="grid grid-cols-5 gap-[4px] max-h-[360px] overflow-y-auto">
             {results.map((card) => (
@@ -454,6 +388,55 @@ export default function TierStack() {
             ))}
           </div>
         </section>
+
+        {/* Collapsed by default; the content is wrapped since <details> doesn't lay out as flex everywhere */}
+        <details ref={tiersPanelRef}>
+          <summary className="font-bold cursor-pointer">Customize Board</summary>
+          <div className="flex flex-col gap-[8px] mt-[8px]">
+            <h3 className="font-bold">Tiers</h3>
+            {doc.tiers.map((tier, i) => (
+              <div key={tier.id} className="flex gap-[8px] items-center">
+                <ColorField
+                  label={`${tier.name} color`}
+                  value={tier.color}
+                  onChange={(color) => updateTier(i, { color })}
+                />
+                {/* One line, so line breaks are typed as \n (as in bulk import) */}
+                <input
+                  ref={(el) => {
+                    tierNameRefs.current[i] = el;
+                  }}
+                  aria-label={`Tier ${i + 1} name`}
+                  className="border border-black px-[4px] flex-1"
+                  value={tier.name.replaceAll('\n', '\\n')}
+                  onChange={(e) => updateTier(i, { name: e.target.value.replaceAll('\\n', '\n') })}
+                />
+              </div>
+            ))}
+            <h3 className="font-bold">Background</h3>
+            <ColorField
+              label="Background color"
+              value={doc.background}
+              onChange={(background) => setDoc((d) => ({ ...d, background }))}
+            />
+          </div>
+        </details>
+
+        <details>
+          <summary className="font-bold cursor-pointer">Bulk import</summary>
+          <div className="flex flex-col gap-[8px] mt-[8px]">
+            <textarea
+              rows={10}
+              className="border border-black px-[4px] font-mono text-[12px]"
+              placeholder={'# Goated\nMew ex MEW 151\nAlakazam\n# Solid\nDragapult ex TWM 130'}
+              value={importText}
+              onChange={(e) => setImportText(e.target.value)}
+            />
+            <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
+              Import (adds to the board)
+            </button>
+          </div>
+        </details>
       </div>
     </div>
   );
