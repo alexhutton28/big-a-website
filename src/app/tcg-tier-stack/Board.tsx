@@ -7,10 +7,11 @@ import { loadImage } from './cards';
 import {
   BOARD_HEIGHT,
   BOARD_WIDTH,
+  CARD_BORDER_WIDTH,
+  CARD_CORNER_RADIUS,
   CARD_HEIGHT,
   CARD_WIDTH,
   LABEL_WIDTH,
-  SEPARATOR_COLOR,
   SEPARATOR_WIDTH,
   TIER_HEIGHT,
   dropTarget,
@@ -75,16 +76,17 @@ export default function Board({
             y={(i + 1) * TIER_HEIGHT - SEPARATOR_WIDTH / 2}
             width={BOARD_WIDTH}
             height={SEPARATOR_WIDTH}
-            fill={SEPARATOR_COLOR}
+            fill={doc.border}
             listening={false}
           />
         ))}
-        {placements.map(({ item, x, y }) => (
+        {placements.map(({ item, tierIndex, x, y }) => (
           <Card
             key={item.id}
             item={item}
             x={x}
             y={y}
+            borderColor={doc.tierCardBorders ? doc.tiers[tierIndex].color : null}
             onSelect={() => onSelect(item.id)}
             onDrop={(centerX, centerY) => {
               const target = dropTarget(doc, item.id, centerX, centerY);
@@ -203,12 +205,14 @@ function Card({
   item,
   x,
   y,
+  borderColor,
   onSelect,
   onDrop,
 }: {
   item: CardItem;
   x: number;
   y: number;
+  borderColor: string | null;
   onSelect: () => void;
   onDrop: (centerX: number, centerY: number) => void;
 }) {
@@ -263,6 +267,20 @@ function Card({
             fill="#ffffff"
           />
         </>
+      )}
+      {borderColor && (
+        // Konva centers strokes on the path, so the path is inset by half the width
+        // to keep the whole stroke inside the card
+        <Rect
+          x={CARD_BORDER_WIDTH / 2}
+          y={CARD_BORDER_WIDTH / 2}
+          width={CARD_WIDTH - CARD_BORDER_WIDTH}
+          height={CARD_HEIGHT - CARD_BORDER_WIDTH}
+          cornerRadius={CARD_CORNER_RADIUS - CARD_BORDER_WIDTH / 2}
+          stroke={borderColor}
+          strokeWidth={CARD_BORDER_WIDTH}
+          listening={false}
+        />
       )}
     </Group>
   );

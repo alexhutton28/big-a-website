@@ -424,11 +424,25 @@ export default function TierStack() {
                 />
               </div>
             ))}
+            <label className="flex gap-[8px] items-center">
+              <input
+                type="checkbox"
+                checked={doc.tierCardBorders}
+                onChange={(e) => setDoc((d) => ({ ...d, tierCardBorders: e.target.checked }))}
+              />
+              Add tier colored border to cards
+            </label>
             <h3 className="font-bold">Background</h3>
             <ColorField
               label="Background color"
               value={doc.background}
               onChange={(background) => setDoc((d) => ({ ...d, background }))}
+            />
+            <h3 className="font-bold">Border</h3>
+            <ColorField
+              label="Border color"
+              value={doc.border}
+              onChange={(border) => setDoc((d) => ({ ...d, border }))}
             />
           </div>
         </details>

@@ -23,5 +23,6 @@ from rendering. Styling is deliberately minimal for now.
 - The editor-only layer (selection outline) is named `editor` and hidden while exporting.
 - Canvas text needs the font loaded first: tier labels are Inter Black (900) at 30px, loaded with `next/font` in `layout.tsx` (`--font-inter`) and then `document.fonts.load` before they draw. Names wrap at spaces in `wrapLabel`, never mid-word (Konva's own wrap splits words that don't fit).
 - Colors are edited with `ColorField`: a hex text field plus the browser's picker.
-- The document autosaves to `localStorage` (`tcg-tier-stack-doc`) and is read back with `parseDoc`; there's no file save/load. Changing the shape means bumping `version`.
+- The document autosaves to `localStorage` (`tcg-tier-stack-doc`) and is read back with `parseDoc`; there's no file save/load. Changing the shape means bumping `version`; a new setting with a default can instead be filled in by `parseDoc` for older saves (as `border` and `tierCardBorders` are).
+- Board settings: `background`, `border` (the lines between tiers) and `tierCardBorders` (a 3px stroke inside each card in its tier's color, following the card images' ~4.5px rounded corners).
 - The Customize Board (tiers and background) and Bulk import panels are `<details>`, collapsed by default; double-clicking a tier label opens Customize Board and focuses that name. Tier names are one-line inputs; `\n` typed there is a line break, as in bulk import. There's no help text in the panel for now.

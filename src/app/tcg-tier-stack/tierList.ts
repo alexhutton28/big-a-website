@@ -23,6 +23,10 @@ export type TierListDoc = {
   version: 1;
   kind: 'tier-list';
   background: string;
+  // Lines between tiers
+  border: string;
+  // Each card gets an inside stroke in its tier's color
+  tierCardBorders: boolean;
   tiers: Tier[];
 };
 
@@ -44,7 +48,10 @@ const CARDS_RIGHT_PADDING = 35;
 const CARDS_AREA_WIDTH = BOARD_WIDTH - CARDS_LEFT - CARDS_RIGHT_PADDING;
 export const TIER_HEIGHT = BOARD_HEIGHT / TIER_COUNT;
 export const SEPARATOR_WIDTH = 3;
-export const SEPARATOR_COLOR = '#16303c';
+// Tier-colored card border, drawn inside the card's edge
+export const CARD_BORDER_WIDTH = 3;
+// Card images have rounded corners: about 21px on the 460px-wide originals
+export const CARD_CORNER_RADIUS = 4.5;
 
 export function newId() {
   return Math.random().toString(36).slice(2, 10);
@@ -61,6 +68,8 @@ export function defaultDoc(): TierListDoc {
     version: 1,
     kind: 'tier-list',
     background: '#1f3d4b',
+    border: '#16303c',
+    tierCardBorders: false,
     tiers: tiers.map(([name, color]) => ({ id: newId(), name, color, items: [] })),
   };
 }
@@ -134,5 +143,10 @@ export function parseDoc(value: unknown): TierListDoc | null {
   ) {
     return null;
   }
-  return doc;
+  // Settings added after version 1 shipped take their defaults
+  return {
+    ...doc,
+    border: typeof doc.border === 'string' ? doc.border : defaultDoc().border,
+    tierCardBorders: doc.tierCardBorders === true,
+  };
 }
