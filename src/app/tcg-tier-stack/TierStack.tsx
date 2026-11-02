@@ -345,7 +345,8 @@ export default function TierStack() {
               </select>
             </label>
           )}
-          <div className="grid grid-cols-5 gap-[4px] max-h-[360px] overflow-y-auto">
+          {/* Fixed-size tiles (80x111 card + 14px caption) so exactly 3 rows show: 3 x 125 + 2 x 4 */}
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] auto-rows-[125px] gap-[4px] max-h-[383px] overflow-y-auto">
             {results.map((card) => (
               // A div, not a button: Firefox won't start a drag from a button
               <div
@@ -353,7 +354,7 @@ export default function TierStack() {
                 role="button"
                 tabIndex={0}
                 title={`${card.set} ${card.number}`}
-                className="cursor-grab text-center text-[11px]"
+                className="cursor-grab flex flex-col items-center text-[11px] leading-[14px]"
                 draggable
                 onDragStart={(e) => {
                   draggedResult.current = card;
@@ -375,6 +376,7 @@ export default function TierStack() {
                 <img
                   src={card.thumb}
                   alt={`${card.set} ${card.number}`}
+                  className="w-[80px] h-[111px] object-contain"
                   loading="lazy"
                   draggable={false}
                   // The CDN occasionally fails a load; retry once through the image proxy
@@ -383,7 +385,9 @@ export default function TierStack() {
                     if (!e.currentTarget.src.endsWith(proxy)) e.currentTarget.src = proxy;
                   }}
                 />
-                {card.set} {card.number}
+                <span className="w-full truncate text-center">
+                  {card.set} {card.number}
+                </span>
               </div>
             ))}
           </div>
