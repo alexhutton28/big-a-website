@@ -8,7 +8,8 @@ from rendering. Styling is deliberately minimal for now.
 ## Files
 
 - `tierList.ts`: the document type, defaults, all board sizes, and the layout (`layoutCards`, `tierGap`, `dropTarget`, `moveCard`).
-- `Board.tsx`: draws the document with react-konva (canvas): tier labels, cards, dragging, selection.
+- `Board.tsx`: draws the document with react-konva (canvas): tier labels, cards, dragging, selection. Clicking a card without dragging (Konva's `click`/`tap` don't fire after a drag) calls `onCardMenu`; `TierStack` shows the card menu (HTML, over the board) there. "Make split card" is a disabled placeholder.
+- Don't use `confirm()`/`alert()`: the in-app test browser never shows them (`confirm` returns false at once). Confirm on the page instead (see New board).
 - `TierStack.tsx`: editor state and the control panel: import, card search, export, save/load. Search results can be clicked (add to the chosen tier, or swap the selected card's print) or dragged onto the board (HTML drag and drop on the board's wrapper, placed with `dropTarget` and `insertCard`; no touch support).
 - `TierStackLoader.tsx`: loads the studio with `ssr: false` (Konva needs a browser canvas).
 - `importText.ts`: the bulk import format (documented at the top of the file). Import adds cards after the ones already in each tier (cards past 12 are left out and reported); it never clears the board.

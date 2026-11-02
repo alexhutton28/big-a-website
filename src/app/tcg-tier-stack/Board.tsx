@@ -31,6 +31,8 @@ type Props = {
   selectedId: string | null;
   onChange: (doc: TierListDoc) => void;
   onSelect: (id: string | null) => void;
+  // A card was clicked without dragging; x, y are in the stage's on-screen pixels
+  onCardMenu: (id: string, x: number, y: number) => void;
   onEditTier: (index: number) => void;
   onStage: (stage: Konva.Stage | null) => void;
 };
@@ -42,6 +44,7 @@ export default function Board({
   selectedId,
   onChange,
   onSelect,
+  onCardMenu,
   onEditTier,
   onStage,
 }: Props) {
@@ -88,6 +91,7 @@ export default function Board({
             y={y}
             borderColor={doc.tierCardBorders ? doc.tiers[tierIndex].color : null}
             onSelect={() => onSelect(item.id)}
+            onMenu={(menuX, menuY) => onCardMenu(item.id, menuX, menuY)}
             onDrop={(centerX, centerY) => {
               const target = dropTarget(doc, item.id, centerX, centerY);
               onChange(moveCard(doc, item.id, target.tierIndex, target.index));
@@ -207,6 +211,7 @@ function Card({
   y,
   borderColor,
   onSelect,
+  onMenu,
   onDrop,
 }: {
   item: CardItem;
@@ -214,11 +219,17 @@ function Card({
   y: number;
   borderColor: string | null;
   onSelect: () => void;
+  onMenu: (x: number, y: number) => void;
   onDrop: (centerX: number, centerY: number) => void;
 }) {
   const [image, setImage] = React.useState<HTMLImageElement | null>(null);
   const [failed, setFailed] = React.useState(false);
   const zIndex = React.useRef(0);
+
+  const openMenu = (stage: Konva.Stage | null) => {
+    const pointer = stage?.getPointerPosition();
+    if (pointer) onMenu(pointer.x, pointer.y);
+  };
 
   React.useEffect(() => {
     let current = true;
@@ -237,7 +248,12 @@ function Card({
       y={y}
       draggable
       onMouseDown={onSelect}
-      onTap={onSelect}
+      // Konva fires click/tap only when the card wasn't dragged
+      onClick={(e) => openMenu(e.target.getStage())}
+      onTap={(e) => {
+        onSelect();
+        openMenu(e.target.getStage());
+      }}
       // Above everything while dragging, then back in order (later cards overlap earlier)
       onDragStart={(e) => {
         zIndex.current = e.target.zIndex();

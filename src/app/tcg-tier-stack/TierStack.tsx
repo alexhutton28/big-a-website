@@ -68,6 +68,9 @@ export default function TierStack() {
   const [results, setResults] = React.useState<CardResult[]>([]);
   const [targetTier, setTargetTier] = React.useState(0);
   const [confirmingNew, setConfirmingNew] = React.useState(false);
+  // Menu for a clicked card, positioned in the board's on-screen pixels
+  const [cardMenu, setCardMenu] = React.useState<{ id: string; x: number; y: number } | null>(null);
+  const cardMenuRef = React.useRef<HTMLDivElement>(null);
 
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
@@ -103,24 +106,39 @@ export default function TierStack() {
     document.fonts.load(`900 30px ${family}`).then(() => setFontFamily(family));
   }, []);
 
-  const removeSelected = React.useCallback(() => {
-    if (!selectedId) return;
+  const removeCard = React.useCallback((id: string) => {
     setDoc((d) => ({
       ...d,
-      tiers: d.tiers.map((t) => ({ ...t, items: t.items.filter((i) => i.id !== selectedId) })),
+      tiers: d.tiers.map((t) => ({ ...t, items: t.items.filter((i) => i.id !== id) })),
     }));
-    setSelectedId(null);
-  }, [selectedId]);
+    setSelectedId((selected) => (selected === id ? null : selected));
+  }, []);
+
+  const removeSelected = React.useCallback(() => {
+    if (!selectedId) return;
+    removeCard(selectedId);
+  }, [selectedId, removeCard]);
 
   React.useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       const typing = e.target instanceof Element && e.target.closest('input, textarea, select');
       if (!typing && (e.key === 'Delete' || e.key === 'Backspace')) removeSelected();
+      if (e.key === 'Escape') setCardMenu(null);
       if (!typing && e.key === 'Escape') setSelectedId(null);
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [removeSelected]);
+
+  // The card menu closes on any press outside it (a press on a card reopens it on click)
+  React.useEffect(() => {
+    if (!cardMenu) return;
+    const onDown = (e: PointerEvent) => {
+      if (!(e.target instanceof Node && cardMenuRef.current?.contains(e.target))) setCardMenu(null);
+    };
+    window.addEventListener('pointerdown', onDown);
+    return () => window.removeEventListener('pointerdown', onDown);
+  }, [cardMenu]);
 
   const updateTier = (index: number, change: Partial<TierListDoc['tiers'][number]>) =>
     setDoc((d) => ({
@@ -273,7 +291,7 @@ export default function TierStack() {
     <div className="tier-stack-page w-full max-w-[1240px] p-[20px] flex flex-col gap-[16px] text-[14px] text-black">
       <div
         ref={boardBoxRef}
-        className="w-full"
+        className="w-full relative"
         onDragOver={(e) => {
           if (draggedResult.current) e.preventDefault();
         }}
@@ -286,6 +304,7 @@ export default function TierStack() {
           selectedId={selectedId}
           onChange={setDoc}
           onSelect={setSelectedId}
+          onCardMenu={(id, x, y) => setCardMenu({ id, x, y })}
           onEditTier={(i) => {
             if (tiersPanelRef.current) tiersPanelRef.current.open = true;
             tierNameRefs.current[i]?.focus();
@@ -294,6 +313,36 @@ export default function TierStack() {
             stageRef.current = stage;
           }}
         />
+        {cardMenu && doc.tiers.some((t) => t.items.some((i) => i.id === cardMenu.id)) && (
+          <div
+            ref={cardMenuRef}
+            role="menu"
+            className="absolute z-10 flex flex-col min-w-[160px] border border-black bg-white shadow-md"
+            // Kept inside the board's right edge
+            style={{
+              left: Math.min(cardMenu.x, BOARD_WIDTH * scale - 160),
+              top: cardMenu.y,
+            }}
+          >
+            <button
+              role="menuitem"
+              className="px-[8px] py-[4px] text-left hover:bg-black/10"
+              onClick={() => {
+                removeCard(cardMenu.id);
+                setCardMenu(null);
+              }}
+            >
+              Remove card
+            </button>
+            <button
+              role="menuitem"
+              className="px-[8px] py-[4px] text-left disabled:opacity-50"
+              disabled
+            >
+              Make split card
+            </button>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-wrap gap-[8px] items-center">
