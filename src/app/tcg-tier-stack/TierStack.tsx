@@ -71,6 +71,9 @@ export default function TierStack() {
   // Menu for a clicked card, positioned in the board's on-screen pixels
   const [cardMenu, setCardMenu] = React.useState<{ id: string; x: number; y: number } | null>(null);
   const cardMenuRef = React.useRef<HTMLDivElement>(null);
+  // Card being replaced: the next search result clicked takes its place
+  const [replacingId, setReplacingId] = React.useState<string | null>(null);
+  const searchInputRef = React.useRef<HTMLInputElement>(null);
 
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
@@ -123,7 +126,10 @@ export default function TierStack() {
     const onKey = (e: KeyboardEvent) => {
       const typing = e.target instanceof Element && e.target.closest('input, textarea, select');
       if (!typing && (e.key === 'Delete' || e.key === 'Backspace')) removeSelected();
-      if (e.key === 'Escape') setCardMenu(null);
+      if (e.key === 'Escape') {
+        setCardMenu(null);
+        setReplacingId(null);
+      }
       if (!typing && e.key === 'Escape') setSelectedId(null);
     };
     window.addEventListener('keydown', onKey);
@@ -188,35 +194,49 @@ export default function TierStack() {
     );
   }
 
-  async function runSearch(e: React.FormEvent) {
-    e.preventDefault();
+  async function search(text: string) {
     // A blank search clears the results
-    if (!query.trim()) {
+    if (!text.trim()) {
       setResults([]);
       setStatus('');
       return;
     }
     setBusy(true);
-    const found = await searchCards(query.trim());
+    const found = await searchCards(text.trim());
     setResults(found);
     setStatus(found.length ? '' : 'No cards found.');
     setBusy(false);
   }
 
+  // Replace card: searches the card's name (its other prints), and the next result
+  // clicked takes its place
+  function startReplacing(id: string) {
+    const item = doc.tiers.flatMap((t) => t.items).find((i) => i.id === id);
+    if (!item) return;
+    setReplacingId(id);
+    setQuery(item.name);
+    searchInputRef.current?.scrollIntoView({ block: 'center' });
+    searchInputRef.current?.focus();
+    search(item.name);
+  }
+
+  const replacing = doc.tiers.flatMap((t) => t.items).find((i) => i.id === replacingId);
+
   function pickResult(card: CardResult) {
-    if (selectedId) {
-      // Swap the selected card's printing, keeping its place and name
+    if (replacing) {
+      const name = query.trim() || replacing.name;
       setDoc((d) => ({
         ...d,
         tiers: d.tiers.map((t) => ({
           ...t,
           items: t.items.map((i) =>
-            i.id === selectedId
-              ? { ...i, set: card.set, number: card.number, image: card.image }
+            i.id === replacing.id
+              ? { ...i, name, set: card.set, number: card.number, image: card.image }
               : i
           ),
         })),
       }));
+      setReplacingId(null);
       return;
     }
     if (doc.tiers[targetTier].items.length >= MAX_CARDS_PER_TIER) {
@@ -336,6 +356,16 @@ export default function TierStack() {
             </button>
             <button
               role="menuitem"
+              className="px-[8px] py-[4px] text-left hover:bg-black/10"
+              onClick={() => {
+                startReplacing(cardMenu.id);
+                setCardMenu(null);
+              }}
+            >
+              Replace card
+            </button>
+            <button
+              role="menuitem"
               className="px-[8px] py-[4px] text-left disabled:opacity-50"
               disabled
             >
@@ -386,8 +416,15 @@ export default function TierStack() {
         {/* min-w-0 so the results scroll instead of widening the column */}
         <section className="flex flex-col gap-[8px] min-w-0">
           <h2 className="font-bold">Add a card</h2>
-          <form onSubmit={runSearch} className="flex gap-[8px]">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+              search(query);
+            }}
+            className="flex gap-[8px]"
+          >
             <input
+              ref={searchInputRef}
               className="border border-black px-[4px] flex-1"
               placeholder="Card name"
               value={query}
@@ -397,7 +434,14 @@ export default function TierStack() {
               Search
             </button>
           </form>
-          {!selectedId && (
+          {replacing ? (
+            <p className="flex gap-[8px] items-center">
+              Replacing {replacing.name}
+              <button className={button} onClick={() => setReplacingId(null)}>
+                Cancel
+              </button>
+            </p>
+          ) : (
             <label className="flex gap-[8px] items-center">
               Add to
               <select
