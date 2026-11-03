@@ -311,6 +311,12 @@ function Card({
         onSelect();
         openMenu(e.target.getStage());
       }}
+      // Right-click opens the same menu in place of the browser's
+      onContextMenu={(e) => {
+        e.evt.preventDefault();
+        onSelect();
+        openMenu(e.target.getStage());
+      }}
       // Above everything while dragging, then back in order (later cards overlap earlier)
       onDragStart={(e) => {
         zIndex.current = e.target.zIndex();
