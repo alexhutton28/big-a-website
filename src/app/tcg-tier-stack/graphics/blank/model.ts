@@ -41,7 +41,7 @@ export const MAX_STROKE_WIDTH = 200;
 
 const DEFAULT_DRAWING = {
   strokes: [],
-  penColor: '#ffffff',
+  penColor: '#1b1b1b',
   penWidth: 12,
   eraserWidth: 24,
 } satisfies Partial<BlankCanvas>;
@@ -49,7 +49,7 @@ const DEFAULT_DRAWING = {
 export function defaultBlankCanvas(): BlankCanvas {
   return {
     kind: 'blank',
-    background: '#1f3d4b',
+    background: '#ffffff',
     border: '#16303c',
     cardWidth: CARD_WIDTH,
     topHalf: false,
