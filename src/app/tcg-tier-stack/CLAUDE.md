@@ -37,7 +37,7 @@ page.
   - Card: Remove card, Replace card, Make split card.
   - Split card: Remove card, Replace top half, Replace bottom half, Swap halves, Unsplit (keeps the top).
   - Replace and Make split card put Add a card in picking mode (`picking`: `{ id, part: 'top' | 'bottom' }`): replacing searches that card's name, and the next result clicked takes its place (or becomes the bottom half), until Cancel or Escape.
-- Add a card: results show 3 rows and scroll. Click one to add it to the chosen tier, or drag it onto the board (HTML drag and drop on the board's wrapper, placed with `dropTarget` and `insertCard`; no touch support). A blank search clears the results.
+- Add a card: results show 3 rows and scroll. Click one to add it to the chosen tier, or drag it onto the board (pointer events, not HTML drag and drop: a copy of the card follows the pointer after a 5px move, and the release is placed with `dropTarget` and `insertCard`; Escape cancels; mouse and pen only, since on touch a press-and-move scrolls the results). A blank search clears the results.
 - Clicking a tier's row anywhere but on a card (its label, the empty space) makes it the Add to tier. Cards are Konva groups named `card`, which is how the board tells them apart.
 - Bulk import adds cards after the ones already in each tier (cards past 12 are left out and reported); it never clears the board. `#` lines move to the next tier and rename it if they have text.
 - Customize Board (tier colors and names, the tier border checkbox, background, border) and Bulk import are `<details>`, collapsed by default; double-clicking a tier label opens Customize Board and focuses that name.
