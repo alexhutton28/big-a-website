@@ -10,8 +10,9 @@ import type { ResolvedGroup } from '../importText';
 // A point in the board's design pixels
 export type Point = { x: number; y: number };
 
-// A card and its top-left corner, in drawing order (later cards on top)
-export type CardPlacement = { item: CardItem; x: number; y: number };
+// A card, its top-left corner and the box it takes (see cardBox in canvas/CardNode), in
+// drawing order (later cards on top)
+export type CardPlacement = { item: CardItem; x: number; y: number; width: number; height: number };
 
 // A card placed by the editor: the changed graphic, or why it couldn't go there
 export type Placed<G> = G | { error: string };

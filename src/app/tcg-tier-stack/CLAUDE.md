@@ -28,7 +28,7 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 - `create`, `parse` (a saved graphic of its kind, with later settings filled in), `label` (in Change board type), `targetNoun` (as in "Add to tier").
 - `Canvas`: Konva layers drawn inside the editor's stage, with a `Rect` named `background` (pressing it deselects) and cards drawn with `CardNode`. It gets callbacks to change the graphic, select cards, open the card menu, pick a target and open a setting.
 - `Settings`: its part of Customize Board. `onEditSetting(key)` from the canvas opens the panel and passes `focus` to it (the tier list uses `tier:<index>`).
-- Cards: `layout` (every card and its top-left corner, drawing order; the editor uses it for selection, hit-testing drops and export), `mapCards` (change or remove), `targets` (the Add to choices; hidden when there's only one), `addCard` (to a target), `dropCard` (at a point), `importCards` (bulk import's `#` groups). Adding returns the new graphic or `{ error }`, shown as the status.
+- Cards: `layout` (every card with its top-left corner and box, drawing order; the editor uses it for selection, hit-testing drops and export), `mapCards` (change or remove), `targets` (the Add to choices; hidden when there's only one), `addCard` (to a target), `dropCard` (at a point), `importCards` (bulk import's `#` groups). Adding returns the new graphic or `{ error }`, shown as the status.
 
 ### Adding a graphic type
 
@@ -56,9 +56,10 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 
 ## Blank canvas
 
-- Cards placed anywhere: each item is a `CardItem` with its top-left `x`, `y`, kept on the board. Later cards draw on top, and a moved card goes on top.
-- Cards added from search or import fill a 10 × 4 grid of spots by how many cards there are (starting over after 40); a dropped result is centered on the pointer. Import groups mean nothing here.
-- Settings: `background`, and `border` for split cards' divider and stroke.
+- Cards placed anywhere: each item is a `CardItem` with its top-left `x`, `y`, kept wholly on the board. Later cards draw on top, and a moved card goes on top.
+- Cards added from search or import fill a grid of as many spots as fit at the card size (10 × 4 at the default), by how many cards there are, starting over once full; a dropped result is centered on the pointer. Import groups mean nothing here.
+- Settings: `cardWidth` (Card size, 40–400px wide; the field applies once a typed number is in range), `topHalf` (Show only top half of cards), `background`, and `border` for split cards' divider and stroke. Changing the size or top halves moves cards that would hang off the board back onto it.
+- `CardNode` draws every card at 100×140 and scales it (`width`), so borders and corners scale too; `topHalf` clips to the top half. Split cards always show both halves, at full height, since their top half would hide the bottom card. `cardBox` gives the box a card takes, which the canvas reports in `layout` for the selection outline and drop hit-testing.
 
 ## Split cards
 

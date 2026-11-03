@@ -3,7 +3,7 @@
 import type Konva from 'konva';
 import React from 'react';
 import { Layer, Rect, Stage } from 'react-konva';
-import { BOARD_HEIGHT, BOARD_WIDTH, CARD_HEIGHT, CARD_WIDTH, EXPORT_SCALE } from './canvas/size';
+import { BOARD_HEIGHT, BOARD_WIDTH, EXPORT_SCALE } from './canvas/size';
 import {
   faceOf,
   loadImage,
@@ -322,10 +322,7 @@ export default function Editor() {
     // Later cards overlap earlier ones, so the last card under the pointer is the top one
     const under = placements.findLast(
       (p) =>
-        point.x >= p.x &&
-        point.x <= p.x + CARD_WIDTH &&
-        point.y >= p.y &&
-        point.y <= p.y + CARD_HEIGHT
+        point.x >= p.x && point.x <= p.x + p.width && point.y >= p.y && point.y <= p.y + p.height
     );
     if (under) {
       setSelectedId(under.item.id);
@@ -461,8 +458,8 @@ export default function Editor() {
                   key={p.item.id}
                   x={p.x - 3}
                   y={p.y - 3}
-                  width={CARD_WIDTH + 6}
-                  height={CARD_HEIGHT + 6}
+                  width={p.width + 6}
+                  height={p.height + 6}
                   stroke="#ffffff"
                   strokeWidth={3}
                   cornerRadius={8}

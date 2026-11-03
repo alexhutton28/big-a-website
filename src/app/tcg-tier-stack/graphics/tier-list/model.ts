@@ -69,6 +69,8 @@ export function layoutCards(list: TierList): TierPlacement[] {
       tierIndex,
       x: CARDS_LEFT + i * (CARD_WIDTH + gap),
       y,
+      width: CARD_WIDTH,
+      height: CARD_HEIGHT,
     }));
   });
 }

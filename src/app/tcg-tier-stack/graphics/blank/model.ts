@@ -1,7 +1,8 @@
 // The blank canvas graphic: cards placed anywhere on a plain background.
 
 import type { CardItem } from '../../cards';
-import { BOARD_HEIGHT, BOARD_WIDTH, CARD_HEIGHT, CARD_WIDTH } from '../../canvas/size';
+import { cardBox } from '../../canvas/CardNode';
+import { BOARD_HEIGHT, BOARD_WIDTH, CARD_WIDTH } from '../../canvas/size';
 import type { CardPlacement, Point } from '../types';
 
 export type BlankCanvas = {
@@ -9,34 +10,70 @@ export type BlankCanvas = {
   background: string;
   // Split cards' divider and border
   border: string;
+  // Every card's width in design pixels (height follows the card's shape)
+  cardWidth: number;
+  // Cards show only their top half (split cards still show both halves)
+  topHalf: boolean;
   // Each card with its top-left corner, in drawing order (later cards on top)
   items: (CardItem & Point)[];
 };
 
-export function defaultBlankCanvas(): BlankCanvas {
-  return { kind: 'blank', background: '#1f3d4b', border: '#16303c', items: [] };
-}
+export const MIN_CARD_WIDTH = 40;
+export const MAX_CARD_WIDTH = 400;
 
-// Keeps a card's top-left corner on the board
-function clamp(x: number, y: number): Point {
+export function defaultBlankCanvas(): BlankCanvas {
   return {
-    x: Math.round(Math.max(0, Math.min(BOARD_WIDTH - CARD_WIDTH, x))),
-    y: Math.round(Math.max(0, Math.min(BOARD_HEIGHT - CARD_HEIGHT, y))),
+    kind: 'blank',
+    background: '#1f3d4b',
+    border: '#16303c',
+    cardWidth: CARD_WIDTH,
+    topHalf: false,
+    items: [],
   };
 }
 
-// Cards added from search or import fill a grid of 10 x 4 spots, left to right and top
-// to bottom by how many cards there are, starting over after 40
-const COLUMNS = 10;
-const ROWS = 4;
-function nextSpot(count: number): Point {
-  const column = count % COLUMNS;
-  const row = Math.floor(count / COLUMNS) % ROWS;
-  return { x: 25 + column * 117, y: 23 + row * 163 };
+const boxOf = (canvas: BlankCanvas, item: CardItem) =>
+  cardBox(item, canvas.cardWidth, canvas.topHalf);
+
+// Keeps a card's top-left corner where the whole card is on the board
+function clamp(canvas: BlankCanvas, item: CardItem, x: number, y: number): Point {
+  const box = boxOf(canvas, item);
+  return {
+    x: Math.round(Math.max(0, Math.min(BOARD_WIDTH - box.width, x))),
+    y: Math.round(Math.max(0, Math.min(BOARD_HEIGHT - box.height, y))),
+  };
+}
+
+// Cards added from search or import fill a grid of as many spots as fit at the card
+// size, left to right and top to bottom by how many cards there are, starting over once
+// it's full. At the default size that's 10 × 4.
+const GRID_LEFT = 25;
+const GRID_TOP = 23;
+const GAP_X = 17;
+const GAP_Y = 23;
+function nextSpot(canvas: BlankCanvas, item: CardItem): Point {
+  const box = boxOf(canvas, item);
+  const columns = Math.max(
+    1,
+    Math.floor((BOARD_WIDTH - GRID_LEFT - 20 + GAP_X) / (box.width + GAP_X))
+  );
+  const rows = Math.max(
+    1,
+    Math.floor((BOARD_HEIGHT - GRID_TOP - 20 + GAP_Y) / (box.height + GAP_Y))
+  );
+  const count = canvas.items.length;
+  const column = count % columns;
+  const row = Math.floor(count / columns) % rows;
+  return clamp(
+    canvas,
+    item,
+    GRID_LEFT + column * (box.width + GAP_X),
+    GRID_TOP + row * (box.height + GAP_Y)
+  );
 }
 
 export function layoutCards(canvas: BlankCanvas): CardPlacement[] {
-  return canvas.items.map(({ x, y, ...item }) => ({ item, x, y }));
+  return canvas.items.map(({ x, y, ...item }) => ({ item, x, y, ...boxOf(canvas, item) }));
 }
 
 export function mapCards(canvas: BlankCanvas, change: (item: CardItem) => CardItem | null) {
@@ -50,12 +87,13 @@ export function mapCards(canvas: BlankCanvas, change: (item: CardItem) => CardIt
 }
 
 export function addCard(canvas: BlankCanvas, item: CardItem): BlankCanvas {
-  return { ...canvas, items: [...canvas.items, { ...item, ...nextSpot(canvas.items.length) }] };
+  return { ...canvas, items: [...canvas.items, { ...item, ...nextSpot(canvas, item) }] };
 }
 
 // Centered on the pointer
 export function dropCard(canvas: BlankCanvas, item: CardItem, point: Point): BlankCanvas {
-  const spot = clamp(point.x - CARD_WIDTH / 2, point.y - CARD_HEIGHT / 2);
+  const box = boxOf(canvas, item);
+  const spot = clamp(canvas, item, point.x - box.width / 2, point.y - box.height / 2);
   return { ...canvas, items: [...canvas.items, { ...item, ...spot }] };
 }
 
@@ -65,8 +103,18 @@ export function moveCard(canvas: BlankCanvas, id: string, x: number, y: number):
   if (!item) return canvas;
   return {
     ...canvas,
-    items: [...canvas.items.filter((i) => i.id !== id), { ...item, ...clamp(x, y) }],
+    items: [...canvas.items.filter((i) => i.id !== id), { ...item, ...clamp(canvas, item, x, y) }],
   };
+}
+
+// Changes the card size or top-half setting, moving cards that would now hang off the
+// board back onto it
+export function setCardShape(
+  canvas: BlankCanvas,
+  change: Partial<Pick<BlankCanvas, 'cardWidth' | 'topHalf'>>
+): BlankCanvas {
+  const next = { ...canvas, ...change };
+  return { ...next, items: next.items.map((i) => ({ ...i, ...clamp(next, i, i.x, i.y) })) };
 }
 
 export function parseBlankCanvas(value: unknown): BlankCanvas | null {
@@ -80,5 +128,13 @@ export function parseBlankCanvas(value: unknown): BlankCanvas | null {
   ) {
     return null;
   }
-  return canvas;
+  // Settings added after blank canvases first shipped take their defaults
+  return {
+    ...canvas,
+    cardWidth:
+      typeof canvas.cardWidth === 'number'
+        ? Math.max(MIN_CARD_WIDTH, Math.min(MAX_CARD_WIDTH, canvas.cardWidth))
+        : CARD_WIDTH,
+    topHalf: canvas.topHalf === true,
+  };
 }

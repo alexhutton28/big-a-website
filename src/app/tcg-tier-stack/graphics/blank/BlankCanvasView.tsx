@@ -24,6 +24,8 @@ export default function BlankCanvasView({
           item={item}
           x={item.x}
           y={item.y}
+          width={canvas.cardWidth}
+          topHalf={canvas.topHalf}
           borderColor={item.split ? canvas.border : null}
           dividerColor={canvas.border}
           onSelect={() => onSelect(item.id)}

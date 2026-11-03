@@ -78,11 +78,27 @@ function Face({
   );
 }
 
-// Named `card`, so the board can tell clicks on cards from clicks on what's behind them
+// Whether a card shows only its top half: split cards always show both halves (their
+// top half would hide the bottom card)
+function showsTopHalf(item: CardItem, topHalf: boolean) {
+  return topHalf && !item.split;
+}
+
+// The box a card takes on the board at a width, whole or top half only
+export function cardBox(item: CardItem, width = CARD_WIDTH, topHalf = false) {
+  const height = (width * CARD_HEIGHT) / CARD_WIDTH;
+  return { width, height: showsTopHalf(item, topHalf) ? height / 2 : height };
+}
+
+// Named `card`, so the board can tell clicks on cards from clicks on what's behind them.
+// Drawn at the design size (100×140) and scaled to `width`, so borders and corners scale
+// with it.
 export default function CardNode({
   item,
   x,
   y,
+  width = CARD_WIDTH,
+  topHalf = false,
   borderColor,
   dividerColor,
   onSelect,
@@ -92,6 +108,9 @@ export default function CardNode({
   item: CardItem;
   x: number;
   y: number;
+  width?: number;
+  // Show only the card's top half (not for split cards)
+  topHalf?: boolean;
   // Inside stroke, or none
   borderColor: string | null;
   // A split card's divider and backing
@@ -103,6 +122,10 @@ export default function CardNode({
   onDragEnd: (x: number, y: number) => void;
 }) {
   const zIndex = React.useRef(0);
+  const half = showsTopHalf(item, topHalf);
+  // Visible height at design size
+  const height = half ? CARD_HEIGHT / 2 : CARD_HEIGHT;
+  const scale = width / CARD_WIDTH;
 
   const openMenu = (stage: Konva.Stage | null) => {
     const pointer = stage?.getPointerPosition();
@@ -114,10 +137,12 @@ export default function CardNode({
       name="card"
       x={x}
       y={y}
+      scaleX={scale}
+      scaleY={scale}
       // Rounded like the card images; a split card's bottom half (the middle of a card)
       // would otherwise have square corners
       clipFunc={(ctx) =>
-        Konva.Util.drawRoundedRectPath(ctx, CARD_WIDTH, CARD_HEIGHT, CARD_CORNER_RADIUS)
+        Konva.Util.drawRoundedRectPath(ctx, CARD_WIDTH, height, CARD_CORNER_RADIUS)
       }
       draggable
       onMouseDown={onSelect}
@@ -171,7 +196,7 @@ export default function CardNode({
           />
         </>
       ) : (
-        <Face face={item} height={CARD_HEIGHT} />
+        <Face face={item} height={height} half={half} />
       )}
       {borderColor && (
         // Konva centers strokes on the path, so the path is inset by half the width
@@ -180,7 +205,7 @@ export default function CardNode({
           x={CARD_BORDER_WIDTH / 2}
           y={CARD_BORDER_WIDTH / 2}
           width={CARD_WIDTH - CARD_BORDER_WIDTH}
-          height={CARD_HEIGHT - CARD_BORDER_WIDTH}
+          height={height - CARD_BORDER_WIDTH}
           cornerRadius={CARD_CORNER_RADIUS - CARD_BORDER_WIDTH / 2}
           stroke={borderColor}
           strokeWidth={CARD_BORDER_WIDTH}
