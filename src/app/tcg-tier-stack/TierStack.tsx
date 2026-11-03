@@ -2,6 +2,7 @@
 
 import type Konva from 'konva';
 import React from 'react';
+import { flushSync } from 'react-dom';
 import Board from './Board';
 import ColorField from './ColorField';
 import { fetchCard, loadImage, mapLimit, proxied, searchCards, type CardResult } from './cards';
@@ -80,6 +81,14 @@ function toItem(card: CardResult, name: string): CardItem {
 
 const button = 'border border-black px-[8px] py-[2px] bg-white disabled:opacity-50';
 
+// The sidebar's tabs
+const TABS = [
+  ['add', 'Add a card'],
+  ['customize', 'Customize Board'],
+  ['import', 'Bulk import'],
+] as const;
+type Tab = (typeof TABS)[number][0];
+
 export default function TierStack() {
   const [doc, setDoc] = React.useState<TierListDoc>(loadSaved);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
@@ -92,6 +101,7 @@ export default function TierStack() {
   const [results, setResults] = React.useState<CardResult[]>([]);
   const [targetTier, setTargetTier] = React.useState(0);
   const [confirmingNew, setConfirmingNew] = React.useState(false);
+  const [tab, setTab] = React.useState<Tab>('add');
   // Menu for a clicked card, or for a search result dropped on a card (`dropped`: the
   // result, and where it goes if added to the tier), positioned in the board's on-screen
   // pixels
@@ -110,7 +120,6 @@ export default function TierStack() {
   const stageRef = React.useRef<Konva.Stage | null>(null);
   const boardBoxRef = React.useRef<HTMLDivElement>(null);
   const tierNameRefs = React.useRef<(HTMLInputElement | null)[]>([]);
-  const tiersPanelRef = React.useRef<HTMLDetailsElement>(null);
   // Search result pressed with a mouse or pen: where the press started, and whether it
   // has moved far enough to be a drag. A drag shows the card under the pointer
   // (dragGhost) and drops it on the board when released.
@@ -275,6 +284,8 @@ export default function TierStack() {
     const item = findCard(id);
     if (!item) return;
     const name = part === 'top' ? item.name : (item.split?.name ?? '');
+    // Shown now, so the search box can be focused
+    flushSync(() => setTab('add'));
     setPicking({ id, part });
     setQuery(name);
     setResults([]);
@@ -474,95 +485,118 @@ export default function TierStack() {
   }
 
   return (
-    <div className="tier-stack-page w-full max-w-[1240px] p-[20px] flex flex-col gap-[16px] text-[14px] text-black">
-      <div ref={boardBoxRef} className="w-full relative">
-        <Board
-          doc={doc}
-          scale={scale}
-          fontFamily={fontFamily}
-          selectedId={selectedId}
-          onChange={setDoc}
-          onSelect={setSelectedId}
-          onCardMenu={(id, x, y) => setCardMenu({ id, x, y })}
-          onEditTier={(i) => {
-            if (tiersPanelRef.current) tiersPanelRef.current.open = true;
-            tierNameRefs.current[i]?.focus();
-          }}
-          onPickTier={setTargetTier}
-          onStage={(stage) => {
-            stageRef.current = stage;
-          }}
-        />
-        {cardMenu && doc.tiers.some((t) => t.items.some((i) => i.id === cardMenu.id)) && (
-          <div
-            ref={cardMenuRef}
-            role="menu"
-            onContextMenu={(e) => e.preventDefault()}
-            className="absolute z-10 flex flex-col min-w-[160px] border border-black bg-white shadow-md"
-            // Kept inside the board's right edge
-            style={{
-              left: Math.min(cardMenu.x, BOARD_WIDTH * scale - 160),
-              top: cardMenu.y,
+    // The board, with the sidebar on its left (below it on narrow screens). On wide
+    // screens each scrolls on its own, so the search results stay beside the board.
+    <div className="tier-stack-page w-full md:h-full flex flex-col md:flex-row-reverse text-[14px] text-black">
+      <div className="flex-1 min-w-0 md:overflow-y-auto p-[20px] flex flex-col gap-[16px]">
+        <div ref={boardBoxRef} className="w-full relative">
+          <Board
+            doc={doc}
+            scale={scale}
+            fontFamily={fontFamily}
+            selectedId={selectedId}
+            onChange={setDoc}
+            onSelect={setSelectedId}
+            onCardMenu={(id, x, y) => setCardMenu({ id, x, y })}
+            onEditTier={(i) => {
+              flushSync(() => setTab('customize'));
+              tierNameRefs.current[i]?.focus();
             }}
-          >
-            {cardMenuItems(cardMenu).map((label) => (
-              <button
-                key={label}
-                role="menuitem"
-                className="px-[8px] py-[4px] text-left hover:bg-black/10"
-                onClick={() => {
-                  runCardMenuItem(cardMenu, label);
-                  setCardMenu(null);
-                }}
-              >
-                {label}
-              </button>
-            ))}
-          </div>
-        )}
-      </div>
-
-      <div className="flex flex-wrap gap-[8px] items-center">
-        <button className={button} onClick={exportPng} disabled={busy}>
-          Export PNG ({BOARD_WIDTH * EXPORT_SCALE}px)
-        </button>
-        <button className={button} onClick={copyPng} disabled={busy}>
-          Copy PNG
-        </button>
-        <button className={button} onClick={removeSelected} disabled={!selectedId}>
-          Remove selected card
-        </button>
-        {/* Confirmed on the page: some browsers (the in-app one) never show confirm() */}
-        {confirmingNew ? (
-          <span className="flex items-center gap-[8px]">
-            Clear the board?
-            <button
-              className={button}
-              onClick={() => {
-                setDoc(defaultDoc());
-                setSelectedId(null);
-                setConfirmingNew(false);
+            onPickTier={setTargetTier}
+            onStage={(stage) => {
+              stageRef.current = stage;
+            }}
+          />
+          {cardMenu && doc.tiers.some((t) => t.items.some((i) => i.id === cardMenu.id)) && (
+            <div
+              ref={cardMenuRef}
+              role="menu"
+              onContextMenu={(e) => e.preventDefault()}
+              className="absolute z-10 flex flex-col min-w-[160px] border border-black bg-white shadow-md"
+              // Kept inside the board's right edge
+              style={{
+                left: Math.min(cardMenu.x, BOARD_WIDTH * scale - 160),
+                top: cardMenu.y,
               }}
             >
-              Yes
-            </button>
-            <button className={button} onClick={() => setConfirmingNew(false)}>
-              Cancel
-            </button>
-          </span>
-        ) : (
-          <button className={button} onClick={() => setConfirmingNew(true)}>
-            New board
+              {cardMenuItems(cardMenu).map((label) => (
+                <button
+                  key={label}
+                  role="menuitem"
+                  className="px-[8px] py-[4px] text-left hover:bg-black/10"
+                  onClick={() => {
+                    runCardMenuItem(cardMenu, label);
+                    setCardMenu(null);
+                  }}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="flex flex-wrap gap-[8px] items-center">
+          <button className={button} onClick={exportPng} disabled={busy}>
+            Export PNG ({BOARD_WIDTH * EXPORT_SCALE}px)
           </button>
-        )}
+          <button className={button} onClick={copyPng} disabled={busy}>
+            Copy PNG
+          </button>
+          <button className={button} onClick={removeSelected} disabled={!selectedId}>
+            Remove selected card
+          </button>
+          {/* Confirmed on the page: some browsers (the in-app one) never show confirm() */}
+          {confirmingNew ? (
+            <span className="flex items-center gap-[8px]">
+              Clear the board?
+              <button
+                className={button}
+                onClick={() => {
+                  setDoc(defaultDoc());
+                  setSelectedId(null);
+                  setConfirmingNew(false);
+                }}
+              >
+                Yes
+              </button>
+              <button className={button} onClick={() => setConfirmingNew(false)}>
+                Cancel
+              </button>
+            </span>
+          ) : (
+            <button className={button} onClick={() => setConfirmingNew(true)}>
+              New board
+            </button>
+          )}
+        </div>
+
+        {status && <p className="whitespace-pre-line">{status}</p>}
       </div>
 
-      {status && <p className="whitespace-pre-line">{status}</p>}
+      <aside className="md:w-[360px] md:flex-none md:overflow-y-auto p-[20px] pt-0 md:pt-[20px] flex flex-col gap-[16px] min-w-0">
+        <div role="tablist" className="flex flex-wrap gap-[4px]">
+          {TABS.map(([id, label]) => (
+            <button
+              key={id}
+              role="tab"
+              aria-selected={tab === id}
+              className={`${button} aria-selected:bg-black aria-selected:text-white`}
+              onClick={() => setTab(id)}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
 
-      <div className="grid gap-[16px] md:grid-cols-3">
-        {/* min-w-0 so the results scroll instead of widening the column */}
-        <section className="flex flex-col gap-[8px] min-w-0">
-          <h2 className="font-bold">Add a card</h2>
+        {/* The panels stay mounted, so tabbing away keeps a search or import text. min-w-0
+            so the results scroll instead of widening the sidebar; on wide screens they
+            fill the sidebar's height */}
+        <section
+          role="tabpanel"
+          hidden={tab !== 'add'}
+          className="flex flex-col gap-[8px] min-w-0 md:flex-1 md:min-h-0"
+        >
           <form
             onSubmit={(e) => {
               e.preventDefault();
@@ -611,8 +645,9 @@ export default function TierStack() {
             </label>
           )}
           {/* Fixed-size tiles (80x111 card + 14px caption), as many per row as fit; the
-              box is 3 rows tall (3 x 125 + 2 x 4) and scrolls down */}
-          <div className="grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] auto-rows-[125px] gap-[4px] max-h-[383px] overflow-y-auto overflow-x-hidden empty:hidden">
+              box is 3 rows tall (3 x 125 + 2 x 4), or the rest of the sidebar on wide
+              screens, and scrolls down */}
+          <div className="grid grid-cols-[repeat(auto-fill,minmax(80px,1fr))] auto-rows-[125px] gap-[4px] max-h-[383px] md:max-h-none md:flex-1 md:min-h-0 overflow-y-auto overflow-x-hidden empty:hidden">
             {results.map((card) => (
               <div
                 key={`${card.set}-${card.number}`}
@@ -657,69 +692,62 @@ export default function TierStack() {
           </div>
         </section>
 
-        {/* Collapsed by default; the content is wrapped since <details> doesn't lay out as flex everywhere */}
-        <details ref={tiersPanelRef}>
-          <summary className="font-bold cursor-pointer">Customize Board</summary>
-          <div className="flex flex-col gap-[8px] mt-[8px]">
-            <h3 className="font-bold">Tiers</h3>
-            {doc.tiers.map((tier, i) => (
-              <div key={tier.id} className="flex gap-[8px] items-center">
-                <ColorField
-                  label={`${tier.name} color`}
-                  value={tier.color}
-                  onChange={(color) => updateTier(i, { color })}
-                />
-                {/* One line, so line breaks are typed as \n (as in bulk import) */}
-                <input
-                  ref={(el) => {
-                    tierNameRefs.current[i] = el;
-                  }}
-                  aria-label={`Tier ${i + 1} name`}
-                  className="border border-black px-[4px] flex-1"
-                  value={tier.name.replaceAll('\n', '\\n')}
-                  onChange={(e) => updateTier(i, { name: e.target.value.replaceAll('\\n', '\n') })}
-                />
-              </div>
-            ))}
-            <label className="flex gap-[8px] items-center">
-              <input
-                type="checkbox"
-                checked={doc.tierCardBorders}
-                onChange={(e) => setDoc((d) => ({ ...d, tierCardBorders: e.target.checked }))}
+        <section role="tabpanel" hidden={tab !== 'customize'} className="flex flex-col gap-[8px]">
+          <h3 className="font-bold">Tiers</h3>
+          {doc.tiers.map((tier, i) => (
+            <div key={tier.id} className="flex gap-[8px] items-center">
+              <ColorField
+                label={`${tier.name} color`}
+                value={tier.color}
+                onChange={(color) => updateTier(i, { color })}
               />
-              Add tier colored border to cards
-            </label>
-            <h3 className="font-bold">Background</h3>
-            <ColorField
-              label="Background color"
-              value={doc.background}
-              onChange={(background) => setDoc((d) => ({ ...d, background }))}
+              {/* One line, so line breaks are typed as \n (as in bulk import) */}
+              <input
+                ref={(el) => {
+                  tierNameRefs.current[i] = el;
+                }}
+                aria-label={`Tier ${i + 1} name`}
+                className="border border-black px-[4px] flex-1"
+                value={tier.name.replaceAll('\n', '\\n')}
+                onChange={(e) => updateTier(i, { name: e.target.value.replaceAll('\\n', '\n') })}
+              />
+            </div>
+          ))}
+          <label className="flex gap-[8px] items-center">
+            <input
+              type="checkbox"
+              checked={doc.tierCardBorders}
+              onChange={(e) => setDoc((d) => ({ ...d, tierCardBorders: e.target.checked }))}
             />
-            <h3 className="font-bold">Border</h3>
-            <ColorField
-              label="Border color"
-              value={doc.border}
-              onChange={(border) => setDoc((d) => ({ ...d, border }))}
-            />
-          </div>
-        </details>
+            Add tier colored border to cards
+          </label>
+          <h3 className="font-bold">Background</h3>
+          <ColorField
+            label="Background color"
+            value={doc.background}
+            onChange={(background) => setDoc((d) => ({ ...d, background }))}
+          />
+          <h3 className="font-bold">Border</h3>
+          <ColorField
+            label="Border color"
+            value={doc.border}
+            onChange={(border) => setDoc((d) => ({ ...d, border }))}
+          />
+        </section>
 
-        <details>
-          <summary className="font-bold cursor-pointer">Bulk import</summary>
-          <div className="flex flex-col gap-[8px] mt-[8px]">
-            <textarea
-              rows={10}
-              className="border border-black px-[4px] font-mono text-[12px]"
-              placeholder={'# Goated\nMew ex MEW 151\nAlakazam\n# Solid\nDragapult ex TWM 130'}
-              value={importText}
-              onChange={(e) => setImportText(e.target.value)}
-            />
-            <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
-              Import (adds to the board)
-            </button>
-          </div>
-        </details>
-      </div>
+        <section role="tabpanel" hidden={tab !== 'import'} className="flex flex-col gap-[8px]">
+          <textarea
+            rows={10}
+            className="border border-black px-[4px] font-mono text-[12px]"
+            placeholder={'# Goated\nMew ex MEW 151\nAlakazam\n# Solid\nDragapult ex TWM 130'}
+            value={importText}
+            onChange={(e) => setImportText(e.target.value)}
+          />
+          <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
+            Import (adds to the board)
+          </button>
+        </section>
+      </aside>
 
       {dragGhost && (
         // eslint-disable-next-line @next/next/no-img-element -- remote thumbnail, as in the results
