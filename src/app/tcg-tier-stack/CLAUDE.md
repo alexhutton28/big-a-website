@@ -27,6 +27,7 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 
 - `create`, `parse` (a saved graphic of its kind, with later settings filled in), `label` (in Change board type), `targetNoun` (as in "Add to tier").
 - `Canvas`: Konva layers drawn inside the editor's stage, with a `Rect` named `background` (pressing it deselects) and cards drawn with `CardNode`. It gets callbacks to change the graphic, select cards, open the card menu, pick a target and open a setting.
+- `Toolbar` (optional): tools beyond moving cards, shown under the board. The editor keeps the active tool (`DEFAULT_TOOL`, `move`, until the toolbar picks another; reset when the board type changes) and passes it to the canvas as `tool`.
 - `Settings`: its part of Customize Board. `onEditSetting(key)` from the canvas opens the panel and passes `focus` to it (the tier list uses `tier:<index>`).
 - Cards: `layout` (every card with its top-left corner and box, drawing order; the editor uses it for selection, hit-testing drops and export), `mapCards` (change or remove), `targets` (the Add to choices; hidden when there's only one), `addCard` (to a target), `dropCard` (at a point), `importCards` (bulk import's `#` groups). Adding returns the new graphic or `{ error }`, shown as the status.
 
@@ -40,7 +41,7 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 
 - 1200×675 for every graphic; export is 2× (2400×1350 PNG), downloaded (named after the graphic's kind) or copied.
 - Cards are 100×140, clipped to the card images' rounded corners (`CARD_CORNER_RADIUS`, ~4.5px).
-- The editor-only layer (selection outline) is named `editor` and hidden while exporting.
+- Editor-only layers are named `editor` and hidden while exporting: the editor's (selection outline), and any a graphic adds (the eraser's circle).
 - Canvas text uses Inter Black (900), loaded with `next/font` in `layout.tsx` (`--font-inter`); it needs `document.fonts.load` before it draws, so the editor passes `fontFamily` once it's loaded.
 
 ## Tier list
@@ -59,6 +60,8 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 - Cards placed anywhere: each item is a `CardItem` with its top-left `x`, `y`, kept wholly on the board. Later cards draw on top, and a moved card goes on top.
 - Cards added from search or import fill a grid of as many spots as fit at the card size (10 × 4 at the default), by how many cards there are, starting over once full; a dropped result is centered on the pointer. Import groups mean nothing here.
 - Settings: `cardWidth` (Card size, 40–400px wide; the field applies once a typed number is in range), `topHalf` (Show only top half of cards), `background`, and `border` for split cards' divider and stroke. Changing the size or top halves moves cards that would hang off the board back onto it.
+- Tools (`BlankToolbar.tsx`, under the board): Move (the default: drag and click cards), Pen (color, size; default white, 12px) and Eraser (size; default 24px). Pen and eraser settings are saved with the board.
+- Ink: `strokes` (pen or eraser, with Konva `Line` points rounded to 0.1px) on their own layer above the cards. Eraser strokes use `destination-out`, so they remove only ink, never cards or the background. While drawing, a transparent rect on the ink layer takes every press (cards don't move or open menus), the stroke stays in component state until the pointer is released anywhere, and a click leaves a dot (the point is doubled). The pen shows a crosshair; the eraser hides the pointer and draws its size as a circle in an editor-only layer. Clear board clears the ink.
 - `CardNode` draws every card at 100×140 and scales it (`width`), so borders and corners scale too; `topHalf` clips to the top half. Split cards always show both halves, at full height, since their top half would hide the bottom card. `cardBox` gives the box a card takes, which the canvas reports in `layout` for the selection outline and drop hit-testing.
 
 ## Split cards

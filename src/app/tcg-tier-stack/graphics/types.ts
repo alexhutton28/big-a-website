@@ -4,8 +4,9 @@ import type { ResolvedGroup } from '../importText';
 
 // The interface every graphic type implements. The editor (Editor.tsx) owns everything
 // graphics share: the stage and its scaling, export, autosave, card search and dragging,
-// the card menu, selection, bulk import lookups and New board. A graphic type owns its
-// document, how it draws, its settings, and where cards go.
+// the card menu, selection, bulk import lookups, Clear board and Change board type, and
+// which tool is active. A graphic type owns its document, how it draws, its settings, its
+// tools, and where cards go.
 
 // A point in the board's design pixels
 export type Point = { x: number; y: number };
@@ -29,6 +30,18 @@ export type CanvasProps<G> = {
   onPickTarget: (index: number) => void;
   // Opens Customize Board and focuses one of the graphic's settings (its own key)
   onEditSetting: (key: string) => void;
+  // The active tool, one of the graphic's own (see Toolbar); DEFAULT_TOOL moves cards
+  tool: string;
+};
+
+// The tool every board starts with: moving and clicking cards
+export const DEFAULT_TOOL = 'move';
+
+export type ToolbarProps<G> = {
+  graphic: G;
+  onChange: (change: (graphic: G) => G) => void;
+  tool: string;
+  onTool: (tool: string) => void;
 };
 
 export type SettingsProps<G> = {
@@ -40,7 +53,7 @@ export type SettingsProps<G> = {
 
 export type GraphicType<G extends { kind: string }> = {
   kind: G['kind'];
-  // In New board
+  // In Change board type
   label: string;
   // What cards are added to, as in "Add to tier"
   targetNoun: string;
@@ -52,6 +65,9 @@ export type GraphicType<G extends { kind: string }> = {
   Canvas: React.ComponentType<CanvasProps<G>>;
   // The graphic's part of Customize Board
   Settings: React.ComponentType<SettingsProps<G>>;
+  // Tools beyond moving cards (e.g. a pen), shown under the board; the Canvas gets the
+  // active one as `tool`
+  Toolbar?: React.ComponentType<ToolbarProps<G>>;
   // Every card and where it's drawn
   layout: (graphic: G) => CardPlacement[];
   // Changes cards, or removes them (null)

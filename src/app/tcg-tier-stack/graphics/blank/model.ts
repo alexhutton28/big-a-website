@@ -16,10 +16,35 @@ export type BlankCanvas = {
   topHalf: boolean;
   // Each card with its top-left corner, in drawing order (later cards on top)
   items: (CardItem & Point)[];
+  // Ink drawn over the cards, in order; eraser strokes remove the ink under them
+  strokes: Stroke[];
+  // Pen and eraser settings, kept with the board
+  penColor: string;
+  penWidth: number;
+  eraserWidth: number;
+};
+
+export type Stroke = {
+  id: string;
+  tool: 'pen' | 'eraser';
+  // Pen only
+  color: string;
+  width: number;
+  // x, y pairs in design pixels, as Konva's Line takes them
+  points: number[];
 };
 
 export const MIN_CARD_WIDTH = 40;
 export const MAX_CARD_WIDTH = 400;
+export const MIN_STROKE_WIDTH = 1;
+export const MAX_STROKE_WIDTH = 200;
+
+const DEFAULT_DRAWING = {
+  strokes: [],
+  penColor: '#ffffff',
+  penWidth: 12,
+  eraserWidth: 24,
+} satisfies Partial<BlankCanvas>;
 
 export function defaultBlankCanvas(): BlankCanvas {
   return {
@@ -29,6 +54,7 @@ export function defaultBlankCanvas(): BlankCanvas {
     cardWidth: CARD_WIDTH,
     topHalf: false,
     items: [],
+    ...DEFAULT_DRAWING,
   };
 }
 
@@ -136,5 +162,12 @@ export function parseBlankCanvas(value: unknown): BlankCanvas | null {
         ? Math.max(MIN_CARD_WIDTH, Math.min(MAX_CARD_WIDTH, canvas.cardWidth))
         : CARD_WIDTH,
     topHalf: canvas.topHalf === true,
+    strokes: Array.isArray(canvas.strokes)
+      ? canvas.strokes.filter((s) => Array.isArray(s?.points))
+      : DEFAULT_DRAWING.strokes,
+    penColor: typeof canvas.penColor === 'string' ? canvas.penColor : DEFAULT_DRAWING.penColor,
+    penWidth: typeof canvas.penWidth === 'number' ? canvas.penWidth : DEFAULT_DRAWING.penWidth,
+    eraserWidth:
+      typeof canvas.eraserWidth === 'number' ? canvas.eraserWidth : DEFAULT_DRAWING.eraserWidth,
   };
 }

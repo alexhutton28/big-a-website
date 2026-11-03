@@ -1,6 +1,7 @@
 import type { GraphicType } from '../types';
 import BlankCanvasView from './BlankCanvasView';
 import BlankSettings from './BlankSettings';
+import BlankToolbar from './BlankToolbar';
 import {
   addCard,
   defaultBlankCanvas,
@@ -19,6 +20,7 @@ const blank: GraphicType<BlankCanvas> = {
   parse: parseBlankCanvas,
   Canvas: BlankCanvasView,
   Settings: BlankSettings,
+  Toolbar: BlankToolbar,
   layout: layoutCards,
   mapCards,
   // One place to add cards: the canvas

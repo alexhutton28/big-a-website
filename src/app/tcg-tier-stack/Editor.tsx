@@ -18,7 +18,7 @@ import {
 } from './cards';
 import { currentGraphic, newDoc, parseSaved, type TierStackDoc } from './document';
 import { GRAPHIC_TYPES, typeOf, type Graphic, type GraphicKind } from './graphics';
-import type { Placed, Point } from './graphics/types';
+import { DEFAULT_TOOL, type Placed, type Point } from './graphics/types';
 import { parseImport } from './importText';
 
 // The editor: the board, drawn by the document's graphic type (see graphics/types.ts), plus
@@ -51,6 +51,8 @@ export default function Editor() {
   const [results, setResults] = React.useState<CardResult[]>([]);
   // Where the next search result goes: one of the graphic's targets
   const [target, setTarget] = React.useState(0);
+  // The active tool: moving cards, or one from the graphic's toolbar
+  const [tool, setTool] = React.useState(DEFAULT_TOOL);
   // Board button whose choices are showing: confirming Clear board, or picking a type
   const [boardChoice, setBoardChoice] = React.useState<'clear' | 'type' | null>(null);
   // Menu for a clicked card, or for a search result dropped on a card (`dropped`: the
@@ -112,7 +114,10 @@ export default function Editor() {
     setSelectedId(null);
     setCardMenu(null);
     setPicking(null);
-    if (kind !== doc.kind) setTarget(0);
+    if (kind !== doc.kind) {
+      setTarget(0);
+      setTool(DEFAULT_TOOL);
+    }
     setBoardChoice(null);
   }
 
@@ -389,12 +394,13 @@ export default function Editor() {
     await document.fonts.ready;
     // Let React draw the cards whose images just finished loading
     await new Promise((resolve) => setTimeout(resolve, 100));
-    const editor = stage.findOne('.editor');
-    editor?.hide();
+    // The editor's own layer, and any a graphic adds (e.g. the eraser's circle)
+    const editorOnly = stage.find('.editor');
+    editorOnly.forEach((node) => node.hide());
     try {
       return (await stage.toBlob({ pixelRatio: EXPORT_SCALE / scale })) as Blob;
     } finally {
-      editor?.show();
+      editorOnly.forEach((node) => node.show());
     }
   }
 
@@ -448,6 +454,7 @@ export default function Editor() {
               if (settingsPanelRef.current) settingsPanelRef.current.open = true;
               setSettingsFocus((f) => ({ key, n: (f?.n ?? 0) + 1 }));
             }}
+            tool={tool}
           />
           {/* Editor-only layer: hidden while exporting */}
           <Layer name="editor" listening={false}>
@@ -495,6 +502,10 @@ export default function Editor() {
           </div>
         )}
       </div>
+
+      {type.Toolbar && (
+        <type.Toolbar graphic={graphic} onChange={setGraphic} tool={tool} onTool={setTool} />
+      )}
 
       <div className="flex flex-wrap gap-[8px] items-center">
         <button className={button} onClick={exportPng} disabled={busy}>
