@@ -48,6 +48,7 @@
   --color-mist: #f3f6fb;
   --color-abyss: #1c2a44;
   --color-night: #060c18;
+
   /* tcgTierStack dark theme: petrel grays for surfaces, borders and text, storm accent */
   --color-petrel-50: #f2f5f6;
   --color-petrel-100: #e3e8eb;
@@ -61,7 +62,12 @@
   --color-petrel-850: #232b30;
   --color-petrel-900: #1b2125;
   --color-petrel-950: #12171a;
-  --color-storm: #9cc0d4;
+  --color-storm-100: #dceaf1;
+  --color-storm-200: #bfd7e4;
+  --color-storm-300: #9cc0d4;
+  --color-storm-400: #78a5bd;
+  --color-storm-600: #466e85;
+  --color-storm-800: #2a4352;
 }
 
 html,
