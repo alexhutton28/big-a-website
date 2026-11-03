@@ -8,12 +8,15 @@ import { fetchCard, loadImage, mapLimit, proxied, searchCards, type CardResult }
 import { parseImport, type ImportCard, type ImportLine } from './importText';
 import {
   BOARD_WIDTH,
+  CARD_HEIGHT,
+  CARD_WIDTH,
   EXPORT_SCALE,
   MAX_CARDS_PER_TIER,
   defaultDoc,
   dropTarget,
   faceOf,
   insertCard,
+  layoutCards,
   newId,
   parseDoc,
   type CardFace,
@@ -89,8 +92,15 @@ export default function TierStack() {
   const [results, setResults] = React.useState<CardResult[]>([]);
   const [targetTier, setTargetTier] = React.useState(0);
   const [confirmingNew, setConfirmingNew] = React.useState(false);
-  // Menu for a clicked card, positioned in the board's on-screen pixels
-  const [cardMenu, setCardMenu] = React.useState<{ id: string; x: number; y: number } | null>(null);
+  // Menu for a clicked card, or for a search result dropped on a card (`dropped`: the
+  // result, and where it goes if added to the tier), positioned in the board's on-screen
+  // pixels
+  const [cardMenu, setCardMenu] = React.useState<{
+    id: string;
+    x: number;
+    y: number;
+    dropped?: { card: CardResult; tierIndex: number; index: number };
+  } | null>(null);
   const cardMenuRef = React.useRef<HTMLDivElement>(null);
   // Card face being picked from search: the next result clicked replaces the card (or a
   // split card's top half), or becomes its bottom half, making it a split card
@@ -275,8 +285,21 @@ export default function TierStack() {
 
   const pickingCard = findCard(picking?.id);
 
-  const cardMenuItems = (id: string) =>
-    findCard(id)?.split
+  // A search result as one half of a card, named after the search
+  const resultFace = (card: CardResult) =>
+    toFace(card, query.trim() || `${card.set} ${card.number}`);
+
+  type CardMenu = NonNullable<typeof cardMenu>;
+
+  // The card menu's items: for a clicked card, or for a search result dropped on it
+  const cardMenuItems = ({ id, dropped }: CardMenu) => {
+    const split = findCard(id)?.split;
+    if (dropped) {
+      return split
+        ? (['Replace top half', 'Replace bottom half', 'Add to tier'] as const)
+        : (['Add as split card', 'Add to tier'] as const);
+    }
+    return split
       ? ([
           'Remove card',
           'Replace top half',
@@ -285,8 +308,22 @@ export default function TierStack() {
           'Unsplit',
         ] as const)
       : (['Remove card', 'Replace card', 'Make split card'] as const);
+  };
 
-  function runCardMenuItem(id: string, label: ReturnType<typeof cardMenuItems>[number]) {
+  function runCardMenuItem(
+    { id, dropped }: CardMenu,
+    label: ReturnType<typeof cardMenuItems>[number]
+  ) {
+    // A dropped result replaces a half, becomes the bottom half, or is added to the tier
+    if (dropped) {
+      const face = resultFace(dropped.card);
+      if (label === 'Replace top half') updateCard(id, (i) => ({ ...i, ...face }));
+      if (label === 'Replace bottom half' || label === 'Add as split card') {
+        updateCard(id, (i) => ({ ...i, split: face }));
+      }
+      if (label === 'Add to tier') addResult(dropped.card, dropped.tierIndex, dropped.index);
+      return;
+    }
     if (label === 'Remove card') removeCard(id);
     if (label === 'Replace card' || label === 'Replace top half') startPicking(id, 'top');
     if (label === 'Make split card' || label === 'Replace bottom half') startPicking(id, 'bottom');
@@ -297,14 +334,18 @@ export default function TierStack() {
     if (label === 'Unsplit') updateCard(id, (i) => ({ ...i, split: undefined }));
   }
 
+  function addResult(card: CardResult, tierIndex: number, index: number) {
+    const next = insertCard(doc, toItem(card, query.trim()), tierIndex, index);
+    if (!next) {
+      setStatus(`That tier is full (${MAX_CARDS_PER_TIER} cards).`);
+      return;
+    }
+    setDoc(next);
+  }
+
   function pickResult(card: CardResult) {
     if (picking && pickingCard) {
-      const face = {
-        name: query.trim() || `${card.set} ${card.number}`,
-        set: card.set,
-        number: card.number,
-        image: card.image,
-      };
+      const face = resultFace(card);
       updateCard(picking.id, (i) =>
         picking.part === 'top' ? { ...i, ...face } : { ...i, split: face }
       );
@@ -319,7 +360,9 @@ export default function TierStack() {
     updateTier(targetTier, { items: [...doc.tiers[targetTier].items, item] });
   }
 
-  // A search result dropped on the board lands in the tier and position under the pointer
+  // A search result dropped on the board lands in the tier and position under the
+  // pointer. Dropped on a card, it opens the card menu to choose between making a split
+  // card and adding it to the tier.
   const dropResult = React.useEffectEvent((card: CardResult, clientX: number, clientY: number) => {
     const stage = stageRef.current;
     if (!stage) return;
@@ -330,13 +373,21 @@ export default function TierStack() {
     const x = (clientX - box.left) / scale;
     const y = (clientY - box.top) / scale;
     const target = dropTarget(doc, '', x, y);
-    const item = toItem(card, query.trim());
-    const next = insertCard(doc, item, target.tierIndex, target.index);
-    if (!next) {
-      setStatus(`That tier is full (${MAX_CARDS_PER_TIER} cards).`);
+    // Later cards overlap earlier ones, so the last card under the pointer is the top one
+    const under = layoutCards(doc).findLast(
+      (p) => x >= p.x && x <= p.x + CARD_WIDTH && y >= p.y && y <= p.y + CARD_HEIGHT
+    );
+    if (under) {
+      setSelectedId(under.item.id);
+      setCardMenu({
+        id: under.item.id,
+        x: clientX - box.left,
+        y: clientY - box.top,
+        dropped: { card, ...target },
+      });
       return;
     }
-    setDoc(next);
+    addResult(card, target.tierIndex, target.index);
   });
 
   // Dragging a search result: follows the pointer once it has moved a few pixels;
@@ -454,13 +505,13 @@ export default function TierStack() {
               top: cardMenu.y,
             }}
           >
-            {cardMenuItems(cardMenu.id).map((label) => (
+            {cardMenuItems(cardMenu).map((label) => (
               <button
                 key={label}
                 role="menuitem"
                 className="px-[8px] py-[4px] text-left hover:bg-black/10"
                 onClick={() => {
-                  runCardMenuItem(cardMenu.id, label);
+                  runCardMenuItem(cardMenu, label);
                   setCardMenu(null);
                 }}
               >
