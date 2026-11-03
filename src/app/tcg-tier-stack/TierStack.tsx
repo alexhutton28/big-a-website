@@ -391,6 +391,7 @@ export default function TierStack() {
             if (tiersPanelRef.current) tiersPanelRef.current.open = true;
             tierNameRefs.current[i]?.focus();
           }}
+          onPickTier={setTargetTier}
           onStage={(stage) => {
             stageRef.current = stage;
           }}
