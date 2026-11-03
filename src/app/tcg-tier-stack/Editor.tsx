@@ -16,7 +16,7 @@ import {
   type CardItem,
   type CardResult,
 } from './cards';
-import { newDoc, parseSaved, type TierStackDoc } from './document';
+import { currentGraphic, newDoc, parseSaved, type TierStackDoc } from './document';
 import { GRAPHIC_TYPES, typeOf, type Graphic, type GraphicKind } from './graphics';
 import type { Placed, Point } from './graphics/types';
 import { parseImport } from './importText';
@@ -39,7 +39,7 @@ const button = 'border border-black px-[8px] py-[2px] bg-white disabled:opacity-
 
 export default function Editor() {
   const [doc, setDoc] = React.useState<TierStackDoc>(loadSaved);
-  const graphic = doc.graphic;
+  const graphic = currentGraphic(doc);
   const type = typeOf(graphic.kind);
   const [selectedId, setSelectedId] = React.useState<string | null>(null);
   const [scale, setScale] = React.useState(1);
@@ -51,8 +51,8 @@ export default function Editor() {
   const [results, setResults] = React.useState<CardResult[]>([]);
   // Where the next search result goes: one of the graphic's targets
   const [target, setTarget] = React.useState(0);
-  // New board, being confirmed: the kind of graphic to start
-  const [newKind, setNewKind] = React.useState<GraphicKind | null>(null);
+  // Board button whose choices are showing: confirming Clear board, or picking a type
+  const [boardChoice, setBoardChoice] = React.useState<'clear' | 'type' | null>(null);
   // Menu for a clicked card, or for a search result dropped on a card (`dropped`: the
   // result, and the point it was dropped at), positioned in the board's on-screen pixels
   const [cardMenu, setCardMenu] = React.useState<{
@@ -93,11 +93,28 @@ export default function Editor() {
   const targets = type.targets(graphic);
   const targetIndex = Math.min(target, targets.length - 1);
 
+  // Changes the board showing
   const setGraphic = React.useCallback(
     (change: (graphic: Graphic) => Graphic) =>
-      setDoc((d) => ({ ...d, graphic: change(d.graphic) })),
+      setDoc((d) => ({ ...d, graphics: { ...d.graphics, [d.kind]: change(currentGraphic(d)) } })),
     []
   );
+
+  // Shows another board type's board (kept from when it was last used, or new), or
+  // replaces the board showing with a new one
+  function showBoard(kind: GraphicKind, clear = false) {
+    setDoc((d) => ({
+      ...d,
+      kind,
+      graphics:
+        clear || !d.graphics[kind] ? { ...d.graphics, [kind]: typeOf(kind).create() } : d.graphics,
+    }));
+    setSelectedId(null);
+    setCardMenu(null);
+    setPicking(null);
+    if (kind !== doc.kind) setTarget(0);
+    setBoardChoice(null);
+  }
 
   // Applies a placed card, or shows why it couldn't be placed
   const applyPlaced = (placed: Placed<Graphic>) => {
@@ -489,47 +506,39 @@ export default function Editor() {
         <button className={button} onClick={copyPng} disabled={busy}>
           Copy PNG
         </button>
-        <button className={button} onClick={removeSelected} disabled={!selectedId}>
-          Remove selected card
-        </button>
         {/* Confirmed on the page: some browsers (the in-app one) never show confirm() */}
-        {newKind ? (
+        {boardChoice === 'clear' ? (
           <span className="flex items-center gap-[8px]">
-            Clear the board for a new
-            <select
-              aria-label="New board type"
-              className="border border-black"
-              value={newKind}
-              onChange={(e) => setNewKind(e.target.value as GraphicKind)}
-            >
-              {GRAPHIC_TYPES.map((t) => (
-                <option key={t.kind} value={t.kind}>
-                  {t.label}
-                </option>
-              ))}
-            </select>
-            ?
-            <button
-              className={button}
-              onClick={() => {
-                setDoc(newDoc(newKind));
-                setSelectedId(null);
-                setCardMenu(null);
-                setPicking(null);
-                setTarget(0);
-                setNewKind(null);
-              }}
-            >
+            Clear the board?
+            <button className={button} onClick={() => showBoard(doc.kind, true)}>
               Yes
             </button>
-            <button className={button} onClick={() => setNewKind(null)}>
+            <button className={button} onClick={() => setBoardChoice(null)}>
+              Cancel
+            </button>
+          </span>
+        ) : boardChoice === 'type' ? (
+          // Each type keeps its own board, so switching loses nothing
+          <span className="flex items-center gap-[8px]">
+            Switch to
+            {GRAPHIC_TYPES.filter((t) => t.kind !== doc.kind).map((t) => (
+              <button key={t.kind} className={button} onClick={() => showBoard(t.kind)}>
+                {t.label}
+              </button>
+            ))}
+            <button className={button} onClick={() => setBoardChoice(null)}>
               Cancel
             </button>
           </span>
         ) : (
-          <button className={button} onClick={() => setNewKind(graphic.kind)}>
-            New board
-          </button>
+          <>
+            <button className={button} onClick={() => setBoardChoice('clear')}>
+              Clear board
+            </button>
+            <button className={button} onClick={() => setBoardChoice('type')}>
+              Change board type
+            </button>
+          </>
         )}
       </div>
 

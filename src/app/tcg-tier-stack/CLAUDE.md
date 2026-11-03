@@ -8,8 +8,8 @@ deliberately minimal for now, and there's no help text on the page.
 
 ## Files
 
-- `Editor.tsx`: the shell, shared by every graphic: the stage and its scaling, selection and its outline, the card menu, Add a card (search, picking, dragging results), Customize Board (around the graphic's own settings), Bulk import (lookups), export, New board, autosave. It only talks to graphics through `GraphicType`.
-- `document.ts`: the saved document (`{ version: 2, graphic }`) and `parseSaved`, which converts older saves.
+- `Editor.tsx`: the shell, shared by every graphic: the stage and its scaling, selection and its outline, the card menu, Add a card (search, picking, dragging results), Customize Board (around the graphic's own settings), Bulk import (lookups), export, Clear board, Change board type, autosave. It only talks to graphics through `GraphicType`.
+- `document.ts`: the saved document (`{ version: 3, kind, graphics }`), `currentGraphic`, and `parseSaved`, which converts older saves.
 - `graphics/types.ts`: the `GraphicType` interface; `graphics/index.ts`: the list of types (`GRAPHIC_TYPES`), the `Graphic` union, and `typeOf(kind)`.
 - `graphics/tier-list/`: `model.ts` (document, layout, edits, import, parse), `TierListCanvas.tsx`, `TierListSettings.tsx`, and `index.ts` (its `GraphicType`).
 - `graphics/blank/`: the same for the blank canvas (`BlankCanvasView.tsx`, `BlankSettings.tsx`).
@@ -25,7 +25,7 @@ deliberately minimal for now, and there's no help text on the page.
 
 A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, its settings and where cards go; the editor owns everything else. What the editor asks of a type:
 
-- `create`, `parse` (a saved graphic of its kind, with later settings filled in), `label` (in New board), `targetNoun` (as in "Add to tier").
+- `create`, `parse` (a saved graphic of its kind, with later settings filled in), `label` (in Change board type), `targetNoun` (as in "Add to tier").
 - `Canvas`: Konva layers drawn inside the editor's stage, with a `Rect` named `background` (pressing it deselects) and cards drawn with `CardNode`. It gets callbacks to change the graphic, select cards, open the card menu, pick a target and open a setting.
 - `Settings`: its part of Customize Board. `onEditSetting(key)` from the canvas opens the panel and passes `focus` to it (the tier list uses `tier:<index>`).
 - Cards: `layout` (every card and its top-left corner, drawing order; the editor uses it for selection, hit-testing drops and export), `mapCards` (change or remove), `targets` (the Add to choices; hidden when there's only one), `addCard` (to a target), `dropCard` (at a point), `importCards` (bulk import's `#` groups). Adding returns the new graphic or `{ error }`, shown as the status.
@@ -33,7 +33,7 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 ### Adding a graphic type
 
 1. Add `graphics/<kind>/` with a model (document type with a unique `kind`, defaults, parse, layout and edits), a canvas, settings, and an `index.ts` exporting its `GraphicType`.
-2. Add it to `GRAPHIC_TYPES` and to the `Graphic` union in `graphics/index.ts`. New board lists it, and saves of it load with no other changes.
+2. Add it to `GRAPHIC_TYPES` and to the `Graphic` union in `graphics/index.ts`. Change board type lists it, and saves of it load with no other changes.
 3. Add its notes below.
 
 ## The board
@@ -73,7 +73,9 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
   - A search result dropped on a card opens the menu with the result's choices (`cardMenu.dropped`): Add as split card (the result is the bottom half) or Add to tier/canvas (the graphic's `dropCard` at the drop point); on a split card, Replace top half, Replace bottom half or Add to tier/canvas.
   - Replace and Make split card put Add a card in picking mode (`picking`: `{ id, part: 'top' | 'bottom' }`): replacing searches that card's name, and the next result clicked takes its place (or becomes the bottom half), until Cancel or Escape.
 - Add a card: results show 3 rows and scroll. Click one to add it to the chosen target, or drag it onto the board (pointer events, not HTML drag and drop: a copy of the card follows the pointer after a 5px move, and the release goes to the graphic's `dropCard`; Escape cancels; mouse and pen only, since on touch a press-and-move scrolls the results). A blank search clears the results.
-- New board asks which kind of graphic to start (defaulting to the current one) and clears the board.
+- Delete or Backspace removes the selected card (there's no button for it).
+- Clear board (confirmed on the page) replaces the board showing with a new one of the same type; other types' boards are kept.
+- Change board type lists the other types; each keeps its own board, so switching loses nothing (a type not used yet starts new).
 - Customize Board and Bulk import are `<details>`, collapsed by default.
 
 ## Cards from Limitless
@@ -85,8 +87,8 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 
 ## Saving
 
-- The document autosaves to `localStorage` (`tcg-tier-stack-doc`) and is read back with `parseSaved`; there's no file save/load. One document at a time.
-- Version 1 was a tier list on its own (`{ version: 1, kind: 'tier-list', ... }`); `parseSaved` wraps it as version 2's `graphic`.
+- The document autosaves to `localStorage` (`tcg-tier-stack-doc`) and is read back with `parseSaved`; there's no file save/load. It holds one board per type (`graphics`, keyed by kind) and which one is showing (`kind`, whose board is always present). Cards are saved as names and image URLs, so even full boards are a few KB.
+- Version 1 was a tier list on its own (`{ version: 1, kind: 'tier-list', ... }`) and version 2 one graphic (`{ version: 2, graphic }`); `parseSaved` converts both. A saved board that doesn't parse is dropped and starts new, keeping the others.
 - Changing the document's shape means bumping `version` and converting in `parseSaved`; a graphic's new setting with a default can instead be filled in by its `parse` (as the tier list's `border` and `tierCardBorders` are).
 - In `next dev`, a tab left open while the document shape changes keeps its old in-memory board (without the new fields) until it's reloaded.
 
