@@ -2,8 +2,8 @@
 
 import React from 'react';
 
-// A labeled dropdown that opens and closes with the card menu's animation
-// (.tier-stack-menu in globals.css), which a native <select> can't do. Arrow keys move
+// A labeled dropdown that opens and closes with the card menu's animation, top to
+// bottom (.tier-stack-menu.dropdown in globals.css), which a native <select> can't do. Arrow keys move
 // through the options, Enter or Space picks one, Escape closes.
 
 export default function Dropdown<T extends string | number>({
@@ -102,7 +102,7 @@ export default function Dropdown<T extends string | number>({
             role="listbox"
             aria-labelledby={`${id}-label`}
             onKeyDown={onListKey}
-            className={`tier-stack-menu absolute left-0 top-full mt-[2px] z-10 flex flex-col min-w-full border border-black bg-white shadow-md ${closing ? 'closing pointer-events-none' : ''}`}
+            className={`tier-stack-menu dropdown absolute left-0 top-full mt-[2px] z-10 flex flex-col min-w-full border border-black bg-white shadow-md ${closing ? 'closing pointer-events-none' : ''}`}
           >
             {options.map((option, i) => (
               <button

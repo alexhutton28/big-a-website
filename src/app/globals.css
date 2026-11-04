@@ -800,13 +800,22 @@ body:has(.art-page) {
 }
 
 .tier-stack-menu {
+  --menu-folded: scaleX(0.2);
+
   transform-origin: left center;
   animation:
     tier-stack-menu-stretch 450ms var(--ease-spring),
     tier-stack-menu-fade 120ms ease-out;
 }
 
-/* Closing folds it back to its left edge, speeding up, and fades over the last 60% */
+/* Dropdowns open below their button, so they stretch and fold from the top edge */
+.tier-stack-menu.dropdown {
+  --menu-folded: scaleY(0.2);
+
+  transform-origin: center top;
+}
+
+/* Closing folds it back to its edge, speeding up, and fades over the last 60% */
 .tier-stack-menu.closing {
   animation:
     tier-stack-menu-fold 180ms cubic-bezier(0.4, 0, 1, 1) forwards,
@@ -815,13 +824,13 @@ body:has(.art-page) {
 
 @keyframes tier-stack-menu-stretch {
   from {
-    transform: scaleX(0.2);
+    transform: var(--menu-folded);
   }
 }
 
 @keyframes tier-stack-menu-fold {
   to {
-    transform: scaleX(0.2);
+    transform: var(--menu-folded);
   }
 }
 

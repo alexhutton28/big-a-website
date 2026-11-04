@@ -13,7 +13,7 @@ page.
 - `TierStack.tsx`: editor state and everything around the board: the card menu, Add a card (search), Customize Board, Bulk import, export, New board, autosave.
 - `TierStackLoader.tsx`: loads `TierStack` with `ssr: false` (Konva needs a browser canvas).
 - `ColorField.tsx`: a hex text field plus the browser's color picker.
-- `Dropdown.tsx`: a labeled dropdown (the Add to tier picker) in place of a native `<select>`, so it can open and close with the card menu's animation; arrow keys, Enter/Space and Escape work as in a select.
+- `Dropdown.tsx`: a labeled dropdown (the Add to tier picker) in place of a native `<select>`, so it can open and close with the card menu's animation (top to bottom); arrow keys, Enter/Space and Escape work as in a select.
 - `importText.ts`: the bulk import format (documented at the top of the file).
 - `cards.ts`: client calls to the API routes, and image loading through the proxy.
 - `layout.tsx`: the page's scroll container, and Inter Black for the tier labels.
@@ -47,7 +47,7 @@ page.
 
 ## Motion
 
-- Chosen from demos: a spring that goes 1.5% past (3% looked like too much live), `--ease-spring` on `.tier-stack-page` (a plain CSS variable, since `@theme inline` tokens don't exist at runtime). 450ms for things that move; plain `ease-out` fades of about 120ms alongside. Use it for new TierStack animations. Popups (the card menu, dropdowns) share `.tier-stack-menu`: stretch open, fold closed. Reduced motion: fades only.
+- Chosen from demos: a spring that goes 1.5% past (3% looked like too much live), `--ease-spring` on `.tier-stack-page` (a plain CSS variable, since `@theme inline` tokens don't exist at runtime). 450ms for things that move; plain `ease-out` fades of about 120ms alongside. Use it for new TierStack animations. Popups (the card menu, dropdowns) share `.tier-stack-menu`: stretch open, fold closed; the card menu left to right, dropdowns (`.dropdown`) top to bottom. Reduced motion: fades only.
 
 ## Cards from Limitless
 
