@@ -54,6 +54,11 @@ export default function Board({
   onStage,
 }: Props) {
   const placements = layoutCards(doc);
+  // The selection outline. Konva moves a dragged card itself, without React, so the
+  // outline is moved the same way to stay on it.
+  const outlineRef = React.useRef<Konva.Rect>(null);
+  const moveOutline = (cardX: number, cardY: number) =>
+    outlineRef.current?.position({ x: cardX - 3, y: cardY - 3 });
 
   // Clicks on a card are the card's own (they open its menu)
   const pickTier = (e: Konva.KonvaEventObject<MouseEvent | TouchEvent>) => {
@@ -113,6 +118,8 @@ export default function Board({
             }
             dividerColor={doc.tierCardBorders ? doc.tiers[tierIndex].color : doc.border}
             onSelect={() => onSelect(item.id)}
+            // A card dragged by touch isn't selected first, so only the selected one moves it
+            onMove={item.id === selectedId ? moveOutline : undefined}
             onMenu={(menuX, menuY) => onCardMenu(item.id, menuX, menuY)}
             onDrop={(centerX, centerY) => {
               const target = dropTarget(doc, item.id, centerX, centerY);
@@ -128,6 +135,7 @@ export default function Board({
           .map((p) => (
             <Rect
               key={p.item.id}
+              ref={outlineRef}
               x={p.x - 3}
               y={p.y - 3}
               width={CARD_WIDTH + 6}
@@ -291,6 +299,7 @@ function Card({
   borderColor,
   dividerColor,
   onSelect,
+  onMove,
   onMenu,
   onDrop,
 }: {
@@ -300,6 +309,8 @@ function Card({
   borderColor: string | null;
   dividerColor: string;
   onSelect: () => void;
+  // The card's position while it's dragged, and its laid-out spot again after
+  onMove?: (x: number, y: number) => void;
   onMenu: (x: number, y: number) => void;
   onDrop: (centerX: number, centerY: number) => void;
 }) {
@@ -343,11 +354,14 @@ function Card({
         zIndex.current = e.target.zIndex();
         e.target.moveToTop();
       }}
+      onDragMove={(e) => onMove?.(e.target.x(), e.target.y())}
       onDragEnd={(e) => {
         const node = e.target;
         onDrop(node.x() + CARD_WIDTH / 2, node.y() + CARD_HEIGHT / 2);
-        // Back to its laid-out spot; the new layout moves it if the drop changed it
+        // Back to its laid-out spot (with the outline, which React only moves when its
+        // spot changes); the new layout moves both if the drop changed it
         node.position({ x, y });
+        onMove?.(x, y);
         node.zIndex(zIndex.current);
       }}
     >
