@@ -48,6 +48,26 @@
   --color-mist: #f3f6fb;
   --color-abyss: #1c2a44;
   --color-night: #060c18;
+
+  /* tcgTierStack dark theme: petrel grays for surfaces, borders and text, storm accent */
+  --color-petrel-50: #f2f5f6;
+  --color-petrel-100: #e3e8eb;
+  --color-petrel-200: #ccd4d8;
+  --color-petrel-300: #b3bec4;
+  --color-petrel-400: #94a2aa;
+  --color-petrel-500: #6c7d88;
+  --color-petrel-600: #546470;
+  --color-petrel-700: #3e4b53;
+  --color-petrel-800: #2d373d;
+  --color-petrel-850: #232b30;
+  --color-petrel-900: #1b2125;
+  --color-petrel-950: #12171a;
+  --color-storm-100: #dceaf1;
+  --color-storm-200: #bfd7e4;
+  --color-storm-300: #9cc0d4;
+  --color-storm-400: #78a5bd;
+  --color-storm-600: #466e85;
+  --color-storm-800: #2a4352;
 }
 
 html,
@@ -758,10 +778,10 @@ body:has(.art-page) {
   }
 }
 
-/* tcgTierStack card menu and dropdowns (Dropdown.tsx): stretches out to the right from its left edge on a spring
-   that goes 1.5% past (chosen from a demo of four openings and three bounce amounts,
-   then eased down from 3% after seeing it live), fading in over the first 120ms.
-   Closing folds it back in (picked from a demo of three closings). */
+/* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge
+   on a spring that goes 1.5% past (chosen from a demo of four openings and three bounce
+   amounts, then eased down from 3% after seeing it live), fading in over the first
+   120ms. Closing folds it back in (picked from a demo of three closings). */
 .tier-stack-page {
   /* Damped spring (damping ratio 0.801) sampled into linear(); settles by the end */
   --ease-spring: linear(
