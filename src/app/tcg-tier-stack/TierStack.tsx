@@ -5,6 +5,7 @@ import React from 'react';
 import { flushSync } from 'react-dom';
 import Board from './Board';
 import ColorField from './ColorField';
+import Dropdown from './Dropdown';
 import { fetchCard, loadImage, mapLimit, proxied, searchCards, type CardResult } from './cards';
 import { parseImport, type ImportCard, type ImportLine } from './importText';
 import {
@@ -643,20 +644,12 @@ export default function TierStack() {
               </button>
             </p>
           ) : (
-            <label className="flex gap-[8px] items-center">
-              Add to
-              <select
-                className="border border-black"
-                value={targetTier}
-                onChange={(e) => setTargetTier(Number(e.target.value))}
-              >
-                {doc.tiers.map((t, i) => (
-                  <option key={t.id} value={i}>
-                    {t.name}
-                  </option>
-                ))}
-              </select>
-            </label>
+            <Dropdown
+              label="Add to"
+              value={targetTier}
+              options={doc.tiers.map((t, i) => ({ value: i, label: t.name.replaceAll('\n', ' ') }))}
+              onChange={setTargetTier}
+            />
           )}
           {/* Fixed-size tiles (80x111 card + 14px caption), as many per row as fit; the
               box is 3 rows tall (3 x 125 + 2 x 4), or the rest of the sidebar on wide

@@ -758,7 +758,7 @@ body:has(.art-page) {
   }
 }
 
-/* tcgTierStack card menu: stretches out to the right from its left edge on a spring
+/* tcgTierStack card menu and dropdowns (Dropdown.tsx): stretches out to the right from its left edge on a spring
    that goes 1.5% past (chosen from a demo of four openings and three bounce amounts,
    then eased down from 3% after seeing it live), fading in over the first 120ms.
    Closing folds it back in (picked from a demo of three closings). */
