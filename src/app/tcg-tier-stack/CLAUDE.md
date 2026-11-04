@@ -34,6 +34,7 @@ page.
 ## Editing
 
 - Drag a card to move or reorder it. Clicking a card without dragging (Konva's `click`/`tap` don't fire after a drag) opens the card menu, HTML over the board; so does right-clicking a card (the browser's own menu is prevented on cards only). Konva also fires `click` for the right button, so only a left `click` opens the menu; right-click opens it from `contextmenu`, which would otherwise land on the already-open menu:
+  - The menu stretches out to the right from its left edge (`.tier-stack-menu` in `globals.css`) on `--ease-spring`, a spring that goes 3% past, and fades out on close (`shownMenu` keeps the last menu on screen for 150ms, on a timer since `animationend` doesn't fire in a tab that isn't painting). It's keyed by card and position, so each opening replays the animation.
   - Card: Remove card, Replace card, Make split card.
   - Split card: Remove card, Replace top half, Replace bottom half, Swap halves, Unsplit (keeps the top).
   - A search result dropped on a card opens the menu with the result's choices (`cardMenu.dropped`): Add as split card (the result is the bottom half) or Add to tier (inserted where it was dropped); on a split card, Replace top half, Replace bottom half or Add to tier.
@@ -42,6 +43,10 @@ page.
 - Clicking a tier's row anywhere but on a card (its label, the empty space) makes it the Add to tier. Cards are Konva groups named `card`, which is how the board tells them apart.
 - Bulk import adds cards after the ones already in each tier (cards past 12 are left out and reported); it never clears the board. `#` lines move to the next tier and rename it if they have text.
 - The controls are tabs in a sidebar left of the board (below it on narrow screens): Add a card, Customize Board (tier colors and names, the tier border checkbox, background, border) and Bulk import. The panels stay mounted and are `hidden` when not shown. On wide screens the sidebar and the board column each scroll on their own, and the search results fill the sidebar's height. Double-clicking a tier label switches to Customize Board and focuses that name; Replace and Make split card switch to Add a card.
+
+## Motion
+
+- Chosen from demos: a spring that goes 3% past, `--ease-spring` on `.tier-stack-page` (a plain CSS variable, since `@theme inline` tokens don't exist at runtime). 450ms for things that move; plain `ease-out` fades of about 120ms alongside. Use it for new TierStack animations. Reduced motion: fades only.
 
 ## Cards from Limitless
 

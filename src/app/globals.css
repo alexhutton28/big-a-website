@@ -757,3 +757,72 @@ body:has(.art-page) {
     justify-self: end;
   }
 }
+
+/* tcgTierStack card menu: stretches out to the right from its left edge on a spring
+   that goes 3% past (chosen from a demo of four openings and three bounce amounts),
+   fading in over the first 120ms. Closing is a quick fade. */
+.tier-stack-page {
+  /* Damped spring (damping ratio 0.745) sampled into linear(); settles by the end */
+  --ease-spring: linear(
+    0,
+    0.032,
+    0.113,
+    0.22,
+    0.339,
+    0.459,
+    0.571,
+    0.672,
+    0.759,
+    0.832,
+    0.89,
+    0.936,
+    0.97,
+    0.995,
+    1.012,
+    1.022,
+    1.028,
+    1.03,
+    1.029,
+    1.027,
+    1.024,
+    1.021,
+    1.017,
+    1.014,
+    1.011,
+    1.008,
+    1.006,
+    1.004,
+    1.002,
+    1.001,
+    1
+  );
+}
+
+.tier-stack-menu {
+  transform-origin: left center;
+  animation:
+    tier-stack-menu-stretch 450ms var(--ease-spring),
+    tier-stack-menu-fade 120ms ease-out;
+}
+
+.tier-stack-menu.closing {
+  animation: tier-stack-menu-fade 110ms ease-in reverse forwards;
+}
+
+@keyframes tier-stack-menu-stretch {
+  from {
+    transform: scaleX(0.2);
+  }
+}
+
+@keyframes tier-stack-menu-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-stack-menu {
+    animation: tier-stack-menu-fade 120ms ease-out;
+  }
+}

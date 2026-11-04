@@ -112,6 +112,17 @@ export default function TierStack() {
     dropped?: { card: CardResult; tierIndex: number; index: number };
   } | null>(null);
   const cardMenuRef = React.useRef<HTMLDivElement>(null);
+  // The menu on screen: the open one, or the last one while it fades out after closing
+  const [shownMenu, setShownMenu] = React.useState(cardMenu);
+  if (cardMenu && cardMenu !== shownMenu) setShownMenu(cardMenu);
+  const menuClosing = !cardMenu && shownMenu !== null;
+  // Removed on a timer just after its 110ms fade (globals.css) rather than on
+  // animationend, which doesn't fire in a tab that isn't painting
+  React.useEffect(() => {
+    if (!menuClosing) return;
+    const timer = setTimeout(() => setShownMenu(null), 150);
+    return () => clearTimeout(timer);
+  }, [menuClosing]);
   // Card face being picked from search: the next result clicked replaces the card (or a
   // split card's top half), or becomes its bottom half, making it a split card
   const [picking, setPicking] = React.useState<{ id: string; part: 'top' | 'bottom' } | null>(null);
@@ -507,33 +518,36 @@ export default function TierStack() {
               stageRef.current = stage;
             }}
           />
-          {cardMenu && doc.tiers.some((t) => t.items.some((i) => i.id === cardMenu.id)) && (
-            <div
-              ref={cardMenuRef}
-              role="menu"
-              onContextMenu={(e) => e.preventDefault()}
-              className="absolute z-10 flex flex-col min-w-[160px] border border-black bg-white shadow-md"
-              // Kept inside the board's right edge
-              style={{
-                left: Math.min(cardMenu.x, BOARD_WIDTH * scale - 160),
-                top: cardMenu.y,
-              }}
-            >
-              {cardMenuItems(cardMenu).map((label) => (
-                <button
-                  key={label}
-                  role="menuitem"
-                  className="px-[8px] py-[4px] text-left hover:bg-black/10"
-                  onClick={() => {
-                    runCardMenuItem(cardMenu, label);
-                    setCardMenu(null);
-                  }}
-                >
-                  {label}
-                </button>
-              ))}
-            </div>
-          )}
+          {shownMenu &&
+            (menuClosing || doc.tiers.some((t) => t.items.some((i) => i.id === shownMenu.id))) && (
+              <div
+                // A new element for each menu, so each one plays the opening animation
+                key={`${shownMenu.id} ${shownMenu.x} ${shownMenu.y}`}
+                ref={cardMenuRef}
+                role="menu"
+                onContextMenu={(e) => e.preventDefault()}
+                className={`tier-stack-menu absolute z-10 flex flex-col min-w-[160px] border border-black bg-white shadow-md ${menuClosing ? 'closing pointer-events-none' : ''}`}
+                // Kept inside the board's right edge
+                style={{
+                  left: Math.min(shownMenu.x, BOARD_WIDTH * scale - 160),
+                  top: shownMenu.y,
+                }}
+              >
+                {cardMenuItems(shownMenu).map((label) => (
+                  <button
+                    key={label}
+                    role="menuitem"
+                    className="px-[8px] py-[4px] text-left hover:bg-black/10"
+                    onClick={() => {
+                      runCardMenuItem(shownMenu, label);
+                      setCardMenu(null);
+                    }}
+                  >
+                    {label}
+                  </button>
+                ))}
+              </div>
+            )}
         </div>
 
         <div className="flex flex-wrap gap-[8px] items-center">
