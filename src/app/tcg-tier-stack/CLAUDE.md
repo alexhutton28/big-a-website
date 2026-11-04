@@ -34,7 +34,7 @@ page.
 ## Editing
 
 - Drag a card to move or reorder it. Clicking a card without dragging (Konva's `click`/`tap` don't fire after a drag) opens the card menu, HTML over the board; so does right-clicking a card (the browser's own menu is prevented on cards only). Konva also fires `click` for the right button, so only a left `click` opens the menu; right-click opens it from `contextmenu`, which would otherwise land on the already-open menu:
-  - The menu stretches out to the right from its left edge (`.tier-stack-menu` in `globals.css`) on `--ease-spring`, a spring that goes 3% past, and fades out on close (`shownMenu` keeps the last menu on screen for 150ms, on a timer since `animationend` doesn't fire in a tab that isn't painting). It's keyed by card and position, so each opening replays the animation.
+  - The menu stretches out to the right from its left edge (`.tier-stack-menu` in `globals.css`) on `--ease-spring`, a spring that goes 1.5% past, and fades out on close (`shownMenu` keeps the last menu on screen for 150ms, on a timer since `animationend` doesn't fire in a tab that isn't painting). It's keyed by card and position, so each opening replays the animation.
   - Card: Remove card, Replace card, Make split card.
   - Split card: Remove card, Replace top half, Replace bottom half, Swap halves, Unsplit (keeps the top).
   - A search result dropped on a card opens the menu with the result's choices (`cardMenu.dropped`): Add as split card (the result is the bottom half) or Add to tier (inserted where it was dropped); on a split card, Replace top half, Replace bottom half or Add to tier.
@@ -46,7 +46,7 @@ page.
 
 ## Motion
 
-- Chosen from demos: a spring that goes 3% past, `--ease-spring` on `.tier-stack-page` (a plain CSS variable, since `@theme inline` tokens don't exist at runtime). 450ms for things that move; plain `ease-out` fades of about 120ms alongside. Use it for new TierStack animations. Reduced motion: fades only.
+- Chosen from demos: a spring that goes 1.5% past (3% looked like too much live), `--ease-spring` on `.tier-stack-page` (a plain CSS variable, since `@theme inline` tokens don't exist at runtime). 450ms for things that move; plain `ease-out` fades of about 120ms alongside. Use it for new TierStack animations. Reduced motion: fades only.
 
 ## Cards from Limitless
 
