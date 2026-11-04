@@ -777,3 +777,105 @@ body:has(.art-page) {
     justify-self: end;
   }
 }
+
+/* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge
+   on a spring that goes 1.5% past (chosen from a demo of four openings and three bounce
+   amounts, then eased down from 3% after seeing it live), fading in over the first
+   120ms. Closing folds it back in (picked from a demo of three closings). */
+.tier-stack-page {
+  /* Damped spring (damping ratio 0.801) sampled into linear(); settles by the end */
+  --ease-spring: linear(
+    0,
+    0.032,
+    0.109,
+    0.212,
+    0.326,
+    0.439,
+    0.545,
+    0.641,
+    0.725,
+    0.795,
+    0.853,
+    0.899,
+    0.935,
+    0.962,
+    0.982,
+    0.996,
+    1.005,
+    1.011,
+    1.014,
+    1.015,
+    1.015,
+    1.014,
+    1.012,
+    1.011,
+    1.009,
+    1.007,
+    1.006,
+    1.005,
+    1.003,
+    1.002,
+    1
+  );
+}
+
+.tier-stack-menu {
+  --menu-folded: scaleX(0.2);
+
+  transform-origin: left center;
+  animation:
+    tier-stack-menu-stretch 450ms var(--ease-spring),
+    tier-stack-menu-fade 120ms ease-out;
+}
+
+/* Dropdowns open below their button, so they stretch and fold from the top edge */
+.tier-stack-menu.dropdown {
+  --menu-folded: scaleY(0.2);
+
+  transform-origin: center top;
+}
+
+/* Closing folds it back to its edge, speeding up, and fades over the last 60% */
+.tier-stack-menu.closing {
+  animation:
+    tier-stack-menu-fold 180ms cubic-bezier(0.4, 0, 1, 1) forwards,
+    tier-stack-menu-fold-fade 180ms linear forwards;
+}
+
+@keyframes tier-stack-menu-stretch {
+  from {
+    transform: var(--menu-folded);
+  }
+}
+
+@keyframes tier-stack-menu-fold {
+  to {
+    transform: var(--menu-folded);
+  }
+}
+
+@keyframes tier-stack-menu-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes tier-stack-menu-fold-fade {
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-stack-menu {
+    animation: tier-stack-menu-fade 120ms ease-out;
+  }
+
+  .tier-stack-menu.closing {
+    animation: tier-stack-menu-fade 110ms ease-in reverse forwards;
+  }
+}
