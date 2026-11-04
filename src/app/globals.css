@@ -761,7 +761,7 @@ body:has(.art-page) {
 /* tcgTierStack card menu: stretches out to the right from its left edge on a spring
    that goes 1.5% past (chosen from a demo of four openings and three bounce amounts,
    then eased down from 3% after seeing it live), fading in over the first 120ms.
-   Closing is a quick fade. */
+   Closing folds it back in (picked from a demo of three closings). */
 .tier-stack-page {
   /* Damped spring (damping ratio 0.801) sampled into linear(); settles by the end */
   --ease-spring: linear(
@@ -806,12 +806,21 @@ body:has(.art-page) {
     tier-stack-menu-fade 120ms ease-out;
 }
 
+/* Closing folds it back to its left edge, speeding up, and fades over the last 60% */
 .tier-stack-menu.closing {
-  animation: tier-stack-menu-fade 110ms ease-in reverse forwards;
+  animation:
+    tier-stack-menu-fold 180ms cubic-bezier(0.4, 0, 1, 1) forwards,
+    tier-stack-menu-fold-fade 180ms linear forwards;
 }
 
 @keyframes tier-stack-menu-stretch {
   from {
+    transform: scaleX(0.2);
+  }
+}
+
+@keyframes tier-stack-menu-fold {
+  to {
     transform: scaleX(0.2);
   }
 }
@@ -822,8 +831,22 @@ body:has(.art-page) {
   }
 }
 
+@keyframes tier-stack-menu-fold-fade {
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .tier-stack-menu {
     animation: tier-stack-menu-fade 120ms ease-out;
+  }
+
+  .tier-stack-menu.closing {
+    animation: tier-stack-menu-fade 110ms ease-in reverse forwards;
   }
 }

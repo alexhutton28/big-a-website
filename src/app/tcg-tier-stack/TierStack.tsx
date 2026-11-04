@@ -116,11 +116,11 @@ export default function TierStack() {
   const [shownMenu, setShownMenu] = React.useState(cardMenu);
   if (cardMenu && cardMenu !== shownMenu) setShownMenu(cardMenu);
   const menuClosing = !cardMenu && shownMenu !== null;
-  // Removed on a timer just after its 110ms fade (globals.css) rather than on
+  // Removed on a timer just after its 180ms fold (globals.css) rather than on
   // animationend, which doesn't fire in a tab that isn't painting
   React.useEffect(() => {
     if (!menuClosing) return;
-    const timer = setTimeout(() => setShownMenu(null), 150);
+    const timer = setTimeout(() => setShownMenu(null), 220);
     return () => clearTimeout(timer);
   }, [menuClosing]);
   // Card face being picked from search: the next result clicked replaces the card (or a
