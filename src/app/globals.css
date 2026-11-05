@@ -750,13 +750,13 @@ body:has(.tier-stack-page) {
   --ts-control-text: var(--color-petrel-100);
   --ts-control-border: transparent;
   --ts-field: var(--color-petrel-900);
-  --ts-primary: var(--color-tier-solid);
-  --ts-primary-hover: var(--color-tier-mid);
+  --ts-primary: var(--color-storm-300);
+  --ts-primary-hover: var(--color-storm-200);
   --ts-primary-text: var(--color-petrel-950);
   --ts-selected: var(--color-tier-mid);
   --ts-selected-text: var(--color-petrel-950);
   --ts-popup: var(--color-petrel-800);
-  --ts-focus: var(--color-tier-goated);
+  --ts-focus: var(--color-storm-200);
   --ts-radius: 999px;
   --ts-field-radius: 12px;
   --ts-panel-radius: 16px;
@@ -870,8 +870,8 @@ body:has(.tier-stack-page) {
   }
 }
 
-/* Each tab and tool takes its own tier color. Goated stays off filled buttons: dark
-   text on it just misses 4.5:1. It marks focus and the header's stripe instead. */
+/* Tier colors only mark what's selected: each tab and tool takes its own. Goated isn't
+   used, because dark text on it just misses 4.5:1. */
 .tier-stack-tab[aria-selected='true']:nth-child(1),
 .tier-stack-tool[aria-pressed='true']:nth-child(1) {
   --ts-selected: var(--color-tier-solid);
@@ -880,19 +880,6 @@ body:has(.tier-stack-page) {
 .tier-stack-tab[aria-selected='true']:nth-child(3),
 .tier-stack-tool[aria-pressed='true']:nth-child(3) {
   --ts-selected: var(--color-tier-fraud);
-}
-
-/* The four tier colors as a stripe under the header */
-body:has(.tier-stack-page) header {
-  border-bottom: 4px solid;
-  border-image: linear-gradient(
-      90deg,
-      var(--color-tier-goated) 25%,
-      var(--color-tier-solid) 25% 50%,
-      var(--color-tier-mid) 50% 75%,
-      var(--color-tier-fraud) 75%
-    )
-    1;
 }
 
 /* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge

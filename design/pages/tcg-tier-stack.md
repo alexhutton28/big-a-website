@@ -9,36 +9,36 @@
 - Professional but fun and friendly, with smooth transitions and rounded borders.
 - A real design tool that feels smooth and satisfying to use.
 - The look, from Alex's mood board: dark (petrel and storm), Figtree as a stand-in for Google Sans Rounded, everything a bit rounded, and smooth motion throughout.
-- Tier Pop: Pill controls with the tier colors as accents: Solid on main actions, each tab and tool in its own tier color, Goated for focus, and all four as a stripe under the header. Goated is never a fill behind text, because dark text on it reaches only 4.49:1.
+- Tier Pop: Pill controls. Storm blue marks main actions, and the tier colors appear only on selected tabs and tools, each in its own color. Goated is never a fill behind text, because dark text on it reaches only 4.49:1.
 
 ## Color
 
 The interface's palette. The look is set as `--ts-*` roles on `body:has(.tier-stack-page)` in `globals.css`.
 
-| Name        | Hex       | Semantic roles | Used for                   |
-| ----------- | --------- | -------------- | -------------------------- |
-| Petrel 50   | `#F2F5F6` |                | Surfaces, borders and text |
-| Petrel 100  | `#E3E8EB` |                | Surfaces, borders and text |
-| Petrel 200  | `#CCD4D8` |                | Surfaces, borders and text |
-| Petrel 300  | `#B3BEC4` |                | Surfaces, borders and text |
-| Petrel 400  | `#94A2AA` |                | Surfaces, borders and text |
-| Petrel 500  | `#6C7D88` |                | Surfaces, borders and text |
-| Petrel 600  | `#546470` |                | Surfaces, borders and text |
-| Petrel 700  | `#3E4B53` |                | Surfaces, borders and text |
-| Petrel 800  | `#2D373D` |                | Surfaces, borders and text |
-| Petrel 850  | `#232B30` |                | Surfaces, borders and text |
-| Petrel 900  | `#1B2125` |                | Surfaces, borders and text |
-| Petrel 950  | `#12171A` |                | Surfaces, borders and text |
-| Storm 100   | `#DCEAF1` |                | Not used yet               |
-| Storm 200   | `#BFD7E4` |                | Not used yet               |
-| Storm 300   | `#9CC0D4` |                | Not used yet               |
-| Storm 400   | `#78A5BD` |                | Not used yet               |
-| Storm 600   | `#466E85` |                | Not used yet               |
-| Storm 800   | `#2A4352` |                | Not used yet               |
-| Tier Goated | `#D9532B` |                | Default tier color. Accent |
-| Tier Solid  | `#F0912F` |                | Default tier color. Accent |
-| Tier Mid    | `#F5C95B` |                | Default tier color. Accent |
-| Tier Fraud  | `#7CC05A` |                | Default tier color. Accent |
+| Name        | Hex       | Semantic roles | Used for                                    |
+| ----------- | --------- | -------------- | ------------------------------------------- |
+| Petrel 50   | `#F2F5F6` |                | Surfaces, borders and text                  |
+| Petrel 100  | `#E3E8EB` |                | Surfaces, borders and text                  |
+| Petrel 200  | `#CCD4D8` |                | Surfaces, borders and text                  |
+| Petrel 300  | `#B3BEC4` |                | Surfaces, borders and text                  |
+| Petrel 400  | `#94A2AA` |                | Surfaces, borders and text                  |
+| Petrel 500  | `#6C7D88` |                | Surfaces, borders and text                  |
+| Petrel 600  | `#546470` |                | Surfaces, borders and text                  |
+| Petrel 700  | `#3E4B53` |                | Surfaces, borders and text                  |
+| Petrel 800  | `#2D373D` |                | Surfaces, borders and text                  |
+| Petrel 850  | `#232B30` |                | Surfaces, borders and text                  |
+| Petrel 900  | `#1B2125` |                | Surfaces, borders and text                  |
+| Petrel 950  | `#12171A` |                | Surfaces, borders and text                  |
+| Storm 100   | `#DCEAF1` |                | Accent                                      |
+| Storm 200   | `#BFD7E4` |                | Accent                                      |
+| Storm 300   | `#9CC0D4` |                | Accent                                      |
+| Storm 400   | `#78A5BD` |                | Accent                                      |
+| Storm 600   | `#466E85` |                | Accent                                      |
+| Storm 800   | `#2A4352` |                | Accent                                      |
+| Tier Goated | `#D9532B` |                | Default tier color. Board only              |
+| Tier Solid  | `#F0912F` |                | Default tier color. Selected tabs and tools |
+| Tier Mid    | `#F5C95B` |                | Default tier color. Selected tabs and tools |
+| Tier Fraud  | `#7CC05A` |                | Default tier color. Selected tabs and tools |
 
 Board colors (tier colors, backgrounds, borders) are canvas colors that users can change. See Exceptions in the HuttonDesign System.
 
