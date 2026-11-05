@@ -1,0 +1,19 @@
+/* Generated from the HuttonDesign System by gen-tokens.py. Do not edit by hand.
+   Import right after @import 'tailwindcss'. */
+@theme static {
+  --color-houndoom: #4E0A0A;
+  --color-eevee: #6C393A;
+  --color-rockruff: #8F6767;
+  --color-scizor: #C62121;
+  --color-butterfree: #F5E6E6;
+  --color-blissey: #E08C8C;
+  --color-togepi: #FAF7F7;
+  --color-jigglypuff: #F7EFEF;
+  --color-bulbasaur: #5FAE62;
+}
+
+.limitless-check-page {
+  --duration-option: 320ms;
+  --duration-overlay: 260ms;
+  --duration-panel: 300ms;
+}

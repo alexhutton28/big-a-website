@@ -2,7 +2,7 @@
 
 A quick drawing game: draw what the prompt says, and an AI scores each drawing.
 
-- **Palette:** `mahogany`, `charlie`, `padauk`, `vanilla`, `bone` (tokens in `src/app/globals.css`). Font: Lato.
+- **Design:** palette, font and page rules are in `design/pages/art-something.md`.
 - **Layout CSS:** the `.art-*` rules in `globals.css` (grid, canvas size per screen, score box shadow, floating points).
 
 ## Files

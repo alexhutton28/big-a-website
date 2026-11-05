@@ -1,0 +1,16 @@
+/* Generated from the HuttonDesign System by gen-tokens.py. Do not edit by hand.
+   Import right after @import 'tailwindcss'. */
+@theme static {
+  --color-mahogany: #461414;
+  --color-charlie: #662020;
+  --color-padauk: #815555;
+  --color-vanilla: #FFF3C3;
+  --color-sand: #FFF8DD;
+  --color-bone: #FFFBEC;
+  --color-money: #FFB700;
+}
+
+.art-page {
+  --duration-rise: 500ms;
+  --duration-gain: 1100ms;
+}

@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+/* Generated from design/*.md by `npm run design:tokens`. Don't edit them by hand. */
+@import '../../design/theme.css';
+@import '../../design/pages/home.css';
+@import '../../design/pages/art-something.css';
+@import '../../design/pages/guess-that-flavor-text.css';
+@import '../../design/pages/limitless-check.css';
+@import '../../design/pages/tcg-tier-stack.css';
+
 /* Font utility classes */
 .barlow {
   font-family: var(--font-barlow), sans-serif;
@@ -16,58 +24,6 @@
   --font-sans: var(--font-lato);
   --font-barlow-body: var(--font-barlow);
   --font-mono: var(--font-geist-mono);
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 16px;
-  --spacing-4: 32px;
-  --spacing-5: 64px;
-  --spacing-6: 128px;
-  --color-money: #ffb700;
-  --color-mahogany: #461414;
-  --color-charlie: #662020;
-  --color-padauk: #815555;
-  --color-vanilla: #fff3c3;
-  --color-sand: #fff8dd;
-  --color-bone: #fffbec;
-  --color-houndoom: #4e0a0a;
-  --color-eevee: #6c393a;
-  --color-bulbasaur: #5fae62;
-  --color-rockruff: #8f6767;
-  --color-scizor: #c62121;
-  --color-butterfree: #f5e6e6;
-  --color-blissey: #e08c8c;
-  --color-togepi: #faf7f7;
-  --color-jigglypuff: #f7efef;
-  --color-tide: #2561eb;
-  --color-wave: #2876ec;
-  --color-splash: #7aa6ff;
-  --color-stone: #8496b1;
-  --color-slate: #47679c;
-  --color-ghost: #f7f7fa;
-  --color-drop: #e4f0ff;
-  --color-mist: #f3f6fb;
-  --color-abyss: #1c2a44;
-  --color-night: #060c18;
-
-  /* tcgTierStack dark theme: petrel grays for surfaces, borders and text, storm accent */
-  --color-petrel-50: #f2f5f6;
-  --color-petrel-100: #e3e8eb;
-  --color-petrel-200: #ccd4d8;
-  --color-petrel-300: #b3bec4;
-  --color-petrel-400: #94a2aa;
-  --color-petrel-500: #6c7d88;
-  --color-petrel-600: #546470;
-  --color-petrel-700: #3e4b53;
-  --color-petrel-800: #2d373d;
-  --color-petrel-850: #232b30;
-  --color-petrel-900: #1b2125;
-  --color-petrel-950: #12171a;
-  --color-storm-100: #dceaf1;
-  --color-storm-200: #bfd7e4;
-  --color-storm-300: #9cc0d4;
-  --color-storm-400: #78a5bd;
-  --color-storm-600: #466e85;
-  --color-storm-800: #2a4352;
 }
 
 html,
@@ -80,8 +36,8 @@ body {
   background: var(--background);
   color: var(--foreground);
 
-  /* --font-sans lives in @theme inline, so it never exists as a real CSS variable;
-     use the variable next/font sets on <body> directly */
+  /* --font-sans is in @theme inline, so it never exists as a real CSS variable; use the
+     variable next/font sets on <body> directly */
   font-family: var(--font-lato), sans-serif;
 }
 
@@ -149,11 +105,11 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .lifeline-reveal {
-  animation: lifeline-reveal 300ms ease-out both;
+  animation: lifeline-reveal var(--duration-reveal) ease-out both;
 }
 
 .lifeline-reveal-delayed {
-  animation: lifeline-reveal 300ms ease-out 120ms both;
+  animation: lifeline-reveal var(--duration-reveal) ease-out var(--duration-stagger) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -255,7 +211,7 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .card-reveal {
-  animation: card-pop 450ms ease-out 2.6s both;
+  animation: card-pop var(--duration-pop) ease-out var(--duration-spotlight) both;
 }
 
 .card-reveal-cover {
@@ -271,21 +227,21 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
     #000 100%
   );
   animation:
-    spotlight-roam 2.6s ease-in-out both,
-    spotlight-clear 400ms ease-out 2.6s both;
+    spotlight-roam var(--duration-spotlight) ease-in-out both,
+    spotlight-clear var(--duration-clear) ease-out var(--duration-spotlight) both;
 }
 
 .result-heading-in {
-  animation: result-fade-up 400ms ease-out 3s both;
+  animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-heading-delay) both;
 }
 
 .result-stars-in {
-  animation: result-fade-up 400ms ease-out 3.25s both;
+  animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-stars-delay) both;
 }
 
 /* Share, streak and countdown follow once the result is shown */
 .result-details-in {
-  animation: result-fade-up 400ms ease-out 3.5s both;
+  animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-details-delay) both;
 }
 
 /* Hold the whole sequence on the dark cover until the card image has loaded */
@@ -329,7 +285,7 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .shake {
-  animation: shake 400ms ease-in-out;
+  animation: shake var(--duration-shake) ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -351,7 +307,7 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .round-option-enter {
-  animation: round-option-in 320ms ease-out both;
+  animation: round-option-in var(--duration-option) ease-out both;
 }
 
 @keyframes overlay-fade-in {
@@ -377,11 +333,11 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .game-over-overlay-enter {
-  animation: overlay-fade-in 260ms ease-out both;
+  animation: overlay-fade-in var(--duration-overlay) ease-out both;
 }
 
 .game-over-panel-enter {
-  animation: overlay-panel-in 300ms ease-out both;
+  animation: overlay-panel-in var(--duration-panel) ease-out both;
 }
 
 /* Home page night sky. Back to front: a deep navy sky that brightens toward the
@@ -440,7 +396,7 @@ body:has(.home-sky) {
 
   /* Brightest at the top of the curve, like light from just behind the planet */
   mask-image: radial-gradient(ellipse 45% 50% at 50% 0%, #000 30%, rgb(0 0 0 / 45%) 100%);
-  animation: atmosphere-breathe 12s ease-in-out infinite alternate;
+  animation: atmosphere-breathe var(--duration-breathe) ease-in-out infinite alternate;
 }
 
 .home-planet {
@@ -500,12 +456,12 @@ body:has(.home-sky) {
 .home-card {
   box-shadow: 0 0 14px rgb(200 220 255 / 15%);
   transition:
-    transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 350ms ease;
+    transform var(--duration-lift) var(--ease-settle),
+    box-shadow var(--duration-lift) ease;
 }
 
 .home-card img {
-  transition: scale 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: scale var(--duration-zoom) var(--ease-settle);
 }
 
 .home-card:hover,
@@ -526,7 +482,7 @@ body:has(.home-sky) {
 @media (prefers-reduced-motion: reduce) {
   .home-card,
   .home-card img {
-    transition: box-shadow 200ms ease;
+    transition: box-shadow var(--duration-reduced) ease;
   }
 
   .home-card:hover,
@@ -561,9 +517,9 @@ body:has(.home-sky) {
   border-radius: 999px;
   color: rgb(255 255 255 / 85%);
   transition:
-    color 250ms ease,
-    filter 250ms ease,
-    transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    color var(--duration-glow) ease,
+    filter var(--duration-glow) ease,
+    transform var(--duration-nudge) var(--ease-settle);
 }
 
 .home-socials a:hover,
@@ -577,8 +533,8 @@ body:has(.home-sky) {
 @media (prefers-reduced-motion: reduce) {
   .home-socials a {
     transition:
-      color 200ms ease,
-      filter 200ms ease;
+      color var(--duration-reduced) ease,
+      filter var(--duration-reduced) ease;
   }
 
   .home-socials a:hover,
@@ -658,7 +614,7 @@ body:has(.art-page) {
 /* The prompt sliding up from where it sat on the intro screen (16px lower) when the
    count-in's timer bar appears */
 .art-prompt-rise {
-  animation: art-prompt-rise 500ms ease-out;
+  animation: art-prompt-rise var(--duration-rise) ease-out;
 }
 
 @keyframes art-prompt-rise {
@@ -717,7 +673,7 @@ body:has(.art-page) {
   line-height: 1;
   color: var(--color-mahogany);
   white-space: nowrap;
-  animation: art-score-gain 1100ms ease-out forwards;
+  animation: art-score-gain var(--duration-gain) ease-out forwards;
 }
 
 @keyframes art-score-gain {
@@ -781,51 +737,16 @@ body:has(.art-page) {
 /* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge
    on a spring that goes 1.5% past (chosen from a demo of four openings and three bounce
    amounts, then eased down from 3% after seeing it live), fading in over the first
-   120ms. Closing folds it back in (picked from a demo of three closings). */
-.tier-stack-page {
-  /* Damped spring (damping ratio 0.801) sampled into linear(); settles by the end */
-  --ease-spring: linear(
-    0,
-    0.032,
-    0.109,
-    0.212,
-    0.326,
-    0.439,
-    0.545,
-    0.641,
-    0.725,
-    0.795,
-    0.853,
-    0.899,
-    0.935,
-    0.962,
-    0.982,
-    0.996,
-    1.005,
-    1.011,
-    1.014,
-    1.015,
-    1.015,
-    1.014,
-    1.012,
-    1.011,
-    1.009,
-    1.007,
-    1.006,
-    1.005,
-    1.003,
-    1.002,
-    1
-  );
-}
-
+   120ms. Closing folds it back in (picked from a demo of three closings). --ease-spring
+   is a damped spring (damping ratio 0.801) sampled into linear(), which settles by the
+   end; it and the durations are in design/pages/tcg-tier-stack.md. */
 .tier-stack-menu {
   --menu-folded: scaleX(0.2);
 
   transform-origin: left center;
   animation:
-    tier-stack-menu-stretch 450ms var(--ease-spring),
-    tier-stack-menu-fade 120ms ease-out;
+    tier-stack-menu-stretch var(--duration-move) var(--ease-spring),
+    tier-stack-menu-fade var(--duration-fade) ease-out;
 }
 
 /* Dropdowns open below their button, so they stretch and fold from the top edge */
@@ -838,8 +759,8 @@ body:has(.art-page) {
 /* Closing folds it back to its edge, speeding up, and fades over the last 60% */
 .tier-stack-menu.closing {
   animation:
-    tier-stack-menu-fold 180ms cubic-bezier(0.4, 0, 1, 1) forwards,
-    tier-stack-menu-fold-fade 180ms linear forwards;
+    tier-stack-menu-fold var(--duration-fold) var(--ease-fold) forwards,
+    tier-stack-menu-fold-fade var(--duration-fold) linear forwards;
 }
 
 @keyframes tier-stack-menu-stretch {
@@ -872,10 +793,10 @@ body:has(.art-page) {
 
 @media (prefers-reduced-motion: reduce) {
   .tier-stack-menu {
-    animation: tier-stack-menu-fade 120ms ease-out;
+    animation: tier-stack-menu-fade var(--duration-fade) ease-out;
   }
 
   .tier-stack-menu.closing {
-    animation: tier-stack-menu-fade 110ms ease-in reverse forwards;
+    animation: tier-stack-menu-fade var(--duration-fold-fade) ease-in reverse forwards;
   }
 }

@@ -9,6 +9,7 @@
     "lint": "eslint",
     "stylelint": "stylelint \"src/**/*.{css,scss}\"",
     "format": "prettier --write .",
+    "design:tokens": "sh scripts/design-tokens.sh",
     "fetch-cards": "node scripts/fetch-cards.mjs",
     "fetch-decks": "node scripts/fetch-decks.mjs",
     "fetch-flavor-cards": "npx tsx scripts/fetch-flavor-cards.mts"
