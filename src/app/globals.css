@@ -734,6 +734,142 @@ body:has(.art-page) {
   }
 }
 
+/* tcgTierStack's interface: the look (Soft Panels, in design/pages/tcg-tier-stack.md).
+   Set on the body so the header and the page background can use it too. The board
+   keeps its own colors (see Exceptions in the HuttonDesign System). */
+body:has(.tier-stack-page) {
+  --ts-page: var(--color-petrel-850);
+  --ts-header: var(--color-petrel-900);
+  --ts-panel: var(--color-petrel-800);
+  --ts-panel-border: transparent;
+  --ts-panel-shadow: 0 8px 24px rgb(18 23 26 / 45%);
+  --ts-text: var(--color-petrel-50);
+  --ts-muted: var(--color-petrel-300);
+  --ts-control: var(--color-petrel-700);
+  --ts-control-hover: var(--color-petrel-600);
+  --ts-control-text: var(--color-petrel-50);
+  --ts-control-border: transparent;
+  --ts-field: var(--color-petrel-900);
+  --ts-primary: var(--color-storm-400);
+  --ts-primary-hover: var(--color-storm-300);
+  --ts-primary-text: var(--color-petrel-950);
+  --ts-selected: var(--color-petrel-100);
+  --ts-selected-text: var(--color-petrel-950);
+  --ts-popup: var(--color-petrel-800);
+  --ts-focus: var(--color-storm-200);
+  --ts-radius: 12px;
+  --ts-field-radius: 12px;
+  --ts-panel-radius: 20px;
+  --ts-popup-radius: 12px;
+
+  background: var(--ts-page);
+}
+
+.tier-stack-page {
+  color: var(--ts-text);
+  font-family: var(--font-figtree), var(--font-lato), system-ui, sans-serif;
+  accent-color: var(--ts-primary);
+  color-scheme: dark;
+}
+
+.tier-stack-panel {
+  padding: var(--spacing-4);
+  border: 1px solid var(--ts-panel-border);
+  border-radius: var(--ts-panel-radius);
+  background: var(--ts-panel);
+  box-shadow: var(--ts-panel-shadow);
+}
+
+.tier-stack-button {
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px solid var(--ts-control-border);
+  border-radius: var(--ts-radius);
+  background: var(--ts-control);
+  color: var(--ts-control-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform var(--duration-move) var(--ease-spring),
+    background-color var(--duration-fade) ease-out,
+    color var(--duration-fade) ease-out;
+}
+
+.tier-stack-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tier-stack-button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.tier-stack-button.primary {
+  border-color: transparent;
+  background: var(--ts-primary);
+  color: var(--ts-primary-text);
+}
+
+.tier-stack-tab[aria-selected='true'],
+.tier-stack-tool[aria-pressed='true'] {
+  border-color: transparent;
+  background: var(--ts-selected);
+  color: var(--ts-selected-text);
+}
+
+.tier-stack-field {
+  padding: var(--spacing-3);
+  border: 1px solid var(--ts-control-border);
+  border-radius: var(--ts-field-radius);
+  background: var(--ts-field);
+  color: var(--ts-text);
+}
+
+.tier-stack-field::placeholder {
+  color: var(--ts-muted);
+}
+
+.tier-stack-popup {
+  overflow: hidden;
+  border: 1px solid var(--ts-control-border);
+  border-radius: var(--ts-popup-radius);
+  background: var(--ts-popup);
+  box-shadow: 0 8px 24px rgb(18 23 26 / 45%);
+}
+
+.tier-stack-option {
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--ts-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .tier-stack-button:hover:not(:disabled),
+  .tier-stack-option:hover {
+    background: var(--ts-control-hover);
+  }
+
+  .tier-stack-button.primary:hover:not(:disabled) {
+    background: var(--ts-primary-hover);
+  }
+
+  .tier-stack-tab[aria-selected='true']:hover,
+  .tier-stack-tool[aria-pressed='true']:hover {
+    background: var(--ts-selected);
+  }
+}
+
+.tier-stack-page :focus-visible {
+  outline: 2px solid var(--ts-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-stack-button:active:not(:disabled) {
+    transform: none;
+  }
+}
+
 /* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge
    on a spring that goes 1.5% past (chosen from a demo of four openings and three bounce
    amounts, then eased down from 3% after seeing it live), fading in over the first

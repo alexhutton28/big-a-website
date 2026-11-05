@@ -3,8 +3,8 @@
 A hidden tool (not linked from the home page, `noindex`) for laying out Pokémon TCG
 graphics, tier lists first, and exporting them as images for X. It's growing into a small
 design tool, so the editor is a shared shell and each kind of graphic (tier list, blank
-canvas; later charts, Venn diagrams) is a pluggable **graphic type**. Styling is
-deliberately minimal for now, and there's no help text on the page.
+canvas; later charts, Venn diagrams) is a pluggable **graphic type**. There's no help
+text on the page.
 
 ## Files
 
@@ -19,7 +19,8 @@ deliberately minimal for now, and there's no help text on the page.
 - `ui/ColorField.tsx`: a hex text field plus the browser's color picker.
 - `ui/Dropdown.tsx`: a labeled dropdown (the Add to picker) in place of a native `<select>`, so it can open and close with the card menu's animation (top to bottom); arrow keys, Enter/Space and Escape work as in a select.
 - `TierStackLoader.tsx`: loads `Editor` with `ssr: false` (Konva needs a browser canvas).
-- `layout.tsx`: the page's scroll container, and Inter Black for the tier labels.
+- `layout.tsx`: the page's scroll container, Inter Black for the tier labels, and Figtree for the controls.
+- Interface styles: the `.tier-stack-*` rules in `globals.css`. Change the look through the `--ts-*` roles at the top of them.
 - `../api/tcg-tier-stack/`: `card` (by set + number), `search` (by name), `image` (proxy), and `limitless.ts`, which reads limitlesstcg.com pages.
 
 ## Graphic types

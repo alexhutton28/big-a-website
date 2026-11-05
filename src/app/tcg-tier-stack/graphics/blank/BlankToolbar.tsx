@@ -14,8 +14,7 @@ const TOOLS = [
   ['eraser', 'Eraser'],
 ] as const;
 
-const toolButton =
-  'border border-black px-3 py-1 bg-white aria-pressed:bg-black aria-pressed:text-white';
+const toolButton = 'tier-stack-button tier-stack-tool';
 
 export default function BlankToolbar({
   graphic: canvas,
@@ -87,7 +86,7 @@ function SizeField({
         aria-label={label}
         min={MIN_STROKE_WIDTH}
         max={MAX_STROKE_WIDTH}
-        className="border border-black px-2 w-[56px]"
+        className="tier-stack-field w-[64px]"
         value={draft}
         onChange={(e) => {
           setDraft(e.target.value);

@@ -42,7 +42,7 @@ export default function TierListSettings({
               tierNameRefs.current[i] = el;
             }}
             aria-label={`Tier ${i + 1} name`}
-            className="border border-black px-2 flex-1"
+            className="tier-stack-field flex-1 min-w-0"
             value={tier.name.replaceAll('\n', '\\n')}
             onChange={(e) => updateTier(i, { name: e.target.value.replaceAll('\\n', '\n') })}
           />
