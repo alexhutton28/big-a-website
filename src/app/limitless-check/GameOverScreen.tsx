@@ -79,7 +79,7 @@ export default function GameOverScreen({
       </div>
       <div className="mt-3 flex min-w-[200px] flex-col gap-4 items-center">
         <button
-          className="bg-houndoom w-full rounded px-5 py-4 text-m font-bold text-togepi transition-colors transition-transform hover:scale-102 hover:bg-eevee cursor-pointer"
+          className="bg-houndoom w-full rounded px-5 py-4 text-m font-bold text-togepi transition-colors transition-transform motion-safe:hover:scale-102 hover:bg-eevee cursor-pointer"
           onClick={onRestart}
           type="button"
         >
@@ -87,14 +87,14 @@ export default function GameOverScreen({
         </button>
         <div className="flex items-center gap-3">
           <button
-            className="ring-2 ring-inset ring-houndoom px-5 py-3 text-sm font-bold text-houndoom transition-colors transition-transform hover:scale-102 hover:ring-eevee hover:text-eevee cursor-pointer rounded"
+            className="ring-2 ring-inset ring-houndoom px-5 py-3 text-sm font-bold text-houndoom transition-colors transition-transform motion-safe:hover:scale-102 hover:ring-eevee hover:text-eevee cursor-pointer rounded"
             onClick={onHome}
             type="button"
           >
             Home
           </button>
           <button
-            className="ring-2 ring-inset ring-houndoom px-5 py-3 text-sm font-bold text-houndoom transition-colors transition-transform hover:scale-102 hover:ring-eevee hover:text-eevee cursor-pointer rounded min-[800px]:hidden"
+            className="ring-2 ring-inset ring-houndoom px-5 py-3 text-sm font-bold text-houndoom transition-colors transition-transform motion-safe:hover:scale-102 hover:ring-eevee hover:text-eevee cursor-pointer rounded min-[800px]:hidden"
             onClick={handleShare}
             type="button"
           >

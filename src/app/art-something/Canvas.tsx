@@ -493,7 +493,7 @@ export default function Canvas() {
             </div>
           )}
         </div>
-        <div className="art-canvas relative w-(--art-canvas-size) h-(--art-canvas-height) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[25px_25px_0_var(--color-mahogany)] max-md:shadow-[12px_12px_0_var(--color-mahogany)]">
+        <div className="art-canvas relative w-(--art-canvas-size) h-(--art-canvas-height) overflow-hidden rounded-tl-2xl border-2 border-mahogany bg-white shadow-[12px_12px_0_var(--color-mahogany)] b7:shadow-[25px_25px_0_var(--color-mahogany)]">
           {/* Between games: a dashed circle to get the next drawing going. It sits
               under the (transparent) canvas, so it's never part of the drawing, and
               fades out once the player starts drawing. It stays hidden while that

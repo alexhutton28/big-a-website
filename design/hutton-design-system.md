@@ -156,8 +156,6 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 - [#37](https://github.com/alexhutton28/big-a-website/issues/37): raw colors that are not covered by Exceptions
 - [#43](https://github.com/alexhutton28/big-a-website/issues/43): type and radius tokens
-- [#44](https://github.com/alexhutton28/big-a-website/issues/44): desktop-first rules in Art Something
-- [#46](https://github.com/alexhutton28/big-a-website/issues/46): animations that don't respect reduced motion yet
 - [#47](https://github.com/alexhutton28/big-a-website/issues/47): a shared focus ring
 - [#48](https://github.com/alexhutton28/big-a-website/issues/48): Limitless Check's off-grid breakpoints
 
