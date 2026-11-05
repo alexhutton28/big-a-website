@@ -31,10 +31,10 @@ export default function Header() {
       className={`${headerClassName} sticky top-0 z-40`}
       style={{ paddingTop: 'env(safe-area-inset-top)' }}
     >
-      <div className="flex items-center justify-between p-3">
+      <div className="flex items-center justify-between p-4">
         <Link href="/" className="text-lg hover:text-gray-300 transition-colors">
           {isLimitlessCheckPage ? (
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-3">
               <Image
                 src="/limitless-check-alt.svg"
                 alt="Limitless Check logo"
@@ -46,7 +46,7 @@ export default function Header() {
               <h2 className="font-medium">Big A Website</h2>
             </span>
           ) : isArtSomethingPage ? (
-            <span className="flex items-center gap-2">
+            <span className="flex items-center gap-3">
               <Image
                 src="/art-something-tan.svg"
                 alt="Art Something logo"

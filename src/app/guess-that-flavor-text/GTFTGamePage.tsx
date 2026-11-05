@@ -28,7 +28,7 @@ function LifelineCost({ used }: { used: boolean }) {
   if (used) return null;
   return (
     <span
-      className="barlow absolute -top-2 -right-1 z-10 flex items-center gap-0.5 whitespace-nowrap rounded-md border border-slate bg-slate px-1 py-0.5 text-[11px] font-medium leading-none text-white"
+      className="barlow absolute -top-3 -right-2 z-10 flex items-center gap-0.5 whitespace-nowrap rounded-md border border-slate bg-slate px-2 py-0.5 text-[11px] font-medium leading-none text-white"
       aria-label="costs 1 point"
     >
       <span aria-hidden="true">−1</span>
@@ -84,7 +84,7 @@ function LifelineCard({
     <button
       onClick={onUse}
       disabled={used}
-      className={`barlow relative flex flex-col flex-1 basis-0 min-w-0 justify-center text-left border border-slate rounded-xs p-2 transition-colors duration-300 ${used ? 'bg-drop cursor-default' : 'bg-mist text-slate cursor-pointer [&:hover]:bg-drop'}`}
+      className={`barlow relative flex flex-col flex-1 basis-0 min-w-0 justify-center text-left border border-slate rounded-xs p-3 transition-colors duration-300 ${used ? 'bg-drop cursor-default' : 'bg-mist text-slate cursor-pointer [&:hover]:bg-drop'}`}
     >
       <LifelineCost used={used} />
       {used ? (
@@ -165,16 +165,16 @@ export default function GTFTGamePage({
   }, [card.flavorText]);
 
   return (
-    <section className="min-h-full w-full flex flex-col items-center px-3 py-3">
+    <section className="min-h-full w-full flex flex-col items-center px-4 py-4">
       <TopSpacer />
       <Image
         src="/unknown-q.svg"
         alt="Guess That Flavor Text Logo"
         width={170}
         height={36}
-        className="mb-3 w-[85px] sm:w-[100px] h-auto drop-shadow-[0_6px_12px_#47679c4d]"
+        className="mb-4 w-[85px] sm:w-[100px] h-auto drop-shadow-[0_6px_12px_#47679c4d]"
       />
-      <div className="flex w-fit max-w-[min(100%,max(60vw,350px))] bg-white rounded px-3 py-2 border border-splash mb-4">
+      <div className="flex w-fit max-w-[min(100%,max(60vw,350px))] bg-white rounded px-4 py-3 border border-splash mb-5">
         <p className="flex justify-center items-center flex-wrap gap-x-[0.3em] italic font-normal text-center text-[20px] text-wave break-words w-full min-h-[60px]">
           {words.map((word, i) => {
             let displayWord = word;
@@ -197,9 +197,9 @@ export default function GTFTGamePage({
       </div>
 
       <div className="relative w-full max-w-[max(60vw,350px)] sm:max-w-[480px]">
-        <div className="flex items-start gap-3 mb-2">
+        <div className="flex items-start gap-4 mb-3">
           <div
-            className={`flex items-center flex-1 min-w-0 min-h-[52px] border border-slate px-3 py-2 bg-white outline-none mb-0 rounded gap-2 ${shaking ? 'shake' : ''}`}
+            className={`flex items-center flex-1 min-w-0 min-h-[52px] border border-slate px-4 py-3 bg-white outline-none mb-0 rounded gap-3 ${shaking ? 'shake' : ''}`}
           >
             {selectedPokemon && (
               <Image
@@ -233,13 +233,13 @@ export default function GTFTGamePage({
           {suggestions.length > 0 && (
             <ul
               ref={listRef}
-              className="absolute left-0 right-0 top-[52px] z-30 mt-1 max-h-52 overflow-y-auto rounded border border-slate bg-white shadow-md list-none p-0 gtft-scrollbar"
+              className="absolute left-0 right-0 top-[52px] z-30 mt-2 max-h-52 overflow-y-auto rounded border border-slate bg-white shadow-md list-none p-0 gtft-scrollbar"
             >
               {suggestions.map((name, i) => {
                 return (
                   <li
                     key={name}
-                    className={`cursor-pointer h-[50px] px-2 py-0 transition-colors flex items-center gap-2 ${i === activeIndex ? 'bg-wave text-white' : 'text-slate [&:hover]:bg-drop'}`}
+                    className={`cursor-pointer h-[50px] px-3 py-0 transition-colors flex items-center gap-3 ${i === activeIndex ? 'bg-wave text-white' : 'text-slate [&:hover]:bg-drop'}`}
                     onMouseDown={() => selectSuggestion(name)}
                     tabIndex={-1}
                   >
@@ -270,15 +270,15 @@ export default function GTFTGamePage({
             </ul>
           )}
           {/* Guess with the remaining points underneath, sharing the button's width */}
-          <div className="flex flex-col shrink-0 gap-1">
+          <div className="flex flex-col shrink-0 gap-2">
             <button
               onClick={handleGuessClick}
-              className="barlow text-white font-medium bg-tide border border-tide h-[52px] px-4 rounded-xs text-base cursor-pointer [&:hover]:bg-wave [&:hover]:border-wave transition-colors"
+              className="barlow text-white font-medium bg-tide border border-tide h-[52px] px-5 rounded-xs text-base cursor-pointer [&:hover]:bg-wave [&:hover]:border-wave transition-colors"
             >
               Guess
             </button>
             <div
-              className="barlow flex items-center justify-end gap-2 text-sm text-tide"
+              className="barlow flex items-center justify-end gap-3 text-sm text-tide"
               aria-label={`${4 - usedLifelines.length} point${4 - usedLifelines.length === 1 ? '' : 's'}`}
             >
               <span className="flex items-center gap-0.5">
@@ -292,10 +292,10 @@ export default function GTFTGamePage({
           </div>
         </div>
 
-        <div className="flex flex-col mb-2">
+        <div className="flex flex-col mb-3">
           <h2 className="barlow font-bold text-slate text-base">Use a Lifeline</h2>
         </div>
-        <div className="flex w-full gap-3 mb-3">
+        <div className="flex w-full gap-4 mb-4">
           {LIFELINES.map((lifeline) => (
             <LifelineCard
               key={lifeline}

@@ -42,7 +42,7 @@ const PromptDisplay = forwardRef<PromptDisplayHandle, Props>(({ prompt }, ref) =
   return (
     <div
       className={
-        `bg-vanilla w-(--art-canvas-size) p-4 rounded-2xl transition-transform ease-in-out duration-2000 transform ` +
+        `bg-vanilla w-(--art-canvas-size) p-5 rounded-2xl transition-transform ease-in-out duration-2000 transform ` +
         // Far enough to be fully hidden behind the canvas, even when the text wraps:
         // its own height plus the timer bar and gaps below it
         (animating ? 'translate-y-[max(120px,calc(100%_+_40px))]' : 'translate-y-0')

@@ -469,13 +469,13 @@ export default function Canvas() {
 
   return (
     // The page scrolls itself: html and body don't scroll (see globals.css)
-    <section className="art-page h-[calc(100dvh_-_62px_-_env(safe-area-inset-top))] overflow-y-auto bg-bone px-3 pt-3 pb-[calc(32px_+_env(safe-area-inset-bottom))]">
+    <section className="art-page h-[calc(100dvh_-_62px_-_env(safe-area-inset-top))] overflow-y-auto bg-bone px-4 pt-4 pb-[calc(32px_+_env(safe-area-inset-bottom))]">
       <div className="art-layout">
         {/* Between games there's no timer bar until the player starts drawing; its space
             (8px bar + 8px gap) goes above the prompt instead, so the canvas sits in the
             same spot all game. When the count-in starts, the bar takes over that space at
             once (so nothing else moves) and the prompt slides up into place. */}
-        <div className={`art-prompt ${showTimerBar ? '' : 'pt-3'}`}>
+        <div className={`art-prompt ${showTimerBar ? '' : 'pt-4'}`}>
           <div className={countingIn ? 'art-prompt-rise' : ''}>
             <PromptDisplay ref={promptRef} prompt={promptText} />
           </div>
@@ -483,7 +483,7 @@ export default function Canvas() {
           {showTimerBar && (
             <div
               aria-hidden="true"
-              className={`mt-2 h-[8px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
+              className={`mt-3 h-[8px] overflow-hidden rounded bg-vanilla transition-opacity duration-500 ${promptBarShown ? 'opacity-100' : 'opacity-0'}`}
             >
               {/* The short linear transition smooths the clock's 50ms steps */}
               <div
