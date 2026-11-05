@@ -28,7 +28,7 @@ function LifelineCost({ used }: { used: boolean }) {
   if (used) return null;
   return (
     <span
-      className="barlow absolute -top-3 -right-2 z-10 flex items-center gap-0.5 whitespace-nowrap rounded-md border border-slate bg-slate px-2 py-0.5 text-[11px] font-medium leading-none text-white"
+      className="barlow absolute -top-3 -right-2 z-10 flex items-center gap-1 whitespace-nowrap rounded-md border border-slate bg-slate px-2 py-1 text-[11px] font-medium leading-none text-white"
       aria-label="costs 1 point"
     >
       <span aria-hidden="true">−1</span>
@@ -281,7 +281,7 @@ export default function GTFTGamePage({
               className="barlow flex items-center justify-end gap-3 text-sm text-tide"
               aria-label={`${4 - usedLifelines.length} point${4 - usedLifelines.length === 1 ? '' : 's'}`}
             >
-              <span className="flex items-center gap-0.5">
+              <span className="flex items-center gap-1">
                 {/* Spent points come off the left, so the remaining filled stars sit next to POINTS */}
                 {Array.from({ length: 4 }, (_, i) => (
                   <Star key={i} filled={i >= usedLifelines.length} />
