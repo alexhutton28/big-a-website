@@ -12,28 +12,28 @@
 
 ## Color
 
-Colors for the planned dark theme: `petrel` grays for surfaces, borders and text, and a `storm` accent.
+Colors for the planned dark theme.
 
-| Name       | Hex       | Semantic roles |
-| ---------- | --------- | -------------- |
-| Petrel 50  | `#F2F5F6` |                |
-| Petrel 100 | `#E3E8EB` |                |
-| Petrel 200 | `#CCD4D8` |                |
-| Petrel 300 | `#B3BEC4` |                |
-| Petrel 400 | `#94A2AA` |                |
-| Petrel 500 | `#6C7D88` |                |
-| Petrel 600 | `#546470` |                |
-| Petrel 700 | `#3E4B53` |                |
-| Petrel 800 | `#2D373D` |                |
-| Petrel 850 | `#232B30` |                |
-| Petrel 900 | `#1B2125` |                |
-| Petrel 950 | `#12171A` |                |
-| Storm 100  | `#DCEAF1` |                |
-| Storm 200  | `#BFD7E4` |                |
-| Storm 300  | `#9CC0D4` |                |
-| Storm 400  | `#78A5BD` |                |
-| Storm 600  | `#466E85` |                |
-| Storm 800  | `#2A4352` |                |
+| Name       | Hex       | Semantic roles | Used for                                             |
+| ---------- | --------- | -------------- | ---------------------------------------------------- |
+| Petrel 50  | `#F2F5F6` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 100 | `#E3E8EB` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 200 | `#CCD4D8` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 300 | `#B3BEC4` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 400 | `#94A2AA` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 500 | `#6C7D88` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 600 | `#546470` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 700 | `#3E4B53` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 800 | `#2D373D` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 850 | `#232B30` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 900 | `#1B2125` |                | Not used yet. Planned for surfaces, borders and text |
+| Petrel 950 | `#12171A` |                | Not used yet. Planned for surfaces, borders and text |
+| Storm 100  | `#DCEAF1` |                | Not used yet. Planned as the accent                  |
+| Storm 200  | `#BFD7E4` |                | Not used yet. Planned as the accent                  |
+| Storm 300  | `#9CC0D4` |                | Not used yet. Planned as the accent                  |
+| Storm 400  | `#78A5BD` |                | Not used yet. Planned as the accent                  |
+| Storm 600  | `#466E85` |                | Not used yet. Planned as the accent                  |
+| Storm 800  | `#2A4352` |                | Not used yet. Planned as the accent                  |
 
 Board colors (tier colors, backgrounds, borders) are canvas colors that users can change. See Exceptions in the HuttonDesign System.
 

@@ -12,9 +12,9 @@
 
 `night` is also the header on pages without their own header color.
 
-| Name  | Hex       | Semantic roles |
-| ----- | --------- | -------------- |
-| Night | `#060C18` |                |
+| Name  | Hex       | Semantic roles | Used for                                                                         |
+| ----- | --------- | -------------- | -------------------------------------------------------------------------------- |
+| Night | `#060C18` |                | Sky, planet surface and page background. Header on pages without their own color |
 
 The sky's other colors are artwork (see Exceptions in the HuttonDesign System): the gradients and glows in the `.home-*` rules in `globals.css`, and the star and satellite constants at the top of `src/components/NightSky.tsx`.
 

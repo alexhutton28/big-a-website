@@ -10,15 +10,15 @@
 
 ## Color
 
-| Name     | Hex       | Semantic roles |
-| -------- | --------- | -------------- |
-| Mahogany | `#461414` |                |
-| Charlie  | `#662020` |                |
-| Padauk   | `#815555` |                |
-| Vanilla  | `#FFF3C3` |                |
-| Sand     | `#FFF8DD` |                |
-| Bone     | `#FFFBEC` |                |
-| Money    | `#FFB700` |                |
+| Name     | Hex       | Semantic roles | Used for                                                                            |
+| -------- | --------- | -------------- | ----------------------------------------------------------------------------------- |
+| Mahogany | `#461414` |                | Header, prompt and score text, canvas and score box borders, and the drawing stroke |
+| Charlie  | `#662020` |                | Not used yet                                                                        |
+| Padauk   | `#815555` |                | Score box shadow and the time and score numbers                                     |
+| Vanilla  | `#FFF3C3` |                | Prompt bubble, timer bar and the dashed arc on the canvas                           |
+| Sand     | `#FFF8DD` |                | Not used yet                                                                        |
+| Bone     | `#FFFBEC` |                | Page background                                                                     |
+| Money    | `#FFB700` |                | Not used yet                                                                        |
 
 ## Typography
 

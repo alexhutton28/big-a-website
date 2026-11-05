@@ -12,17 +12,17 @@
 
 ## Color
 
-| Name   | Hex       | Semantic roles |
-| ------ | --------- | -------------- |
-| Tide   | `#2561EB` |                |
-| Wave   | `#2876EC` |                |
-| Splash | `#7AA6FF` |                |
-| Stone  | `#8496B1` |                |
-| Slate  | `#47679C` |                |
-| Ghost  | `#F7F7FA` |                |
-| Drop   | `#E4F0FF` |                |
-| Mist   | `#F3F6FB` |                |
-| Abyss  | `#1C2A44` |                |
+| Name   | Hex       | Semantic roles | Used for                                                              |
+| ------ | --------- | -------------- | --------------------------------------------------------------------- |
+| Tide   | `#2561EB` |                | Primary buttons and headings                                          |
+| Wave   | `#2876EC` |                | Button hover, selected autocomplete result, scrollbar and result text |
+| Splash | `#7AA6FF` |                | Header and the flavor text box border                                 |
+| Stone  | `#8496B1` |                | Placeholder text, quiet text and the streak box border                |
+| Slate  | `#47679C` |                | Body text, lifeline borders and the toast background                  |
+| Ghost  | `#F7F7FA` |                | Page gradient and the streak box                                      |
+| Drop   | `#E4F0FF` |                | Page dots, used lifelines and autocomplete hover                      |
+| Mist   | `#F3F6FB` |                | Unused lifelines                                                      |
+| Abyss  | `#1C2A44` |                | Result card cover                                                     |
 
 ## Typography
 
