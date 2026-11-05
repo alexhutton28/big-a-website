@@ -1,5 +1,13 @@
 @import 'tailwindcss';
 
+/* Generated from design/*.md by `npm run design:tokens`. Don't edit them by hand. */
+@import '../../design/theme.css';
+@import '../../design/pages/home.css';
+@import '../../design/pages/art-something.css';
+@import '../../design/pages/guess-that-flavor-text.css';
+@import '../../design/pages/limitless-check.css';
+@import '../../design/pages/tcg-tier-stack.css';
+
 /* Font utility classes */
 .barlow {
   font-family: var(--font-barlow), sans-serif;
@@ -16,58 +24,6 @@
   --font-sans: var(--font-lato);
   --font-barlow-body: var(--font-barlow);
   --font-mono: var(--font-geist-mono);
-  --spacing-1: 4px;
-  --spacing-2: 8px;
-  --spacing-3: 16px;
-  --spacing-4: 32px;
-  --spacing-5: 64px;
-  --spacing-6: 128px;
-  --color-money: #ffb700;
-  --color-mahogany: #461414;
-  --color-charlie: #662020;
-  --color-padauk: #815555;
-  --color-vanilla: #fff3c3;
-  --color-sand: #fff8dd;
-  --color-bone: #fffbec;
-  --color-houndoom: #4e0a0a;
-  --color-eevee: #6c393a;
-  --color-bulbasaur: #5fae62;
-  --color-rockruff: #8f6767;
-  --color-scizor: #c62121;
-  --color-butterfree: #f5e6e6;
-  --color-blissey: #e08c8c;
-  --color-togepi: #faf7f7;
-  --color-jigglypuff: #f7efef;
-  --color-tide: #2561eb;
-  --color-wave: #2876ec;
-  --color-splash: #7aa6ff;
-  --color-stone: #8496b1;
-  --color-slate: #47679c;
-  --color-ghost: #f7f7fa;
-  --color-drop: #e4f0ff;
-  --color-mist: #f3f6fb;
-  --color-abyss: #1c2a44;
-  --color-night: #060c18;
-
-  /* tcgTierStack dark theme: petrel grays for surfaces, borders and text, storm accent */
-  --color-petrel-50: #f2f5f6;
-  --color-petrel-100: #e3e8eb;
-  --color-petrel-200: #ccd4d8;
-  --color-petrel-300: #b3bec4;
-  --color-petrel-400: #94a2aa;
-  --color-petrel-500: #6c7d88;
-  --color-petrel-600: #546470;
-  --color-petrel-700: #3e4b53;
-  --color-petrel-800: #2d373d;
-  --color-petrel-850: #232b30;
-  --color-petrel-900: #1b2125;
-  --color-petrel-950: #12171a;
-  --color-storm-100: #dceaf1;
-  --color-storm-200: #bfd7e4;
-  --color-storm-300: #9cc0d4;
-  --color-storm-400: #78a5bd;
-  --color-storm-600: #466e85;
-  --color-storm-800: #2a4352;
 }
 
 html,
@@ -80,8 +36,8 @@ body {
   background: var(--background);
   color: var(--foreground);
 
-  /* --font-sans lives in @theme inline, so it never exists as a real CSS variable;
-     use the variable next/font sets on <body> directly */
+  /* --font-sans is in @theme inline, so it never exists as a real CSS variable; use the
+     variable next/font sets on <body> directly */
   font-family: var(--font-lato), sans-serif;
 }
 
@@ -781,51 +737,16 @@ body:has(.art-page) {
 /* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge
    on a spring that goes 1.5% past (chosen from a demo of four openings and three bounce
    amounts, then eased down from 3% after seeing it live), fading in over the first
-   120ms. Closing folds it back in (picked from a demo of three closings). */
-.tier-stack-page {
-  /* Damped spring (damping ratio 0.801) sampled into linear(); settles by the end */
-  --ease-spring: linear(
-    0,
-    0.032,
-    0.109,
-    0.212,
-    0.326,
-    0.439,
-    0.545,
-    0.641,
-    0.725,
-    0.795,
-    0.853,
-    0.899,
-    0.935,
-    0.962,
-    0.982,
-    0.996,
-    1.005,
-    1.011,
-    1.014,
-    1.015,
-    1.015,
-    1.014,
-    1.012,
-    1.011,
-    1.009,
-    1.007,
-    1.006,
-    1.005,
-    1.003,
-    1.002,
-    1
-  );
-}
-
+   120ms. Closing folds it back in (picked from a demo of three closings). --ease-spring
+   is a damped spring (damping ratio 0.801) sampled into linear(), which settles by the
+   end; it and the durations are in design/pages/tcg-tier-stack.md. */
 .tier-stack-menu {
   --menu-folded: scaleX(0.2);
 
   transform-origin: left center;
   animation:
-    tier-stack-menu-stretch 450ms var(--ease-spring),
-    tier-stack-menu-fade 120ms ease-out;
+    tier-stack-menu-stretch var(--duration-move) var(--ease-spring),
+    tier-stack-menu-fade var(--duration-fade) ease-out;
 }
 
 /* Dropdowns open below their button, so they stretch and fold from the top edge */
@@ -872,7 +793,7 @@ body:has(.art-page) {
 
 @media (prefers-reduced-motion: reduce) {
   .tier-stack-menu {
-    animation: tier-stack-menu-fade 120ms ease-out;
+    animation: tier-stack-menu-fade var(--duration-fade) ease-out;
   }
 
   .tier-stack-menu.closing {

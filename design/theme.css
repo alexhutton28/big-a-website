@@ -1,0 +1,20 @@
+/* Generated from the HuttonDesign System by gen-tokens.py. Do not edit by hand.
+   Import right after @import 'tailwindcss'. */
+@theme static {
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 16px;
+  --spacing-4: 32px;
+  --spacing-5: 64px;
+  --spacing-6: 128px;
+  --breakpoint-b3: 384px;
+  --breakpoint-b5: 512px;
+  --breakpoint-b6: 640px;
+  --breakpoint-b7: 768px;
+  --breakpoint-b8: 896px;
+  --breakpoint-b10: 1024px;
+  --breakpoint-b11: 1152px;
+  --breakpoint-b12: 1280px;
+  --breakpoint-b14: 1408px;
+  --breakpoint-b15: 1536px;
+}

@@ -3,7 +3,7 @@
 A daily puzzle: everyone gets the same Pokémon TCG card's flavor text and names the
 Pokémon. Lifelines (set, stage, attack) each cost a point.
 
-- **Palette:** `tide`, `wave`, `splash`, `stone`, `slate`, `ghost`, `drop`, `mist`, `abyss` (tokens in `src/app/globals.css`). Font: Barlow (the `barlow` class).
+- **Design:** palette, font and page rules are in `design/pages/guess-that-flavor-text.md`.
 - **Page CSS:** `layout.tsx` (dot-grid background, own scroll container) and the result-page reveal animations (`.result-*`, `.reveal-pending`) and `.gtft-scrollbar` in `globals.css`.
 
 ## Files

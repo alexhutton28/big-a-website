@@ -1,0 +1,13 @@
+/* Generated from the HuttonDesign System by gen-tokens.py. Do not edit by hand.
+   Import right after @import 'tailwindcss'. */
+@theme static {
+  --color-tide: #2561EB;
+  --color-wave: #2876EC;
+  --color-splash: #7AA6FF;
+  --color-stone: #8496B1;
+  --color-slate: #47679C;
+  --color-ghost: #F7F7FA;
+  --color-drop: #E4F0FF;
+  --color-mist: #F3F6FB;
+  --color-abyss: #1C2A44;
+}

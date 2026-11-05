@@ -4,7 +4,7 @@ Higher-or-lower on Pokémon TCG tournament play: pick which card, deck or player
 more entries in recent Play Limitless tournaments. A correct pick keeps the winner on
 the left for the next round; a wrong pick ends the run.
 
-- **Palette:** the Pokémon-named tokens (`houndoom`, `eevee`, `rockruff`, `scizor`, `butterfree`, `blissey`, `togepi`, `jigglypuff`, `bulbasaur`) in `src/app/globals.css`. Paper background: `public/paper-bg.jpg`.
+- **Design:** palette, background and page rules are in `design/pages/limitless-check.md`.
 - **Page CSS:** the `limitless-check-scrollbar` and game-over overlay rules in `globals.css`.
 
 ## Files
