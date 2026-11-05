@@ -1,45 +1,50 @@
 # Page System: tcgTierStack
 
-> The hidden graphics tool at `/tcg-tier-stack`. Adds to `design/hutton-design-system.md` and wins on this page. Styling is deliberately minimal for now.
+> The hidden graphics tool at `/tcg-tier-stack`. Adds to `design/hutton-design-system.md` and wins on this page.
 
-**Version 1.0 · November 4, 2026 · Size: small · Scope: `.tier-stack-page`**
+**Version 1.1 · November 5, 2026 · Size: small · Scope: `.tier-stack-page`**
 
 ## Feel
 
 - Professional but fun and friendly, with smooth transitions and rounded borders.
 - A real design tool that feels smooth and satisfying to use.
-- Planned look, from Alex's mood board: dark (petrel and storm), Figtree as a stand-in for Google Sans Rounded, everything a bit rounded, the four default tier colors as accents, and smooth motion throughout. Not built yet. New visuals start as a side-by-side demo.
+- The look, from Alex's mood board: dark (petrel and storm), Figtree as a stand-in for Google Sans Rounded, everything a bit rounded, and smooth motion throughout.
+- Quiet Storm: Thin borders and small rounding. Storm blue appears only on main actions; the tier colors stay on the board.
 
 ## Color
 
-Colors for the planned dark theme.
+The interface's palette. The look is set as `--ts-*` roles on `body:has(.tier-stack-page)` in `globals.css`.
 
-| Name       | Hex       | Semantic roles | Used for                                             |
-| ---------- | --------- | -------------- | ---------------------------------------------------- |
-| Petrel 50  | `#F2F5F6` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 100 | `#E3E8EB` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 200 | `#CCD4D8` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 300 | `#B3BEC4` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 400 | `#94A2AA` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 500 | `#6C7D88` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 600 | `#546470` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 700 | `#3E4B53` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 800 | `#2D373D` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 850 | `#232B30` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 900 | `#1B2125` |                | Not used yet. Planned for surfaces, borders and text |
-| Petrel 950 | `#12171A` |                | Not used yet. Planned for surfaces, borders and text |
-| Storm 100  | `#DCEAF1` |                | Not used yet. Planned as the accent                  |
-| Storm 200  | `#BFD7E4` |                | Not used yet. Planned as the accent                  |
-| Storm 300  | `#9CC0D4` |                | Not used yet. Planned as the accent                  |
-| Storm 400  | `#78A5BD` |                | Not used yet. Planned as the accent                  |
-| Storm 600  | `#466E85` |                | Not used yet. Planned as the accent                  |
-| Storm 800  | `#2A4352` |                | Not used yet. Planned as the accent                  |
+| Name        | Hex       | Semantic roles | Used for                       |
+| ----------- | --------- | -------------- | ------------------------------ |
+| Petrel 50   | `#F2F5F6` |                | Surfaces, borders and text     |
+| Petrel 100  | `#E3E8EB` |                | Surfaces, borders and text     |
+| Petrel 200  | `#CCD4D8` |                | Surfaces, borders and text     |
+| Petrel 300  | `#B3BEC4` |                | Surfaces, borders and text     |
+| Petrel 400  | `#94A2AA` |                | Surfaces, borders and text     |
+| Petrel 500  | `#6C7D88` |                | Surfaces, borders and text     |
+| Petrel 600  | `#546470` |                | Surfaces, borders and text     |
+| Petrel 700  | `#3E4B53` |                | Surfaces, borders and text     |
+| Petrel 800  | `#2D373D` |                | Surfaces, borders and text     |
+| Petrel 850  | `#232B30` |                | Surfaces, borders and text     |
+| Petrel 900  | `#1B2125` |                | Surfaces, borders and text     |
+| Petrel 950  | `#12171A` |                | Surfaces, borders and text     |
+| Storm 100   | `#DCEAF1` |                | Accent                         |
+| Storm 200   | `#BFD7E4` |                | Accent                         |
+| Storm 300   | `#9CC0D4` |                | Accent                         |
+| Storm 400   | `#78A5BD` |                | Accent                         |
+| Storm 600   | `#466E85` |                | Accent                         |
+| Storm 800   | `#2A4352` |                | Accent                         |
+| Tier Goated | `#D9532B` |                | Default tier color. Board only |
+| Tier Solid  | `#F0912F` |                | Default tier color. Board only |
+| Tier Mid    | `#F5C95B` |                | Default tier color. Board only |
+| Tier Fraud  | `#7CC05A` |                | Default tier color. Board only |
 
 Board colors (tier colors, backgrounds, borders) are canvas colors that users can change. See Exceptions in the HuttonDesign System.
 
 ## Typography
 
-Canvas text uses Inter Black (900), loaded in this route's `layout.tsx` as `--font-inter`. The controls use Lato, the site default.
+Canvas text uses Inter Black (900), loaded in this route's `layout.tsx` as `--font-inter`. The controls use Figtree, loaded in the same `layout.tsx` as `--font-figtree`.
 
 ## Motion
 
@@ -59,5 +64,6 @@ Canvas text uses Inter Black (900), loaded in this route's `layout.tsx` as `--fo
 
 ## Changelog
 
+- **November 5, 2026 · v1.1:** Quiet Storm look built: dark interface, Figtree, and the four default tier colors added to the palette ([#37](https://github.com/alexhutton28/big-a-website/issues/37)).
 - **November 4, 2026 · v1.0:** Feel added by Alex; full popup motion recorded.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.

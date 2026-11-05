@@ -58,7 +58,7 @@ function CardSizeField({ value, onChange }: { value: number; onChange: (width: n
         type="number"
         min={MIN_CARD_WIDTH}
         max={MAX_CARD_WIDTH}
-        className="border border-black px-2 w-[64px]"
+        className="tier-stack-field w-[64px]"
         value={draft}
         onChange={(e) => {
           setDraft(e.target.value);

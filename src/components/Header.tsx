@@ -13,6 +13,7 @@ export default function Header() {
   const isLimitlessCheckPage = pathname.startsWith('/limitless-check');
   const isArtSomethingPage = pathname === '/art-something';
   const isGuessThatFlavorTextPage = pathname.startsWith('/guess-that-flavor-text');
+  const isTierStackPage = pathname.startsWith('/tcg-tier-stack');
 
   let headerClassName = 'w-full bg-night text-white';
 
@@ -22,6 +23,8 @@ export default function Header() {
     headerClassName = 'w-full bg-mahogany text-white';
   } else if (isGuessThatFlavorTextPage) {
     headerClassName = 'w-full bg-splash text-white';
+  } else if (isTierStackPage) {
+    headerClassName = 'w-full bg-(--ts-header) text-petrel-50';
   }
 
   return (
