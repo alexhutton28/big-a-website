@@ -122,28 +122,28 @@ export default function GTFTResultPage({
 
   return (
     <section
-      className={`min-h-full flex flex-col items-center w-full py-3 ${cardLoaded ? '' : 'reveal-pending'}`}
+      className={`min-h-full flex flex-col items-center w-full py-4 ${cardLoaded ? '' : 'reveal-pending'}`}
     >
       <TopSpacer />
       {/* Result text waits for the card reveal below to finish (see .card-reveal in globals.css) */}
-      <div className="flex flex-col gap-0 items-center mb-4">
+      <div className="flex flex-col gap-0 items-center mb-5">
         <div className="result-heading-in flex flex-col items-center">
           <h1 className="barlow font-bold text-[45px] text-tide mb-0">
             {correct ? 'CORRECT' : 'INCORRECT'}
           </h1>
           {correct ? (
-            <h2 className="barlow text-wave font-light text-[24px] mb-0 -mt-3">
+            <h2 className="barlow text-wave font-light text-[24px] mb-0 -mt-4">
               {score} POINT{score === 1 ? '' : 'S'} EARNED
             </h2>
           ) : (
-            <div className="barlow text-wave font-light text-[24px] mb-0 -mt-3">
+            <div className="barlow text-wave font-light text-[24px] mb-0 -mt-4">
               Try again tomorrow!
             </div>
           )}
         </div>
         {correct && (
           <div
-            className="result-stars-in flex items-center gap-1 text-wave mt-1"
+            className="result-stars-in flex items-center gap-2 text-wave mt-2"
             aria-label={`${score} of 4 points`}
           >
             {Array.from({ length: 4 }, (_, i) => (
@@ -155,7 +155,7 @@ export default function GTFTResultPage({
 
       {/* Card image: starts blacked out, a spotlight roams over it, then it's revealed */}
       {card.image && (
-        <div className="flex justify-center mb-4">
+        <div className="flex justify-center mb-5">
           <div className="card-reveal relative overflow-hidden rounded-xl shadow-[0_8px_24px_#47679c40]">
             <Image
               src={card.image}
@@ -179,13 +179,13 @@ export default function GTFTResultPage({
       <div className="result-details-in flex flex-col items-center">
         {/* Share button */}
         <button
-          className="barlow text-white font-medium bg-tide h-[52px] px-4 rounded-xs text-base cursor-pointer [&:hover]:bg-wave transition-colors mb-3"
+          className="barlow text-white font-medium bg-tide h-[52px] px-5 rounded-xs text-base cursor-pointer [&:hover]:bg-wave transition-colors mb-4"
           onClick={handleShare}
         >
           Share
         </button>
 
-        <div className="bg-ghost border border-solid border-stone px-2 py-1 rounded flex items-center gap-2 mb-1">
+        <div className="bg-ghost border border-solid border-stone px-3 py-2 rounded flex items-center gap-3 mb-2">
           <Image
             src="/fire-energy.png"
             alt="Fire Energy"
@@ -195,13 +195,13 @@ export default function GTFTResultPage({
           />
           <span className="barlow text-sm text-stone font-bold">{streak} Day Streak</span>
         </div>
-        <p className="barlow text-xs text-slate pb-3">Next card in: {countdown}</p>
+        <p className="barlow text-xs text-slate pb-4">Next card in: {countdown}</p>
 
         {/* Developer-only reset button */}
         {typeof window !== 'undefined' &&
           (window.location.hostname === 'localhost' || window.location.search.includes('dev')) && (
             <button
-              className="mt-2 bg-none border border-dashed border-slate text-wave rounded-lg px-5 py-1.5 text-[13px] cursor-pointer block mx-auto"
+              className="mt-3 bg-none border border-dashed border-slate text-wave rounded-lg px-6 py-3 text-[13px] cursor-pointer block mx-auto"
               onClick={onReset}
               title="Reset game (developer only)"
             >
@@ -214,7 +214,7 @@ export default function GTFTResultPage({
       <div
         role="status"
         aria-live="polite"
-        className={`barlow pointer-events-none fixed top-[calc(env(safe-area-inset-top)_+_78px)] left-1/2 z-50 -translate-x-1/2 rounded-md bg-slate px-4 py-2 text-sm font-medium text-white shadow-[0_8px_24px_#47679c40] transition-all duration-300 ${toastVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-2'}`}
+        className={`barlow pointer-events-none fixed top-[calc(env(safe-area-inset-top)_+_78px)] left-1/2 z-50 -translate-x-1/2 rounded-md bg-slate px-5 py-3 text-sm font-medium text-white shadow-[0_8px_24px_#47679c40] transition-all duration-300 ${toastVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-3'}`}
       >
         {toastMessage}
       </div>

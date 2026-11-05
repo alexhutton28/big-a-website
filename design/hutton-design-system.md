@@ -53,16 +53,22 @@ There is no shared type scale yet ([#43](https://github.com/alexhutton28/big-a-w
 
 ## 5. Spacing
 
-Six steps, from 4px to 128px. Tailwind's numbered spacing utilities use these values, so `p-3` is 16px. The move to the seven-step HuttonDesign default (2px to 128px) is [#41](https://github.com/alexhutton28/big-a-website/issues/41).
+Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered spacing utilities use these values, so `p-4` is 16px.
 
 | Token     | Value |
 | --------- | ----- |
-| `space-1` | 4px   |
-| `space-2` | 8px   |
-| `space-3` | 16px  |
-| `space-4` | 32px  |
-| `space-5` | 64px  |
-| `space-6` | 128px |
+| `space-1` | 2px   |
+| `space-2` | 4px   |
+| `space-3` | 8px   |
+| `space-4` | 16px  |
+| `space-5` | 32px  |
+| `space-6` | 64px  |
+| `space-7` | 128px |
+
+- Padding, margins, gaps and offsets use a step, in classes (`gap-3`) and in CSS (`var(--spacing-3)`). A size between steps rounds to the nearest one; there are no arbitrary spacing values such as `mt-[12px]`.
+- Widths and heights are component sizes, not spacing, and use raw values (`w-[260px]`).
+- An offset that has to equal a component size stays raw, such as the Guess That Flavor Text autocomplete at `top-[52px]`, under the 52px input.
+- Shadow offsets and animation distances belong to the shadow or the motion, not the spacing scale.
 
 ## 6. Border radius
 
@@ -149,8 +155,6 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 ## 15. Known gaps
 
 - [#37](https://github.com/alexhutton28/big-a-website/issues/37): raw colors that are not covered by Exceptions
-- [#41](https://github.com/alexhutton28/big-a-website/issues/41): the seven-step spacing scale
-- [#42](https://github.com/alexhutton28/big-a-website/issues/42): arbitrary spacing values
 - [#43](https://github.com/alexhutton28/big-a-website/issues/43): type and radius tokens
 - [#44](https://github.com/alexhutton28/big-a-website/issues/44): desktop-first rules in Art Something
 - [#46](https://github.com/alexhutton28/big-a-website/issues/46): animations that don't respect reduced motion yet
@@ -159,5 +163,6 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 16. Changelog
 
+- **November 5, 2026 · v1.1:** Spacing moves to the seven-step HuttonDesign default (2px to 128px). Every step number moves up by one ([#41](https://github.com/alexhutton28/big-a-website/issues/41)). Arbitrary spacing values are replaced with the nearest step, and the spacing rules are recorded ([#42](https://github.com/alexhutton28/big-a-website/issues/42)).
 - **November 4, 2026 · v1.0:** Philosophy and locked rules added by Alex. Motion recorded on every page. Approved by Alex.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the site as it is.

@@ -77,7 +77,7 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
   const getButtonClassName = () => {
     const hoverClass = pendingGuess === null ? 'hover:border-blissey hover:scale-102' : '';
 
-    return `w-full min-[800px]:min-w-[300px] min-[800px]:h-full border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] transition-transform duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-4 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
+    return `w-full min-[800px]:min-w-[300px] min-[800px]:h-full border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] transition-transform duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-5 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
   };
 
   const getButtonOutlineColor = (side: GuessSide) => {
@@ -100,14 +100,14 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
   };
 
   return (
-    <div className="flex flex-col gap-4 w-[80vw] max-w-[1000px]">
-      <div className="flex items-end justify-between gap-4">
+    <div className="flex flex-col gap-5 w-[80vw] max-w-[1000px]">
+      <div className="flex items-end justify-between gap-5">
         <div>
           <p className="text-sm font-bold uppercase text-eevee">Score</p>
           <h1 className="text-4xl font-bold">{score}</h1>
         </div>
         <div>
-          <p className="max-w-md text-right text-sm text-eevee mb-1">
+          <p className="max-w-md text-right text-sm text-eevee mb-2">
             Who has more entries on{' '}
             <a
               className="underline underline-offset-2 hover:text-houndoom"
@@ -123,8 +123,8 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
         </div>
       </div>
 
-      <div className="flex flex-col gap-3">
-        <div className="flex flex-wrap gap-3 min-[800px]:gap-4 min-[800px]:flex-nowrap min-[800px]:items-stretch">
+      <div className="flex flex-col gap-4">
+        <div className="flex flex-wrap gap-4 min-[800px]:gap-5 min-[800px]:flex-nowrap min-[800px]:items-stretch">
           <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
             <button
               className={getButtonClassName()}
@@ -133,9 +133,9 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
               style={{ outlineColor: getButtonOutlineColor('left') }}
               type="button"
             >
-              <div className="flex flex-col text-left py-4">
+              <div className="flex flex-col text-left py-5">
                 {round.left.image.length > 0 && (
-                  <div className="mb-2 flex items-center gap-2">
+                  <div className="mb-3 flex items-center gap-3">
                     {round.left.image.map((imageUrl, index) => (
                       <Image
                         alt={`${round.left.name} image ${index + 1}`}
@@ -148,13 +148,13 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
                     ))}
                   </div>
                 )}
-                <h2 className="text-3xl font-bold mb-2">{round.left.name}</h2>
+                <h2 className="text-3xl font-bold mb-3">{round.left.name}</h2>
                 <span className="text-xs font-bold uppercase text-eevee">
                   {getItemMetaLabel(round.left)}
                 </span>
               </div>
             </button>
-            <div className="mt-2 min-h-[28px] min-[800px]:hidden">
+            <div className="mt-3 min-h-[28px] min-[800px]:hidden">
               {pendingGuess !== null && <EntryCount value={round.left.entries} />}
             </div>
           </div>
@@ -164,7 +164,7 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
           </div>
 
           <div className="round-option-enter w-full min-[800px]:min-w-0 min-[800px]:flex-1 min-[800px]:flex">
-            <div className="mb-2 min-h-[28px] min-[800px]:hidden">
+            <div className="mb-3 min-h-[28px] min-[800px]:hidden">
               {pendingGuess !== null && <EntryCount value={round.right.entries} />}
             </div>
             <button
@@ -174,9 +174,9 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
               style={{ outlineColor: getButtonOutlineColor('right') }}
               type="button"
             >
-              <div className="flex flex-col text-left py-4">
+              <div className="flex flex-col text-left py-5">
                 {round.right.image.length > 0 && (
-                  <div className="mb-2 flex items-center gap-2">
+                  <div className="mb-3 flex items-center gap-3">
                     {round.right.image.map((imageUrl, index) => (
                       <Image
                         alt={`${round.right.name} image ${index + 1}`}
@@ -189,7 +189,7 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
                     ))}
                   </div>
                 )}
-                <h2 className="text-3xl font-bold mb-2">{round.right.name}</h2>
+                <h2 className="text-3xl font-bold mb-3">{round.right.name}</h2>
                 <span className="text-xs font-bold uppercase text-eevee">
                   {getItemMetaLabel(round.right)}
                 </span>
@@ -199,7 +199,7 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
         </div>
 
         {pendingGuess !== null && (
-          <div className="hidden gap-4 min-[800px]:flex min-[800px]:flex-nowrap">
+          <div className="hidden gap-5 min-[800px]:flex min-[800px]:flex-nowrap">
             <div className="w-full min-[800px]:min-w-0 min-[800px]:flex-1">
               <EntryCount value={round.left.entries} />
             </div>

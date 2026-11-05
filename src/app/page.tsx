@@ -20,10 +20,10 @@ export default function Home() {
 
         <div className="relative z-10 flex flex-col items-center">
           <h1 className="home-title text-5xl">big a&apos;s website</h1>
-          <p className="home-subtitle mt-2 mb-4 md:mb-5">Games &amp; Portfolio by Alex Hutton</p>
+          <p className="home-subtitle mt-3 mb-5 md:mb-6">Games &amp; Portfolio by Alex Hutton</p>
           {/* On phones the cards stack, so they're a little smaller (same shape) and
               closer together */}
-          <div className="flex flex-row flex-wrap justify-center gap-3 md:gap-4">
+          <div className="flex flex-row flex-wrap justify-center gap-4 md:gap-5">
             <Link
               href="/art-something"
               className="home-card group relative overflow-hidden rounded"

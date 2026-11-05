@@ -101,7 +101,7 @@ export default function TimeAndScore({ playerScore, timeLeft }: Props) {
     // the box sits under it.
     <div
       ref={boxRef}
-      className="art-score-box relative flex flex-col gap-1 max-md:flex-row max-md:gap-3 rounded-tl-lg border-2 border-mahogany bg-white px-2 py-1"
+      className="art-score-box relative flex flex-col gap-2 max-md:flex-row max-md:gap-4 rounded-tl-lg border-2 border-mahogany bg-white px-3 py-2"
     >
       <div className="flex flex-col items-start">
         <div className="text-padauk font-light text-4xl leading-none tabular-nums min-w-[3ch]">
