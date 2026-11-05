@@ -11,3 +11,9 @@
   --color-jigglypuff: #F7EFEF;
   --color-bulbasaur: #5FAE62;
 }
+
+.limitless-check-page {
+  --duration-option: 320ms;
+  --duration-overlay: 260ms;
+  --duration-panel: 300ms;
+}

@@ -105,11 +105,11 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .lifeline-reveal {
-  animation: lifeline-reveal 300ms ease-out both;
+  animation: lifeline-reveal var(--duration-reveal) ease-out both;
 }
 
 .lifeline-reveal-delayed {
-  animation: lifeline-reveal 300ms ease-out 120ms both;
+  animation: lifeline-reveal var(--duration-reveal) ease-out var(--duration-stagger) both;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -211,7 +211,7 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .card-reveal {
-  animation: card-pop 450ms ease-out 2.6s both;
+  animation: card-pop var(--duration-pop) ease-out var(--duration-spotlight) both;
 }
 
 .card-reveal-cover {
@@ -227,21 +227,21 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
     #000 100%
   );
   animation:
-    spotlight-roam 2.6s ease-in-out both,
-    spotlight-clear 400ms ease-out 2.6s both;
+    spotlight-roam var(--duration-spotlight) ease-in-out both,
+    spotlight-clear var(--duration-clear) ease-out var(--duration-spotlight) both;
 }
 
 .result-heading-in {
-  animation: result-fade-up 400ms ease-out 3s both;
+  animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-heading-delay) both;
 }
 
 .result-stars-in {
-  animation: result-fade-up 400ms ease-out 3.25s both;
+  animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-stars-delay) both;
 }
 
 /* Share, streak and countdown follow once the result is shown */
 .result-details-in {
-  animation: result-fade-up 400ms ease-out 3.5s both;
+  animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-details-delay) both;
 }
 
 /* Hold the whole sequence on the dark cover until the card image has loaded */
@@ -285,7 +285,7 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .shake {
-  animation: shake 400ms ease-in-out;
+  animation: shake var(--duration-shake) ease-in-out;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -307,7 +307,7 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .round-option-enter {
-  animation: round-option-in 320ms ease-out both;
+  animation: round-option-in var(--duration-option) ease-out both;
 }
 
 @keyframes overlay-fade-in {
@@ -333,11 +333,11 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 .game-over-overlay-enter {
-  animation: overlay-fade-in 260ms ease-out both;
+  animation: overlay-fade-in var(--duration-overlay) ease-out both;
 }
 
 .game-over-panel-enter {
-  animation: overlay-panel-in 300ms ease-out both;
+  animation: overlay-panel-in var(--duration-panel) ease-out both;
 }
 
 /* Home page night sky. Back to front: a deep navy sky that brightens toward the
@@ -396,7 +396,7 @@ body:has(.home-sky) {
 
   /* Brightest at the top of the curve, like light from just behind the planet */
   mask-image: radial-gradient(ellipse 45% 50% at 50% 0%, #000 30%, rgb(0 0 0 / 45%) 100%);
-  animation: atmosphere-breathe 12s ease-in-out infinite alternate;
+  animation: atmosphere-breathe var(--duration-breathe) ease-in-out infinite alternate;
 }
 
 .home-planet {
@@ -456,12 +456,12 @@ body:has(.home-sky) {
 .home-card {
   box-shadow: 0 0 14px rgb(200 220 255 / 15%);
   transition:
-    transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1),
-    box-shadow 350ms ease;
+    transform var(--duration-lift) var(--ease-settle),
+    box-shadow var(--duration-lift) ease;
 }
 
 .home-card img {
-  transition: scale 500ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  transition: scale var(--duration-zoom) var(--ease-settle);
 }
 
 .home-card:hover,
@@ -482,7 +482,7 @@ body:has(.home-sky) {
 @media (prefers-reduced-motion: reduce) {
   .home-card,
   .home-card img {
-    transition: box-shadow 200ms ease;
+    transition: box-shadow var(--duration-reduced) ease;
   }
 
   .home-card:hover,
@@ -517,9 +517,9 @@ body:has(.home-sky) {
   border-radius: 999px;
   color: rgb(255 255 255 / 85%);
   transition:
-    color 250ms ease,
-    filter 250ms ease,
-    transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+    color var(--duration-glow) ease,
+    filter var(--duration-glow) ease,
+    transform var(--duration-nudge) var(--ease-settle);
 }
 
 .home-socials a:hover,
@@ -533,8 +533,8 @@ body:has(.home-sky) {
 @media (prefers-reduced-motion: reduce) {
   .home-socials a {
     transition:
-      color 200ms ease,
-      filter 200ms ease;
+      color var(--duration-reduced) ease,
+      filter var(--duration-reduced) ease;
   }
 
   .home-socials a:hover,
@@ -614,7 +614,7 @@ body:has(.art-page) {
 /* The prompt sliding up from where it sat on the intro screen (16px lower) when the
    count-in's timer bar appears */
 .art-prompt-rise {
-  animation: art-prompt-rise 500ms ease-out;
+  animation: art-prompt-rise var(--duration-rise) ease-out;
 }
 
 @keyframes art-prompt-rise {
@@ -673,7 +673,7 @@ body:has(.art-page) {
   line-height: 1;
   color: var(--color-mahogany);
   white-space: nowrap;
-  animation: art-score-gain 1100ms ease-out forwards;
+  animation: art-score-gain var(--duration-gain) ease-out forwards;
 }
 
 @keyframes art-score-gain {
@@ -759,8 +759,8 @@ body:has(.art-page) {
 /* Closing folds it back to its edge, speeding up, and fades over the last 60% */
 .tier-stack-menu.closing {
   animation:
-    tier-stack-menu-fold 180ms cubic-bezier(0.4, 0, 1, 1) forwards,
-    tier-stack-menu-fold-fade 180ms linear forwards;
+    tier-stack-menu-fold var(--duration-fold) var(--ease-fold) forwards,
+    tier-stack-menu-fold-fade var(--duration-fold) linear forwards;
 }
 
 @keyframes tier-stack-menu-stretch {
@@ -797,6 +797,6 @@ body:has(.art-page) {
   }
 
   .tier-stack-menu.closing {
-    animation: tier-stack-menu-fade 110ms ease-in reverse forwards;
+    animation: tier-stack-menu-fade var(--duration-fold-fade) ease-in reverse forwards;
   }
 }

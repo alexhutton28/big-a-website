@@ -2,4 +2,14 @@
    Import right after @import 'tailwindcss'. */
 @theme static {
   --color-night: #060C18;
+  --ease-settle: cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.home-sky {
+  --duration-lift: 350ms;
+  --duration-zoom: 500ms;
+  --duration-nudge: 300ms;
+  --duration-glow: 250ms;
+  --duration-breathe: 12s;
+  --duration-reduced: 200ms;
 }

@@ -11,3 +11,16 @@
   --color-mist: #F3F6FB;
   --color-abyss: #1C2A44;
 }
+
+.dot-gradient-bg {
+  --duration-reveal: 300ms;
+  --duration-stagger: 120ms;
+  --duration-spotlight: 2.6s;
+  --duration-clear: 400ms;
+  --duration-pop: 450ms;
+  --duration-fade-up: 400ms;
+  --duration-heading-delay: 3s;
+  --duration-stars-delay: 3.25s;
+  --duration-details-delay: 3.5s;
+  --duration-shake: 400ms;
+}

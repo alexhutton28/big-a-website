@@ -2,11 +2,13 @@
 
 > The daily puzzle at `/guess-that-flavor-text`. Adds to `design/hutton-design-system.md` and wins on this page.
 
-**Version 0.1 · November 4, 2026 · Size: small · Scope: `.dot-gradient-bg`**
+**Version 1.0 · November 4, 2026 · Size: small · Scope: `.dot-gradient-bg`**
 
 ## Feel
 
-- {{How this page should feel: to be written by Alex}}
+- Clean and daily: a light, bright ritual to come back to.
+- A big reveal: it builds to a theatrical moment.
+- Friendly and shareable.
 
 ## Color
 
@@ -28,9 +30,23 @@ Barlow, through the `barlow` class. Loaded in `src/app/layout.tsx`.
 
 ## Motion
 
-Not defined for this project.
+| Token                    | Value |
+| ------------------------ | ----- |
+| `duration-reveal`        | 300ms |
+| `duration-stagger`       | 120ms |
+| `duration-spotlight`     | 2.6s  |
+| `duration-clear`         | 400ms |
+| `duration-pop`           | 450ms |
+| `duration-fade-up`       | 400ms |
+| `duration-heading-delay` | 3s    |
+| `duration-stars-delay`   | 3.25s |
+| `duration-details-delay` | 3.5s  |
+| `duration-shake`         | 400ms |
 
-The page has motion but no shared tokens yet: the lifeline reveal, the result card spotlight and pop, the result fade-ups and the guess shake, in `globals.css`. All of them respect reduced motion.
+- Lifeline answers fade up over `duration-reveal`, the second one `duration-stagger` later. Reveals after a guess are spaced by `REVEAL_GAP_MS` (1000ms) in `GuessThatFlavorText.tsx`.
+- The result is the big moment: a spotlight roams the covered card over `duration-spotlight`, the cover clears over `duration-clear` as the card pops over `duration-pop`, and then the heading, stars and details fade up in turn.
+- The guess shake is a nudge over `duration-shake`.
+- Reduced motion: all of these are off, and the result shows straight away.
 
 ## Components
 
@@ -40,4 +56,5 @@ The page has motion but no shared tokens yet: the lifeline reveal, the result ca
 
 ## Changelog
 
+- **November 4, 2026 · v1.0:** Feel and motion added by Alex; motion recorded from the page as it is.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.

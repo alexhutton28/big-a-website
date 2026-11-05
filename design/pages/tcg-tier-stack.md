@@ -2,16 +2,17 @@
 
 > The hidden graphics tool at `/tcg-tier-stack`. Adds to `design/hutton-design-system.md` and wins on this page. Styling is deliberately minimal for now.
 
-**Version 0.1 · November 4, 2026 · Size: small · Scope: `.tier-stack-page`**
+**Version 1.0 · November 4, 2026 · Size: small · Scope: `.tier-stack-page`**
 
 ## Feel
 
-- {{How this page should feel: to be written by Alex}}
+- Professional but fun and friendly, with smooth transitions and rounded borders.
+- A real design tool that feels smooth and satisfying to use.
 - Planned look, from Alex's mood board: dark (petrel and storm), Figtree as a stand-in for Google Sans Rounded, everything a bit rounded, the four default tier colors as accents, and smooth motion throughout. Not built yet. New visuals start as a side-by-side demo.
 
 ## Color
 
-Colors for the planned dark theme: `petrel` grays for surfaces, borders and text, and a `storm` accent. Nothing uses them yet.
+Colors for the planned dark theme: `petrel` grays for surfaces, borders and text, and a `storm` accent.
 
 | Name       | Hex       | Semantic roles |
 | ---------- | --------- | -------------- |
@@ -42,16 +43,21 @@ Canvas text uses Inter Black (900), loaded in this route's `layout.tsx` as `--fo
 
 ## Motion
 
-| Token           | Value                                                                                                                                                                                                                   |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `ease-spring`   | linear(0, 0.032, 0.109, 0.212, 0.326, 0.439, 0.545, 0.641, 0.725, 0.795, 0.853, 0.899, 0.935, 0.962, 0.982, 0.996, 1.005, 1.011, 1.014, 1.015, 1.015, 1.014, 1.012, 1.011, 1.009, 1.007, 1.006, 1.005, 1.003, 1.002, 1) |
-| `duration-move` | 450ms                                                                                                                                                                                                                   |
-| `duration-fade` | 120ms                                                                                                                                                                                                                   |
+| Token                | Value                                                                                                                                                                                                                   |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `ease-spring`        | linear(0, 0.032, 0.109, 0.212, 0.326, 0.439, 0.545, 0.641, 0.725, 0.795, 0.853, 0.899, 0.935, 0.962, 0.982, 0.996, 1.005, 1.011, 1.014, 1.015, 1.015, 1.014, 1.012, 1.011, 1.009, 1.007, 1.006, 1.005, 1.003, 1.002, 1) |
+| `duration-move`      | 450ms                                                                                                                                                                                                                   |
+| `duration-fade`      | 120ms                                                                                                                                                                                                                   |
+| `duration-fold`      | 180ms                                                                                                                                                                                                                   |
+| `duration-fold-fade` | 110ms                                                                                                                                                                                                                   |
+| `ease-fold`          | cubic-bezier(0.4, 0, 1, 1)                                                                                                                                                                                              |
 
 - A spring that goes 1.5% past (3% looked like too much live). 450ms for things that move, with plain `ease-out` fades of about 120ms alongside. Use it for new tcgTierStack animations.
 - Popups share `.tier-stack-menu`: stretch open, fold closed. The card menu goes left to right, dropdowns top to bottom.
-- Reduced motion: fades only.
+- Closing folds back over `duration-fold` on `ease-fold`, speeding up as it goes. The timers in `Editor.tsx` and `ui/Dropdown.tsx` wait for it.
+- Reduced motion: fades only, closing over `duration-fold-fade`.
 
 ## Changelog
 
+- **November 4, 2026 · v1.0:** Feel added by Alex; full popup motion recorded.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.

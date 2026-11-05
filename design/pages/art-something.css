@@ -9,3 +9,8 @@
   --color-bone: #FFFBEC;
   --color-money: #FFB700;
 }
+
+.art-page {
+  --duration-rise: 500ms;
+  --duration-gain: 1100ms;
+}

@@ -2,11 +2,13 @@
 
 > The higher-or-lower game at `/limitless-check`. Adds to `design/hutton-design-system.md` and wins on this page.
 
-**Version 0.1 · November 4, 2026 · Size: small · Scope: `.limitless-check-scrollbar`**
+**Version 1.0 · November 4, 2026 · Size: small · Scope: `.limitless-check-page`**
 
 ## Feel
 
-- {{How this page should feel: to be written by Alex}}
+- Fast and arcade-like.
+- Competitive and in the know.
+- Bold and punchy.
 
 ## Color
 
@@ -22,8 +24,6 @@
 | Jigglypuff | `#F7EFEF` |                |
 | Bulbasaur  | `#5FAE62` |                |
 
-`jigglypuff` is in the palette but not used yet.
-
 ## Typography
 
 Lato, the site default.
@@ -34,10 +34,17 @@ Paper background: `public/paper-bg.jpg`.
 
 ## Motion
 
-Not defined for this project.
+| Token              | Value |
+| ------------------ | ----- |
+| `duration-option`  | 320ms |
+| `duration-overlay` | 260ms |
+| `duration-panel`   | 300ms |
 
-The page has motion but no shared tokens yet: the round option entrance and the game-over overlay, in `globals.css`.
+- Round options enter over `duration-option`. The game-over overlay fades over `duration-overlay` while its panel rises over `duration-panel`.
+- Timing set in code stays in named constants in `GameScreen.tsx`: the entry count (`ENTRY_COUNT_DURATION_MS`, 900ms) and the pause after a result (`POST_RESULT_DELAY_MS`, 2000ms).
+- Reduced motion: these animations don't respect it yet ([#46](https://github.com/alexhutton28/big-a-website/issues/46)).
 
 ## Changelog
 
+- **November 4, 2026 · v1.0:** Feel and motion added by Alex; motion recorded from the page as it is.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.

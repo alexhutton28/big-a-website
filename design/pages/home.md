@@ -2,11 +2,11 @@
 
 > The animated night sky at `/`. Adds to `design/hutton-design-system.md` and wins on this page.
 
-**Version 0.1 · November 4, 2026 · Size: small · Scope: `.home-sky`**
+**Version 1.0 · November 4, 2026 · Size: small · Scope: `.home-sky`**
 
 ## Feel
 
-- {{How this page should feel: to be written by Alex}}
+- Vast but fun. The games are the spotlight, and outer space is essentially white space.
 
 ## Color
 
@@ -24,9 +24,19 @@ Google Sans Flex for the title and tagline, loaded with `next/font` as `--font-g
 
 ## Motion
 
-Not defined for this project.
+| Token              | Value                          |
+| ------------------ | ------------------------------ |
+| `ease-settle`      | cubic-bezier(0.2, 0.8, 0.2, 1) |
+| `duration-lift`    | 350ms                          |
+| `duration-zoom`    | 500ms                          |
+| `duration-nudge`   | 300ms                          |
+| `duration-glow`    | 250ms                          |
+| `duration-breathe` | 12s                            |
+| `duration-reduced` | 200ms                          |
 
-The page has motion but no shared tokens yet. What exists: the starfield in `NightSky.tsx`, the breathing atmosphere, and the card and social link hover lifts, which respect reduced motion.
+- Things settle: `ease-settle` is a quick start with a long, soft landing. Game cards lift over `duration-lift`, their images zoom over `duration-zoom`, and social links rise over `duration-nudge` while they glow over `duration-glow`.
+- The atmosphere breathes slowly over `duration-breathe`. Stars, shooting stars and satellites are timed by constants at the top of `NightSky.tsx`.
+- Reduced motion: no lifts or zooms, and hover keeps a glow over `duration-reduced`. The atmosphere stops, and the sky is a single still frame.
 
 ## Components
 
@@ -40,4 +50,5 @@ The page has motion but no shared tokens yet. What exists: the starfield in `Nig
 
 ## Changelog
 
+- **November 4, 2026 · v1.0:** Feel and motion added by Alex; motion recorded from the page as it is.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.

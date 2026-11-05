@@ -111,7 +111,7 @@ export default function LimitlessCheck() {
 
   return (
     <section
-      className="relative flex flex-col items-center justify-start pt-3 pb-3 min-[800px]:pt-[10vh] min-h-[calc(100vh-62px)] px-3 min-[640px]:px-4 min-[1200px]:px-[120px] text-houndoom"
+      className="limitless-check-page relative flex flex-col items-center justify-start pt-3 pb-3 min-[800px]:pt-[10vh] min-h-[calc(100vh-62px)] px-3 min-[640px]:px-4 min-[1200px]:px-[120px] text-houndoom"
       style={{
         backgroundImage:
           "linear-gradient(rgba(250, 247, 247, 0.5), rgba(250, 247, 247, 0.5)), url('/paper-bg.jpg')",

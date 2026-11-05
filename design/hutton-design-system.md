@@ -7,7 +7,7 @@
 
 This system records the site as it is today. Where the code differs, it is tracked in the issues under Known gaps and changes when that work is done: existing code is not rewritten to match.
 
-**Version 0.1 · November 4, 2026 · Design owner: Alex Hutton · Size: small**
+**Version 1.0 · November 4, 2026 · Design owner: Alex Hutton · Size: small**
 
 | Look                   | Page System                              | Route                     |
 | ---------------------- | ---------------------------------------- | ------------------------- |
@@ -21,17 +21,21 @@ This system records the site as it is today. Where the code differs, it is track
 
 **Locked (never change)**
 
-- Nothing yet. Alex decides what is locked.
+- Logos: the files in `public/` are used as they are, never redrawn or recolored.
+- Each page's fonts.
+- Each page's palette. New colors need Alex's approval.
 
 **Standard (follow as written)**
-Spacing scale, breakpoints, each page's palette, fonts and motion.
+Spacing scale, breakpoints and each page's motion.
 
 **Open (can grow)**
 Semantic tokens that map onto existing palette colors and spacing steps, recorded in the Changelog.
 
 ## 2. Principles
 
-- {{Alex's design philosophy: to be written}}
+- Alex is a designer, so the craft and design of each game takes the spotlight.
+- Make unique games and designs that stand apart from the AI-generated sites popping up online.
+- Craft is in the details: motion, shadows, timing and type all get real care.
 - Every page is its own world. Pages share spacing and breakpoints, not colors or fonts, and values do not move between pages.
 - Color is used by name through tokens (`bg-mahogany`, `var(--color-night)`), not raw hex.
 
@@ -86,11 +90,11 @@ No tokens yet ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). 
 
 ### Focus
 
-- There is no shared focus ring yet. Each page handles focus itself.
+- There is no shared focus ring yet ([#47](https://github.com/alexhutton28/big-a-website/issues/47)). Each page handles focus itself.
 
 ## 11. Motion
 
-Motion is defined per page. See each Page System.
+Motion is defined per page, recorded from what each page does. See each Page System.
 
 - Every animation respects `prefers-reduced-motion`.
 - New animations and visual options start as a side-by-side demo of a few variants in the page's palette. The chosen one is then built into the page.
@@ -106,7 +110,7 @@ Code uses Tailwind's `sm` and `md`, which are the same widths as `b6` and `b7`. 
 | `b3`       | Phone         | 384px  | Standard and larger phones                         |
 | `b5`       | Large phone   | 512px  | Large phones                                       |
 | `b6`       | Small tablet  | 640px  | Same as `sm`                                       |
-| `b7`       | Tablet        | 768px  | Same as `md`. The main layout change on every page |
+| `b7`       | Tablet        | 768px  | Same as `md`. The main layout change on most pages |
 | `b8`       | Large tablet  | 896px  | Large tablets and narrow windows                   |
 | `b10`      | Desktop       | 1024px | Standard desktop                                   |
 | `b11`      | Laptop        | 1152px | Small laptops                                      |
@@ -132,15 +136,15 @@ Shared components are in `src/components/`. Everything else belongs to a page.
 
 Places where the token rules do not apply. Keep raw values in named constants, matching a palette color when one exists.
 
-| Where                                                              | Allowed                                          | Why                                                                                   |
-| ------------------------------------------------------------------ | ------------------------------------------------ | ------------------------------------------------------------------------------------- |
-| Canvas drawing: Konva boards, `NightSky`, the Art Something canvas | Named color and size constants                   | Canvas drawing does not take CSS variables, and exported images must match the screen |
-| User-chosen colors, including saved board colors                   | Any value                                        | They belong to the user's content, not the design system                              |
-| Exported images                                                    | Values the artwork needs                         | They are images, not interface                                                        |
-| `themeColor` in route metadata                                     | Hex matching the page's header token             | Browsers read it as a plain value                                                     |
-| Painted backgrounds and glows, such as the home sky and planet     | Gradient stops and glow colors in the page's CSS | They are artwork built in CSS                                                         |
-| `.home-card` and `.home-socials` hover                             | Plain `:hover` on all devices                    | The hover glow is part of the home page's look                                        |
-| The `.home-title` font size                                        | `clamp()`                                        | The wide title has to keep its side margins on narrow phones                          |
+| Where                                                                                                                                         | Allowed                                  | Why                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------- |
+| Canvas drawing: Konva boards, `NightSky`, the Art Something canvas                                                                            | Named color and size constants           | Canvas drawing does not take CSS variables, and exported images must match the screen |
+| User-chosen colors, including saved board colors                                                                                              | Any value                                | They belong to the user's content, not the design system                              |
+| Exported images                                                                                                                               | Values the artwork needs                 | They are images, not interface                                                        |
+| `themeColor` in route metadata                                                                                                                | Hex matching the page's header token     | Browsers read it as a plain value                                                     |
+| Home sky artwork: the navy gradient stops, planet and glow colors in the `.home-*` rules, and the star and satellite colors in `NightSky.tsx` | Raw colors, kept out of the Home palette | They are artwork built in code, not interface colors                                  |
+| `.home-card` and `.home-socials` hover                                                                                                        | Plain `:hover` on all devices            | The hover glow is part of the home page's look                                        |
+| The `.home-title` font size                                                                                                                   | `clamp()`                                | The wide title has to keep its side margins on narrow phones                          |
 
 ## 15. Known gaps
 
@@ -149,7 +153,11 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 - [#42](https://github.com/alexhutton28/big-a-website/issues/42): arbitrary spacing values
 - [#43](https://github.com/alexhutton28/big-a-website/issues/43): type and radius tokens
 - [#44](https://github.com/alexhutton28/big-a-website/issues/44): desktop-first rules in Art Something
+- [#46](https://github.com/alexhutton28/big-a-website/issues/46): animations that don't respect reduced motion yet
+- [#47](https://github.com/alexhutton28/big-a-website/issues/47): a shared focus ring
+- [#48](https://github.com/alexhutton28/big-a-website/issues/48): Limitless Check's off-grid breakpoints
 
 ## 16. Changelog
 
-- **November 4, 2026 · v0.1:** Initial draft, recorded from the site as it is. Approved by: pending Alex's review.
+- **November 4, 2026 · v1.0:** Philosophy and locked rules added by Alex. Motion recorded on every page. Approved by Alex.
+- **November 4, 2026 · v0.1:** Initial draft, recorded from the site as it is.

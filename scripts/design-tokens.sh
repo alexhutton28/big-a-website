@@ -12,7 +12,7 @@ python3 -I "$GEN" design/hutton-design-system.md --format tailwind4 --keep-defau
   --out design/theme.css
 
 for page in home:.home-sky art-something:.art-page \
-  guess-that-flavor-text:.dot-gradient-bg limitless-check:.limitless-check-scrollbar \
+  guess-that-flavor-text:.dot-gradient-bg limitless-check:.limitless-check-page \
   tcg-tier-stack:.tier-stack-page; do
   name="${page%%:*}"
   python3 -I "$GEN" "design/pages/$name.md" --format tailwind4 \
