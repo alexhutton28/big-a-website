@@ -37,7 +37,8 @@ function loadSaved() {
   }
 }
 
-const button = 'border border-black px-3 py-1 bg-white disabled:opacity-50';
+const button = 'tier-stack-button';
+const primaryButton = 'tier-stack-button primary';
 
 // The sidebar's tabs
 const TABS = [
@@ -460,7 +461,7 @@ export default function Editor() {
   return (
     // The board, with the sidebar on its left (below it on narrow screens). On wide
     // screens each scrolls on its own, so the search results stay beside the board.
-    <div className="tier-stack-page w-full md:h-full flex flex-col md:flex-row-reverse text-[14px] text-black">
+    <div className="tier-stack-page w-full md:h-full flex flex-col md:flex-row-reverse text-[14px]">
       <div className="flex-1 min-w-0 md:overflow-y-auto p-4 flex flex-col gap-4">
         <div ref={boardBoxRef} className="w-full relative">
           <Stage
@@ -520,7 +521,7 @@ export default function Editor() {
               ref={cardMenuRef}
               role="menu"
               onContextMenu={(e) => e.preventDefault()}
-              className={`tier-stack-menu absolute z-10 flex flex-col min-w-[160px] border border-black bg-white shadow-md ${menuClosing ? 'closing pointer-events-none' : ''}`}
+              className={`tier-stack-menu absolute z-10 tier-stack-popup flex flex-col min-w-[160px] ${menuClosing ? 'closing pointer-events-none' : ''}`}
               // Kept inside the board's right edge
               style={{
                 left: Math.min(shownMenu.x, BOARD_WIDTH * scale - 160),
@@ -531,7 +532,7 @@ export default function Editor() {
                 <button
                   key={label}
                   role="menuitem"
-                  className="px-3 py-2 text-left hover:bg-black/10"
+                  className="tier-stack-option"
                   onClick={() => {
                     runCardMenuItem(shownMenu, label);
                     setCardMenu(null);
@@ -549,7 +550,7 @@ export default function Editor() {
         )}
 
         <div className="flex flex-wrap gap-3 items-center">
-          <button className={button} onClick={exportPng} disabled={busy}>
+          <button className={primaryButton} onClick={exportPng} disabled={busy}>
             Export PNG ({BOARD_WIDTH * EXPORT_SCALE}px)
           </button>
           <button className={button} onClick={copyPng} disabled={busy}>
@@ -601,7 +602,7 @@ export default function Editor() {
               key={id}
               role="tab"
               aria-selected={tab === id}
-              className={`${button} aria-selected:bg-black aria-selected:text-white`}
+              className="tier-stack-button tier-stack-tab"
               onClick={() => setTab(id)}
             >
               {label}
@@ -615,7 +616,7 @@ export default function Editor() {
         <section
           role="tabpanel"
           hidden={tab !== 'add'}
-          className="flex flex-col gap-3 min-w-0 md:flex-1 md:min-h-0"
+          className="tier-stack-panel flex flex-col gap-3 min-w-0 md:flex-1 md:min-h-0"
         >
           <form
             onSubmit={(e) => {
@@ -626,12 +627,12 @@ export default function Editor() {
           >
             <input
               ref={searchInputRef}
-              className="border border-black px-2 flex-1"
+              className="tier-stack-field flex-1 min-w-0"
               placeholder="Card name"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button className={button} disabled={busy}>
+            <button className={primaryButton} disabled={busy}>
               Search
             </button>
           </form>
@@ -672,7 +673,7 @@ export default function Editor() {
                 role="button"
                 tabIndex={0}
                 title={`${card.set} ${card.number}`}
-                className="cursor-grab select-none flex flex-col items-center text-[11px] leading-[14px]"
+                className="cursor-grab select-none flex flex-col items-center text-[11px] leading-[14px] text-(--ts-muted)"
                 // Mouse and pen only: on touch, a press-and-move scrolls the results
                 onPointerDown={(e) => {
                   if (e.pointerType === 'touch' || e.button !== 0) return;
@@ -710,19 +711,31 @@ export default function Editor() {
           </div>
         </section>
 
-        <section role="tabpanel" hidden={tab !== 'customize'} className="flex flex-col gap-3">
+        <section
+          role="tabpanel"
+          hidden={tab !== 'customize'}
+          className="tier-stack-panel flex flex-col gap-3"
+        >
           <type.Settings graphic={graphic} onChange={setGraphic} focus={settingsFocus} />
         </section>
 
-        <section role="tabpanel" hidden={tab !== 'import'} className="flex flex-col gap-3">
+        <section
+          role="tabpanel"
+          hidden={tab !== 'import'}
+          className="tier-stack-panel flex flex-col gap-3"
+        >
           <textarea
             rows={10}
-            className="border border-black px-2 font-mono text-[12px]"
+            className="tier-stack-field font-mono text-[12px]"
             placeholder={'# Goated\nMew ex MEW 151\nAlakazam\n# Solid\nDragapult ex TWM 130'}
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
           />
-          <button className={button} onClick={runImport} disabled={busy || !importText.trim()}>
+          <button
+            className={primaryButton}
+            onClick={runImport}
+            disabled={busy || !importText.trim()}
+          >
             Import (adds to the board)
           </button>
         </section>
