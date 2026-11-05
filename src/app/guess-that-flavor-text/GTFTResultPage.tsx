@@ -201,7 +201,7 @@ export default function GTFTResultPage({
         {typeof window !== 'undefined' &&
           (window.location.hostname === 'localhost' || window.location.search.includes('dev')) && (
             <button
-              className="mt-3 bg-none border border-dashed border-slate text-wave rounded-lg px-6 py-1.5 text-[13px] cursor-pointer block mx-auto"
+              className="mt-3 bg-none border border-dashed border-slate text-wave rounded-lg px-6 py-3 text-[13px] cursor-pointer block mx-auto"
               onClick={onReset}
               title="Reset game (developer only)"
             >

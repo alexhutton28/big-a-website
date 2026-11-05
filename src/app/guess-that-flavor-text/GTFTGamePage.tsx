@@ -233,7 +233,7 @@ export default function GTFTGamePage({
           {suggestions.length > 0 && (
             <ul
               ref={listRef}
-              className="absolute left-0 right-0 top-[52px] z-30 mt-2 max-h-52 overflow-y-auto rounded border border-slate bg-white shadow-md list-none p-0 gtft-scrollbar"
+              className="absolute left-0 right-0 top-[52px] z-30 mt-2 max-h-[208px] overflow-y-auto rounded border border-slate bg-white shadow-md list-none p-0 gtft-scrollbar"
             >
               {suggestions.map((name, i) => {
                 return (

@@ -501,11 +501,11 @@ body:has(.home-sky) {
    as the game cards. */
 .home-socials {
   position: absolute;
-  bottom: max(24px, calc(env(safe-area-inset-bottom) + 16px));
+  bottom: max(var(--spacing-5), calc(env(safe-area-inset-bottom) + var(--spacing-4)));
   left: 50%;
   z-index: 10;
   display: flex;
-  gap: 8px;
+  gap: var(--spacing-3);
   translate: -50% 0;
 }
 
@@ -600,7 +600,7 @@ body:has(.art-page) {
     'canvas'
     'stats';
   grid-template-columns: 1fr;
-  gap: 32px;
+  gap: var(--spacing-5);
   align-items: center;
   width: var(--art-canvas-size);
   margin-inline: auto;
@@ -608,7 +608,7 @@ body:has(.art-page) {
 
 .art-prompt {
   grid-area: prompt;
-  margin-bottom: -16px; /* sits closer to the canvas: half the usual 32px gap */
+  margin-bottom: calc(var(--spacing-4) * -1); /* sits closer to the canvas: half the usual gap */
 }
 
 /* The prompt sliding up from where it sat on the intro screen (16px lower) when the
@@ -659,8 +659,8 @@ body:has(.art-page) {
    the screen's left) */
 .art-score-gains {
   position: absolute;
-  right: calc(100% + 12px);
-  bottom: 22px;
+  right: calc(100% + var(--spacing-4));
+  bottom: var(--spacing-4);
   pointer-events: none;
 }
 
@@ -700,7 +700,7 @@ body:has(.art-page) {
 @media (width < 48rem) {
   .art-score-gains {
     right: auto;
-    left: calc(100% + 22px); /* past the box's shadow */
+    left: calc(100% + var(--spacing-4)); /* past the box's shadow */
   }
 
   .art-score-gain {
@@ -712,7 +712,7 @@ body:has(.art-page) {
 /* Clear the canvas's shadow, which sits outside its box */
 @media (width < 48rem) {
   .art-stats {
-    margin-top: 12px;
+    margin-top: var(--spacing-4);
   }
 }
 
@@ -725,7 +725,7 @@ body:has(.art-page) {
       '. prompt .'
       'stats canvas .';
     grid-template-columns: 1fr auto 1fr;
-    column-gap: 48px;
+    column-gap: var(--spacing-6);
     width: 100%;
   }
 

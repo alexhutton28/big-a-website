@@ -24,7 +24,7 @@ Vercel. Versions and scripts are in `package.json`.
 
 ## Gotchas
 
-- **Custom spacing scale** (Spacing in `design/hutton-design-system.md`): Tailwind's numbered spacing doesn't mean the default sizes here, e.g. `p-4` is 16px, the same as Tailwind's default, but `px-6` (64px) and `gap-5` (32px) are much bigger than usual. Check the scale, and use arbitrary values (`mt-[12px]`) for sizes it doesn't have, until #42 settles those.
+- **Custom spacing scale** (Spacing in `design/hutton-design-system.md`): Tailwind's numbered spacing doesn't mean the default sizes here, e.g. `p-4` is 16px, the same as Tailwind's default, but `px-6` (64px) and `gap-5` (32px) are much bigger than usual. Check the scale, and round to the nearest step rather than writing arbitrary spacing like `mt-[12px]`. Widths and heights stay raw (`w-[260px]`).
 - **`html` and `body` don't scroll** (`overflow: hidden` in `globals.css`). Each page gives itself a scroll container.
 - **Tailwind's `hover:` variant only applies on devices that can hover.** For hover effects that must work everywhere use plain `:hover` in CSS (see `.home-card`).
 - **Tailwind's `shadow-[...]` stacks the shadow with four empty layers**, so animating `box-shadow` from it fades instead of moving. Set shadows that animate in plain CSS (see `.art-score-box`).
