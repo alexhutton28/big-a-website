@@ -8,6 +8,10 @@
   --spacing-5: 32px;
   --spacing-6: 64px;
   --spacing-7: 128px;
+  --radius-small: 4px;
+  --radius-medium: 8px;
+  --radius-large: 16px;
+  --radius-full: 9999px;
   --breakpoint-b3: 384px;
   --breakpoint-b5: 512px;
   --breakpoint-b6: 640px;

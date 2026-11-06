@@ -72,7 +72,16 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 
 ## 6. Border radius
 
-No tokens yet ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). Pages use Tailwind's default `rounded` utilities.
+| Token           | Value  | Used for                               |
+| --------------- | ------ | -------------------------------------- |
+| `radius-small`  | 4px    | tcgTierStack's buttons, fields, popups |
+| `radius-medium` | 8px    | tcgTierStack's panels                  |
+| `radius-large`  | 16px   | Not used yet                           |
+| `radius-full`   | 9999px | Not used yet                           |
+
+- The values come from the spacing scale, but radius keeps its own tokens.
+- The names avoid Tailwind's `sm`, `md` and `lg`, so existing `rounded-md` and `rounded-lg` classes keep their sizes.
+- Other pages still use Tailwind's default `rounded` utilities, and move over in [#43](https://github.com/alexhutton28/big-a-website/issues/43).
 
 ## 7. Iconography
 
@@ -154,7 +163,7 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 15. Known gaps
 
-- [#43](https://github.com/alexhutton28/big-a-website/issues/43): type and radius tokens
+- [#43](https://github.com/alexhutton28/big-a-website/issues/43): type tokens, and moving the other pages onto the radius tokens
 - [#44](https://github.com/alexhutton28/big-a-website/issues/44): desktop-first rules in Art Something
 - [#46](https://github.com/alexhutton28/big-a-website/issues/46): animations that don't respect reduced motion yet
 - [#47](https://github.com/alexhutton28/big-a-website/issues/47): a shared focus ring
@@ -162,6 +171,7 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 16. Changelog
 
+- **November 5, 2026 · v1.2:** Radius tokens added (4, 8 and 16px, plus full), first used by tcgTierStack ([#43](https://github.com/alexhutton28/big-a-website/issues/43)).
 - **November 5, 2026 · v1.1:** Spacing moves to the seven-step HuttonDesign default (2px to 128px). Every step number moves up by one ([#41](https://github.com/alexhutton28/big-a-website/issues/41)). Arbitrary spacing values are replaced with the nearest step, and the spacing rules are recorded ([#42](https://github.com/alexhutton28/big-a-website/issues/42)).
 - **November 4, 2026 · v1.0:** Philosophy and locked rules added by Alex. Motion recorded on every page. Approved by Alex.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the site as it is.

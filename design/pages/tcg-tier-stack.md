@@ -8,8 +8,8 @@
 
 - Professional but fun and friendly, with smooth transitions and rounded borders.
 - A real design tool that feels smooth and satisfying to use.
-- The look, from Alex's mood board: dark (petrel and storm), Figtree as a stand-in for Google Sans Rounded, everything a bit rounded, and smooth motion throughout.
-- Soft Panels: Lighter petrel, large rounding and no borders, with panels floating on soft shadows. Storm blue marks main actions; the tier colors stay on the board.
+- The look, from Alex's mood board: dark (petrel and storm), Figtree as a stand-in for Google Sans Rounded, and smooth motion throughout.
+- Soft Panels: Lighter petrel, crisp corners and no borders, with panels floating on soft shadows. Controls and popups use `radius-small`, and panels use `radius-medium`. Storm blue marks main actions; the tier colors stay on the board.
 
 ## Color
 

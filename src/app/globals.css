@@ -757,10 +757,10 @@ body:has(.tier-stack-page) {
   --ts-selected-text: var(--color-petrel-950);
   --ts-popup: var(--color-petrel-800);
   --ts-focus: var(--color-storm-200);
-  --ts-radius: 12px;
-  --ts-field-radius: 12px;
-  --ts-panel-radius: 20px;
-  --ts-popup-radius: 12px;
+  --ts-radius: var(--radius-small);
+  --ts-field-radius: var(--radius-small);
+  --ts-panel-radius: var(--radius-medium);
+  --ts-popup-radius: var(--radius-small);
 
   background: var(--ts-page);
 }
