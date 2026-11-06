@@ -7,7 +7,7 @@
 
 This system records the site as it is today. Where the code differs, it is tracked in the issues under Known gaps and changes when that work is done: existing code is not rewritten to match.
 
-**Version 1.4 · November 5, 2026 · Design owner: Alex Hutton · Size: small**
+**Version 1.5 · November 6, 2026 · Design owner: Alex Hutton · Size: small**
 
 | Look                   | Page System                              | Route                     |
 | ---------------------- | ---------------------------------------- | ------------------------- |
@@ -15,7 +15,6 @@ This system records the site as it is today. Where the code differs, it is track
 | Art Something          | `design/pages/art-something.md`          | `/art-something`          |
 | Guess That Flavor Text | `design/pages/guess-that-flavor-text.md` | `/guess-that-flavor-text` |
 | Limitless Check        | `design/pages/limitless-check.md`        | `/limitless-check`        |
-| tcgTierStack           | `design/pages/tcg-tier-stack.md`         | `/tcg-tier-stack`         |
 
 ## 1. Rule tiers
 
@@ -69,7 +68,7 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 | `space-7`      | 128px |
 | `space-button` | 12px  |
 
-- `space-button` is the one exception to the steps: the side padding of buttons, where 8px is too tight and 16px too wide. It is for buttons only.
+- `space-button` is the one exception to the steps: the side padding of buttons, where 8px is too tight and 16px too wide. It is for buttons only, and is not used yet.
 - Padding, margins, gaps and offsets use a step, in classes (`gap-3`) and in CSS (`var(--spacing-3)`). A size between steps rounds to the nearest one; there are no arbitrary spacing values such as `mt-[12px]`.
 - Widths and heights are component sizes, not spacing, and use raw values (`w-[260px]`).
 - An offset that has to equal a component size stays raw, such as the Guess That Flavor Text autocomplete at `top-[52px]`, under the 52px input.
@@ -77,12 +76,12 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 
 ## 6. Border radius
 
-| Token           | Value  | Used for                               |
-| --------------- | ------ | -------------------------------------- |
-| `radius-small`  | 4px    | tcgTierStack's buttons, fields, popups |
-| `radius-medium` | 8px    | Not used yet                           |
-| `radius-large`  | 16px   | Not used yet                           |
-| `radius-full`   | 9999px | Not used yet                           |
+| Token           | Value  | Used for     |
+| --------------- | ------ | ------------ |
+| `radius-small`  | 4px    | Not used yet |
+| `radius-medium` | 8px    | Not used yet |
+| `radius-large`  | 16px   | Not used yet |
+| `radius-full`   | 9999px | Not used yet |
 
 - The values come from the spacing scale, but radius keeps its own tokens.
 - The names avoid Tailwind's `sm`, `md` and `lg`, so existing `rounded-md` and `rounded-lg` classes keep their sizes.
@@ -91,11 +90,11 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 ## 7. Iconography
 
 - Icons and logos are SVGs in `public/`, with no icon library package.
-- Icons come from [Feather](https://feathericons.com) (MIT license). Copy the icon's SVG into `public/` under its Feather name, unchanged. Where it needs to follow the text color, use it as a CSS mask over `currentcolor` (see `.tier-stack-chevron`).
+- Icons come from [Feather](https://feathericons.com) (MIT license). Copy the icon's SVG into `public/` under its Feather name, unchanged. Where it needs to follow the text color, use it as a CSS mask over `currentcolor`.
 
 ## 8. Logo
 
-- Art Something, Guess That Flavor Text and Limitless Check have their own logo in the header, in `src/components/Header.tsx`. Files are in `public/`. tcgTierStack shows its name as text.
+- Art Something, Guess That Flavor Text and Limitless Check have their own logo in the header, in `src/components/Header.tsx`. Files are in `public/`.
 
 ## 9. Imagery and visuals
 
@@ -143,7 +142,7 @@ Code uses Tailwind's `sm` and `md`, which are the same widths as `b6` and `b7`. 
 
 - `html` and `body` do not scroll. Each page gives itself a scroll container.
 - Each page's body background is set with `body:has(.page-class)` in `globals.css`, so it fills behind mobile browser toolbars.
-- The sticky header (`src/components/Header.tsx`, or tcgTierStack's top bar) tints the iOS status bar. Respect `env(safe-area-inset-*)`.
+- The sticky header (`src/components/Header.tsx`) tints the iOS status bar. Respect `env(safe-area-inset-*)`.
 
 ## 13. Components
 
@@ -151,7 +150,7 @@ Shared components are in `src/components/`. Everything else belongs to a page.
 
 ### Header
 
-- Sticky, colored per page. Hidden on the home page, which has its own title, and on tcgTierStack, which has its own top bar.
+- Sticky, colored per page. Hidden on the home page, which has its own title.
 
 ## 14. Exceptions
 
@@ -175,6 +174,7 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 16. Changelog
 
+- **November 6, 2026 · v1.5:** tcgTierStack moved to its own repo, [TierBinder](https://github.com/alexhutton28/tierbinder), so its Page System is gone and the radius tokens are unused for now ([#72](https://github.com/alexhutton28/big-a-website/issues/72)).
 - **November 5, 2026 · v1.4:** tcgTierStack replaces the site header with its own top bar and stops using `radius-medium`.
 - **November 5, 2026 · v1.3:** Radius tokens added (4, 8 and 16px, plus full), first used by tcgTierStack ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). Feather recorded as the icon source. `space-button` added for buttons' side padding.
 - **November 5, 2026 · v1.2:** Beliefs added by Alex: unique designs, thought for every element, and color over monochrome. They hold across every HuttonDesign project.
