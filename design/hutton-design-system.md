@@ -38,6 +38,9 @@ Semantic tokens that map onto existing palette colors and spacing steps, recorde
 - Craft is in the details: motion, shadows, timing and type all get real care.
 - Every page is its own world. Pages share spacing and breakpoints, not colors or fonts, and values do not move between pages.
 - Color is used by name through tokens (`bg-mahogany`, `var(--color-night)`), not raw hex.
+- Make unique designs. Take inspiration from anywhere, but stay out of the AI-generated style. Every element earns its place: taglines, very round corners, eyebrow headers and drop shadows are fine sometimes, when the design calls for them, but they are never defaults.
+- Give every design element thought. Nothing looks or behaves a certain way just because of what it is: each component gets real care for its looks, usability and motion, and still works with a keyboard, a screen reader, touch and reduced motion.
+- Use color. Do not go monochromatic. Alex has a habit of sticking to one color, so use more of the palette and flag it when one color takes over.
 
 ## 3. Color
 
@@ -103,7 +106,7 @@ No tokens yet ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). 
 Motion is defined per page, recorded from what each page does. See each Page System.
 
 - Every animation respects `prefers-reduced-motion`.
-- New animations and visual options start as a side-by-side demo of a few variants in the page's palette. The chosen one is then built into the page.
+- New UI elements, animations and visual options start as a few different options in the page's palette, each published as an Artifact or shown side by side. Alex picks one, it gets refined from there, and then it is built into the page.
 
 ## 12. Responsive behavior
 
@@ -161,6 +164,7 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 16. Changelog
 
+- **November 5, 2026 · v1.2:** Beliefs added by Alex: unique designs, thought for every element, and color over monochrome. They hold across every HuttonDesign project.
 - **November 5, 2026 · v1.1:** Spacing moves to the seven-step HuttonDesign default (2px to 128px). Every step number moves up by one ([#41](https://github.com/alexhutton28/big-a-website/issues/41)). Arbitrary spacing values are replaced with the nearest step, and the spacing rules are recorded ([#42](https://github.com/alexhutton28/big-a-website/issues/42)).
 - **November 4, 2026 · v1.0:** Philosophy and locked rules added by Alex. Motion recorded on every page. Approved by Alex.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the site as it is.
