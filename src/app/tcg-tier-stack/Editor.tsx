@@ -21,6 +21,7 @@ import { currentGraphic, newDoc, parseSaved, type TierStackDoc } from './documen
 import { GRAPHIC_TYPES, typeOf, type Graphic, type GraphicKind } from './graphics';
 import { DEFAULT_TOOL, type Placed, type Point } from './graphics/types';
 import { parseImport } from './importText';
+import Button from './ui/Button';
 import Dropdown from './ui/Dropdown';
 
 // The editor: the board, drawn by the document's graphic type (see graphics/types.ts), plus
@@ -36,9 +37,6 @@ function loadSaved() {
     return newDoc();
   }
 }
-
-const button = 'tier-stack-button';
-const primaryButton = 'tier-stack-button primary';
 
 // The sidebar's tabs
 const TABS = [
@@ -550,44 +548,34 @@ export default function Editor() {
         )}
 
         <div className="flex flex-wrap gap-3 items-center">
-          <button className={primaryButton} onClick={exportPng} disabled={busy}>
+          <Button variant="primary" onClick={exportPng} disabled={busy}>
             Export PNG ({BOARD_WIDTH * EXPORT_SCALE}px)
-          </button>
-          <button className={button} onClick={copyPng} disabled={busy}>
+          </Button>
+          <Button onClick={copyPng} disabled={busy}>
             Copy PNG
-          </button>
+          </Button>
           {/* Confirmed on the page: some browsers (the in-app one) never show confirm() */}
           {boardChoice === 'clear' ? (
             <span className="flex items-center gap-3">
               Clear the board?
-              <button className={button} onClick={() => showBoard(doc.kind, true)}>
-                Yes
-              </button>
-              <button className={button} onClick={() => setBoardChoice(null)}>
-                Cancel
-              </button>
+              <Button onClick={() => showBoard(doc.kind, true)}>Yes</Button>
+              <Button onClick={() => setBoardChoice(null)}>Cancel</Button>
             </span>
           ) : boardChoice === 'type' ? (
             // Each type keeps its own board, so switching loses nothing
             <span className="flex items-center gap-3">
               Switch to
               {GRAPHIC_TYPES.filter((t) => t.kind !== doc.kind).map((t) => (
-                <button key={t.kind} className={button} onClick={() => showBoard(t.kind)}>
+                <Button key={t.kind} onClick={() => showBoard(t.kind)}>
                   {t.label}
-                </button>
+                </Button>
               ))}
-              <button className={button} onClick={() => setBoardChoice(null)}>
-                Cancel
-              </button>
+              <Button onClick={() => setBoardChoice(null)}>Cancel</Button>
             </span>
           ) : (
             <>
-              <button className={button} onClick={() => setBoardChoice('clear')}>
-                Clear board
-              </button>
-              <button className={button} onClick={() => setBoardChoice('type')}>
-                Change board type
-              </button>
+              <Button onClick={() => setBoardChoice('clear')}>Clear board</Button>
+              <Button onClick={() => setBoardChoice('type')}>Change board type</Button>
             </>
           )}
         </div>
@@ -598,15 +586,15 @@ export default function Editor() {
       <aside className="md:w-[360px] md:flex-none md:overflow-y-auto p-4 pt-0 md:pt-4 flex flex-col gap-4 min-w-0">
         <div role="tablist" className="flex flex-wrap gap-2">
           {TABS.map(([id, label]) => (
-            <button
+            <Button
               key={id}
               role="tab"
               aria-selected={tab === id}
-              className="tier-stack-button tier-stack-tab"
+              variant="tab"
               onClick={() => setTab(id)}
             >
               {label}
-            </button>
+            </Button>
           ))}
         </div>
 
@@ -632,9 +620,9 @@ export default function Editor() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
-            <button className={primaryButton} disabled={busy}>
+            <Button variant="primary" disabled={busy}>
               Search
-            </button>
+            </Button>
           </form>
           {picking && pickingCard ? (
             <p className="flex gap-3 items-center">
@@ -645,9 +633,7 @@ export default function Editor() {
                 : pickingCard.split
                   ? `Replacing the bottom half (${pickingCard.split.name})`
                   : `Splitting ${pickingCard.name}: pick the bottom card`}
-              <button className={button} onClick={() => setPicking(null)}>
-                Cancel
-              </button>
+              <Button onClick={() => setPicking(null)}>Cancel</Button>
             </p>
           ) : (
             // Only when there's a choice (a blank canvas has one place for cards)
@@ -731,13 +717,9 @@ export default function Editor() {
             value={importText}
             onChange={(e) => setImportText(e.target.value)}
           />
-          <button
-            className={primaryButton}
-            onClick={runImport}
-            disabled={busy || !importText.trim()}
-          >
+          <Button variant="primary" onClick={runImport} disabled={busy || !importText.trim()}>
             Import (adds to the board)
-          </button>
+          </Button>
         </section>
       </aside>
 

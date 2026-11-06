@@ -16,6 +16,7 @@ text on the page.
 - `canvas/CardNode.tsx`: a card on the board for every graphic (image or split card, rounded clip, placeholder, dragging, menu clicks). `canvas/size.ts`: board, export and card sizes.
 - `cards.ts`: card types saved in documents (`CardFace`, `CardItem`), `newId`, client calls to the API routes, bulk import lookups (`resolveCard`, `defaultPrint`), and image loading through the proxy.
 - `importText.ts`: the bulk import format (documented at the top of the file).
+- `ui/Button.tsx`: every button on the page, with a `variant` (`default`, `primary`, `tab`, `tool`).
 - `ui/ColorField.tsx`: a hex text field plus the browser's color picker.
 - `ui/Dropdown.tsx`: a labeled dropdown (the Add to picker) in place of a native `<select>`, so it can open and close with the card menu's animation (top to bottom); arrow keys, Enter/Space and Escape work as in a select.
 - `TierStackLoader.tsx`: loads `Editor` with `ssr: false` (Konva needs a browser canvas).
@@ -88,7 +89,7 @@ A type (`GraphicType` in `graphics/types.ts`) owns its document, how it draws, i
 
 ## Look and motion
 
-- Styling is still minimal. The palette, planned look and motion are in `design/pages/tcg-tier-stack.md`, including `--ease-spring`, `--duration-move` and `--duration-fade`.
+- The palette, look and motion are in `design/pages/tcg-tier-stack.md`, including `--ease-spring`, `--duration-move`, `--duration-drop` and `--duration-fade`.
 - Popups (the card menu, dropdowns) share `.tier-stack-menu` in `globals.css`.
 
 ## Cards from Limitless

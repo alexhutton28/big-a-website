@@ -52,13 +52,14 @@ Canvas text uses Inter Black (900), loaded in this route's `layout.tsx` as `--fo
 | -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `ease-spring`        | linear(0, 0.032, 0.109, 0.212, 0.326, 0.439, 0.545, 0.641, 0.725, 0.795, 0.853, 0.899, 0.935, 0.962, 0.982, 0.996, 1.005, 1.011, 1.014, 1.015, 1.015, 1.014, 1.012, 1.011, 1.009, 1.007, 1.006, 1.005, 1.003, 1.002, 1) |
 | `duration-move`      | 450ms                                                                                                                                                                                                                   |
+| `duration-drop`      | 300ms                                                                                                                                                                                                                   |
 | `duration-fade`      | 120ms                                                                                                                                                                                                                   |
 | `duration-fold`      | 180ms                                                                                                                                                                                                                   |
 | `duration-fold-fade` | 110ms                                                                                                                                                                                                                   |
 | `ease-fold`          | cubic-bezier(0.4, 0, 1, 1)                                                                                                                                                                                              |
 
 - A spring that goes 1.5% past (3% looked like too much live). 450ms for things that move, with plain `ease-out` fades of about 120ms alongside. Use it for new tcgTierStack animations.
-- Popups share `.tier-stack-menu`: stretch open, fold closed. The card menu goes left to right, dropdowns top to bottom.
+- Popups share `.tier-stack-menu`: stretch open, fold closed. Dropdowns open faster, over `duration-drop`, because people use them constantly. The card menu goes left to right, dropdowns top to bottom.
 - Closing folds back over `duration-fold` on `ease-fold`, speeding up as it goes. The timers in `Editor.tsx` and `ui/Dropdown.tsx` wait for it.
 - Reduced motion: fades only, closing over `duration-fold-fade`.
 

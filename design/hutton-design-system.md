@@ -58,16 +58,18 @@ There is no shared type scale yet ([#43](https://github.com/alexhutton28/big-a-w
 
 Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered spacing utilities use these values, so `p-4` is 16px.
 
-| Token     | Value |
-| --------- | ----- |
-| `space-1` | 2px   |
-| `space-2` | 4px   |
-| `space-3` | 8px   |
-| `space-4` | 16px  |
-| `space-5` | 32px  |
-| `space-6` | 64px  |
-| `space-7` | 128px |
+| Token          | Value |
+| -------------- | ----- |
+| `space-1`      | 2px   |
+| `space-2`      | 4px   |
+| `space-3`      | 8px   |
+| `space-4`      | 16px  |
+| `space-5`      | 32px  |
+| `space-6`      | 64px  |
+| `space-7`      | 128px |
+| `space-button` | 12px  |
 
+- `space-button` is the one exception to the steps: the side padding of buttons, where 8px is too tight and 16px too wide. It is for buttons only.
 - Padding, margins, gaps and offsets use a step, in classes (`gap-3`) and in CSS (`var(--spacing-3)`). A size between steps rounds to the nearest one; there are no arbitrary spacing values such as `mt-[12px]`.
 - Widths and heights are component sizes, not spacing, and use raw values (`w-[260px]`).
 - An offset that has to equal a component size stays raw, such as the Guess That Flavor Text autocomplete at `top-[52px]`, under the 52px input.
@@ -88,7 +90,8 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 
 ## 7. Iconography
 
-- Icons and logos are SVGs in `public/`, with no icon library.
+- Icons and logos are SVGs in `public/`, with no icon library package.
+- Icons come from [Feather](https://feathericons.com) (MIT license). Copy the icon's SVG into `public/` under its Feather name, unchanged. Where it needs to follow the text color, use it as a CSS mask over `currentcolor` (see `.tier-stack-chevron`).
 
 ## 8. Logo
 
@@ -172,7 +175,7 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 16. Changelog
 
-- **November 5, 2026 · v1.3:** Radius tokens added (4, 8 and 16px, plus full), first used by tcgTierStack ([#43](https://github.com/alexhutton28/big-a-website/issues/43)).
+- **November 5, 2026 · v1.3:** Radius tokens added (4, 8 and 16px, plus full), first used by tcgTierStack ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). Feather recorded as the icon source. `space-button` added for buttons' side padding.
 - **November 5, 2026 · v1.2:** Beliefs added by Alex: unique designs, thought for every element, and color over monochrome. They hold across every HuttonDesign project.
 - **November 5, 2026 · v1.1:** Spacing moves to the seven-step HuttonDesign default (2px to 128px). Every step number moves up by one ([#41](https://github.com/alexhutton28/big-a-website/issues/41)). Arbitrary spacing values are replaced with the nearest step, and the spacing rules are recorded ([#42](https://github.com/alexhutton28/big-a-website/issues/42)).
 - **November 4, 2026 · v1.0:** Philosophy and locked rules added by Alex. Motion recorded on every page. Approved by Alex.

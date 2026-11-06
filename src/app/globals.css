@@ -779,7 +779,7 @@ body:has(.tier-stack-page) {
 }
 
 .tier-stack-button {
-  padding: var(--spacing-3) var(--spacing-4);
+  padding: var(--spacing-3) var(--spacing-button);
   border: 1px solid var(--ts-control-border);
   border-radius: var(--ts-radius);
   background: var(--ts-control);
@@ -834,6 +834,14 @@ body:has(.tier-stack-page) {
   box-shadow: 0 8px 24px rgb(18 23 26 / 45%);
 }
 
+/* Feather's chevron-down, colored by the text around it */
+.tier-stack-chevron {
+  width: 16px;
+  height: 16px;
+  background: currentcolor;
+  mask: url('/chevron-down.svg') center / contain no-repeat;
+}
+
 .tier-stack-option {
   padding: var(--spacing-3) var(--spacing-4);
   color: var(--ts-text);
@@ -876,16 +884,18 @@ body:has(.tier-stack-page) {
    end; it and the durations are in design/pages/tcg-tier-stack.md. */
 .tier-stack-menu {
   --menu-folded: scaleX(0.2);
+  --menu-open: var(--duration-move);
 
   transform-origin: left center;
   animation:
-    tier-stack-menu-stretch var(--duration-move) var(--ease-spring),
+    tier-stack-menu-stretch var(--menu-open) var(--ease-spring),
     tier-stack-menu-fade var(--duration-fade) ease-out;
 }
 
 /* Dropdowns open below their button, so they stretch and fold from the top edge */
 .tier-stack-menu.dropdown {
   --menu-folded: scaleY(0.2);
+  --menu-open: var(--duration-drop);
 
   transform-origin: center top;
 }

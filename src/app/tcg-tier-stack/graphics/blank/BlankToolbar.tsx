@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Button from '../../ui/Button';
 import ColorField from '../../ui/ColorField';
 import { DEFAULT_TOOL, type ToolbarProps } from '../types';
 import { MAX_STROKE_WIDTH, MIN_STROKE_WIDTH, type BlankCanvas } from './model';
@@ -14,8 +15,6 @@ const TOOLS = [
   ['eraser', 'Eraser'],
 ] as const;
 
-const toolButton = 'tier-stack-button tier-stack-tool';
-
 export default function BlankToolbar({
   graphic: canvas,
   onChange,
@@ -25,14 +24,9 @@ export default function BlankToolbar({
   return (
     <div className="flex flex-wrap gap-3 items-center">
       {TOOLS.map(([id, label]) => (
-        <button
-          key={id}
-          className={toolButton}
-          aria-pressed={tool === id}
-          onClick={() => onTool(id)}
-        >
+        <Button key={id} variant="tool" aria-pressed={tool === id} onClick={() => onTool(id)}>
           {label}
-        </button>
+        </Button>
       ))}
       {tool === 'pen' && (
         <>

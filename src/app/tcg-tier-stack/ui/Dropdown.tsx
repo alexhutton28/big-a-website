@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import Button from './Button';
 
 // A labeled dropdown that opens and closes with the card menu's animation, top to
 // bottom (.tier-stack-menu.dropdown in globals.css), which a native <select> can't do. Arrow keys move
@@ -78,14 +79,14 @@ export default function Dropdown<T extends string | number>({
     <div className="flex gap-3 items-center">
       <span id={`${id}-label`}>{label}</span>
       <div ref={boxRef} className="relative">
-        <button
+        <Button
           ref={buttonRef}
           id={`${id}-button`}
           type="button"
           aria-haspopup="listbox"
           aria-expanded={open}
           aria-labelledby={`${id}-label ${id}-button`}
-          className="tier-stack-button flex gap-2 items-center"
+          className="flex gap-2 items-center"
           onClick={() => setOpen((o) => !o)}
           onKeyDown={(e) => {
             if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
@@ -95,8 +96,8 @@ export default function Dropdown<T extends string | number>({
           }}
         >
           {options[selected]?.label}
-          <span aria-hidden>▾</span>
-        </button>
+          <span aria-hidden className="tier-stack-chevron" />
+        </Button>
         {shown && (
           <div
             role="listbox"
