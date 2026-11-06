@@ -732,6 +732,286 @@ body:has(.art-page) {
   }
 }
 
+/* tcgTierStack's interface: the look is in design/pages/tcg-tier-stack.md. Set on the
+   body so the page background can use it too. The board keeps its own colors (see
+   Exceptions in the HuttonDesign System). */
+body:has(.tier-stack-page) {
+  --ts-page: var(--color-petrel-950);
+  --ts-bar: var(--color-petrel-900);
+  --ts-line: var(--color-petrel-800);
+  --ts-text: var(--color-petrel-100);
+  --ts-muted: var(--color-petrel-400);
+  --ts-control-hover: var(--color-petrel-800);
+  --ts-control-text: var(--color-petrel-100);
+  --ts-control-border: var(--color-petrel-700);
+  --ts-field: var(--color-petrel-950);
+  --ts-primary: var(--color-storm-300);
+  --ts-primary-hover: var(--color-storm-200);
+  --ts-primary-text: var(--color-petrel-950);
+  --ts-selected: var(--color-petrel-100);
+  --ts-selected-text: var(--color-petrel-950);
+  --ts-popup: var(--color-petrel-850);
+  --ts-focus: var(--color-storm-200);
+  --ts-radius: var(--radius-small);
+
+  background: var(--ts-page);
+}
+
+.tier-stack-page {
+  color: var(--ts-text);
+  font-family: var(--font-figtree), var(--font-lato), system-ui, sans-serif;
+  accent-color: var(--ts-primary);
+  color-scheme: dark;
+}
+
+.tier-stack-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--spacing-3);
+  height: calc(48px + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  padding-inline: var(--spacing-4);
+  border-bottom: 1px solid var(--ts-line);
+  background: var(--ts-bar);
+}
+
+@media (width >= 24rem) {
+  .tier-stack-top {
+    gap: var(--spacing-4);
+  }
+}
+
+.tier-stack-brand {
+  color: var(--ts-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Beside the sidebar, the board takes the height it can and stays centered */
+@media (width >= 48rem) {
+  .tier-stack-canvas {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tier-stack-board {
+    width: min(100%, 1200px, calc((100dvh - 144px) * 16 / 9));
+  }
+}
+
+.tier-stack-side {
+  border-top: 1px solid var(--ts-line);
+  background: var(--ts-bar);
+}
+
+@media (width >= 48rem) {
+  .tier-stack-side {
+    border-top: 0;
+    border-right: 1px solid var(--ts-line);
+  }
+}
+
+.tier-stack-side-head {
+  padding: var(--spacing-3);
+  border-bottom: 1px solid var(--ts-line);
+}
+
+.tier-stack-panel {
+  padding: var(--spacing-4);
+}
+
+.tier-stack-heading {
+  color: var(--ts-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tier-stack-prop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  min-height: 32px;
+  color: var(--ts-muted);
+}
+
+.tier-stack-button {
+  height: 32px;
+  padding-inline: var(--spacing-button);
+  border: 1px solid var(--ts-control-border);
+  border-radius: var(--ts-radius);
+  white-space: nowrap;
+  color: var(--ts-control-text);
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    transform var(--duration-move) var(--ease-spring),
+    background-color var(--duration-hover) ease-out,
+    color var(--duration-hover) ease-out;
+}
+
+.tier-stack-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.tier-stack-button:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.tier-stack-button.primary {
+  border-color: transparent;
+  background: var(--ts-primary);
+  color: var(--ts-primary-text);
+}
+
+.tier-stack-button.ghost {
+  border-color: transparent;
+}
+
+.tier-stack-tool[aria-pressed='true'] {
+  border-color: transparent;
+  background: var(--ts-selected);
+  color: var(--ts-selected-text);
+}
+
+/* The main nav (ui/RadioBar.tsx): a colored block that hugs the selected word */
+.tier-stack-radio {
+  position: relative;
+  display: grid;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  padding: var(--spacing-2);
+  border-radius: var(--ts-radius);
+  background: var(--ts-field);
+}
+
+.tier-stack-radio-block {
+  position: absolute;
+  border-radius: var(--ts-radius);
+  transition:
+    top var(--duration-move) var(--ease-spring),
+    left var(--duration-move) var(--ease-spring),
+    width var(--duration-move) var(--ease-spring),
+    background-color var(--duration-hover) ease-out;
+}
+
+.tier-stack-radio-option {
+  position: relative;
+  padding-block: var(--spacing-2);
+  color: var(--ts-control-text);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--duration-hover) ease-out;
+}
+
+.tier-stack-radio-option span {
+  display: inline-block;
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.tier-stack-radio-option[aria-selected='true'] {
+  color: var(--ts-primary-text);
+}
+
+.tier-stack-field {
+  height: 32px;
+  padding-inline: var(--spacing-3);
+  border: 1px solid var(--ts-field);
+  border-radius: var(--ts-radius);
+  background: var(--ts-field);
+  color: var(--ts-text);
+}
+
+.tier-stack-field::placeholder {
+  color: var(--ts-muted);
+}
+
+textarea.tier-stack-field {
+  height: auto;
+  padding-block: var(--spacing-3);
+}
+
+/* The color picker, as a plain swatch */
+.tier-stack-page input[type='color'] {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--ts-radius);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tier-stack-page input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.tier-stack-page input[type='color']::-webkit-color-swatch {
+  border: 0;
+}
+
+.tier-stack-page input[type='color']::-moz-color-swatch {
+  border: 0;
+}
+
+.tier-stack-popup {
+  overflow: hidden;
+  border: 1px solid var(--ts-control-border);
+  border-radius: var(--ts-radius);
+  background: var(--ts-popup);
+  box-shadow: 0 8px 24px rgb(18 23 26 / 45%);
+}
+
+/* Feather's chevron-down, colored by the text around it */
+.tier-stack-chevron {
+  width: 16px;
+  height: 16px;
+  background: currentcolor;
+  mask: url('/chevron-down.svg') center / contain no-repeat;
+}
+
+.tier-stack-option {
+  padding: var(--spacing-3) var(--spacing-4);
+  color: var(--ts-text);
+  text-align: left;
+  cursor: pointer;
+}
+
+@media (hover: hover) {
+  .tier-stack-button:hover:not(:disabled),
+  .tier-stack-option:hover {
+    background: var(--ts-control-hover);
+  }
+
+  .tier-stack-button.primary:hover:not(:disabled) {
+    background: var(--ts-primary-hover);
+  }
+
+  .tier-stack-tool[aria-pressed='true']:hover {
+    background: var(--ts-selected);
+  }
+}
+
+.tier-stack-page :focus-visible {
+  outline: 2px solid var(--ts-focus);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tier-stack-button:active:not(:disabled) {
+    transform: none;
+  }
+
+  .tier-stack-radio-block {
+    transition: background-color var(--duration-hover) ease-out;
+  }
+}
+
 /* tcgTierStack card menu and dropdowns (ui/Dropdown.tsx): stretches out from its edge
    on a spring that goes 1.5% past (chosen from a demo of four openings and three bounce
    amounts, then eased down from 3% after seeing it live), fading in over the first
@@ -740,16 +1020,18 @@ body:has(.art-page) {
    end; it and the durations are in design/pages/tcg-tier-stack.md. */
 .tier-stack-menu {
   --menu-folded: scaleX(0.2);
+  --menu-open: var(--duration-move);
 
   transform-origin: left center;
   animation:
-    tier-stack-menu-stretch var(--duration-move) var(--ease-spring),
+    tier-stack-menu-stretch var(--menu-open) var(--ease-spring),
     tier-stack-menu-fade var(--duration-fade) ease-out;
 }
 
 /* Dropdowns open below their button, so they stretch and fold from the top edge */
 .tier-stack-menu.dropdown {
   --menu-folded: scaleY(0.2);
+  --menu-open: var(--duration-drop);
 
   transform-origin: center top;
 }

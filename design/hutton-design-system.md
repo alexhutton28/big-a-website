@@ -7,7 +7,7 @@
 
 This system records the site as it is today. Where the code differs, it is tracked in the issues under Known gaps and changes when that work is done: existing code is not rewritten to match.
 
-**Version 1.0 · November 4, 2026 · Design owner: Alex Hutton · Size: small**
+**Version 1.4 · November 5, 2026 · Design owner: Alex Hutton · Size: small**
 
 | Look                   | Page System                              | Route                     |
 | ---------------------- | ---------------------------------------- | ------------------------- |
@@ -58,16 +58,18 @@ There is no shared type scale yet ([#43](https://github.com/alexhutton28/big-a-w
 
 Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered spacing utilities use these values, so `p-4` is 16px.
 
-| Token     | Value |
-| --------- | ----- |
-| `space-1` | 2px   |
-| `space-2` | 4px   |
-| `space-3` | 8px   |
-| `space-4` | 16px  |
-| `space-5` | 32px  |
-| `space-6` | 64px  |
-| `space-7` | 128px |
+| Token          | Value |
+| -------------- | ----- |
+| `space-1`      | 2px   |
+| `space-2`      | 4px   |
+| `space-3`      | 8px   |
+| `space-4`      | 16px  |
+| `space-5`      | 32px  |
+| `space-6`      | 64px  |
+| `space-7`      | 128px |
+| `space-button` | 12px  |
 
+- `space-button` is the one exception to the steps: the side padding of buttons, where 8px is too tight and 16px too wide. It is for buttons only.
 - Padding, margins, gaps and offsets use a step, in classes (`gap-3`) and in CSS (`var(--spacing-3)`). A size between steps rounds to the nearest one; there are no arbitrary spacing values such as `mt-[12px]`.
 - Widths and heights are component sizes, not spacing, and use raw values (`w-[260px]`).
 - An offset that has to equal a component size stays raw, such as the Guess That Flavor Text autocomplete at `top-[52px]`, under the 52px input.
@@ -75,15 +77,25 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 
 ## 6. Border radius
 
-No tokens yet ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). Pages use Tailwind's default `rounded` utilities.
+| Token           | Value  | Used for                               |
+| --------------- | ------ | -------------------------------------- |
+| `radius-small`  | 4px    | tcgTierStack's buttons, fields, popups |
+| `radius-medium` | 8px    | Not used yet                           |
+| `radius-large`  | 16px   | Not used yet                           |
+| `radius-full`   | 9999px | Not used yet                           |
+
+- The values come from the spacing scale, but radius keeps its own tokens.
+- The names avoid Tailwind's `sm`, `md` and `lg`, so existing `rounded-md` and `rounded-lg` classes keep their sizes.
+- Other pages still use Tailwind's default `rounded` utilities, and move over in [#43](https://github.com/alexhutton28/big-a-website/issues/43).
 
 ## 7. Iconography
 
-- Icons and logos are SVGs in `public/`, with no icon library.
+- Icons and logos are SVGs in `public/`, with no icon library package.
+- Icons come from [Feather](https://feathericons.com) (MIT license). Copy the icon's SVG into `public/` under its Feather name, unchanged. Where it needs to follow the text color, use it as a CSS mask over `currentcolor` (see `.tier-stack-chevron`).
 
 ## 8. Logo
 
-- Each game has its own logo in the header, in `src/components/Header.tsx`. Files are in `public/`.
+- Art Something, Guess That Flavor Text and Limitless Check have their own logo in the header, in `src/components/Header.tsx`. Files are in `public/`. tcgTierStack shows its name as text.
 
 ## 9. Imagery and visuals
 
@@ -131,7 +143,7 @@ Code uses Tailwind's `sm` and `md`, which are the same widths as `b6` and `b7`. 
 
 - `html` and `body` do not scroll. Each page gives itself a scroll container.
 - Each page's body background is set with `body:has(.page-class)` in `globals.css`, so it fills behind mobile browser toolbars.
-- The sticky header (`src/components/Header.tsx`) tints the iOS status bar. Respect `env(safe-area-inset-*)`.
+- The sticky header (`src/components/Header.tsx`, or tcgTierStack's top bar) tints the iOS status bar. Respect `env(safe-area-inset-*)`.
 
 ## 13. Components
 
@@ -139,7 +151,7 @@ Shared components are in `src/components/`. Everything else belongs to a page.
 
 ### Header
 
-- Sticky, colored per page. Hidden on the home page, which has its own title.
+- Sticky, colored per page. Hidden on the home page, which has its own title, and on tcgTierStack, which has its own top bar.
 
 ## 14. Exceptions
 
@@ -157,13 +169,14 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 15. Known gaps
 
-- [#37](https://github.com/alexhutton28/big-a-website/issues/37): raw colors that are not covered by Exceptions
-- [#43](https://github.com/alexhutton28/big-a-website/issues/43): type and radius tokens
+- [#43](https://github.com/alexhutton28/big-a-website/issues/43): type tokens, and moving the other pages onto the radius tokens
 - [#47](https://github.com/alexhutton28/big-a-website/issues/47): a shared focus ring
 - [#48](https://github.com/alexhutton28/big-a-website/issues/48): Limitless Check's off-grid breakpoints
 
 ## 16. Changelog
 
+- **November 5, 2026 · v1.4:** tcgTierStack replaces the site header with its own top bar and stops using `radius-medium`.
+- **November 5, 2026 · v1.3:** Radius tokens added (4, 8 and 16px, plus full), first used by tcgTierStack ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). Feather recorded as the icon source. `space-button` added for buttons' side padding.
 - **November 5, 2026 · v1.2:** Beliefs added by Alex: unique designs, thought for every element, and color over monochrome. They hold across every HuttonDesign project.
 - **November 5, 2026 · v1.1:** Spacing moves to the seven-step HuttonDesign default (2px to 128px). Every step number moves up by one ([#41](https://github.com/alexhutton28/big-a-website/issues/41)). Arbitrary spacing values are replaced with the nearest step, and the spacing rules are recorded ([#42](https://github.com/alexhutton28/big-a-website/issues/42)).
 - **November 4, 2026 · v1.0:** Philosophy and locked rules added by Alex. Motion recorded on every page. Approved by Alex.
