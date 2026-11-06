@@ -15,17 +15,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  // TierBinder moved to its own repo. Temporary for now: it moves again once it has its
-  // real domain, and browsers remember permanent redirects.
-  async redirects() {
-    return [
-      {
-        source: '/tcg-tier-stack',
-        destination: 'https://tierbinder.big-a.fun',
-        permanent: false,
-      },
-    ];
-  },
 };
 
 export default nextConfig;
