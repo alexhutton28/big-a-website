@@ -340,6 +340,14 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   animation: overlay-panel-in var(--duration-panel) ease-out both;
 }
 
+/* Reduced motion: fades only. The overlay already just fades. */
+@media (prefers-reduced-motion: reduce) {
+  .round-option-enter,
+  .game-over-panel-enter {
+    animation-name: overlay-fade-in;
+  }
+}
+
 /* Home page night sky. Back to front: a deep navy sky that brightens toward the
    horizon, the NightSky canvas (components/NightSky.tsx), an atmosphere glow, and a
    planet whose edge curves across the bottom. Inspired by the "Gravity" CodePen
@@ -636,38 +644,32 @@ body:has(.art-page) {
 .art-stats {
   grid-area: stats;
   justify-self: start;
+  margin-top: var(--spacing-4); /* clears the canvas's shadow, which sits outside its box */
 }
 
 /* The time and score box's offset shadow. Set here rather than with Tailwind's
    shadow utility, which stacks it with four empty shadows: the press when a drawing
    is scored (TimeAndScore.tsx) would then fade it out instead of tucking it in. */
 .art-score-box {
-  --art-score-shadow: 10px;
+  --art-score-shadow: 6px; /* in balance with the canvas's phone shadow */
 
   box-shadow: var(--art-score-shadow) var(--art-score-shadow) 0 var(--color-padauk);
 }
 
-/* Phones: a smaller shadow, in balance with the canvas's halved one */
-@media (width < 48rem) {
-  .art-score-box {
-    --art-score-shadow: 6px;
-  }
-}
-
-/* When a drawing is scored, the points earned float up beside the box: on the left
-   on wide screens (the canvas is to its right), on the right on phones (it sits at
-   the screen's left) */
+/* When a drawing is scored, the points earned float up beside the box: on the right
+   on phones (it sits at the screen's left), on the left on wide screens (the canvas
+   is to its right) */
 .art-score-gains {
   position: absolute;
-  right: calc(100% + var(--spacing-4));
   bottom: var(--spacing-4);
+  left: calc(100% + var(--spacing-4)); /* past the box's shadow */
   pointer-events: none;
 }
 
 .art-score-gain {
   position: absolute;
-  right: 0;
   bottom: 0;
+  left: 0;
   font-weight: 900;
   font-size: 20px;
   line-height: 1;
@@ -697,25 +699,6 @@ body:has(.art-page) {
   }
 }
 
-@media (width < 48rem) {
-  .art-score-gains {
-    right: auto;
-    left: calc(100% + var(--spacing-4)); /* past the box's shadow */
-  }
-
-  .art-score-gain {
-    right: auto;
-    left: 0;
-  }
-}
-
-/* Clear the canvas's shadow, which sits outside its box */
-@media (width < 48rem) {
-  .art-stats {
-    margin-top: var(--spacing-4);
-  }
-}
-
 @media (width >= 48rem) {
   .art-layout {
     --art-canvas-size: min(70vh, 70vw, 800px);
@@ -731,6 +714,21 @@ body:has(.art-page) {
 
   .art-stats {
     justify-self: end;
+    margin-top: 0;
+  }
+
+  .art-score-box {
+    --art-score-shadow: 10px;
+  }
+
+  .art-score-gains {
+    right: calc(100% + var(--spacing-4));
+    left: auto;
+  }
+
+  .art-score-gain {
+    right: 0;
+    left: auto;
   }
 }
 
