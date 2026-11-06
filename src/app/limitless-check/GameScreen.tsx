@@ -22,10 +22,12 @@ function EntryCount({ value }: EntryCountProps) {
 
   useEffect(() => {
     const animationStart = performance.now();
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let frameId = 0;
 
     const updateValue = (currentTime: number) => {
-      const progress = Math.min((currentTime - animationStart) / ENTRY_COUNT_DURATION_MS, 1);
+      const elapsed = currentTime - animationStart;
+      const progress = reduced ? 1 : Math.min(elapsed / ENTRY_COUNT_DURATION_MS, 1);
       setDisplayValue(Math.round(value * progress));
 
       if (progress < 1) {
@@ -75,7 +77,8 @@ export default function GameScreen({ round, score, onGuess, lastUpdatedLabel }: 
   };
 
   const getButtonClassName = () => {
-    const hoverClass = pendingGuess === null ? 'hover:border-blissey hover:scale-102' : '';
+    const hoverClass =
+      pendingGuess === null ? 'hover:border-blissey motion-safe:hover:scale-102' : '';
 
     return `w-full min-[800px]:min-w-[300px] min-[800px]:h-full border-2 border-transparent outline-4 rounded transition-[outline-color,border-color] transition-transform duration-300 flex flex-col justify-center bg-butterfree cursor-pointer px-5 disabled:border-transparent disabled:cursor-default ${hoverClass}`;
   };

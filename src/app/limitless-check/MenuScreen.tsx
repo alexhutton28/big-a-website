@@ -33,7 +33,7 @@ export default function MenuScreen({ onStart }: MenuScreenProps) {
         <p className="text-l text-eevee">A Pokémon TCG Higher-Lower Game</p>
       </div>
       <button
-        className="mb-4 cursor-pointer rounded bg-houndoom px-5 py-4 text-xl font-bold text-togepi transition-colors transition-transform hover:scale-105 hover:bg-eevee"
+        className="mb-4 cursor-pointer rounded bg-houndoom px-5 py-4 text-xl font-bold text-togepi transition-colors transition-transform motion-safe:hover:scale-105 hover:bg-eevee"
         onClick={() => onStart(selectedMode)}
         type="button"
       >
@@ -45,7 +45,7 @@ export default function MenuScreen({ onStart }: MenuScreenProps) {
         aria-label="Game mode"
       >
         <div
-          className="pointer-events-none absolute bottom-2 left-2 top-2 rounded bg-rockruff transition-transform duration-300 ease-out"
+          className="pointer-events-none absolute bottom-2 left-2 top-2 rounded bg-rockruff transition-transform duration-300 ease-out motion-reduce:transition-none"
           style={{
             width: 'calc((100% - 0.5rem) / 2)',
             transform: `translateX(${selectedModeIndex * 100}%)`,

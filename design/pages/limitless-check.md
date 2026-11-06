@@ -2,7 +2,7 @@
 
 > The higher-or-lower game at `/limitless-check`. Adds to `design/hutton-design-system.md` and wins on this page.
 
-**Version 1.0 · November 4, 2026 · Size: small · Scope: `.limitless-check-page`**
+**Version 1.1 · November 5, 2026 · Size: small · Scope: `.limitless-check-page`**
 
 ## Feel
 
@@ -42,9 +42,10 @@ Paper background: `public/paper-bg.jpg`.
 
 - Round options enter over `duration-option`. The game-over overlay fades over `duration-overlay` while its panel rises over `duration-panel`.
 - Timing set in code stays in named constants in `GameScreen.tsx`: the entry count (`ENTRY_COUNT_DURATION_MS`, 900ms) and the pause after a result (`POST_RESULT_DELAY_MS`, 2000ms).
-- Reduced motion: these animations don't respect it yet ([#46](https://github.com/alexhutton28/big-a-website/issues/46)).
+- Reduced motion: round options and the game-over panel only fade, and the mode switch's slide, hover zooms and entry count-up are off. The entry count shows its final number straight away.
 
 ## Changelog
 
+- **November 5, 2026 · v1.1:** Reduced motion recorded ([#46](https://github.com/alexhutton28/big-a-website/issues/46)).
 - **November 4, 2026 · v1.0:** Feel and motion added by Alex; motion recorded from the page as it is.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.
