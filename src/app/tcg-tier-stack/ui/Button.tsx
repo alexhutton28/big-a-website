@@ -1,11 +1,11 @@
 import type { ComponentProps } from 'react';
 
-// Every tcgTierStack button. The styles are the .tier-stack-button rules in globals.css;
-// tabs and tools show as selected from aria-selected and aria-pressed.
+// tcgTierStack's buttons. The styles are the .tier-stack-button rules in globals.css;
+// tools show as selected from aria-pressed.
 const VARIANTS = {
   default: '',
   primary: 'primary',
-  tab: 'tier-stack-tab',
+  ghost: 'ghost',
   tool: 'tier-stack-tool',
 };
 

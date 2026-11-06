@@ -732,33 +732,27 @@ body:has(.art-page) {
   }
 }
 
-/* tcgTierStack's interface: the look (Soft Panels, in design/pages/tcg-tier-stack.md).
-   Set on the body so the header and the page background can use it too. The board
-   keeps its own colors (see Exceptions in the HuttonDesign System). */
+/* tcgTierStack's interface: the look is in design/pages/tcg-tier-stack.md. Set on the
+   body so the page background can use it too. The board keeps its own colors (see
+   Exceptions in the HuttonDesign System). */
 body:has(.tier-stack-page) {
-  --ts-page: var(--color-petrel-850);
-  --ts-header: var(--color-petrel-900);
-  --ts-panel: var(--color-petrel-800);
-  --ts-panel-border: transparent;
-  --ts-panel-shadow: 0 8px 24px rgb(18 23 26 / 45%);
-  --ts-text: var(--color-petrel-50);
-  --ts-muted: var(--color-petrel-300);
-  --ts-control: var(--color-petrel-700);
-  --ts-control-hover: var(--color-petrel-600);
-  --ts-control-text: var(--color-petrel-50);
-  --ts-control-border: transparent;
-  --ts-field: var(--color-petrel-900);
-  --ts-primary: var(--color-storm-400);
-  --ts-primary-hover: var(--color-storm-300);
+  --ts-page: var(--color-petrel-950);
+  --ts-bar: var(--color-petrel-900);
+  --ts-line: var(--color-petrel-800);
+  --ts-text: var(--color-petrel-100);
+  --ts-muted: var(--color-petrel-400);
+  --ts-control-hover: var(--color-petrel-800);
+  --ts-control-text: var(--color-petrel-100);
+  --ts-control-border: var(--color-petrel-700);
+  --ts-field: var(--color-petrel-950);
+  --ts-primary: var(--color-storm-300);
+  --ts-primary-hover: var(--color-storm-200);
   --ts-primary-text: var(--color-petrel-950);
   --ts-selected: var(--color-petrel-100);
   --ts-selected-text: var(--color-petrel-950);
-  --ts-popup: var(--color-petrel-800);
+  --ts-popup: var(--color-petrel-850);
   --ts-focus: var(--color-storm-200);
   --ts-radius: var(--radius-small);
-  --ts-field-radius: var(--radius-small);
-  --ts-panel-radius: var(--radius-medium);
-  --ts-popup-radius: var(--radius-small);
 
   background: var(--ts-page);
 }
@@ -770,26 +764,94 @@ body:has(.tier-stack-page) {
   color-scheme: dark;
 }
 
+.tier-stack-top {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: var(--spacing-3);
+  height: calc(48px + env(safe-area-inset-top));
+  padding-top: env(safe-area-inset-top);
+  padding-inline: var(--spacing-4);
+  border-bottom: 1px solid var(--ts-line);
+  background: var(--ts-bar);
+}
+
+@media (width >= 24rem) {
+  .tier-stack-top {
+    gap: var(--spacing-4);
+  }
+}
+
+.tier-stack-brand {
+  color: var(--ts-text);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+/* Beside the sidebar, the board takes the height it can and stays centered */
+@media (width >= 48rem) {
+  .tier-stack-canvas {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .tier-stack-board {
+    width: min(100%, 1200px, calc((100dvh - 144px) * 16 / 9));
+  }
+}
+
+.tier-stack-side {
+  border-top: 1px solid var(--ts-line);
+  background: var(--ts-bar);
+}
+
+@media (width >= 48rem) {
+  .tier-stack-side {
+    border-top: 0;
+    border-right: 1px solid var(--ts-line);
+  }
+}
+
+.tier-stack-side-head {
+  padding: var(--spacing-3);
+  border-bottom: 1px solid var(--ts-line);
+}
+
 .tier-stack-panel {
   padding: var(--spacing-4);
-  border: 1px solid var(--ts-panel-border);
-  border-radius: var(--ts-panel-radius);
-  background: var(--ts-panel);
-  box-shadow: var(--ts-panel-shadow);
+}
+
+.tier-stack-heading {
+  color: var(--ts-muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.tier-stack-prop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-4);
+  min-height: 32px;
+  color: var(--ts-muted);
 }
 
 .tier-stack-button {
-  padding: var(--spacing-3) var(--spacing-button);
+  height: 32px;
+  padding-inline: var(--spacing-button);
   border: 1px solid var(--ts-control-border);
   border-radius: var(--ts-radius);
-  background: var(--ts-control);
+  white-space: nowrap;
   color: var(--ts-control-text);
   font-weight: 600;
   cursor: pointer;
   transition:
     transform var(--duration-move) var(--ease-spring),
-    background-color var(--duration-fade) ease-out,
-    color var(--duration-fade) ease-out;
+    background-color var(--duration-hover) ease-out,
+    color var(--duration-hover) ease-out;
 }
 
 .tier-stack-button:disabled {
@@ -807,17 +869,61 @@ body:has(.tier-stack-page) {
   color: var(--ts-primary-text);
 }
 
-.tier-stack-tab[aria-selected='true'],
+.tier-stack-button.ghost {
+  border-color: transparent;
+}
+
 .tier-stack-tool[aria-pressed='true'] {
   border-color: transparent;
   background: var(--ts-selected);
   color: var(--ts-selected-text);
 }
 
+/* The main nav (ui/RadioBar.tsx): a colored block that hugs the selected word */
+.tier-stack-radio {
+  position: relative;
+  display: grid;
+  grid-auto-columns: auto;
+  grid-auto-flow: column;
+  padding: var(--spacing-2);
+  border-radius: var(--ts-radius);
+  background: var(--ts-field);
+}
+
+.tier-stack-radio-block {
+  position: absolute;
+  border-radius: var(--ts-radius);
+  transition:
+    top var(--duration-move) var(--ease-spring),
+    left var(--duration-move) var(--ease-spring),
+    width var(--duration-move) var(--ease-spring),
+    background-color var(--duration-hover) ease-out;
+}
+
+.tier-stack-radio-option {
+  position: relative;
+  padding-block: var(--spacing-2);
+  color: var(--ts-control-text);
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color var(--duration-hover) ease-out;
+}
+
+.tier-stack-radio-option span {
+  display: inline-block;
+  padding: var(--spacing-2) var(--spacing-3);
+}
+
+.tier-stack-radio-option[aria-selected='true'] {
+  color: var(--ts-primary-text);
+}
+
 .tier-stack-field {
-  padding: var(--spacing-3);
-  border: 1px solid var(--ts-control-border);
-  border-radius: var(--ts-field-radius);
+  height: 32px;
+  padding-inline: var(--spacing-3);
+  border: 1px solid var(--ts-field);
+  border-radius: var(--ts-radius);
   background: var(--ts-field);
   color: var(--ts-text);
 }
@@ -826,10 +932,37 @@ body:has(.tier-stack-page) {
   color: var(--ts-muted);
 }
 
+textarea.tier-stack-field {
+  height: auto;
+  padding-block: var(--spacing-3);
+}
+
+/* The color picker, as a plain swatch */
+.tier-stack-page input[type='color'] {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: var(--ts-radius);
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.tier-stack-page input[type='color']::-webkit-color-swatch-wrapper {
+  padding: 0;
+}
+
+.tier-stack-page input[type='color']::-webkit-color-swatch {
+  border: 0;
+}
+
+.tier-stack-page input[type='color']::-moz-color-swatch {
+  border: 0;
+}
+
 .tier-stack-popup {
   overflow: hidden;
   border: 1px solid var(--ts-control-border);
-  border-radius: var(--ts-popup-radius);
+  border-radius: var(--ts-radius);
   background: var(--ts-popup);
   box-shadow: 0 8px 24px rgb(18 23 26 / 45%);
 }
@@ -859,7 +992,6 @@ body:has(.tier-stack-page) {
     background: var(--ts-primary-hover);
   }
 
-  .tier-stack-tab[aria-selected='true']:hover,
   .tier-stack-tool[aria-pressed='true']:hover {
     background: var(--ts-selected);
   }
@@ -873,6 +1005,10 @@ body:has(.tier-stack-page) {
 @media (prefers-reduced-motion: reduce) {
   .tier-stack-button:active:not(:disabled) {
     transform: none;
+  }
+
+  .tier-stack-radio-block {
+    transition: background-color var(--duration-hover) ease-out;
   }
 }
 

@@ -9,11 +9,13 @@ import Button from './Button';
 
 export default function Dropdown<T extends string | number>({
   label,
+  hideLabel = false,
   value,
   options,
   onChange,
 }: {
   label: string;
+  hideLabel?: boolean;
   value: T;
   options: { value: T; label: string }[];
   onChange: (value: T) => void;
@@ -77,7 +79,9 @@ export default function Dropdown<T extends string | number>({
 
   return (
     <div className="flex gap-3 items-center">
-      <span id={`${id}-label`}>{label}</span>
+      <span id={`${id}-label`} className={hideLabel ? 'sr-only' : undefined}>
+        {label}
+      </span>
       <div ref={boxRef} className="relative">
         <Button
           ref={buttonRef}

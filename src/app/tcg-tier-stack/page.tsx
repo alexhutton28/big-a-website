@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-// Browser bar color; matches the header
+// Browser bar color; matches the top bar
 export const viewport: Viewport = {
   themeColor: '#1B2125',
 };

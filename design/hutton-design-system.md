@@ -7,7 +7,7 @@
 
 This system records the site as it is today. Where the code differs, it is tracked in the issues under Known gaps and changes when that work is done: existing code is not rewritten to match.
 
-**Version 1.0 · November 4, 2026 · Design owner: Alex Hutton · Size: small**
+**Version 1.4 · November 5, 2026 · Design owner: Alex Hutton · Size: small**
 
 | Look                   | Page System                              | Route                     |
 | ---------------------- | ---------------------------------------- | ------------------------- |
@@ -80,7 +80,7 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 | Token           | Value  | Used for                               |
 | --------------- | ------ | -------------------------------------- |
 | `radius-small`  | 4px    | tcgTierStack's buttons, fields, popups |
-| `radius-medium` | 8px    | tcgTierStack's panels                  |
+| `radius-medium` | 8px    | Not used yet                           |
 | `radius-large`  | 16px   | Not used yet                           |
 | `radius-full`   | 9999px | Not used yet                           |
 
@@ -95,7 +95,7 @@ Seven steps, from 2px to 128px, the HuttonDesign default. Tailwind's numbered sp
 
 ## 8. Logo
 
-- Each game has its own logo in the header, in `src/components/Header.tsx`. Files are in `public/`.
+- Art Something, Guess That Flavor Text and Limitless Check have their own logo in the header, in `src/components/Header.tsx`. Files are in `public/`. tcgTierStack shows its name as text.
 
 ## 9. Imagery and visuals
 
@@ -143,7 +143,7 @@ Code uses Tailwind's `sm` and `md`, which are the same widths as `b6` and `b7`. 
 
 - `html` and `body` do not scroll. Each page gives itself a scroll container.
 - Each page's body background is set with `body:has(.page-class)` in `globals.css`, so it fills behind mobile browser toolbars.
-- The sticky header (`src/components/Header.tsx`) tints the iOS status bar. Respect `env(safe-area-inset-*)`.
+- The sticky header (`src/components/Header.tsx`, or tcgTierStack's top bar) tints the iOS status bar. Respect `env(safe-area-inset-*)`.
 
 ## 13. Components
 
@@ -151,7 +151,7 @@ Shared components are in `src/components/`. Everything else belongs to a page.
 
 ### Header
 
-- Sticky, colored per page. Hidden on the home page, which has its own title.
+- Sticky, colored per page. Hidden on the home page, which has its own title, and on tcgTierStack, which has its own top bar.
 
 ## 14. Exceptions
 
@@ -175,6 +175,7 @@ Places where the token rules do not apply. Keep raw values in named constants, m
 
 ## 16. Changelog
 
+- **November 5, 2026 · v1.4:** tcgTierStack replaces the site header with its own top bar and stops using `radius-medium`.
 - **November 5, 2026 · v1.3:** Radius tokens added (4, 8 and 16px, plus full), first used by tcgTierStack ([#43](https://github.com/alexhutton28/big-a-website/issues/43)). Feather recorded as the icon source. `space-button` added for buttons' side padding.
 - **November 5, 2026 · v1.2:** Beliefs added by Alex: unique designs, thought for every element, and color over monochrome. They hold across every HuttonDesign project.
 - **November 5, 2026 · v1.1:** Spacing moves to the seven-step HuttonDesign default (2px to 128px). Every step number moves up by one ([#41](https://github.com/alexhutton28/big-a-website/issues/41)). Arbitrary spacing values are replaced with the nearest step, and the spacing rules are recorded ([#42](https://github.com/alexhutton28/big-a-website/issues/42)).

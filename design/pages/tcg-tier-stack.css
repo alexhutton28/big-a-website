@@ -30,6 +30,7 @@
 .tier-stack-page {
   --duration-move: 450ms;
   --duration-drop: 300ms;
+  --duration-hover: 200ms;
   --duration-fade: 120ms;
   --duration-fold: 180ms;
   --duration-fold-fade: 110ms;

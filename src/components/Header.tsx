@@ -9,11 +9,12 @@ export default function Header() {
   // The home page has its own title and is where the header links to, so it goes
   // without; the sky runs to the top of the screen instead
   if (pathname === '/') return null;
+  // tcgTierStack has its own top bar
+  if (pathname.startsWith('/tcg-tier-stack')) return null;
 
   const isLimitlessCheckPage = pathname.startsWith('/limitless-check');
   const isArtSomethingPage = pathname === '/art-something';
   const isGuessThatFlavorTextPage = pathname.startsWith('/guess-that-flavor-text');
-  const isTierStackPage = pathname.startsWith('/tcg-tier-stack');
 
   let headerClassName = 'w-full bg-night text-white';
 
@@ -23,8 +24,6 @@ export default function Header() {
     headerClassName = 'w-full bg-mahogany text-white';
   } else if (isGuessThatFlavorTextPage) {
     headerClassName = 'w-full bg-splash text-white';
-  } else if (isTierStackPage) {
-    headerClassName = 'w-full bg-(--ts-header) text-petrel-50';
   }
 
   return (
