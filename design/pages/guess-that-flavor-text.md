@@ -44,7 +44,10 @@ Barlow, through the `barlow` class. Loaded in `src/app/layout.tsx`.
 | `duration-shake`         | 400ms |
 
 - Lifeline answers fade up over `duration-reveal`, the second one `duration-stagger` later. Reveals after a guess are spaced by `REVEAL_GAP_MS` (1000ms) in `GuessThatFlavorText.tsx`.
-- The result is the big moment: a spotlight roams the covered card over `duration-spotlight`, the cover clears over `duration-clear` as the card pops over `duration-pop`, and then the heading, stars and details fade up in turn.
+- The result is the big moment, and a different reveal plays each day: a spotlight, a smoke burst, ink bleeding in, or a zig-zag split. Each one finishes by `duration-heading-delay`, then the heading, stars and details fade up in turn.
+- Once the card shows, a finale plays, also changing daily: a big pop, a shake, a jelly wobble or a ta-da. A right guess adds a burst of score stars (tide, wave, splash and slate) flying out from the card.
+- The spotlight roams the covered card over `duration-spotlight` and the cover clears over `duration-clear`. The other reveals', the finales' and the star burst's timings are in `globals.css`. `duration-pop` is unused for now: the finales replaced the spotlight's pop.
+- The card is never shown before its cover is drawn: the image hides itself until the reveal starts.
 - The guess shake is a nudge over `duration-shake`.
 - Reduced motion: all of these are off, and the result shows straight away.
 
@@ -55,6 +58,8 @@ Barlow, through the `barlow` class. Loaded in `src/app/layout.tsx`.
 - A dot grid over a white-to-`ghost` gradient, on the body so it fills the screen. See `body:has(.dot-gradient-bg)`.
 
 ## Changelog
+
+- **November 19, 2026:** The result reveal and its finale change daily (four of each), a right guess bursts stars from the card, and the card no longer flashes before its cover on mobile.
 
 - **November 4, 2026 · v1.0:** Feel and motion added by Alex; motion recorded from the page as it is.
 - **November 4, 2026 · v0.1:** Initial draft, recorded from the page as it is.

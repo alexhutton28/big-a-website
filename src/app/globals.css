@@ -118,9 +118,40 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   }
 }
 
-/* Result card reveal: the card starts covered in abyss, a spotlight works up the card
-   (flavor text, attacks, art, name), widens to fill it, then the cover fades and the
-   card pops. The result heading and stars fade in once the card is showing. */
+/* Result card reveals. One reveal and one finale play each day (picked in CardReveal.tsx);
+   the finale starts when the reveal ends (--reveal-end), and a right guess adds a star
+   burst. Each reveal ends by --duration-heading-delay, when the result heading fades in.
+   The card image hides itself (.card-reveal-img) until its cover is drawn: never rely on a
+   cover layer alone, since mobile browsers can paint the image a frame before it. */
+@keyframes card-reveal-show {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.card-reveal-img {
+  animation: card-reveal-show 1ms linear 0.2s both;
+}
+
+/* Steps a sprite-sheet mask through its frames */
+@keyframes card-reveal-sprite {
+  from {
+    mask-position: 0 0;
+  }
+
+  to {
+    mask-position: 100% 0;
+  }
+}
+
+/* Spotlight: the card starts covered in abyss, a spotlight works up the card (flavor
+   text, attacks, art, name), widens to fill it, then the cover fades.
+   The spotlight never starts at a 0 radius: a zero-size gradient mask can count as no
+   mask on mobile Safari, which drops the whole cover for a frame. */
 @property --spot-x {
   syntax: '<percentage>';
   inherits: false;
@@ -136,14 +167,14 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 @property --spot-r {
   syntax: '<length>';
   inherits: false;
-  initial-value: 0;
+  initial-value: 1px;
 }
 
 @keyframes spotlight-roam {
   0% {
     --spot-x: 68%;
     --spot-y: 92%;
-    --spot-r: 0;
+    --spot-r: 1px;
   }
 
   12% {
@@ -183,20 +214,6 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   }
 }
 
-@keyframes card-pop {
-  0% {
-    transform: scale(1);
-  }
-
-  45% {
-    transform: scale(1.04);
-  }
-
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes result-fade-up {
   from {
     opacity: 0;
@@ -209,14 +226,10 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   }
 }
 
-.card-reveal {
-  animation: card-pop var(--duration-pop) ease-out var(--duration-spotlight) both;
-}
-
-.card-reveal-cover {
+.card-reveal-spotlight .card-reveal-cover {
   --spot-x: 68%;
   --spot-y: 92%;
-  --spot-r: 0;
+  --spot-r: 1px;
 
   background: var(--color-abyss);
   mask-image: radial-gradient(
@@ -228,6 +241,269 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   animation:
     spotlight-roam var(--duration-spotlight) ease-in-out both,
     spotlight-clear var(--duration-clear) ease-out var(--duration-spotlight) both;
+}
+
+/* Smoke: a filmed smoke burst (sprite from Codrops' CSS mask transitions) eats the cover
+   from the middle out, with soft edges and a haze that lingers */
+.card-reveal-smoke .card-reveal-cover {
+  inset: -20px;
+  background: var(--color-abyss);
+  filter: blur(10px);
+  mask: url('/gtft-reveal-smoke.png') 0 0 / 2300% 100%;
+  animation: card-reveal-sprite 2.2s steps(22) 0.8s both;
+}
+
+@keyframes card-reveal-haze {
+  0%,
+  30% {
+    opacity: 0.55;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.card-reveal-smoke .card-reveal-haze {
+  background: var(--color-abyss);
+  animation: card-reveal-haze 3s ease-out both;
+}
+
+/* Ink: the card bleeds in through the abyss cover like ink (sprite from Ryan Yu's ink
+   transition pen) */
+.card-reveal-ink .card-reveal-cover {
+  background: var(--color-abyss);
+  mask: url('/gtft-reveal-ink.png') 0 0 / 4000% 100%;
+  animation: card-reveal-sprite 2.2s steps(39) 0.5s both;
+}
+
+/* Zig-zag: the cover splits along a jagged edge and the halves pull apart */
+@keyframes card-reveal-zigzag-up {
+  to {
+    transform: translateY(-60%);
+  }
+}
+
+@keyframes card-reveal-zigzag-down {
+  to {
+    transform: translateY(60%);
+  }
+}
+
+/* The top half's edge sits 2px lower than the bottom half's, so the two overlap and no
+   anti-aliased seam shows before they split */
+.card-reveal-zigzag .card-reveal-cover {
+  background: var(--color-abyss);
+  animation: card-reveal-zigzag-up 0.9s cubic-bezier(0.7, 0, 0.3, 1) 1.2s both;
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% calc(46% + 2px),
+    92.86% calc(54% + 2px),
+    85.71% calc(46% + 2px),
+    78.57% calc(54% + 2px),
+    71.43% calc(46% + 2px),
+    64.29% calc(54% + 2px),
+    57.14% calc(46% + 2px),
+    50% calc(54% + 2px),
+    42.86% calc(46% + 2px),
+    35.71% calc(54% + 2px),
+    28.57% calc(46% + 2px),
+    21.43% calc(54% + 2px),
+    14.29% calc(46% + 2px),
+    7.14% calc(54% + 2px),
+    0 calc(46% + 2px)
+  );
+}
+
+.card-reveal-zigzag .card-reveal-cover-bottom {
+  animation-name: card-reveal-zigzag-down;
+  clip-path: polygon(
+    0 46%,
+    7.14% 54%,
+    14.29% 46%,
+    21.43% 54%,
+    28.57% 46%,
+    35.71% 54%,
+    42.86% 46%,
+    50% 54%,
+    57.14% 46%,
+    64.29% 54%,
+    71.43% 46%,
+    78.57% 54%,
+    85.71% 46%,
+    92.86% 54%,
+    100% 46%,
+    100% 100%,
+    0 100%
+  );
+}
+
+/* When each reveal has finished showing the card: the finale and star burst start here */
+.card-reveal-finale {
+  --reveal-end: var(--duration-spotlight);
+}
+
+.card-reveal-finale[data-reveal='smoke'] {
+  --reveal-end: 3s;
+}
+
+.card-reveal-finale[data-reveal='ink'] {
+  --reveal-end: 2.7s;
+}
+
+.card-reveal-finale[data-reveal='zigzag'] {
+  --reveal-end: 2.1s;
+}
+
+/* Finales: what the card does once it's revealed */
+@keyframes card-finale-big-pop {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(1.12);
+  }
+
+  60% {
+    transform: scale(0.97);
+  }
+
+  80% {
+    transform: scale(1.02);
+  }
+}
+
+@keyframes card-finale-shake {
+  0%,
+  100% {
+    transform: rotate(0);
+  }
+
+  15% {
+    transform: rotate(-5deg);
+  }
+
+  30% {
+    transform: rotate(5deg);
+  }
+
+  45% {
+    transform: rotate(-4deg);
+  }
+
+  60% {
+    transform: rotate(3deg);
+  }
+
+  75% {
+    transform: rotate(-1.5deg);
+  }
+}
+
+@keyframes card-finale-jelly {
+  0%,
+  100% {
+    transform: scale(1, 1);
+  }
+
+  25% {
+    transform: scale(1.12, 0.88);
+  }
+
+  40% {
+    transform: scale(0.9, 1.1);
+  }
+
+  55% {
+    transform: scale(1.05, 0.95);
+  }
+
+  70% {
+    transform: scale(0.98, 1.02);
+  }
+
+  85% {
+    transform: scale(1.01, 0.99);
+  }
+}
+
+@keyframes card-finale-tada {
+  0%,
+  100% {
+    transform: scale(1) rotate(0);
+  }
+
+  10%,
+  20% {
+    transform: scale(0.94) rotate(-3deg);
+  }
+
+  30%,
+  50%,
+  70% {
+    transform: scale(1.08) rotate(3deg);
+  }
+
+  40%,
+  60% {
+    transform: scale(1.08) rotate(-3deg);
+  }
+
+  90% {
+    transform: scale(1.02) rotate(0);
+  }
+}
+
+.card-finale-big-pop {
+  animation: card-finale-big-pop 650ms ease-out var(--reveal-end) both;
+}
+
+.card-finale-shake {
+  animation: card-finale-shake 550ms ease-out var(--reveal-end) both;
+}
+
+.card-finale-jelly {
+  animation: card-finale-jelly 750ms ease-out var(--reveal-end) both;
+}
+
+.card-finale-tada {
+  animation: card-finale-tada 900ms ease-out var(--reveal-end) both;
+}
+
+/* Star burst for a right guess: the score stars fly out from the middle of the card */
+@keyframes card-reveal-star-out {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.2) rotate(0);
+  }
+
+  15%,
+  70% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(var(--star-x), var(--star-y)) scale(1) rotate(var(--star-spin));
+  }
+}
+
+.card-reveal-stars {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 1;
+}
+
+.card-reveal-star {
+  position: absolute;
+  translate: -50% -50%;
+  line-height: 0;
+  animation: card-reveal-star-out 900ms cubic-bezier(0.2, 0.7, 0.3, 1)
+    calc(var(--reveal-end) + var(--star-delay)) both;
 }
 
 .result-heading-in {
@@ -243,9 +519,10 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
   animation: result-fade-up var(--duration-fade-up) ease-out var(--duration-details-delay) both;
 }
 
-/* Hold the whole sequence on the dark cover until the card image has loaded */
-.reveal-pending .card-reveal,
-.reveal-pending .card-reveal-cover,
+/* Hold the whole sequence on its first frame until the card image (and the reveal's
+   sprite, if it has one) has loaded */
+.reveal-pending .card-reveal-finale,
+.reveal-pending .card-reveal-finale *,
 .reveal-pending .result-heading-in,
 .reveal-pending .result-stars-in,
 .reveal-pending .result-details-in {
@@ -253,14 +530,17 @@ html.limitless-check-scrollbar::-webkit-scrollbar-thumb {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .card-reveal,
+  .card-reveal-finale,
+  .card-reveal-finale *,
   .result-heading-in,
   .result-stars-in,
   .result-details-in {
     animation: none;
   }
 
-  .card-reveal-cover {
+  .card-reveal-cover,
+  .card-reveal-haze,
+  .card-reveal-stars {
     display: none;
   }
 }
