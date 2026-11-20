@@ -35,6 +35,7 @@ interface ApiCard {
   supertype: string;
   subtypes?: string[];
   types?: string[];
+  nationalPokedexNumbers?: number[];
   flavorText?: string;
   attacks?: ApiAttack[];
   set: { name: string };
@@ -61,6 +62,7 @@ interface FlavorCard {
   stage: string | null;
   set: string | null;
   type: string | null;
+  generation: number | null;
   image: string | null;
 }
 
@@ -69,6 +71,16 @@ interface FlavorCard {
 // ---------------------------------------------------------------------------
 
 const STAGES = ['Basic', 'Stage 1', 'Stage 2'] as const;
+
+// The last National Pokédex number in each generation, from Gen 1 on
+const GENERATION_ENDS = [151, 251, 386, 493, 649, 721, 809, 905, 1025];
+
+/** The generation a Pokédex number belongs to, or null if it's unknown or past Gen 9 */
+function generationOf(dexNumber: number | undefined): number | null {
+  if (!dexNumber) return null;
+  const index = GENERATION_ENDS.findIndex((end) => dexNumber <= end);
+  return index === -1 ? null : index + 1;
+}
 
 function normaliseCard(card: ApiCard): FlavorCard {
   const stage = card.subtypes?.find((s) => (STAGES as readonly string[]).includes(s)) ?? null;
@@ -94,6 +106,7 @@ function normaliseCard(card: ApiCard): FlavorCard {
     stage,
     set: card.set.name,
     type: card.types?.[0] ?? null,
+    generation: generationOf(card.nationalPokedexNumbers?.[0]),
     image: card.images.small,
   };
 }

@@ -43,6 +43,8 @@ Barlow, through the `barlow` class. Loaded in `src/app/layout.tsx`.
 | `duration-details-delay` | 3.5s  |
 | `duration-shake`         | 400ms |
 
+- Unknown Q "says" the flavor text: while the words type in, the logo chatters with a soft squash and stretch (about 4.5%, a 400ms loop, anchored at its bottom). It rests during each sentence pause and eases back once the text is done. The motion is in `chatter.ts`.
+- Redemption: after a wrong guess and the lifelines opening, the guess box gives the error shake (the same `.shake` as the empty-guess nudge) and a pill with the wrong guess crossed out (after a small grayscale sprite) fades up above it, aligned left, as the guess fades out of the box. Unknown Q does a short chatter and spits each hint out of its round middle: a squash, a lurch, and the hint arcs out to land beside it (the first on the left, the second on the right), with a quick chatter before the second. The hints look like answered lifelines. The motion is in `chatter.ts`.
 - Lifeline answers fade up over `duration-reveal`, the second one `duration-stagger` later. Reveals after a guess are spaced by `REVEAL_GAP_MS` (1000ms) in `GuessThatFlavorText.tsx`.
 - The result is the big moment, and a different reveal plays each day: a spotlight, a smoke burst, ink bleeding in, or a zig-zag split. Each one finishes by `duration-heading-delay`, then the heading, stars and details fade up in turn.
 - Once the card shows, a finale plays, also changing daily: a big pop, a shake, a jelly wobble or a ta-da. A right guess adds a burst of score stars (tide, wave, splash and slate) flying out from the card.
@@ -59,6 +61,7 @@ Barlow, through the `barlow` class. Loaded in `src/app/layout.tsx`.
 
 ## Changelog
 
+- **November 19, 2026:** Unknown Q chatters while it says the flavor text, and after a wrong guess spits out two redemption hints for a half-point try.
 - **November 19, 2026:** The result reveal and its finale change daily (four of each), a right guess bursts stars from the card, and the card no longer flashes before its cover on mobile.
 
 - **November 4, 2026 · v1.0:** Feel and motion added by Alex; motion recorded from the page as it is.

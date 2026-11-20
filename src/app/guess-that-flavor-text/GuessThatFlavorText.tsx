@@ -4,16 +4,19 @@ import GTFTIntroPage from './GTFTIntroPage';
 import GTFTGamePage from './GTFTGamePage';
 import GTFTResultPage from './GTFTResultPage';
 import { useEffect, useRef, useState } from 'react';
+import { spitDurationMs } from './chatter';
 
 // ---------------------------------------------------------------------------
 // Types
 // ---------------------------------------------------------------------------
 
-import type { Card, DayState, Lifeline } from './types.ts';
+import type { Card, DayState, Hint, Lifeline } from './types.ts';
 // In on-screen order, left to right; also the order they auto-reveal after a guess
 const LIFELINES: Lifeline[] = ['Set', 'Stage', 'Attack'];
 // Pause between each automatic lifeline reveal after a guess, and before the result page
 const REVEAL_GAP_MS = 1000;
+// The guess box's error shake (`.shake`, `duration-shake` in the design system)
+const SHAKE_MS = 400;
 // Storage key format predates localDateKey (no zero padding); kept so saved games still load
 function getDayKey(date: Date) {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
@@ -38,6 +41,28 @@ function namesMatch(guess: string, answer: string) {
   // Other card names ('Shining Volcanion', 'Tapu Koko ◇', 'Cool Porygon') accept the
   // Pokémon's name as whole words, so 'Porygon' matches 'Cool Porygon' but 'Mew' doesn't match 'Mewtwo ex'
   return spacedName(answer).includes(spacedName(guess));
+}
+
+// Each generation by the games it started with, Gen 1 first
+const GENERATION_GAMES = [
+  'Red & Blue',
+  'Gold & Silver',
+  'Ruby & Sapphire',
+  'Diamond & Pearl',
+  'Black & White',
+  'X & Y',
+  'Sun & Moon',
+  'Sword & Shield',
+  'Scarlet & Violet',
+];
+
+// The redemption hints Unknown Q gives after a wrong guess; a card missing one skips it
+function redemptionHints(card: Card): Hint[] {
+  const hints: Hint[] = [];
+  if (card.type) hints.push({ label: 'Type', answer: card.type });
+  const games = card.generation ? GENERATION_GAMES[card.generation - 1] : undefined;
+  if (games) hints.push({ label: 'Generation', answer: games });
+  return hints;
 }
 
 export default function GuessThatFlavorText() {
@@ -68,6 +93,14 @@ export default function GuessThatFlavorText() {
   // Lifelines shown automatically after a guess; display only, never affects the score
   const [autoRevealed, setAutoRevealed] = useState<Lifeline[]>([]);
   const revealTimers = useRef<ReturnType<typeof setTimeout>[]>([]);
+  // Redemption, display only: hold the hints back while the lifelines open after a wrong
+  // guess, then have Unknown Q spit them out. A game reloaded mid-redemption shows them
+  // straight away.
+  const [hintsPending, setHintsPending] = useState(false);
+  const [animateHints, setAnimateHints] = useState(false);
+  // From a wrong guess until the lifelines, shake and spit are done: the wrong guess stays
+  // in the guess box, which can't be changed or submitted yet
+  const [guessLocked, setGuessLocked] = useState(false);
   const [suggestions, setSuggestions] = useState<string[]>([]);
   const [activeIndex, setActiveIndex] = useState(-1);
   const inputRef = useRef<HTMLInputElement>(null!) as React.RefObject<HTMLInputElement>;
@@ -210,7 +243,8 @@ export default function GuessThatFlavorText() {
     }));
   }
   function submitGuess() {
-    if (dayState.completed || !card || !selectedPokemon) return;
+    // No guessing while the lifelines and hints are still coming out after a wrong guess
+    if (dayState.completed || guessLocked || !card || !selectedPokemon) return;
     // Yesterday's puzzle is over once the date changes; don't record a guess for it
     if (isNewDay()) {
       window.location.reload();
@@ -219,22 +253,67 @@ export default function GuessThatFlavorText() {
     const guess = selectedPokemon;
     setSuggestions([]);
     const correct = namesMatch(guess, card.name);
-    setDayState((prev: DayState) => ({
-      ...prev,
-      guess,
-      completed: true,
-      correct,
-      score: correct ? prev.score : 0,
-    }));
+    const hints = redemptionHints(card);
 
-    // Reveal the unused lifelines left to right, one every REVEAL_GAP_MS, then show the result
+    // The redemption guess: half a point if right, nothing if not, then the result
+    if (dayState.firstGuess) {
+      setDayState((prev: DayState) => ({
+        ...prev,
+        guess,
+        completed: true,
+        correct,
+        redeemed: correct,
+        score: correct ? 0.5 : 0,
+      }));
+      revealTimers.current.push(setTimeout(() => setPage(2), REVEAL_GAP_MS));
+      return;
+    }
+
+    // A wrong first guess gets one more try, if there's a hint to give
+    const redeemable = !correct && hints.length > 0;
+    if (redeemable) {
+      setDayState((prev: DayState) => ({ ...prev, firstGuess: guess, score: 0 }));
+      setHintsPending(true);
+      setGuessLocked(true);
+    } else {
+      setDayState((prev: DayState) => ({
+        ...prev,
+        guess,
+        completed: true,
+        correct,
+        score: correct ? prev.score : 0,
+      }));
+    }
+
+    // Reveal the unused lifelines left to right, one every REVEAL_GAP_MS, then show the
+    // result, or for a wrong guess, start redemption
     const remaining = LIFELINES.filter((l) => !dayState.usedLifelines.includes(l));
     remaining.forEach((lifeline, i) => {
       revealTimers.current.push(
         setTimeout(() => setAutoRevealed((prev) => [...prev, lifeline]), i * REVEAL_GAP_MS)
       );
     });
-    revealTimers.current.push(setTimeout(() => setPage(2), remaining.length * REVEAL_GAP_MS));
+    revealTimers.current.push(
+      setTimeout(() => {
+        if (redeemable) {
+          setHintsPending(false);
+          setAnimateHints(true);
+          // Once the shake is over and the hints have landed, clear the box for one more try
+          revealTimers.current.push(
+            setTimeout(
+              () => {
+                setInputValue('');
+                setSelectedPokemon(null);
+                setGuessLocked(false);
+              },
+              Math.max(SHAKE_MS, spitDurationMs(hints.length))
+            )
+          );
+        } else {
+          setPage(2);
+        }
+      }, remaining.length * REVEAL_GAP_MS)
+    );
   }
 
   // Dev reset: clear today's saved game and every bit of in-progress UI state
@@ -247,6 +326,9 @@ export default function GuessThatFlavorText() {
     } catch {}
     setDayState(defaultState);
     setAutoRevealed([]);
+    setHintsPending(false);
+    setAnimateHints(false);
+    setGuessLocked(false);
     setInputValue('');
     setSelectedPokemon(null);
     setSuggestions([]);
@@ -254,7 +336,7 @@ export default function GuessThatFlavorText() {
     setPage(0);
   }
 
-  const { correct, score, usedLifelines } = dayState;
+  const { correct, score, usedLifelines, firstGuess, redeemed } = dayState;
   // PAGE 1: Intro
   if (page === 0) {
     return <GTFTIntroPage onPlay={() => setPage(1)} today={today} gameNumber={gameNumber} />;
@@ -278,6 +360,17 @@ export default function GuessThatFlavorText() {
         handleKeyDown={handleKeyDown}
         selectSuggestion={selectSuggestion}
         submitGuess={submitGuess}
+        guessLocked={guessLocked}
+        // From a wrong first guess on (still shown in the moment before the result)
+        redemption={
+          firstGuess
+            ? {
+                firstGuess,
+                hints: hintsPending ? null : redemptionHints(card),
+                animate: animateHints,
+              }
+            : null
+        }
       />
     );
   }
@@ -286,6 +379,7 @@ export default function GuessThatFlavorText() {
       <GTFTResultPage
         card={card}
         correct={correct}
+        redeemed={!!redeemed}
         score={score}
         onReset={resetGame}
         today={today}
