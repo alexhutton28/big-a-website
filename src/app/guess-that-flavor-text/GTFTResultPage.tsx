@@ -23,9 +23,15 @@ function isDev() {
   );
 }
 
+// Points as players read them: a redemption's half point is ½
+function formatScore(score: number) {
+  return score === 0.5 ? '½' : String(score);
+}
+
 export default function GTFTResultPage({
   card,
   correct,
+  redeemed,
   score,
   onReset,
   today,
@@ -33,6 +39,8 @@ export default function GTFTResultPage({
 }: {
   card: Card;
   correct: boolean;
+  /** Right on the redemption guess, after a wrong first one */
+  redeemed: boolean;
   score: number;
   onReset: () => void;
   today: Date;
@@ -84,7 +92,7 @@ export default function GTFTResultPage({
   }
 
   async function handleShare() {
-    const shareText = `Guess That Flavor Text #${gameNumber}\n${correct ? '✅' : '❌'} ${score}/4\n${window.location.href}`;
+    const shareText = `Guess That Flavor Text #${gameNumber}\n${correct ? '✅' : '❌'} ${formatScore(score)}/4\n${window.location.href}`;
     const nav = navigator as Navigator & { userAgentData?: { mobile: boolean } };
     const isMobile =
       nav.userAgentData?.mobile ?? /Android|iPhone|iPad|iPod|Mobile/i.test(nav.userAgent);
@@ -189,11 +197,11 @@ export default function GTFTResultPage({
         <div className="flex flex-col gap-0 items-center mb-5">
           <div className="result-heading-in flex flex-col items-center">
             <h1 className="barlow font-bold text-[45px] text-tide mb-0">
-              {correct ? 'CORRECT' : 'INCORRECT'}
+              {redeemed ? 'REDEMPTION' : correct ? 'CORRECT' : 'INCORRECT'}
             </h1>
             {correct ? (
               <h2 className="barlow text-wave font-light text-[24px] mb-0 -mt-4">
-                {score} POINT{score === 1 ? '' : 'S'} EARNED
+                {formatScore(score)} POINT{score === 1 || score === 0.5 ? '' : 'S'} EARNED
               </h2>
             ) : (
               <div className="barlow text-wave font-light text-[24px] mb-0 -mt-4">
@@ -204,10 +212,11 @@ export default function GTFTResultPage({
           {correct && (
             <div
               className="result-stars-in flex items-center gap-2 text-wave mt-2"
-              aria-label={`${score} of 4 points`}
+              aria-label={`${formatScore(score)} of 4 points`}
             >
+              {/* Earned points fill from the left; a half point is a half star */}
               {Array.from({ length: 4 }, (_, i) => (
-                <Star key={i} size={20} filled={i < score} />
+                <Star key={i} size={20} filled={score - i >= 1} half={score - i === 0.5} />
               ))}
             </div>
           )}

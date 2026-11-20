@@ -9,6 +9,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'HS—Triumphant',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss4/1.png',
   },
   {
@@ -20,6 +21,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy5/1.png',
   },
   {
@@ -31,6 +33,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Secret Wonders',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/1.png',
   },
   {
@@ -42,6 +45,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/det1/1.png',
   },
   {
@@ -53,6 +57,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 1,
     image: 'https://images.pokemontcg.io/dv1/1.png',
   },
   {
@@ -64,6 +69,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/1.png',
   },
   {
@@ -75,6 +81,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Base Set 2',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base4/1.png',
   },
   {
@@ -86,6 +93,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss1/1.png',
   },
   {
@@ -97,6 +105,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fossil',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/1.png',
   },
   {
@@ -108,6 +117,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'POP Series 6',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/1.png',
   },
   {
@@ -119,6 +129,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss4/2.png',
   },
   {
@@ -130,6 +141,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Secret Wonders',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/dp3/2.png',
   },
   {
@@ -141,6 +153,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fossil',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/2.png',
   },
   {
@@ -151,6 +164,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 6',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/2.png',
   },
   {
@@ -162,6 +176,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy2/2.png',
   },
   {
@@ -173,6 +188,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/2.png',
   },
   {
@@ -184,6 +200,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Detective Pikachu',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/det1/2.png',
   },
   {
@@ -195,6 +212,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "McDonald's Collection 2019",
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/2.png',
   },
   {
@@ -206,6 +224,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy5/2.png',
   },
   {
@@ -217,6 +236,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy11/1.png',
   },
   {
@@ -228,6 +248,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Black & White',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/1.png',
   },
   {
@@ -239,6 +260,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/1.png',
   },
   {
@@ -250,6 +272,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/1.png',
   },
   {
@@ -261,6 +284,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Call of Legends',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/col1/1.png',
   },
   {
@@ -272,6 +296,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/1.png',
   },
   {
@@ -283,6 +308,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy7/1.png',
   },
   {
@@ -294,6 +320,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base Set 2',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base4/3.png',
   },
   {
@@ -305,6 +332,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy5/3.png',
   },
   {
@@ -316,6 +344,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 6',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/3.png',
   },
   {
@@ -327,6 +356,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Southern Islands',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/2.png',
   },
   {
@@ -338,6 +368,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fossil',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/3.png',
   },
   {
@@ -349,6 +380,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Triumphant',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss4/3.png',
   },
   {
@@ -360,6 +392,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy7/2.png',
   },
   {
@@ -371,6 +404,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/2.png',
   },
   {
@@ -382,6 +416,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Flashfire',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy2/3.png',
   },
   {
@@ -393,6 +428,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Steam Siege',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy11/2.png',
   },
   {
@@ -404,6 +440,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/det1/3.png',
   },
   {
@@ -415,6 +452,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 1,
     image: 'https://images.pokemontcg.io/dv1/3.png',
   },
   {
@@ -426,6 +464,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'POP Series 7',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop7/2.png',
   },
   {
@@ -437,6 +476,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/3.png',
   },
   {
@@ -448,6 +488,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Call of Legends',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/col1/2.png',
   },
   {
@@ -459,6 +500,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Secret Wonders',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/dp3/3.png',
   },
   {
@@ -470,6 +512,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm2/1.png',
   },
   {
@@ -481,6 +524,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy4/1.png',
   },
   {
@@ -492,6 +536,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw4/1.png',
   },
   {
@@ -503,6 +548,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Great Encounters',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/1.png',
   },
   {
@@ -514,6 +560,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm5/1.png',
   },
   {
@@ -525,6 +572,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy10/1.png',
   },
   {
@@ -536,6 +584,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss2/1.png',
   },
   {
@@ -547,6 +596,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP01.png',
   },
   {
@@ -558,6 +608,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/1.png',
   },
   {
@@ -569,6 +620,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'POP Series 9',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/1.png',
   },
   {
@@ -580,6 +632,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/4.png',
   },
   {
@@ -591,6 +644,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Fossil',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/4.png',
   },
   {
@@ -602,6 +656,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pop7/3.png',
   },
   {
@@ -613,6 +668,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 6',
     type: 'Lightning',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/4.png',
   },
   {
@@ -624,6 +680,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/det1/4.png',
   },
   {
@@ -635,6 +692,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss1/4.png',
   },
   {
@@ -646,6 +704,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dark Explorers',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw5/2.png',
   },
   {
@@ -657,6 +716,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Fire',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP02.png',
   },
   {
@@ -668,6 +728,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm2/2.png',
   },
   {
@@ -679,6 +740,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy4/2.png',
   },
   {
@@ -690,6 +752,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy2/4.png',
   },
   {
@@ -701,6 +764,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Great Encounters',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp4/2.png',
   },
   {
@@ -712,6 +776,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Diamond & Pearl',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/2.png',
   },
   {
@@ -723,6 +788,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/3.png',
   },
   {
@@ -733,6 +799,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/4.png',
   },
   {
@@ -744,6 +811,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Arceus',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pl4/2.png',
   },
   {
@@ -754,6 +822,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Storm',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw8/2.png',
   },
   {
@@ -765,6 +834,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy11/3.png',
   },
   {
@@ -776,6 +846,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/swsh1/2.png',
   },
   {
@@ -787,6 +858,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy7/3.png',
   },
   {
@@ -797,6 +869,7 @@ const flavorCards = [
     stage: null,
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/3.png',
   },
   {
@@ -808,6 +881,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw4/2.png',
   },
   {
@@ -819,6 +893,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Darkness',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss4/4.png',
   },
   {
@@ -830,6 +905,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm5/2.png',
   },
   {
@@ -841,6 +917,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/si1/4.png',
   },
   {
@@ -852,6 +929,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Dark Explorers',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw5/3.png',
   },
   {
@@ -863,6 +941,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Diamond & Pearl',
     type: 'Lightning',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/3.png',
   },
   {
@@ -874,6 +953,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Steam Siege',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy11/4.png',
   },
   {
@@ -885,6 +965,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'HS—Triumphant',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss4/5.png',
   },
   {
@@ -896,6 +977,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ultra Prism',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm5/3.png',
   },
   {
@@ -907,6 +989,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HeartGold & SoulSilver',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/5.png',
   },
   {
@@ -918,6 +1001,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Arceus',
     type: 'Fire',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pl4/3.png',
   },
   {
@@ -929,6 +1013,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/4.png',
   },
   {
@@ -940,6 +1025,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Fossil',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/5.png',
   },
   {
@@ -951,6 +1037,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Great Encounters',
     type: 'Darkness',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp4/3.png',
   },
   {
@@ -962,6 +1049,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Secret Wonders',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp3/5.png',
   },
   {
@@ -973,6 +1061,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Black & White',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/3.png',
   },
   {
@@ -984,6 +1073,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy7/4.png',
   },
   {
@@ -995,6 +1085,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/2.png',
   },
   {
@@ -1006,6 +1097,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw4/3.png',
   },
   {
@@ -1017,6 +1109,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Fire',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss2/2.png',
   },
   {
@@ -1028,6 +1121,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pop7/4.png',
   },
   {
@@ -1039,6 +1133,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Revelation',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/2.png',
   },
   {
@@ -1050,6 +1145,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/5.png',
   },
   {
@@ -1061,6 +1157,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm75/2.png',
   },
   {
@@ -1072,6 +1169,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 9',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/pop9/3.png',
   },
   {
@@ -1083,6 +1181,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP03.png',
   },
   {
@@ -1094,6 +1193,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy10/2.png',
   },
   {
@@ -1105,6 +1205,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/4.png',
   },
   {
@@ -1116,6 +1217,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'POP Series 6',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/5.png',
   },
   {
@@ -1127,6 +1229,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/6.png',
   },
   {
@@ -1137,6 +1240,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dv1/6.png',
   },
   {
@@ -1148,6 +1252,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Lost Thunder',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm8/3.png',
   },
   {
@@ -1159,6 +1264,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Diamond & Pearl',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/4.png',
   },
   {
@@ -1170,6 +1276,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fossil',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/6.png',
   },
   {
@@ -1181,6 +1288,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm2/3.png',
   },
   {
@@ -1192,6 +1300,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/5.png',
   },
   {
@@ -1202,6 +1311,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 9',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/4.png',
   },
   {
@@ -1213,6 +1323,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'HS—Triumphant',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss4/6.png',
   },
   {
@@ -1224,6 +1335,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legendary Treasures',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw11/4.png',
   },
   {
@@ -1235,6 +1347,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/swsh1/4.png',
   },
   {
@@ -1245,6 +1358,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Plasma Storm',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw8/3.png',
   },
   {
@@ -1256,6 +1370,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy10/3.png',
   },
   {
@@ -1267,6 +1382,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Steam Siege',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy11/5.png',
   },
   {
@@ -1278,6 +1394,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw4/4.png',
   },
   {
@@ -1289,6 +1406,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/3.png',
   },
   {
@@ -1299,6 +1417,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 7',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop7/5.png',
   },
   {
@@ -1310,6 +1429,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Arceus',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/pl4/4.png',
   },
   {
@@ -1321,6 +1441,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dv1/7.png',
   },
   {
@@ -1332,6 +1453,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Call of Legends',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/col1/4.png',
   },
   {
@@ -1343,6 +1465,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/6.png',
   },
   {
@@ -1354,6 +1477,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/7.png',
   },
   {
@@ -1365,6 +1489,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy7/5.png',
   },
   {
@@ -1376,6 +1501,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Flashfire',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/7.png',
   },
   {
@@ -1386,6 +1512,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Arceus',
     type: 'Lightning',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pl4/5.png',
   },
   {
@@ -1397,6 +1524,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss1/7.png',
   },
   {
@@ -1408,6 +1536,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Secret Wonders',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp3/7.png',
   },
   {
@@ -1419,6 +1548,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fossil',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/7.png',
   },
   {
@@ -1430,6 +1560,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/6.png',
   },
   {
@@ -1441,6 +1572,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop7/6.png',
   },
   {
@@ -1452,6 +1584,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Southern Islands',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/6.png',
   },
   {
@@ -1463,6 +1596,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/det1/7.png',
   },
   {
@@ -1474,6 +1608,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Diamond & Pearl',
     type: 'Fire',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/5.png',
   },
   {
@@ -1485,6 +1620,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 9',
     type: 'Lightning',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/5.png',
   },
   {
@@ -1496,6 +1632,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'HS—Triumphant',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss4/7.png',
   },
   {
@@ -1507,6 +1644,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Neo Revelation',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/4.png',
   },
   {
@@ -1518,6 +1656,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm2/4.png',
   },
   {
@@ -1529,6 +1668,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legendary Treasures',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw11/5.png',
   },
   {
@@ -1540,6 +1680,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/swsh35/6.png',
   },
   {
@@ -1551,6 +1692,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP06.png',
   },
   {
@@ -1562,6 +1704,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss2/5.png',
   },
   {
@@ -1573,6 +1716,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Call of Legends',
     type: 'Metal',
+    generation: 2,
     image: 'https://images.pokemontcg.io/col1/5.png',
   },
   {
@@ -1584,6 +1728,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dv1/8.png',
   },
   {
@@ -1595,6 +1740,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 6',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/6.png',
   },
   {
@@ -1606,6 +1752,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/si1/7.png',
   },
   {
@@ -1617,6 +1764,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/8.png',
   },
   {
@@ -1628,6 +1776,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 7',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop7/7.png',
   },
   {
@@ -1639,6 +1788,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/7.png',
   },
   {
@@ -1650,6 +1800,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm2/5.png',
   },
   {
@@ -1661,6 +1812,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy7/6.png',
   },
   {
@@ -1672,6 +1824,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm75/4.png',
   },
   {
@@ -1683,6 +1836,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh1/5.png',
   },
   {
@@ -1694,6 +1848,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Storm',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw8/4.png',
   },
   {
@@ -1705,6 +1860,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fossil',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/8.png',
   },
   {
@@ -1716,6 +1872,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Secret Wonders',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp3/8.png',
   },
   {
@@ -1727,6 +1884,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base Set 2',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base4/6.png',
   },
   {
@@ -1738,6 +1896,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/7.png',
   },
   {
@@ -1749,6 +1908,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/det1/8.png',
   },
   {
@@ -1760,6 +1920,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/8.png',
   },
   {
@@ -1771,6 +1932,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/5.png',
   },
   {
@@ -1782,6 +1944,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss4/8.png',
   },
   {
@@ -1793,6 +1956,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragons Exalted',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/6.png',
   },
   {
@@ -1804,6 +1968,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh35/7.png',
   },
   {
@@ -1815,6 +1980,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'BREAKthrough',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy8/2.png',
   },
   {
@@ -1826,6 +1992,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm75/5.png',
   },
   {
@@ -1837,6 +2004,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Lost Thunder',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm8/5.png',
   },
   {
@@ -1848,6 +2016,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh1/6.png',
   },
   {
@@ -1859,6 +2028,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/8.png',
   },
   {
@@ -1870,6 +2040,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Freeze',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw9/5.png',
   },
   {
@@ -1881,6 +2052,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/9.png',
   },
   {
@@ -1892,6 +2064,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/6.png',
   },
   {
@@ -1903,6 +2076,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Storm',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw8/5.png',
   },
   {
@@ -1914,6 +2088,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Black & White',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/5.png',
   },
   {
@@ -1925,6 +2100,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/8.png',
   },
   {
@@ -1936,6 +2112,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 9',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/6.png',
   },
   {
@@ -1947,6 +2124,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/8.png',
   },
   {
@@ -1958,6 +2136,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm2/6.png',
   },
   {
@@ -1969,6 +2148,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Secret Wonders',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp3/9.png',
   },
   {
@@ -1980,6 +2160,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Triumphant',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss4/9.png',
   },
   {
@@ -1991,6 +2172,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Call of Legends',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/col1/6.png',
   },
   {
@@ -2002,6 +2184,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Detective Pikachu',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/det1/9.png',
   },
   {
@@ -2012,6 +2195,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'DP Black Star Promos',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP07.png',
   },
   {
@@ -2023,6 +2207,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Darkness',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/10.png',
   },
   {
@@ -2034,6 +2219,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV2.png',
   },
   {
@@ -2045,6 +2231,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Emerging Powers',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/2.png',
   },
   {
@@ -2056,6 +2243,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/6.png',
   },
   {
@@ -2067,6 +2255,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/7.png',
   },
   {
@@ -2078,6 +2267,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 6',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/8.png',
   },
   {
@@ -2089,6 +2279,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/6.png',
   },
   {
@@ -2099,6 +2290,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Boundaries Crossed',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/bw7/8.png',
   },
   {
@@ -2110,6 +2302,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Cosmic Eclipse',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm12/7.png',
   },
   {
@@ -2121,6 +2314,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'XY',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy1/7.png',
   },
   {
@@ -2132,6 +2326,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh1/7.png',
   },
   {
@@ -2143,6 +2338,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragons Exalted',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/7.png',
   },
   {
@@ -2154,6 +2350,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 7',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pop7/8.png',
   },
   {
@@ -2165,6 +2362,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/10.png',
   },
   {
@@ -2176,6 +2374,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm2/7.png',
   },
   {
@@ -2186,6 +2385,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 9',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/7.png',
   },
   {
@@ -2196,6 +2396,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Lost Thunder',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm8/7.png',
   },
   {
@@ -2207,6 +2408,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Phantom Forces',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/7.png',
   },
   {
@@ -2218,6 +2420,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm75/7.png',
   },
   {
@@ -2229,6 +2432,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy1/8.png',
   },
   {
@@ -2240,6 +2444,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/8.png',
   },
   {
@@ -2251,6 +2456,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Dragons Exalted',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/8.png',
   },
   {
@@ -2262,6 +2468,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'HS—Unleashed',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/7.png',
   },
   {
@@ -2273,6 +2480,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/7.png',
   },
   {
@@ -2284,6 +2492,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 9',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/8.png',
   },
   {
@@ -2295,6 +2504,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Cosmic Eclipse',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm12/8.png',
   },
   {
@@ -2306,6 +2516,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'DP Black Star Promos',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP08.png',
   },
   {
@@ -2317,6 +2528,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop7/9.png',
   },
   {
@@ -2328,6 +2540,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh1/8.png',
   },
   {
@@ -2339,6 +2552,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW02.png',
   },
   {
@@ -2350,6 +2564,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BREAKthrough',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy8/4.png',
   },
   {
@@ -2361,6 +2576,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Triumphant',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss4/10.png',
   },
   {
@@ -2372,6 +2588,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/det1/11.png',
   },
   {
@@ -2383,6 +2600,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Fire',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/9.png',
   },
   {
@@ -2394,6 +2612,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/10.png',
   },
   {
@@ -2404,6 +2623,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Southern Islands',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/10.png',
   },
   {
@@ -2415,6 +2635,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Supreme Victors',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl3/7.png',
   },
   {
@@ -2426,6 +2647,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "McDonald's Collection 2019",
     type: 'Metal',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/11.png',
   },
   {
@@ -2437,6 +2659,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Arceus',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl4/9.png',
   },
   {
@@ -2448,6 +2671,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm2/8.png',
   },
   {
@@ -2459,6 +2683,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Base',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/8.png',
   },
   {
@@ -2470,6 +2695,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY Black Star Promos',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY01.png',
   },
   {
@@ -2481,6 +2707,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dark Explorers',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw5/6.png',
   },
   {
@@ -2492,6 +2719,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/9.png',
   },
   {
@@ -2503,6 +2731,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Base',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/9.png',
   },
   {
@@ -2514,6 +2743,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY Black Star Promos',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY02.png',
   },
   {
@@ -2525,6 +2755,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW03.png',
   },
   {
@@ -2536,6 +2767,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy1/9.png',
   },
   {
@@ -2547,6 +2779,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2019",
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/mcd19/12.png',
   },
   {
@@ -2558,6 +2791,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM02.png',
   },
   {
@@ -2569,6 +2803,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Diamond & Pearl',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/8.png',
   },
   {
@@ -2580,6 +2815,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm75/8.png',
   },
   {
@@ -2591,6 +2827,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss3/4.png',
   },
   {
@@ -2602,6 +2839,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/10.png',
   },
   {
@@ -2613,6 +2851,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Fire',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/10.png',
   },
   {
@@ -2624,6 +2863,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Team Up',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm9/10.png',
   },
   {
@@ -2635,6 +2875,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/si1/11.png',
   },
   {
@@ -2646,6 +2887,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/8.png',
   },
   {
@@ -2657,6 +2899,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragons Exalted',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/9.png',
   },
   {
@@ -2668,6 +2911,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dark Explorers',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw5/7.png',
   },
   {
@@ -2679,6 +2923,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dv1/11.png',
   },
   {
@@ -2690,6 +2935,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Revelation',
     type: 'Darkness',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/8.png',
   },
   {
@@ -2701,6 +2947,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 9',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/9.png',
   },
   {
@@ -2712,6 +2959,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Jungle',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base2/2.png',
   },
   {
@@ -2722,6 +2970,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Mysterious Treasures',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/3.png',
   },
   {
@@ -2733,6 +2982,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates Shiny Vault',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV3.png',
   },
   {
@@ -2744,6 +2994,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm6/3.png',
   },
   {
@@ -2755,6 +3006,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Primal Clash',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/11.png',
   },
   {
@@ -2766,6 +3018,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dark Explorers',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw5/8.png',
   },
   {
@@ -2777,6 +3030,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss2/8.png',
   },
   {
@@ -2788,6 +3042,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 5,
     image: 'https://images.pokemontcg.io/dv1/12.png',
   },
   {
@@ -2799,6 +3054,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/9.png',
   },
   {
@@ -2810,6 +3066,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Storm',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw8/7.png',
   },
   {
@@ -2821,6 +3078,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Guardians Rising',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm2/9.png',
   },
   {
@@ -2832,6 +3090,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/12.png',
   },
   {
@@ -2843,6 +3102,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Secret Wonders',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp3/12.png',
   },
   {
@@ -2854,6 +3114,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm75/9.png',
   },
   {
@@ -2865,6 +3126,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/swsh35/11.png',
   },
   {
@@ -2876,6 +3138,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM03.png',
   },
   {
@@ -2887,6 +3150,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragons Exalted',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/10.png',
   },
   {
@@ -2898,6 +3162,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Lost Thunder',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm8/8.png',
   },
   {
@@ -2909,6 +3174,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH001.png',
   },
   {
@@ -2920,6 +3186,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/1.png',
   },
   {
@@ -2931,6 +3198,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/12.png',
   },
   {
@@ -2942,6 +3210,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HGSS Black Star Promos',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hsp/HGSS02.png',
   },
   {
@@ -2953,6 +3222,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/9.png',
   },
   {
@@ -2964,6 +3234,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legendary Collection',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base6/10.png',
   },
   {
@@ -2975,6 +3246,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Supreme Victors',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pl3/10.png',
   },
   {
@@ -2986,6 +3258,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/12.png',
   },
   {
@@ -2997,6 +3270,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 8',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop8/4.png',
   },
   {
@@ -3008,6 +3282,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm75/10.png',
   },
   {
@@ -3019,6 +3294,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HeartGold & SoulSilver',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/13.png',
   },
   {
@@ -3030,6 +3306,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/4.png',
   },
   {
@@ -3041,6 +3318,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY Black Star Promos',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY03.png',
   },
   {
@@ -3052,6 +3330,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw4/10.png',
   },
   {
@@ -3063,6 +3342,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Unified Minds',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm11/5.png',
   },
   {
@@ -3074,6 +3354,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Kalos Starter Set',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/4.png',
   },
   {
@@ -3085,6 +3366,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 6',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/10.png',
   },
   {
@@ -3096,6 +3378,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss3/6.png',
   },
   {
@@ -3107,6 +3390,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/swsh35/12.png',
   },
   {
@@ -3118,6 +3402,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/9.png',
   },
   {
@@ -3129,6 +3414,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Roaring Skies',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy6/7.png',
   },
   {
@@ -3140,6 +3426,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Arceus',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pl4/11.png',
   },
   {
@@ -3151,6 +3438,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm6/4.png',
   },
   {
@@ -3162,6 +3450,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Great Encounters',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/9.png',
   },
   {
@@ -3173,6 +3462,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 9',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop9/11.png',
   },
   {
@@ -3184,6 +3474,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/13.png',
   },
   {
@@ -3194,6 +3485,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy7/12.png',
   },
   {
@@ -3205,6 +3497,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/13.png',
   },
   {
@@ -3216,6 +3509,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Call of Legends',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/col1/12.png',
   },
   {
@@ -3227,6 +3521,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Freeze',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw9/10.png',
   },
   {
@@ -3238,6 +3533,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Fire',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH002.png',
   },
   {
@@ -3249,6 +3545,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragons Exalted',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/11.png',
   },
   {
@@ -3260,6 +3557,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Jungle',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base2/4.png',
   },
   {
@@ -3271,6 +3569,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sun & Moon',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/11.png',
   },
   {
@@ -3282,6 +3581,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm2/11.png',
   },
   {
@@ -3293,6 +3593,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW004.png',
   },
   {
@@ -3304,6 +3605,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Kalos Starter Set',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/5.png',
   },
   {
@@ -3315,6 +3617,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/11.png',
   },
   {
@@ -3326,6 +3629,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop7/13.png',
   },
   {
@@ -3336,6 +3640,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'XY Black Star Promos',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY04.png',
   },
   {
@@ -3347,6 +3652,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 5,
     image: 'https://images.pokemontcg.io/dv1/14.png',
   },
   {
@@ -3358,6 +3664,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 6',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/11.png',
   },
   {
@@ -3369,6 +3676,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/11.png',
   },
   {
@@ -3380,6 +3688,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/5.png',
   },
   {
@@ -3391,6 +3700,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fossil',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/13.png',
   },
   {
@@ -3402,6 +3712,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Neo Genesis',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/4.png',
   },
   {
@@ -3413,6 +3724,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy2/14.png',
   },
   {
@@ -3424,6 +3736,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Metal',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss3/7.png',
   },
   {
@@ -3435,6 +3748,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Phantom Forces',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/10.png',
   },
   {
@@ -3446,6 +3760,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Base Set 2',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base4/12.png',
   },
   {
@@ -3457,6 +3772,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy10/12.png',
   },
   {
@@ -3468,6 +3784,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW005.png',
   },
   {
@@ -3479,6 +3796,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Undaunted',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss3/8.png',
   },
   {
@@ -3490,6 +3808,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Jungle',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base2/5.png',
   },
   {
@@ -3501,6 +3820,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy0/6.png',
   },
   {
@@ -3512,6 +3832,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH003.png',
   },
   {
@@ -3523,6 +3844,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Southern Islands',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/15.png',
   },
   {
@@ -3534,6 +3856,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss4/14.png',
   },
   {
@@ -3545,6 +3868,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw10/14.png',
   },
   {
@@ -3556,6 +3880,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm5/14.png',
   },
   {
@@ -3567,6 +3892,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/11.png',
   },
   {
@@ -3578,6 +3904,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Guardians Rising',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm2/12.png',
   },
   {
@@ -3589,6 +3916,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Guardians Rising',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm2/13.png',
   },
   {
@@ -3600,6 +3928,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV5.png',
   },
   {
@@ -3611,6 +3940,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Shining Legends',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm35/5.png',
   },
   {
@@ -3622,6 +3952,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop7/14.png',
   },
   {
@@ -3633,6 +3964,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Fighting',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM06.png',
   },
   {
@@ -3644,6 +3976,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY Black Star Promos',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY05.png',
   },
   {
@@ -3655,6 +3988,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Fates Collide',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy10/13.png',
   },
   {
@@ -3666,6 +4000,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/16.png',
   },
   {
@@ -3677,6 +4012,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss4/15.png',
   },
   {
@@ -3688,6 +4024,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/10.png',
   },
   {
@@ -3699,6 +4036,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/12.png',
   },
   {
@@ -3709,6 +4047,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy0/7.png',
   },
   {
@@ -3720,6 +4059,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/7.png',
   },
   {
@@ -3731,6 +4071,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Southern Islands',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/16.png',
   },
   {
@@ -3742,6 +4083,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 5,
     image: 'https://images.pokemontcg.io/dv1/16.png',
   },
   {
@@ -3753,6 +4095,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/5.png',
   },
   {
@@ -3764,6 +4107,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Base',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/13.png',
   },
   {
@@ -3775,6 +4119,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/16.png',
   },
   {
@@ -3786,6 +4131,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fossil',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/15.png',
   },
   {
@@ -3797,6 +4143,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'HS—Undaunted',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss3/9.png',
   },
   {
@@ -3808,6 +4155,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/11.png',
   },
   {
@@ -3819,6 +4167,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Detective Pikachu',
     type: 'Fairy',
+    generation: 2,
     image: 'https://images.pokemontcg.io/det1/15.png',
   },
   {
@@ -3830,6 +4179,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Darkness',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss3/10.png',
   },
   {
@@ -3841,6 +4191,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Roaring Skies',
     type: 'Grass',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy6/11.png',
   },
   {
@@ -3852,6 +4203,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sun & Moon',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/13.png',
   },
   {
@@ -3863,6 +4215,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Revelation',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/12.png',
   },
   {
@@ -3874,6 +4227,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Platinum',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl1/16.png',
   },
   {
@@ -3885,6 +4239,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm2/14.png',
   },
   {
@@ -3896,6 +4251,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Majestic Dawn',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp5/5.png',
   },
   {
@@ -3907,6 +4263,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Colorless',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM07.png',
   },
   {
@@ -3917,6 +4274,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/12.png',
   },
   {
@@ -3928,6 +4286,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HGSS Black Star Promos',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hsp/HGSS05.png',
   },
   {
@@ -3939,6 +4298,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm5/16.png',
   },
   {
@@ -3950,6 +4310,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP14.png',
   },
   {
@@ -3961,6 +4322,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/8.png',
   },
   {
@@ -3972,6 +4334,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp6/4.png',
   },
   {
@@ -3983,6 +4346,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pop7/15.png',
   },
   {
@@ -3994,6 +4358,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/9.png',
   },
   {
@@ -4005,6 +4370,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm75/13.png',
   },
   {
@@ -4016,6 +4382,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Southern Islands',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/si1/18.png',
   },
   {
@@ -4027,6 +4394,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2016",
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/mcd16/5.png',
   },
   {
@@ -4038,6 +4406,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/pop7/16.png',
   },
   {
@@ -4049,6 +4418,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Lightning',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP15.png',
   },
   {
@@ -4060,6 +4430,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss3/11.png',
   },
   {
@@ -4071,6 +4442,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/14.png',
   },
   {
@@ -4082,6 +4454,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Diamond & Pearl',
     type: 'Darkness',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/15.png',
   },
   {
@@ -4093,6 +4466,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'POP Series 8',
     type: 'Lightning',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop8/8.png',
   },
   {
@@ -4104,6 +4478,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 5,
     image: 'https://images.pokemontcg.io/dv1/17.png',
   },
   {
@@ -4115,6 +4490,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy4/13.png',
   },
   {
@@ -4126,6 +4502,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 9',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop9/14.png',
   },
   {
@@ -4137,6 +4514,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/15.png',
   },
   {
@@ -4148,6 +4526,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY Black Star Promos',
     type: 'Darkness',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY06.png',
   },
   {
@@ -4159,6 +4538,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sun & Moon',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/14.png',
   },
   {
@@ -4170,6 +4550,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss3/12.png',
   },
   {
@@ -4181,6 +4562,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/bw10/18.png',
   },
   {
@@ -4191,6 +4573,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/16.png',
   },
   {
@@ -4202,6 +4585,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Grass',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/10.png',
   },
   {
@@ -4213,6 +4597,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/16.png',
   },
   {
@@ -4224,6 +4609,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ultra Prism',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm5/17.png',
   },
   {
@@ -4235,6 +4621,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/19.png',
   },
   {
@@ -4246,6 +4633,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 7',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pop7/17.png',
   },
   {
@@ -4257,6 +4645,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Neo Genesis',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/8.png',
   },
   {
@@ -4268,6 +4657,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy4/14.png',
   },
   {
@@ -4279,6 +4669,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Metal',
+    generation: 1,
     image: 'https://images.pokemontcg.io/neo2/7.png',
   },
   {
@@ -4290,6 +4681,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm75/14.png',
   },
   {
@@ -4300,6 +4692,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Diamond & Pearl',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/16.png',
   },
   {
@@ -4311,6 +4704,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sma/SV8.png',
   },
   {
@@ -4322,6 +4716,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss2/15.png',
   },
   {
@@ -4333,6 +4728,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/18.png',
   },
   {
@@ -4344,6 +4740,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM09.png',
   },
   {
@@ -4355,6 +4752,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/17.png',
   },
   {
@@ -4366,6 +4764,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2016",
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd16/7.png',
   },
   {
@@ -4377,6 +4776,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/16.png',
   },
   {
@@ -4388,6 +4788,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss2/16.png',
   },
   {
@@ -4399,6 +4800,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Psychic',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/18.png',
   },
   {
@@ -4410,6 +4812,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm75/15.png',
   },
   {
@@ -4421,6 +4824,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SM Black Star Promos',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM10.png',
   },
   {
@@ -4432,6 +4836,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'BW Black Star Promos',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW09.png',
   },
   {
@@ -4443,6 +4848,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss4/19.png',
   },
   {
@@ -4454,6 +4860,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Black & White',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/14.png',
   },
   {
@@ -4465,6 +4872,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SWSH Black Star Promos',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH007.png',
   },
   {
@@ -4476,6 +4884,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sma/SV9.png',
   },
   {
@@ -4487,6 +4896,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Steam Siege',
     type: 'Fire',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy11/19.png',
   },
   {
@@ -4498,6 +4908,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 6',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop6/16.png',
   },
   {
@@ -4509,6 +4920,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy0/11.png',
   },
   {
@@ -4520,6 +4932,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm2/17.png',
   },
   {
@@ -4531,6 +4944,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy4/16.png',
   },
   {
@@ -4542,6 +4956,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss1/19.png',
   },
   {
@@ -4553,6 +4968,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss3/14.png',
   },
   {
@@ -4564,6 +4980,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Psychic',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/19.png',
   },
   {
@@ -4575,6 +4992,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Darkness',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp3/21.png',
   },
   {
@@ -4586,6 +5004,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM11.png',
   },
   {
@@ -4597,6 +5016,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy2/21.png',
   },
   {
@@ -4608,6 +5028,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SWSH Black Star Promos',
     type: 'Metal',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH008.png',
   },
   {
@@ -4619,6 +5040,7 @@ const flavorCards = [
     stage: null,
     set: 'Fates Collide',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/17.png',
   },
   {
@@ -4629,6 +5051,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Mysterious Treasures',
     type: 'Darkness',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/10.png',
   },
   {
@@ -4640,6 +5063,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Base Set 2',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base4/19.png',
   },
   {
@@ -4651,6 +5075,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Grass',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm35/9.png',
   },
   {
@@ -4662,6 +5087,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Fire',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm6/12.png',
   },
   {
@@ -4673,6 +5099,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: "Champion's Path",
     type: 'Psychic',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/20.png',
   },
   {
@@ -4684,6 +5111,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sun & Moon',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/18.png',
   },
   {
@@ -4695,6 +5123,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/22.png',
   },
   {
@@ -4706,6 +5135,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/18.png',
   },
   {
@@ -4717,6 +5147,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Jungle',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base2/11.png',
   },
   {
@@ -4728,6 +5159,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/15.png',
   },
   {
@@ -4739,6 +5171,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Mysterious Treasures',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/11.png',
   },
   {
@@ -4749,6 +5182,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Vault',
     type: 'Dragon',
+    generation: 5,
     image: 'https://images.pokemontcg.io/dv1/21.png',
   },
   {
@@ -4760,6 +5194,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Supreme Victors',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl3/18.png',
   },
   {
@@ -4771,6 +5206,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Fighting',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM12.png',
   },
   {
@@ -4782,6 +5218,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Great Encounters',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/15.png',
   },
   {
@@ -4793,6 +5230,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SWSH Black Star Promos',
     type: 'Colorless',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swshp/SWSH009.png',
   },
   {
@@ -4804,6 +5242,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/18.png',
   },
   {
@@ -4815,6 +5254,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/21.png',
   },
   {
@@ -4826,6 +5266,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/18.png',
   },
   {
@@ -4837,6 +5278,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/23.png',
   },
   {
@@ -4848,6 +5290,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/21.png',
   },
   {
@@ -4859,6 +5302,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Colorless',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM13.png',
   },
   {
@@ -4870,6 +5314,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates Shiny Vault',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sma/SV12.png',
   },
   {
@@ -4881,6 +5326,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sun & Moon',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/19.png',
   },
   {
@@ -4891,6 +5337,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Arceus',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl4/18.png',
   },
   {
@@ -4902,6 +5349,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Team Up',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm9/21.png',
   },
   {
@@ -4913,6 +5361,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/19.png',
   },
   {
@@ -4924,6 +5373,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH010.png',
   },
   {
@@ -4935,6 +5385,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW12.png',
   },
   {
@@ -4946,6 +5397,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Triumphant',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss4/21.png',
   },
   {
@@ -4957,6 +5409,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Black & White',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/17.png',
   },
   {
@@ -4968,6 +5421,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2016",
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/mcd16/10.png',
   },
   {
@@ -4979,6 +5433,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/21.png',
   },
   {
@@ -4990,6 +5445,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'XY Black Star Promos',
     type: 'Dragon',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY10.png',
   },
   {
@@ -5000,6 +5456,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy4/18.png',
   },
   {
@@ -5011,6 +5468,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Great Encounters',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/17.png',
   },
   {
@@ -5022,6 +5480,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Crimson Invasion',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm4/13.png',
   },
   {
@@ -5033,6 +5492,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'POP Series 8',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pop8/14.png',
   },
   {
@@ -5044,6 +5504,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Colorless',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH011.png',
   },
   {
@@ -5055,6 +5516,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm75/17.png',
   },
   {
@@ -5066,6 +5528,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss4/22.png',
   },
   {
@@ -5077,6 +5540,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/24.png',
   },
   {
@@ -5088,6 +5552,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/22.png',
   },
   {
@@ -5099,6 +5564,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Genesis',
     type: 'Metal',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/13.png',
   },
   {
@@ -5110,6 +5576,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Neo Discovery',
     type: 'Darkness',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/12.png',
   },
   {
@@ -5121,6 +5588,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sun & Moon',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/20.png',
   },
   {
@@ -5132,6 +5600,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Diamond & Pearl',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/20.png',
   },
   {
@@ -5143,6 +5612,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/15.png',
   },
   {
@@ -5154,6 +5624,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Cosmic Eclipse',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm12/21.png',
   },
   {
@@ -5165,6 +5636,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Black & White',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/19.png',
   },
   {
@@ -5176,6 +5648,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Colorless',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW13.png',
   },
   {
@@ -5187,6 +5660,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH012.png',
   },
   {
@@ -5198,6 +5672,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Triumphant',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss4/23.png',
   },
   {
@@ -5209,6 +5684,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/14.png',
   },
   {
@@ -5220,6 +5696,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Majestic Dawn',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp5/12.png',
   },
   {
@@ -5231,6 +5708,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/25.png',
   },
   {
@@ -5242,6 +5720,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY Black Star Promos',
     type: 'Metal',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY12.png',
   },
   {
@@ -5253,6 +5732,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Guardians Rising',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm2/20.png',
   },
   {
@@ -5264,6 +5744,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/20.png',
   },
   {
@@ -5275,6 +5756,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/21.png',
   },
   {
@@ -5286,6 +5768,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Lost Thunder',
     type: 'Grass',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm8/19.png',
   },
   {
@@ -5297,6 +5780,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw10/24.png',
   },
   {
@@ -5308,6 +5792,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy6/18.png',
   },
   {
@@ -5319,6 +5804,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Roaring Skies',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy6/19.png',
   },
   {
@@ -5330,6 +5816,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV14.png',
   },
   {
@@ -5341,6 +5828,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/21.png',
   },
   {
@@ -5352,6 +5840,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP22.png',
   },
   {
@@ -5363,6 +5852,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/21.png',
   },
   {
@@ -5374,6 +5864,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Genesis',
     type: 'Metal',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/15.png',
   },
   {
@@ -5385,6 +5876,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Flashfire',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/26.png',
   },
   {
@@ -5396,6 +5888,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/swshp/SWSH013.png',
   },
   {
@@ -5407,6 +5900,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Fire',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy11/25.png',
   },
   {
@@ -5418,6 +5912,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/14.png',
   },
   {
@@ -5429,6 +5924,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Darkness',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy0/16.png',
   },
   {
@@ -5440,6 +5936,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Genesis',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/16.png',
   },
   {
@@ -5451,6 +5948,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw4/24.png',
   },
   {
@@ -5462,6 +5960,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Discovery',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/15.png',
   },
   {
@@ -5473,6 +5972,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/smp/SM15.png',
   },
   {
@@ -5484,6 +5984,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Arceus',
     type: 'Lightning',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl4/22.png',
   },
   {
@@ -5495,6 +5996,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sma/SV15.png',
   },
   {
@@ -5506,6 +6008,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/swsh35/24.png',
   },
   {
@@ -5517,6 +6020,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy10/22.png',
   },
   {
@@ -5528,6 +6032,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP23.png',
   },
   {
@@ -5539,6 +6044,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Supreme Victors',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl3/21.png',
   },
   {
@@ -5550,6 +6056,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Kalos Starter Set',
     type: 'Darkness',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy0/17.png',
   },
   {
@@ -5561,6 +6068,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BREAKthrough',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy8/18.png',
   },
   {
@@ -5572,6 +6080,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Fire',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm5/24.png',
   },
   {
@@ -5583,6 +6092,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Vivid Voltage',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/swsh4/19.png',
   },
   {
@@ -5594,6 +6104,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Colorless',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW15.png',
   },
   {
@@ -5605,6 +6116,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/27.png',
   },
   {
@@ -5616,6 +6128,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Base',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/22.png',
   },
   {
@@ -5627,6 +6140,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy7/24.png',
   },
   {
@@ -5638,6 +6152,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Mysterious Treasures',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp2/16.png',
   },
   {
@@ -5649,6 +6164,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy10/23.png',
   },
   {
@@ -5660,6 +6176,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Darkness',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/18.png',
   },
   {
@@ -5671,6 +6188,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragons Exalted',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/25.png',
   },
   {
@@ -5682,6 +6200,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HGSS Black Star Promos',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hsp/HGSS13.png',
   },
   {
@@ -5693,6 +6212,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/swsh35/25.png',
   },
   {
@@ -5704,6 +6224,7 @@ const flavorCards = [
     stage: null,
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/27.png',
   },
   {
@@ -5715,6 +6236,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'XY Black Star Promos',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY15.png',
   },
   {
@@ -5726,6 +6248,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'BREAKthrough',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy8/19.png',
   },
   {
@@ -5737,6 +6260,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/22.png',
   },
   {
@@ -5748,6 +6272,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy11/27.png',
   },
   {
@@ -5759,6 +6284,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/25.png',
   },
   {
@@ -5770,6 +6296,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Secret Wonders',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/dp3/29.png',
   },
   {
@@ -5781,6 +6308,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragons Exalted',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/bw6/26.png',
   },
   {
@@ -5792,6 +6320,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm2/23.png',
   },
   {
@@ -5803,6 +6332,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sma/SV16.png',
   },
   {
@@ -5814,6 +6344,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/28.png',
   },
   {
@@ -5825,6 +6356,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Unified Minds',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm11/16.png',
   },
   {
@@ -5836,6 +6368,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy0/19.png',
   },
   {
@@ -5847,6 +6380,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss1/27.png',
   },
   {
@@ -5858,6 +6392,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Furious Fists',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy3/15.png',
   },
   {
@@ -5869,6 +6404,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/18.png',
   },
   {
@@ -5879,6 +6415,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Unbroken Bonds',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm10/19.png',
   },
   {
@@ -5890,6 +6427,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Triumphant',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss4/25.png',
   },
   {
@@ -5901,6 +6439,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/29.png',
   },
   {
@@ -5911,6 +6450,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy11/28.png',
   },
   {
@@ -5922,6 +6462,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Freeze',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw9/24.png',
   },
   {
@@ -5933,6 +6474,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Rebel Clash',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh2/20.png',
   },
   {
@@ -5944,6 +6486,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "McDonald's Collection 2012",
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd12/5.png',
   },
   {
@@ -5955,6 +6498,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sun & Moon',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/26.png',
   },
   {
@@ -5966,6 +6510,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Kalos Starter Set',
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy0/20.png',
   },
   {
@@ -5977,6 +6522,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HeartGold & SoulSilver',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss1/29.png',
   },
   {
@@ -5988,6 +6534,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/30.png',
   },
   {
@@ -5999,6 +6546,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/dp3/30.png',
   },
   {
@@ -6010,6 +6558,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Steam Siege',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy11/29.png',
   },
   {
@@ -6021,6 +6570,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Furious Fists',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy3/16.png',
   },
   {
@@ -6032,6 +6582,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/27.png',
   },
   {
@@ -6043,6 +6594,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Crimson Invasion',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm4/19.png',
   },
   {
@@ -6054,6 +6606,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/31.png',
   },
   {
@@ -6065,6 +6618,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates Shiny Vault',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sma/SV18.png',
   },
   {
@@ -6076,6 +6630,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/29.png',
   },
   {
@@ -6087,6 +6642,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HGSS Black Star Promos',
     type: 'Lightning',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hsp/HGSS16.png',
   },
   {
@@ -6097,6 +6653,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Legends Awakened',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/18.png',
   },
   {
@@ -6108,6 +6665,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2012",
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd12/6.png',
   },
   {
@@ -6119,6 +6677,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/31.png',
   },
   {
@@ -6130,6 +6689,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Destiny',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo4/27.png',
   },
   {
@@ -6141,6 +6701,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/28.png',
   },
   {
@@ -6152,6 +6713,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Crimson Invasion',
     type: 'Water',
+    generation: 2,
     image: 'https://images.pokemontcg.io/sm4/20.png',
   },
   {
@@ -6163,6 +6725,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Lightning',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy6/24.png',
   },
   {
@@ -6174,6 +6737,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV19.png',
   },
   {
@@ -6185,6 +6749,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/30.png',
   },
   {
@@ -6196,6 +6761,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HGSS Black Star Promos',
     type: 'Lightning',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hsp/HGSS17.png',
   },
   {
@@ -6207,6 +6773,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Freeze',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw9/25.png',
   },
   {
@@ -6218,6 +6785,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Darkness',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/24.png',
   },
   {
@@ -6229,6 +6797,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/29.png',
   },
   {
@@ -6240,6 +6809,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/31.png',
   },
   {
@@ -6251,6 +6821,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/32.png',
   },
   {
@@ -6262,6 +6833,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Neo Genesis',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/21.png',
   },
   {
@@ -6273,6 +6845,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/26.png',
   },
   {
@@ -6284,6 +6857,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Destiny',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo4/28.png',
   },
   {
@@ -6295,6 +6869,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Great Encounters',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/24.png',
   },
   {
@@ -6306,6 +6881,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/32.png',
   },
   {
@@ -6317,6 +6893,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2012",
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd12/7.png',
   },
   {
@@ -6328,6 +6905,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Noble Victories',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw3/24.png',
   },
   {
@@ -6338,6 +6916,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/25.png',
   },
   {
@@ -6349,6 +6928,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Rebel Clash',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh2/22.png',
   },
   {
@@ -6360,6 +6940,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Plasma Blast',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/33.png',
   },
   {
@@ -6371,6 +6952,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Majestic Dawn',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp5/21.png',
   },
   {
@@ -6382,6 +6964,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/27.png',
   },
   {
@@ -6393,6 +6976,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SM Black Star Promos',
     type: 'Fighting',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM20.png',
   },
   {
@@ -6404,6 +6988,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Destiny',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo4/29.png',
   },
   {
@@ -6415,6 +7000,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Darkness',
+    generation: 4,
     image: 'https://images.pokemontcg.io/hgss3/25.png',
   },
   {
@@ -6426,6 +7012,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Dragon',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM21.png',
   },
   {
@@ -6437,6 +7024,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy6/27.png',
   },
   {
@@ -6448,6 +7036,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Fighting',
+    generation: 7,
     image: 'https://images.pokemontcg.io/swsh35/30.png',
   },
   {
@@ -6459,6 +7048,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'BREAKpoint',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy9/20.png',
   },
   {
@@ -6470,6 +7060,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy7/30.png',
   },
   {
@@ -6481,6 +7072,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Destiny',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo4/30.png',
   },
   {
@@ -6492,6 +7084,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2012",
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd12/8.png',
   },
   {
@@ -6503,6 +7096,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HeartGold & SoulSilver',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/33.png',
   },
   {
@@ -6514,6 +7108,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Next Destinies',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/33.png',
   },
   {
@@ -6525,6 +7120,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legends Awakened',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/22.png',
   },
   {
@@ -6536,6 +7132,7 @@ const flavorCards = [
     stage: null,
     set: 'Neo Genesis',
     type: 'Fire',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/23.png',
   },
   {
@@ -6547,6 +7144,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Steam Siege',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy11/32.png',
   },
   {
@@ -6558,6 +7156,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Rebel Clash',
     type: 'Grass',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh2/23.png',
   },
   {
@@ -6569,6 +7168,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Genesis',
     type: 'Darkness',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/24.png',
   },
   {
@@ -6580,6 +7180,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Furious Fists',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy3/21.png',
   },
   {
@@ -6591,6 +7192,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/29.png',
   },
   {
@@ -6602,6 +7204,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legends Awakened',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/23.png',
   },
   {
@@ -6613,6 +7216,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Lightning',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/28.png',
   },
   {
@@ -6624,6 +7228,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Fighting',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/31.png',
   },
   {
@@ -6635,6 +7240,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fossil',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base3/32.png',
   },
   {
@@ -6645,6 +7251,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Diamond & Pearl',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp1/32.png',
   },
   {
@@ -6656,6 +7263,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/26.png',
   },
   {
@@ -6667,6 +7275,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BREAKpoint',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy9/22.png',
   },
   {
@@ -6678,6 +7287,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Furious Fists',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy3/22.png',
   },
   {
@@ -6689,6 +7299,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/24.png',
   },
   {
@@ -6700,6 +7311,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/24.png',
   },
   {
@@ -6711,6 +7323,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy10/30.png',
   },
   {
@@ -6721,6 +7334,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/basep/28.png',
   },
   {
@@ -6732,6 +7346,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BREAKthrough',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy8/27.png',
   },
   {
@@ -6743,6 +7358,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy7/31.png',
   },
   {
@@ -6754,6 +7370,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2012",
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd12/9.png',
   },
   {
@@ -6765,6 +7382,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legendary Treasures',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/bw11/34.png',
   },
   {
@@ -6776,6 +7394,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss3/29.png',
   },
   {
@@ -6787,6 +7406,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/27.png',
   },
   {
@@ -6798,6 +7418,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'BREAKthrough',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy8/28.png',
   },
   {
@@ -6809,6 +7430,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Genesis',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/26.png',
   },
   {
@@ -6820,6 +7442,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Crimson Invasion',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm4/24.png',
   },
   {
@@ -6831,6 +7454,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/25.png',
   },
   {
@@ -6842,6 +7466,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Burning Shadows',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm3/28.png',
   },
   {
@@ -6853,6 +7478,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/33.png',
   },
   {
@@ -6864,6 +7490,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm75/31.png',
   },
   {
@@ -6875,6 +7502,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HGSS Black Star Promos',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hsp/HGSS22.png',
   },
   {
@@ -6886,6 +7514,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Freeze',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw9/30.png',
   },
   {
@@ -6897,6 +7526,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Fire',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/32.png',
   },
   {
@@ -6908,6 +7538,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/33.png',
   },
   {
@@ -6919,6 +7550,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Lightning',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/37.png',
   },
   {
@@ -6930,6 +7562,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss2/30.png',
   },
   {
@@ -6941,6 +7574,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Team Up',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm9/34.png',
   },
   {
@@ -6952,6 +7586,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Base',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/32.png',
   },
   {
@@ -6963,6 +7598,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'SWSH Black Star Promos',
     type: 'Fighting',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH024.png',
   },
   {
@@ -6974,6 +7610,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Dragon Majesty',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm75/32.png',
   },
   {
@@ -6985,6 +7622,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Darkness',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV26.png',
   },
   {
@@ -6996,6 +7634,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Primal Clash',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/33.png',
   },
   {
@@ -7007,6 +7646,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Forbidden Light',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/28.png',
   },
   {
@@ -7018,6 +7658,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Hidden Fates',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/34.png',
   },
   {
@@ -7029,6 +7670,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "McDonald's Collection 2012",
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd12/11.png',
   },
   {
@@ -7040,6 +7682,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/26.png',
   },
   {
@@ -7051,6 +7694,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/32.png',
   },
   {
@@ -7062,6 +7706,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Arceus',
     type: 'Metal',
+    generation: 4,
     image: 'https://images.pokemontcg.io/pl4/34.png',
   },
   {
@@ -7073,6 +7718,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Fire',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh3/28.png',
   },
   {
@@ -7084,6 +7730,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/38.png',
   },
   {
@@ -7095,6 +7742,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Undaunted',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss3/30.png',
   },
   {
@@ -7105,6 +7753,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Primal Clash',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/34.png',
   },
   {
@@ -7116,6 +7765,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy4/31.png',
   },
   {
@@ -7127,6 +7777,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SWSH Black Star Promos',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swshp/SWSH025.png',
   },
   {
@@ -7138,6 +7789,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Emerging Powers',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/27.png',
   },
   {
@@ -7149,6 +7801,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Dragon Majesty',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm75/33.png',
   },
   {
@@ -7160,6 +7813,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy0/27.png',
   },
   {
@@ -7171,6 +7825,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/39.png',
   },
   {
@@ -7182,6 +7837,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/33.png',
   },
   {
@@ -7193,6 +7849,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy2/39.png',
   },
   {
@@ -7204,6 +7861,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy7/34.png',
   },
   {
@@ -7215,6 +7873,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Team Up',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm9/36.png',
   },
   {
@@ -7226,6 +7885,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 3,
     image: 'https://images.pokemontcg.io/swsh35/35.png',
   },
   {
@@ -7237,6 +7897,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sword & Shield',
     type: 'Fire',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/34.png',
   },
   {
@@ -7248,6 +7909,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ancient Origins',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy7/35.png',
   },
   {
@@ -7259,6 +7921,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 3,
     image: 'https://images.pokemontcg.io/swsh35/36.png',
   },
   {
@@ -7270,6 +7933,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy0/28.png',
   },
   {
@@ -7281,6 +7945,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/34.png',
   },
   {
@@ -7292,6 +7957,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm35/26.png',
   },
   {
@@ -7303,6 +7969,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Diamond & Pearl',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/36.png',
   },
   {
@@ -7314,6 +7981,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Team Up',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm9/37.png',
   },
   {
@@ -7325,6 +7993,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/39.png',
   },
   {
@@ -7336,6 +8005,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/40.png',
   },
   {
@@ -7347,6 +8017,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Forbidden Light',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/31.png',
   },
   {
@@ -7358,6 +8029,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm115/37.png',
   },
   {
@@ -7369,6 +8041,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Water',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm35/27.png',
   },
   {
@@ -7380,6 +8053,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'SM Black Star Promos',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM28.png',
   },
   {
@@ -7391,6 +8065,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/37.png',
   },
   {
@@ -7402,6 +8077,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Fates Collide',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/35.png',
   },
   {
@@ -7413,6 +8089,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/41.png',
   },
   {
@@ -7424,6 +8101,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sma/SV30.png',
   },
   {
@@ -7435,6 +8113,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Base',
     type: 'Grass',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/37.png',
   },
   {
@@ -7446,6 +8125,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Freeze',
     type: 'Lightning',
+    generation: 2,
     image: 'https://images.pokemontcg.io/bw9/35.png',
   },
   {
@@ -7457,6 +8137,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Metal',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH028.png',
   },
   {
@@ -7468,6 +8149,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/42.png',
   },
   {
@@ -7479,6 +8161,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy6/36.png',
   },
   {
@@ -7490,6 +8173,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/43.png',
   },
   {
@@ -7500,6 +8184,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Colorless',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/30.png',
   },
   {
@@ -7511,6 +8196,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Undaunted',
     type: 'Darkness',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss3/35.png',
   },
   {
@@ -7522,6 +8208,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM29.png',
   },
   {
@@ -7533,6 +8220,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/36.png',
   },
   {
@@ -7544,6 +8232,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Lost Thunder',
     type: 'Grass',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm8/37.png',
   },
   {
@@ -7555,6 +8244,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM30.png',
   },
   {
@@ -7566,6 +8256,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Arceus',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl4/40.png',
   },
   {
@@ -7577,6 +8268,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/37.png',
   },
   {
@@ -7588,6 +8280,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Primal Clash',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/39.png',
   },
   {
@@ -7599,6 +8292,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh35/40.png',
   },
   {
@@ -7610,6 +8304,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/44.png',
   },
   {
@@ -7621,6 +8316,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Majestic Dawn',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp5/33.png',
   },
   {
@@ -7632,6 +8328,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'HS—Unleashed',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/38.png',
   },
   {
@@ -7643,6 +8340,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HeartGold & SoulSilver',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss1/44.png',
   },
   {
@@ -7654,6 +8352,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Darkness Ablaze',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/swsh3/35.png',
   },
   {
@@ -7665,6 +8364,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Call of Legends',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/col1/39.png',
   },
   {
@@ -7676,6 +8376,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Dragon',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm75/38.png',
   },
   {
@@ -7687,6 +8388,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Noble Victories',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw3/35.png',
   },
   {
@@ -7698,6 +8400,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Metal',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV32.png',
   },
   {
@@ -7709,6 +8412,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Colorless',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/31.png',
   },
   {
@@ -7720,6 +8424,7 @@ const flavorCards = [
     stage: null,
     set: 'Fates Collide',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy10/38.png',
   },
   {
@@ -7731,6 +8436,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Guardians Rising',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm2/39.png',
   },
   {
@@ -7742,6 +8448,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Noble Victories',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw3/36.png',
   },
   {
@@ -7753,6 +8460,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Crimson Invasion',
     type: 'Lightning',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm4/31.png',
   },
   {
@@ -7764,6 +8472,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy7/40.png',
   },
   {
@@ -7775,6 +8484,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legendary Collection',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base6/35.png',
   },
   {
@@ -7786,6 +8496,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh35/42.png',
   },
   {
@@ -7797,6 +8508,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Kalos Starter Set',
     type: 'Colorless',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy0/32.png',
   },
   {
@@ -7808,6 +8520,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Primal Clash',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy5/40.png',
   },
   {
@@ -7819,6 +8532,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy11/43.png',
   },
   {
@@ -7830,6 +8544,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp1/42.png',
   },
   {
@@ -7841,6 +8556,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Metal',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH033.png',
   },
   {
@@ -7852,6 +8568,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh35/43.png',
   },
   {
@@ -7863,6 +8580,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Unbroken Bonds',
     type: 'Fire',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm10/32.png',
   },
   {
@@ -7874,6 +8592,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Freeze',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw9/40.png',
   },
   {
@@ -7885,6 +8604,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Wizards Black Star Promos',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/basep/38.png',
   },
   {
@@ -7896,6 +8616,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/xy10/40.png',
   },
   {
@@ -7907,6 +8628,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh3/36.png',
   },
   {
@@ -7918,6 +8640,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Grass',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/43.png',
   },
   {
@@ -7929,6 +8652,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Celestial Storm',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm7/41.png',
   },
   {
@@ -7940,6 +8664,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy6/39.png',
   },
   {
@@ -7951,6 +8676,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SWSH Black Star Promos',
     type: 'Metal',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH034.png',
   },
   {
@@ -7962,6 +8688,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss2/41.png',
   },
   {
@@ -7973,6 +8700,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Vivid Voltage',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh4/38.png',
   },
   {
@@ -7984,6 +8712,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm5/40.png',
   },
   {
@@ -7995,6 +8724,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Freeze',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw9/41.png',
   },
   {
@@ -8006,6 +8736,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/43.png',
   },
   {
@@ -8017,6 +8748,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Emerging Powers',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/35.png',
   },
   {
@@ -8028,6 +8760,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sun & Moon',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/40.png',
   },
   {
@@ -8039,6 +8772,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm5/41.png',
   },
   {
@@ -8050,6 +8784,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Celestial Storm',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm7/42.png',
   },
   {
@@ -8061,6 +8796,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sma/SV36.png',
   },
   {
@@ -8072,6 +8808,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Vivid Voltage',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh4/39.png',
   },
   {
@@ -8083,6 +8820,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp2/37.png',
   },
   {
@@ -8094,6 +8832,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/39.png',
   },
   {
@@ -8105,6 +8844,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Darkness',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh35/46.png',
   },
   {
@@ -8116,6 +8856,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Celestial Storm',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm7/43.png',
   },
   {
@@ -8127,6 +8868,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Undaunted',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss3/42.png',
   },
   {
@@ -8138,6 +8880,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SWSH Black Star Promos',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH036.png',
   },
   {
@@ -8149,6 +8892,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Emerging Powers',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/37.png',
   },
   {
@@ -8160,6 +8904,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Vivid Voltage',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh4/40.png',
   },
   {
@@ -8171,6 +8916,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sun & Moon',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/41.png',
   },
   {
@@ -8182,6 +8928,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Vivid Voltage',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh4/41.png',
   },
   {
@@ -8193,6 +8940,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/40.png',
   },
   {
@@ -8204,6 +8952,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Metal',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/39.png',
   },
   {
@@ -8215,6 +8964,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Emerging Powers',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/38.png',
   },
   {
@@ -8226,6 +8976,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Freeze',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/bw9/45.png',
   },
   {
@@ -8237,6 +8988,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Noble Victories',
     type: 'Lightning',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw3/42.png',
   },
   {
@@ -8248,6 +9000,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Vivid Voltage',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh4/42.png',
   },
   {
@@ -8259,6 +9012,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "Champion's Path",
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/swsh35/48.png',
   },
   {
@@ -8270,6 +9024,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2011",
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd11/8.png',
   },
   {
@@ -8281,6 +9036,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Emerging Powers',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/39.png',
   },
   {
@@ -8292,6 +9048,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sun & Moon',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/43.png',
   },
   {
@@ -8303,6 +9060,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Furious Fists',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy3/35.png',
   },
   {
@@ -8314,6 +9072,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Emerging Powers',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/40.png',
   },
   {
@@ -8325,6 +9084,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/48.png',
   },
   {
@@ -8336,6 +9096,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/51.png',
   },
   {
@@ -8347,6 +9108,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Darkness',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy2/53.png',
   },
   {
@@ -8358,6 +9120,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Darkness Ablaze',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/swsh3/43.png',
   },
   {
@@ -8369,6 +9132,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2011",
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd11/10.png',
   },
   {
@@ -8380,6 +9144,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Plasma Blast',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/52.png',
   },
   {
@@ -8391,6 +9156,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp6/42.png',
   },
   {
@@ -8402,6 +9168,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Noble Victories',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw3/44.png',
   },
   {
@@ -8413,6 +9180,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Genesis',
     type: 'Fighting',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo1/43.png',
   },
   {
@@ -8424,6 +9192,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp2/42.png',
   },
   {
@@ -8435,6 +9204,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/44.png',
   },
   {
@@ -8446,6 +9216,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp3/52.png',
   },
   {
@@ -8457,6 +9228,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Furious Fists',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/xy3/38.png',
   },
   {
@@ -8468,6 +9240,7 @@ const flavorCards = [
     stage: null,
     set: 'Plasma Blast',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/53.png',
   },
   {
@@ -8479,6 +9252,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy11/51.png',
   },
   {
@@ -8490,6 +9264,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Great Encounters',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/43.png',
   },
   {
@@ -8501,6 +9276,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sun & Moon',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/47.png',
   },
   {
@@ -8512,6 +9288,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/54.png',
   },
   {
@@ -8523,6 +9300,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Noble Victories',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw3/46.png',
   },
   {
@@ -8534,6 +9312,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/51.png',
   },
   {
@@ -8545,6 +9324,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Colorless',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sma/SV43.png',
   },
   {
@@ -8556,6 +9336,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Dragon',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM40.png',
   },
   {
@@ -8567,6 +9348,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm35/40.png',
   },
   {
@@ -8578,6 +9360,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy4/45.png',
   },
   {
@@ -8589,6 +9372,7 @@ const flavorCards = [
     stage: 'Basic',
     set: "McDonald's Collection 2011",
     type: 'Colorless',
+    generation: 5,
     image: 'https://images.pokemontcg.io/mcd11/12.png',
   },
   {
@@ -8600,6 +9384,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Team Up',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm9/51.png',
   },
   {
@@ -8611,6 +9396,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Great Encounters',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp4/44.png',
   },
   {
@@ -8622,6 +9408,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy2/57.png',
   },
   {
@@ -8633,6 +9420,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'DP Black Star Promos',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dpp/DP50.png',
   },
   {
@@ -8644,6 +9432,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Team Up',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm9/52.png',
   },
   {
@@ -8655,6 +9444,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Furious Fists',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy3/40.png',
   },
   {
@@ -8666,6 +9456,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy10/49.png',
   },
   {
@@ -8677,6 +9468,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Colorless',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM41.png',
   },
   {
@@ -8688,6 +9480,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legends Awakened',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/46.png',
   },
   {
@@ -8699,6 +9492,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy6/48.png',
   },
   {
@@ -8710,6 +9504,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM42.png',
   },
   {
@@ -8721,6 +9516,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Furious Fists',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy3/41.png',
   },
   {
@@ -8732,6 +9528,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Psychic',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm35/42.png',
   },
   {
@@ -8743,6 +9540,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy11/54.png',
   },
   {
@@ -8754,6 +9552,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Hidden Fates Shiny Vault',
     type: 'Colorless',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sma/SV45.png',
   },
   {
@@ -8765,6 +9564,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Phantom Forces',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/48.png',
   },
   {
@@ -8776,6 +9576,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Phantom Forces',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/49.png',
   },
   {
@@ -8787,6 +9588,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Water',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/55.png',
   },
   {
@@ -8798,6 +9600,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/48.png',
   },
   {
@@ -8809,6 +9612,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/48.png',
   },
   {
@@ -8820,6 +9624,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Phantom Forces',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy4/50.png',
   },
   {
@@ -8831,6 +9636,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'SM Black Star Promos',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM45.png',
   },
   {
@@ -8842,6 +9648,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/49.png',
   },
   {
@@ -8853,6 +9660,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Forbidden Light',
     type: 'Psychic',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/49.png',
   },
   {
@@ -8864,6 +9672,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/62.png',
   },
   {
@@ -8875,6 +9684,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sun & Moon',
     type: 'Lightning',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/51.png',
   },
   {
@@ -8886,6 +9696,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Majestic Dawn',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp5/49.png',
   },
   {
@@ -8897,6 +9708,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Colorless',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW42.png',
   },
   {
@@ -8908,6 +9720,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Water',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/50.png',
   },
   {
@@ -8919,6 +9732,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW43.png',
   },
   {
@@ -8930,6 +9744,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm35/45.png',
   },
   {
@@ -8941,6 +9756,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legends Awakened',
     type: 'Fire',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/51.png',
   },
   {
@@ -8952,6 +9768,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dragon Majesty',
     type: 'Dragon',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm75/53.png',
   },
   {
@@ -8963,6 +9780,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp2/49.png',
   },
   {
@@ -8974,6 +9792,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/47.png',
   },
   {
@@ -8985,6 +9804,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/48.png',
   },
   {
@@ -8996,6 +9816,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Undaunted',
     type: 'Fighting',
+    generation: 3,
     image: 'https://images.pokemontcg.io/hgss3/55.png',
   },
   {
@@ -9007,6 +9828,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/57.png',
   },
   {
@@ -9018,6 +9840,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Dragon Majesty',
     type: 'Dragon',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm75/54.png',
   },
   {
@@ -9029,6 +9852,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Flashfire',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/64.png',
   },
   {
@@ -9040,6 +9864,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/56.png',
   },
   {
@@ -9051,6 +9876,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/49.png',
   },
   {
@@ -9062,6 +9888,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/61.png',
   },
   {
@@ -9073,6 +9900,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Destiny',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo4/57.png',
   },
   {
@@ -9084,6 +9912,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Plasma Blast',
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw10/61.png',
   },
   {
@@ -9095,6 +9924,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ancient Origins',
     type: 'Dragon',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy7/58.png',
   },
   {
@@ -9106,6 +9936,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/swsh3/52.png',
   },
   {
@@ -9117,6 +9948,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ancient Origins',
     type: 'Dragon',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy7/59.png',
   },
   {
@@ -9128,6 +9960,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/62.png',
   },
   {
@@ -9139,6 +9972,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Sword & Shield',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/58.png',
   },
   {
@@ -9150,6 +9984,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SM Black Star Promos',
     type: 'Colorless',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM49.png',
   },
   {
@@ -9161,6 +9996,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Flashfire',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/66.png',
   },
   {
@@ -9172,6 +10008,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/50.png',
   },
   {
@@ -9183,6 +10020,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Cosmic Eclipse',
     type: 'Water',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm12/61.png',
   },
   {
@@ -9194,6 +10032,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Ancient Origins',
     type: 'Dragon',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy7/60.png',
   },
   {
@@ -9205,6 +10044,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Discovery',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo2/51.png',
   },
   {
@@ -9216,6 +10056,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Unified Minds',
     type: 'Water',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm11/53.png',
   },
   {
@@ -9227,6 +10068,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Flashfire',
     type: 'Fairy',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy2/67.png',
   },
   {
@@ -9238,6 +10080,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Rebel Clash',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh2/54.png',
   },
   {
@@ -9249,6 +10092,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Psychic',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm5/58.png',
   },
   {
@@ -9260,6 +10104,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh3/53.png',
   },
   {
@@ -9271,6 +10116,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Evolutions',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy12/54.png',
   },
   {
@@ -9282,6 +10128,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'XY Black Star Promos',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xyp/XY50.png',
   },
   {
@@ -9293,6 +10140,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'XY',
     type: 'Fighting',
+    generation: 1,
     image: 'https://images.pokemontcg.io/xy1/60.png',
   },
   {
@@ -9304,6 +10152,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Base',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/base1/61.png',
   },
   {
@@ -9315,6 +10164,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Destiny',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo4/60.png',
   },
   {
@@ -9326,6 +10176,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh3/54.png',
   },
   {
@@ -9337,6 +10188,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sun & Moon',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm1/57.png',
   },
   {
@@ -9348,6 +10200,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Fates Collide',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/57.png',
   },
   {
@@ -9359,6 +10212,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Black & White',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/58.png',
   },
   {
@@ -9370,6 +10224,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Fates Collide',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy10/58.png',
   },
   {
@@ -9381,6 +10236,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sun & Moon',
     type: 'Psychic',
+    generation: 1,
     image: 'https://images.pokemontcg.io/sm1/58.png',
   },
   {
@@ -9392,6 +10248,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Ultra Prism',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm5/61.png',
   },
   {
@@ -9403,6 +10260,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Colorless',
+    generation: 1,
     image: 'https://images.pokemontcg.io/hgss2/62.png',
   },
   {
@@ -9414,6 +10272,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Black & White',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/60.png',
   },
   {
@@ -9425,6 +10284,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Dark Explorers',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw5/56.png',
   },
   {
@@ -9436,6 +10296,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/67.png',
   },
   {
@@ -9447,6 +10308,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Ultra Prism',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm5/62.png',
   },
   {
@@ -9458,6 +10320,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Water',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/63.png',
   },
   {
@@ -9469,6 +10332,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/neo3/58.png',
   },
   {
@@ -9480,6 +10344,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'BW Black Star Promos',
     type: 'Colorless',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bwp/BW52.png',
   },
   {
@@ -9491,6 +10356,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Crimson Invasion',
     type: 'Fighting',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm4/55.png',
   },
   {
@@ -9501,6 +10367,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Next Destinies',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/68.png',
   },
   {
@@ -9511,6 +10378,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Platinum',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/pl1/64.png',
   },
   {
@@ -9522,6 +10390,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Guardians Rising',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm2/61.png',
   },
   {
@@ -9533,6 +10402,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'HS—Unleashed',
     type: 'Colorless',
+    generation: 2,
     image: 'https://images.pokemontcg.io/hgss2/65.png',
   },
   {
@@ -9544,6 +10414,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Burning Shadows',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm3/61.png',
   },
   {
@@ -9555,6 +10426,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Burning Shadows',
     type: 'Psychic',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm3/62.png',
   },
   {
@@ -9566,6 +10438,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SWSH Black Star Promos',
     type: 'Psychic',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swshp/SWSH058.png',
   },
   {
@@ -9577,6 +10450,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Vivid Voltage',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh4/62.png',
   },
   {
@@ -9588,6 +10462,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Secret Wonders',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp3/70.png',
   },
   {
@@ -9599,6 +10474,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Dragon',
+    generation: 3,
     image: 'https://images.pokemontcg.io/sm35/56.png',
   },
   {
@@ -9610,6 +10486,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Shining Legends',
     type: 'Colorless',
+    generation: 4,
     image: 'https://images.pokemontcg.io/sm35/57.png',
   },
   {
@@ -9621,6 +10498,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp1/69.png',
   },
   {
@@ -9632,6 +10510,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'XY',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy1/67.png',
   },
   {
@@ -9643,6 +10522,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Black & White',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw1/65.png',
   },
   {
@@ -9654,6 +10534,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Crimson Invasion',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm4/60.png',
   },
   {
@@ -9665,6 +10546,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Diamond & Pearl',
     type: 'Fighting',
+    generation: 4,
     image: 'https://images.pokemontcg.io/dp1/71.png',
   },
   {
@@ -9676,6 +10558,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Crimson Invasion',
     type: 'Darkness',
+    generation: 5,
     image: 'https://images.pokemontcg.io/sm4/61.png',
   },
   {
@@ -9687,6 +10570,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Darkness Ablaze',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh3/62.png',
   },
   {
@@ -9698,6 +10582,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Forbidden Light',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/65.png',
   },
   {
@@ -9709,6 +10594,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/neo3/65.png',
   },
   {
@@ -9720,6 +10606,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh3/63.png',
   },
   {
@@ -9731,6 +10618,7 @@ const flavorCards = [
     stage: 'Stage 2',
     set: 'Steam Siege',
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy11/73.png',
   },
   {
@@ -9742,6 +10630,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Emerging Powers',
     type: 'Fighting',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw2/63.png',
   },
   {
@@ -9753,6 +10642,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Neo Revelation',
     type: 'Water',
+    generation: 1,
     image: 'https://images.pokemontcg.io/neo3/66.png',
   },
   {
@@ -9764,6 +10654,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp2/65.png',
   },
   {
@@ -9775,6 +10666,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Steam Siege',
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/xy11/74.png',
   },
   {
@@ -9786,6 +10678,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Next Destinies',
     type: 'Metal',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw4/77.png',
   },
   {
@@ -9797,6 +10690,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Darkness Ablaze',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh3/65.png',
   },
   {
@@ -9808,6 +10702,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'SM Black Star Promos',
     type: 'Colorless',
+    generation: 7,
     image: 'https://images.pokemontcg.io/smp/SM64.png',
   },
   {
@@ -9819,6 +10714,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sword & Shield',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/73.png',
   },
   {
@@ -9830,6 +10726,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Forbidden Light',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/sm6/68.png',
   },
   {
@@ -9841,6 +10738,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Mysterious Treasures',
     type: 'Psychic',
+    generation: 2,
     image: 'https://images.pokemontcg.io/dp2/67.png',
   },
   {
@@ -9852,6 +10750,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Roaring Skies',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/xy6/70.png',
   },
   {
@@ -9863,6 +10762,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Legends Awakened',
     type: 'Colorless',
+    generation: 3,
     image: 'https://images.pokemontcg.io/dp6/73.png',
   },
   {
@@ -9874,6 +10774,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Furious Fists',
     type: 'Fighting',
+    generation: 6,
     image: 'https://images.pokemontcg.io/xy3/62.png',
   },
   {
@@ -9885,6 +10786,7 @@ const flavorCards = [
     stage: 'Stage 1',
     set: 'Sword & Shield',
     type: 'Lightning',
+    generation: 8,
     image: 'https://images.pokemontcg.io/swsh1/75.png',
   },
   {
@@ -9896,6 +10798,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Legendary Treasures',
     type: 'Psychic',
+    generation: 5,
     image: 'https://images.pokemontcg.io/bw11/78.png',
   },
   {
@@ -9907,6 +10810,7 @@ const flavorCards = [
     stage: 'Basic',
     set: 'Sun & Moon',
     type: 'Fighting',
+    generation: 7,
     image: 'https://images.pokemontcg.io/sm1/72.png',
   },
 ];
